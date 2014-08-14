@@ -72,5 +72,10 @@ nbproject/*
 /www/js/vendor/modernizr*.min.js
 /www/index.html
 
+
+# editor and local reference files #
+####################################
+*.sublime-project
+*.sublime-workspace
 _reference
 _local-notes
