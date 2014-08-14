@@ -63,6 +63,7 @@ nbproject/*
 
 # www project files #
 #####################
+/www/.sass-cache
 /www/npm-debug.log
 /www/node_modules
 /www/css/main*
