@@ -71,12 +71,12 @@ module.exports = (grunt) ->
     watch:
       templates:
         files: ["<%= my_template_files %>"]
-        tasks: ["template-module", "concat"]
+        tasks: ["eco", "concat"]
       coffee:
         files: ["<%= my_coffeescript_files %>"]
         tasks: ["coffee", "concat"]
       template:
-        files: ["index.html.tpl","sass/lib/_settings.scss.tpl"]
+        files: ["index.html.tpl"]
         tasks: ["template:dev"]
       css:
         files: '**/*.sass'
