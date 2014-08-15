@@ -10,6 +10,7 @@ module.exports = (grunt) ->
       "js/vendor/backbone.js"
       "js/vendor/backbone.touch.js"
       "js/vendor/marionette.js"
+      "js/vendor/ratchet.js" # customized Ratchet, minus push.js
       "js/vendor/placeholder_polyfill.jquery.js"
       "js/build/templates.js"
       "js/build/mycoffee.js"
