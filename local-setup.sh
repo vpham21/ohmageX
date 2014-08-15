@@ -36,17 +36,6 @@ fi
 # rename our directory in preparation for it being moved.
 mv www www-temp
 
-# prepare local notification directories for being moved
-# move the LocalNotification plugin replacement files into a new temp directory `localnot`
-# -p option makes intermediate directories
-mkdir -p localnot/plugins/com\.cmpsoft\.mobile\.plugin\.localnotification
-
-# `$_` invokes the last arg passed
-mv plugins/com\.cmpsoft\.mobile\.plugin\.localnotification/www $_
-
-mkdir -p "localnot/platforms/ios/${app_name}"
-mv "platforms/ios/${app_name}/Classes" "$_/Classes"
-
 
 echo "************"
 echo "creating ${app_name} Phonegap project in current directory..."
@@ -90,14 +79,6 @@ echo "************"
 for module in "${modules[@]}"; do
   cordova plugin add "$module"
 done
-
-# Remove auto-generated localnotification plugin files, replace with ours
-rm plugins/com.cmpsoft.mobile.plugin.localnotification/www/LocalNotification.js
-mv localnot/plugins/com.cmpsoft.mobile.plugin.localnotification/www/LocalNotification.js plugins/com.cmpsoft.mobile.plugin.localnotification/www/LocalNotification.js
-
-rm "platforms/ios/${app_name}/Classes/AppDelegate.m"
-mv "localnot/platforms/ios/${app_name}/Classes/AppDelegate.m" "platforms/ios/${app_name}/Classes/AppDelegate.m"
-rm -R localnot
 
 echo "************"
 echo "Setup complete. Build with:"
