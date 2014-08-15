@@ -1,0 +1,4 @@
+<header>
+  Header Template
+  <ul id="nav-links" class="right"></ul>
+</header>
