@@ -67,7 +67,7 @@ nbproject/*
 /www/npm-debug.log
 /www/node_modules
 /www/css/main*
-/www/build/
+/www/js/build/
 /www/js/ohmage*
 /www/js/vendor/modernizr*.min.js
 /www/index.html
