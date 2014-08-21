@@ -1,1 +1,2 @@
-dashboard show template
+<div id="prompt-text-short-region"></div>
+<div id="prompt-text-long-region"></div>
