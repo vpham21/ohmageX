@@ -10,5 +10,5 @@ echo "************"
 echo "installing grunt modules..."
 echo "************"
 for module in "${modules[@]}"; do
-  npm install --save-dev "$module"
+  npm install "$module"
 done
