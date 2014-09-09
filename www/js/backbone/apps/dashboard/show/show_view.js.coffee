@@ -16,9 +16,19 @@
     triggers:
       "click button[type='submit']" : "validateStub"
 
+  class Show.PromptSCItem extends App.Views.ItemView
+    tagName: 'li'
+    template: "dashboard/show/prompt_sc_item"
+
+  # Prompt Single Choice
+  class Show.PromptSC extends App.Views.CompositeView
+    template: "dashboard/show/prompt_sc"
+    itemView: Show.PromptSCItem
+    itemViewContainer: ".prompt-list"
+
   class Show.Layout extends App.Views.Layout
     template: "dashboard/show/show_layout"
-
     regions:
       promptShortRegion: "#prompt-text-short-region"
       promptLongRegion: "#prompt-text-long-region"
+      promptSCRegion: "#prompt-single-choice-region"
