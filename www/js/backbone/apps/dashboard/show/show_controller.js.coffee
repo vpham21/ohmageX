@@ -8,6 +8,7 @@
       @listenTo @layout, "show", =>
         @promptShortRegion()
         @promptLongRegion()
+        @promptSCRegion()
 
       @show @layout
 
