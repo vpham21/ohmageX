@@ -4,7 +4,7 @@
   <label for="<%= @id %>"><%= @promptText %></label><br />
   <input name="<%= @id %>" type="text" />
   <% if @skippable: %>
-  <button>Skippable</button>
+  <button><%= @skipLabel %></button>
   <% end %>
   <button type="submit">Submit</button>
   </form>
