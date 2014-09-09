@@ -22,7 +22,7 @@
         <prompt>
           <id>textOneToTen</id>
           <displayType>event</displayType>
-          <displayLabel>Number One - textOneToTen</displayLabel>
+          <displayLabel>Text Short: textOneToTen</displayLabel>
           <promptText>Write some text.</promptText>
           <abbreviatedText>Write some text.</abbreviatedText>
           <promptType>text</promptType>
@@ -47,7 +47,7 @@
         <prompt>
           <id>textBigRange</id>
           <displayType>event</displayType>
-          <displayLabel>Number Three - textBigRange</displayLabel>
+          <displayLabel>Text Long: textBigRange</displayLabel>
           <promptText>Write some text.</promptText>
           <abbreviatedText>Write some text.</abbreviatedText>
           <promptType>text</promptType>
