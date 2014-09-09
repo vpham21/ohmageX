@@ -65,6 +65,27 @@
           <skippable>true</skippable>
           <skipLabel>Skip</skipLabel>
         </prompt>
+        <prompt>
+          <id>WithFriends</id>
+          <displayLabel>Single Choice: With Friends</displayLabel>
+          <displayType>category</displayType>
+          <promptText>Did you go anywhere with friends?</promptText>
+          <abbreviatedText>going with Friends</abbreviatedText>
+          <promptType>single_choice</promptType>
+          <condition>NumHoursExercise &gt; 0</condition>
+          <skippable>true</skippable>
+          <skipLabel>Skip</skipLabel>
+          <properties>
+            <property>
+              <key>0</key>
+              <label>Yes</label>
+            </property>
+            <property>
+              <key>1</key>
+              <label>No</label>
+            </property>
+          </properties>
+        </prompt>
       </contentList>
    </survey>
   </surveys>
