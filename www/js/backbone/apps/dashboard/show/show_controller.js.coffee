@@ -21,9 +21,21 @@
       promptsView = @getPromptsView longPrompt
       @show promptsView, region: @layout.promptLongRegion
 
+    promptSCRegion: ->
+      scPrompt = App.request "prompt:get", 2
+
+      promptsView = @getPromptSCView scPrompt
+      @show promptsView, region: @layout.promptSCRegion
+
     getPromptsView: (promptContent) ->
       new Show.Prompt
         model: promptContent
+
+    getPromptSCView: (promptContent) ->
+      console.log "properties",promptContent.get('properties')
+      new Show.PromptSC
+        model: promptContent
+        collection: promptContent.get('properties')
 
     getLayoutView: ->
       new Show.Layout
