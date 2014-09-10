@@ -14,6 +14,7 @@
         @promptShortRegion()
         @promptLongRegion()
         @promptSCRegion()
+        @promptMCRegion()
 
       @show @layout
 
@@ -33,13 +34,23 @@
       promptsView = @getPromptSCView scPrompt
       @show promptsView, region: @layout.promptSCRegion
 
+    promptMCRegion: ->
+      mcPrompt = App.request "prompt:get", 3
+
+      promptsView = @getPromptMCView mcPrompt
+      @show promptsView, region: @layout.promptMCRegion
+
     getPromptsView: (promptContent) ->
       new Show.Prompt
         model: promptContent
 
     getPromptSCView: (promptContent) ->
-      console.log "properties",promptContent.get('properties')
       new Show.PromptSC
+        model: promptContent
+        collection: promptContent.get('properties')
+
+    getPromptMCView: (promptContent) ->
+      new Show.PromptMC
         model: promptContent
         collection: promptContent.get('properties')
 
