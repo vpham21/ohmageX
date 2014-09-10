@@ -1,5 +1,11 @@
 @Ohmage.module "Entities", (Entities, App, Backbone, Marionette, $, _) ->
 
+  # The prompt entity currently contains the most logic, and some of this
+  # logic will be sectioned into other modules as it grows.
+  # It requests XML from the abstracted XML entity, and then performs
+  # some parsing on individual tags within a requested prompt's XML,
+  # converting them into the appropriate entities.
+
   class Entities.ChoiceModel extends Entities.Model
 
   class Entities.ChoiceCollection extends Entities.Collection
