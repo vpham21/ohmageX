@@ -86,6 +86,42 @@
             </property>
           </properties>
         </prompt>
+        <prompt>
+          <id>DistanceUnit</id>
+          <displayLabel>Multi Choice: Distance Unit</displayLabel>
+          <displayType>metadata</displayType>
+          <promptText>What unit was that distance?</promptText>
+          <abbreviatedText>Distance Unit</abbreviatedText>
+          <promptType>multi_choice</promptType>
+          <default>0</default>
+          <condition>
+            (Distance != NOT_DISPLAYED) and
+            (Distance != SKIPPED)
+          </condition>
+          <skippable>false</skippable>
+          <properties>
+            <property>
+              <key>0</key>
+              <label>Feet</label>
+              <value>1</value>
+            </property>
+            <property>
+              <key>1</key>
+              <label>Meters</label>
+              <value>3.2808399</value>
+            </property>
+            <property>
+              <key>2</key>
+              <label>Kilometers</label>
+              <value>3280.8399</value>
+            </property>
+            <property>
+              <key>3</key>
+              <label>Miles</label>
+              <value>5280</value>
+            </property>
+          </properties>
+        </prompt>
       </contentList>
    </survey>
   </surveys>
