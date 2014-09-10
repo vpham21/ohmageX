@@ -1,3 +1,4 @@
 <div id="prompt-text-short-region"></div>
 <div id="prompt-text-long-region"></div>
 <div id="prompt-single-choice-region"></div>
+<div id="prompt-multi-choice-region"></div>
