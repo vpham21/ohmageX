@@ -17,6 +17,7 @@
         @promptMCRegion()
         @promptSCCustomRegion()
         @promptMCCustomRegion()
+        @promptNumberRegion()
 
       @show @layout
 
@@ -54,6 +55,11 @@
       promptsView = @getPromptMCCustomView mcPrompt
       @show promptsView, region: @layout.promptMCCustomRegion
 
+    promptNumberRegion: ->
+      numberPrompt = App.request "prompt:get", 6
+      promptsView = @getPromptNumberView numberPrompt
+      @show promptsView, region: @layout.promptNumberRegion
+
     getPromptsView: (promptContent) ->
       new Show.Prompt
         model: promptContent
@@ -78,6 +84,9 @@
         model: promptContent
         collection: promptContent.get('properties')
 
+    getPromptNumberView: (promptContent) ->
+      new Show.PromptNumber
+        model: promptContent
 
     getLayoutView: ->
       new Show.Layout
