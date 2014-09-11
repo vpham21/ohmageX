@@ -122,6 +122,26 @@
             </property>
           </properties>
         </prompt>
+        <prompt>
+          <id>singleChoiceCustom1</id>
+          <displayType>event</displayType>
+          <displayLabel>Single Choice Custom: blank example</displayLabel>
+          <promptText>Add a choice.</promptText>
+          <abbreviatedText>Add a choice.</abbreviatedText>
+          <promptType>single_choice_custom</promptType>
+          <skippable>true</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+        <prompt>
+          <id>multiChoiceCustom1</id>
+          <displayType>event</displayType>
+          <displayLabel>Multi Choice Custom: blank example</displayLabel>
+          <promptText>Add a choice:</promptText>
+          <abbreviatedText>add a choice</abbreviatedText>
+          <promptType>multi_choice_custom</promptType>
+          <skippable>true</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
       </contentList>
    </survey>
   </surveys>
