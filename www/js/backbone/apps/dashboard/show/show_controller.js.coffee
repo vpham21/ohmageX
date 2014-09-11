@@ -68,5 +68,16 @@
         model: promptContent
         collection: promptContent.get('properties')
 
+    getPromptSCCustomView: (promptContent) ->
+      new Show.PromptSCCustom
+        model: promptContent
+        collection: promptContent.get('properties')
+
+    getPromptMCCustomView: (promptContent) ->
+      new Show.PromptMCCustom
+        model: promptContent
+        collection: promptContent.get('properties')
+
+
     getLayoutView: ->
       new Show.Layout
