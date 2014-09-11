@@ -139,3 +139,4 @@
       promptMCRegion: "#prompt-multi-choice-region"
       promptSCCustomRegion: "#prompt-single-choice-custom-region"
       promptMCCustomRegion: "#prompt-multi-choice-custom-region"
+      promptNumberRegion: "#prompt-number"
