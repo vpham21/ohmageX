@@ -142,6 +142,27 @@
           <skippable>true</skippable>
           <skipLabel>Skip</skipLabel>
         </prompt>
+        <prompt>
+          <id>numberNegTenToZero</id>
+          <displayType>event</displayType>
+          <displayLabel>Number: (-10 to Zero)</displayLabel>
+          <promptText>Pick a number.</promptText>
+          <abbreviatedText>Pick a number.</abbreviatedText>
+          <promptType>number</promptType>
+          <properties>
+            <property>
+              <key>min</key>
+              <label>-10</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>0</label>
+            </property>
+          </properties>
+          <default>-1</default>
+          <skippable>true</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
       </contentList>
    </survey>
   </surveys>

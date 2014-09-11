@@ -83,7 +83,52 @@
     # will be added in a new event Trigger
     itemView: Show.PromptMCItem
 
+  class Show.PromptNumber extends App.Views.ItemView
+    template: "dashboard/show/prompt_number"
+    initialize: ->
+      @listenTo @, 'validateStub', @validateStub
+      @listenTo @, 'value:increment', @incrementValue
+      @listenTo @, 'value:decrement', @decrementValue
+      @listenTo @, 'value:change', @filterValue
+    incrementValue: ->
+      $valueField = @$el.find("input[type='text']")
+      $valueField.val( parseInt($valueField.val())+1 )
+    decrementValue: ->
+      $valueField = @$el.find("input[type='text']")
+      $valueField.val( parseInt($valueField.val())-1 )
+    filterValue: ->
+      console.log 'filtervalue'
+      # filters input on the text field.
+      $valueField = @$el.find("input[type='text']")
+      c = $valueField.selectionStart
+      r = /^[-]?\d*\.?\d+/g
+      v = $valueField.val()
+      if not r.test(v)
+        $valueField.val v.replace(r, "")
+        c--
+      $valueField[0].setSelectionRange c, c
 
+    validateStub: ->
+      submitVal = parseInt( @$el.find("input[type='text']").val() )
+      properties = @model.get('properties')
+      if submitVal < properties.get('min')
+        console.log 'value too low'
+      if submitVal > properties.get('max')
+        console.log 'value too high'
+    serializeData: ->
+      data = @model.toJSON()
+      newDefault = @model.get('default')
+      console.log "newDefault ",newDefault
+      if !!newDefault
+        data.default = newDefault
+      else
+        data.default = ""
+      data
+    triggers:
+      "click button[type='submit']" : "validateStub"
+      "click button.increment": "value:increment"
+      "click button.decrement": "value:decrement"
+      "input input[type=text]": "value:change"
 
   class Show.Layout extends App.Views.Layout
     template: "dashboard/show/show_layout"
@@ -94,3 +139,4 @@
       promptMCRegion: "#prompt-multi-choice-region"
       promptSCCustomRegion: "#prompt-single-choice-custom-region"
       promptMCCustomRegion: "#prompt-multi-choice-custom-region"
+      promptNumberRegion: "#prompt-number"
