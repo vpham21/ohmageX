@@ -15,6 +15,8 @@
         @promptLongRegion()
         @promptSCRegion()
         @promptMCRegion()
+        @promptSCCustomRegion()
+        @promptMCCustomRegion()
 
       @show @layout
 
@@ -39,6 +41,18 @@
 
       promptsView = @getPromptMCView mcPrompt
       @show promptsView, region: @layout.promptMCRegion
+
+    promptSCCustomRegion: ->
+      scPrompt = App.request "prompt:get", 4
+
+      promptsView = @getPromptSCCustomView scPrompt
+      @show promptsView, region: @layout.promptSCCustomRegion
+
+    promptMCCustomRegion: ->
+      mcPrompt = App.request "prompt:get", 5
+
+      promptsView = @getPromptMCCustomView mcPrompt
+      @show promptsView, region: @layout.promptMCCustomRegion
 
     getPromptsView: (promptContent) ->
       new Show.Prompt
