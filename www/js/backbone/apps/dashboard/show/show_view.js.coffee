@@ -8,7 +8,6 @@
       submitVal = @$el.find("input[type='text']").val()
       console.log submitVal
       properties = @model.get('properties')
-      window.myProperties = properties
       if submitVal.length < properties.get('min')
         console.log 'length too short'
       if submitVal.length > properties.get('max')
