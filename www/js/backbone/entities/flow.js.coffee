@@ -36,6 +36,7 @@
       currentFlow.add myContentSteps
       mySurveySubmitSteps = @createSurveySubmitSteps App.request("survey:xml:root", $surveyXML)
       currentFlow.add mySurveySubmitSteps
+      console.log 'Current flow Object', currentFlow.toJSON()
 
     createIntroStep: ($rootXML) ->
 
