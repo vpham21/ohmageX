@@ -32,6 +32,8 @@
       currentFlow = new Entities.StepCollection
       myIntroStep = @createIntroStep App.request("survey:xml:root", $surveyXML)
       currentFlow.add myIntroStep
+      myContentSteps = @createContentSteps App.request("survey:xml:content", $surveyXML)
+      currentFlow.add myContentSteps
 
     createIntroStep: ($rootXML) ->
 
@@ -44,6 +46,18 @@
         condition: introCondition
         status: if introCondition then "displayed" else "not_displayed"
 
+    createContentSteps: ($contentXML) ->
+      _.map( $contentXML.children(), (child) ->
+        $child = $(child)
+
+        isMessage = $child.prop('tagName') is 'message'
+        conditionExists = !!$child.find('condition').length
+
+        result =
+          id: $child.tagText('id')
+          type: if isMessage then "message" else $child.tagText('promptType')
+          condition: if conditionExists then $child.tagText('condition') else true
+      )
 
   App.commands.setHandler "flow:init", ($surveyXML) ->
     API.init $surveyXML
