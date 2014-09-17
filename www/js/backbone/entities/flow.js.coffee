@@ -44,7 +44,6 @@
         condition: introCondition
         status: if introCondition then "displayed" else "not_displayed"
 
-      console.log result
 
   App.commands.setHandler "flow:init", ($surveyXML) ->
     API.init $surveyXML
