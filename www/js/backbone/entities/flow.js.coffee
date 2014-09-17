@@ -3,8 +3,10 @@
   # The Flow Entity contains data related to the flow
   # of the Steps within a Survey.
 
+  # currentFlow
   # "flow:init" initializes a StepCollection that persists in memory.
-  # That collection is removed with "flow:destroy"
+  # This collection is removed with "flow:destroy"
+  currentFlow = false
 
   class Entities.Step extends Entities.Model
 
