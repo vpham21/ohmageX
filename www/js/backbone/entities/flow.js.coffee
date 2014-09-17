@@ -29,18 +29,20 @@
   API =
     init: ($surveyXML) ->
       throw new Error "flow already initialized, use 'flow:destroy' to remove existing flow" unless currentFlow is false
-      @createIntroStep App.request("survey:xml:root", $surveyXML)
-    createIntroStep: ($stepXML) ->
+      currentFlow = new Entities.StepCollection
+      myIntroStep = @createIntroStep App.request("survey:xml:root", $surveyXML)
+      currentFlow.add myIntroStep
 
-      # no showSummary tag? assume we show it.
-      myCondition = !!!$stepXML.find('showSummary') or $stepXML.tagText('showSummary') is "true"
+    createIntroStep: ($rootXML) ->
 
-      result = 
-        id: "#{$stepXML.tagText('id')}Intro"
+      # no showSummary tag? assume we show this Step.
+      introCondition = !!!$rootXML.find('showSummary') or $rootXML.tagText('showSummary') is "true"
+
+      result =
+        id: "#{$rootXML.tagText('id')}Intro"
         type: "intro"
-        condition: myCondition
-        skippable: false # intro step can never be skipped, no input is required
-        status: if myCondition then "displayed" else "not_displayed"
+        condition: introCondition
+        status: if introCondition then "displayed" else "not_displayed"
 
       console.log result
 
