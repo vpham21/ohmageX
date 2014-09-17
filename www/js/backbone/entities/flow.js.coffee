@@ -16,6 +16,12 @@
   # skipped        - the user intentionally skipped this Step
 
   class Entities.Step extends Entities.Model
+    defaults: # default values for all Steps:
+      condition: true # Step is always shown
+      entity: false # entity is not initialized
+      skippable: false # Step can't be skipped
+      skiplabel: false # Skip label is empty
+      status: "pending" # Step hasn't been processed
 
   class Entities.StepCollection extends Entities.Collection
     model: Entities.Step
