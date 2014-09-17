@@ -26,8 +26,6 @@
   class Entities.StepCollection extends Entities.Collection
     model: Entities.Step
 
-  currentFlow = false
-
   API =
     init: ($surveyXML) ->
       throw new Error "flow already initialized, use 'flow:destroy' to remove existing flow" unless currentFlow is false
