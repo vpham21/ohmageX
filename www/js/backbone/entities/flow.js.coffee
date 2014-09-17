@@ -34,6 +34,8 @@
       currentFlow.add myIntroStep
       myContentSteps = @createContentSteps App.request("survey:xml:content", $surveyXML)
       currentFlow.add myContentSteps
+      mySurveySubmitSteps = @createSurveySubmitSteps App.request("survey:xml:root", $surveyXML)
+      currentFlow.add mySurveySubmitSteps
 
     createIntroStep: ($rootXML) ->
 
@@ -58,6 +60,18 @@
           type: if isMessage then "message" else $child.tagText('promptType')
           condition: if conditionExists then $child.tagText('condition') else true
       )
+
+    createSurveySubmitSteps: ($rootXML) ->
+      result = []
+      result.push
+        id: "#{$rootXML.tagText('id')}beforeSurveySubmit"
+        type: "beforeSurveySubmit"
+
+      result.push
+        id: "#{$rootXML.tagText('id')}afterSurveySubmit"
+        type: "afterSurveySubmit"
+
+      result
 
   App.commands.setHandler "flow:init", ($surveyXML) ->
     API.init $surveyXML
