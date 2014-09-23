@@ -9,9 +9,7 @@
 
   API =
     firstId: (currentFlow) ->
-      # Limit our starting search to the first two items, no need to search all.
-      # Then remove any with a "false" condition.
-      # Then only return the first model that we get back from our condition check.
+      # Only return the first model that we receive from the condition check.
       # Then return its id.
       result = currentFlow.find((step) ->
         step.get('condition') isnt false
