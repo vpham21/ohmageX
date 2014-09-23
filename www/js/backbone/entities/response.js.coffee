@@ -23,11 +23,10 @@
       currentResponses.add myResponses
       console.log 'currentResponses', currentResponses.toJSON()
     createResponses: ($contentXML) ->
-      # first loop through all responses.
-      # Only generate a new Response for a contentItem that actually
-      # has a response, so we check its type. Currently a "message"
+      # Loop through all responses.
+      # Only want to create a Response for a contentItem that actually
+      # can accept responses, so we check its type. Currently a "message"
       # is the only item that does not have a response.
-
       # The .map() creates a new array, each key is object or false.
       # The .filter() removes the false keys.
 
