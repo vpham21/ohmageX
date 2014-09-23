@@ -10,7 +10,11 @@
 
       # initialize both the flow and response objects with jQuery Survey XML
       App.execute "flow:init", $mySurveyXML
-      # App.execute "response:init", $mySurveyXML
+      App.execute "responses:init", $mySurveyXML
+
+      firstId = App.request "flow:id:first"
+
+      App.navigate "survey/#{id}/step/#{firstId}", trigger: true
 
   App.addInitializer ->
     new SurveyApp.Router
