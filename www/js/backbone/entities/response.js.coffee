@@ -42,3 +42,7 @@
 
   App.commands.setHandler "responses:init", ($surveyXML) ->
     API.init $surveyXML
+
+  App.reqres.setHandler "responses:current", ->
+    throw new Error "responses not initialized, use 'responses:init' to create new Responses" unless currentResponses isnt false
+    currentResponses
