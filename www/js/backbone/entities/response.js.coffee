@@ -9,8 +9,8 @@
   currentResponses = false
 
   class Entities.Response extends Entities.Model
-    defaults:
-      response: "NOT_DISPLAYED" # All submitted responses are not_displayed by default.
+    defaults: # default values for all Responses:
+      response: "NOT_DISPLAYED" # All submitted responses are not_displayed
 
   class Entities.ResponseCollection extends Entities.Collection
     model: Entities.Response
