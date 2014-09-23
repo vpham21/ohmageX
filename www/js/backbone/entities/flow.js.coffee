@@ -2,6 +2,7 @@
 
   # The Flow Entity contains data related to the flow
   # of the Steps within a Survey.
+  # This module contains the initialization for Flow.
 
   # currentFlow
   # "flow:init" initializes a StepCollection that persists in memory.
