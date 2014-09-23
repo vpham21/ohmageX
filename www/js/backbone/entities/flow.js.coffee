@@ -2,6 +2,7 @@
 
   # The Flow Entity contains data related to the flow
   # of the Steps within a Survey.
+  # This module contains the initialization for Flow.
 
   # currentFlow
   # "flow:init" initializes a StepCollection that persists in memory.
@@ -37,6 +38,8 @@
       mySurveySubmitSteps = @createSurveySubmitSteps App.request("survey:xml:root", $surveyXML)
       currentFlow.add mySurveySubmitSteps
       console.log 'Current flow Object', currentFlow.toJSON()
+    getFlow: ->
+      currentFlow
 
     createIntroStep: ($rootXML) ->
 
@@ -76,3 +79,10 @@
 
   App.commands.setHandler "flow:init", ($surveyXML) ->
     API.init $surveyXML
+
+  App.reqres.setHandler "flow:init:status", ->
+    currentFlow isnt false
+
+  App.reqres.setHandler "flow:current", ->
+    throw new Error "flow not initialized, use 'flow:init' to create new Flow" unless currentFlow isnt false
+    currentFlow
