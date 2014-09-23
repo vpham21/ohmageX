@@ -37,6 +37,8 @@
       mySurveySubmitSteps = @createSurveySubmitSteps App.request("survey:xml:root", $surveyXML)
       currentFlow.add mySurveySubmitSteps
       console.log 'Current flow Object', currentFlow.toJSON()
+    getFlow: ->
+      currentFlow
 
     createIntroStep: ($rootXML) ->
 
@@ -79,3 +81,7 @@
 
   App.reqres.setHandler "flow:init:status", ->
     currentFlow isnt false
+
+  App.reqres.setHandler "flow:current", ->
+    throw new Error "flow not initialized, use 'flow:init' to create new Flow" unless currentFlow isnt false
+    currentFlow
