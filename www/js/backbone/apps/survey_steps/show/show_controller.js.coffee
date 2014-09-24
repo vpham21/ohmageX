@@ -9,4 +9,5 @@
     initialize: (options) ->
       { stepId } = options
       myType = App.request "flow:type", stepId
-      # myEntity = App.request "flow:entity", stepId
+      myEntity = App.request "flow:entity", stepId
+      console.log "myEntity for #{stepId}",myEntity.toJSON()
