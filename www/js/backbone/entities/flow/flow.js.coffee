@@ -23,6 +23,7 @@
       skippable: false # Step can't be skipped
       skiplabel: false # Skip label is empty
       status: "pending" # Step hasn't been processed
+      entity: false # Step's Entity starts out uninitialized
 
   class Entities.StepCollection extends Entities.Collection
     model: Entities.Step
@@ -52,6 +53,7 @@
         type: "intro"
         condition: introCondition
         status: if introCondition then "displayed" else "not_displayed"
+        $XML: $rootXML
 
     createContentSteps: ($contentXML) ->
       _.map( $contentXML.children(), (child) ->
@@ -64,6 +66,7 @@
           id: $child.tagText('id')
           type: if isMessage then "message" else $child.tagText('promptType')
           condition: if conditionExists then $child.tagText('condition') else true
+          $XML: $child
       )
 
     createSurveySubmitSteps: ($rootXML) ->
@@ -71,10 +74,12 @@
       result.push
         id: "#{$rootXML.tagText('id')}beforeSurveySubmit"
         type: "beforeSurveySubmit"
+        $XML: $rootXML
 
       result.push
         id: "#{$rootXML.tagText('id')}afterSurveySubmit"
         type: "afterSurveySubmit"
+        $XML: $rootXML
 
       result
 
