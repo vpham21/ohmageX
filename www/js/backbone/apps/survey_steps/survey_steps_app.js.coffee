@@ -6,6 +6,8 @@
 
   API =
     checkStep: (id, stepId) ->
+      console.log "checkStep #{stepId}"
+
       # Redirect to the start of the survey 
       # if survey isn't initialized before proceeding.
       # TODO: persist currentFlow in localStorage for refresh
