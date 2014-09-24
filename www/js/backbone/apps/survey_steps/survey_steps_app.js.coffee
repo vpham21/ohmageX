@@ -15,8 +15,17 @@
         App.navigate "survey/#{id}", trigger: true
         return false
 
-      console.log 'id', id
-      console.log 'first', first
+      isPassed = App.request "flow:condition:check", stepId
+
+      if isPassed
+        @showStep stepId
+      else
+        nextId = App.request "flow:id:next", stepId
+        App.navigate "survey/#{id}/step/#{nextId}", { trigger: true }
+
+    showStep: (stepId) ->
+      new SurveyStepsApp.Show.Controller
+        stepId: stepId
 
   App.addInitializer ->
     new SurveyStepsApp.Router
