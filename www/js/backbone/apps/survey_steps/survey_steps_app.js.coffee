@@ -2,10 +2,10 @@
 
   class SurveyStepsApp.Router extends Marionette.AppRouter
     appRoutes:
-      "survey/:id/step/:first": "checkStep"
+      "survey/:id/step/:stepId": "checkStep"
 
   API =
-    checkStep: (id, first) ->
+    checkStep: (id, stepId) ->
       # Redirect to the start of the survey 
       # if survey isn't initialized before proceeding.
       # TODO: persist currentFlow in localStorage for refresh
