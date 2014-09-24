@@ -37,11 +37,19 @@
 
         if isResponseType then {id: $child.tagText('id') } else false
       ).filter((result) -> !!result).value()
+    getResponses: ->
+      throw new Error "responses not initialized, use 'responses:init' to create new Responses" unless currentResponses isnt false
+      currentResponses
 
 
   App.commands.setHandler "responses:init", ($surveyXML) ->
     API.init $surveyXML
 
   App.reqres.setHandler "responses:current", ->
-    throw new Error "responses not initialized, use 'responses:init' to create new Responses" unless currentResponses isnt false
-    currentResponses
+    API.getResponses()
+
+  App.reqres.setHandler "response:get", (id) ->
+    currentResponses = API.getResponses()
+    myResponse = currentResponses.get(id)
+    throw new Error "response id #{id} does not exist in currentResponses" if typeof myResponse is 'undefined'
+    myResponse
