@@ -23,6 +23,16 @@
       throw new Error "id #{id} is not in currentFlow" if myIndex is -1
       myIndex
 
+    nextId: (currentFlow, id) ->
+      myIndex = @currentIndex currentFlow, id
+
+      result = currentFlow.at(myIndex+1)
+      throw new Error "id #{id} in currentFlow has no next id" if typeof result is 'undefined'
+      result.get 'id'
   App.reqres.setHandler "flow:id:first", ->
     currentFlow = App.request "flow:current"
     API.firstId currentFlow
+
+  App.reqres.setHandler "flow:id:next", (id) ->
+    currentFlow = App.request "flow:current"
+    API.nextId currentFlow, id
