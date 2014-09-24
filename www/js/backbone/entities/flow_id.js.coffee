@@ -16,7 +16,12 @@
       )
       throw new Error "All Flow step conditions are false" if typeof result is 'undefined'
       result.get 'id'
+    currentIndex: (currentFlow, id) ->
 
+      currentStep = currentFlow.get id
+      myIndex = currentFlow.indexOf currentStep
+      throw new Error "id #{id} is not in currentFlow" if myIndex is -1
+      myIndex
 
   App.reqres.setHandler "flow:id:first", ->
     currentFlow = App.request "flow:current"
