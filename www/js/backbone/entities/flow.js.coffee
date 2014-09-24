@@ -39,6 +39,7 @@
       currentFlow.add mySurveySubmitSteps
       console.log 'Current flow Object', currentFlow.toJSON()
     getFlow: ->
+      throw new Error "flow not initialized, use 'flow:init' to create new Flow" unless currentFlow isnt false
       currentFlow
 
     createIntroStep: ($rootXML) ->
@@ -84,5 +85,10 @@
     currentFlow isnt false
 
   App.reqres.setHandler "flow:current", ->
-    throw new Error "flow not initialized, use 'flow:init' to create new Flow" unless currentFlow isnt false
-    currentFlow
+    API.getFlow()
+
+  App.reqres.setHandler "flow:step", (id) ->
+    currentFlow = API.getFlow()
+    myStep = currentFlow.get(id)
+    throw new Error "step id #{id} does not exist in currentFlow" if typeof myStep is 'undefined'
+    myStep
