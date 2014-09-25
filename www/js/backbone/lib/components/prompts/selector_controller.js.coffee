@@ -9,6 +9,10 @@
 
       @myView = @selectView entity, type
 
+      @listenTo @myView, "response:submit", (response, surveyId, stepId) ->
+        console.log "response:submit"
+        App.execute "response:validate", response, surveyId, stepId
+
       # Ensure this controller is removed during view cleanup.
       @listenTo @myView, "close", @close
 
