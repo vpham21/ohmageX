@@ -90,6 +90,9 @@
   App.reqres.setHandler "flow:init:status", ->
     currentFlow isnt false
 
+  App.commands.setHandler "flow:destroy", ->
+    currentFlow = false
+
   App.reqres.setHandler "flow:current", ->
     API.getFlow()
 

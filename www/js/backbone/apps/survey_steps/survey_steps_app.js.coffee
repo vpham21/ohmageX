@@ -53,7 +53,8 @@
 
   App.vent.on "survey:aftersubmit:next:clicked", (surveyId, stepId) ->
     # for now, just go back to the beginning of the survey
-    App.navigate "survey/#{surveyId}"
+    App.execute "flow:destroy"
+    App.execute "responses:destroy"
 
   App.vent.on "response:set:success", (response, surveyId, stepId) ->
     API.goNext surveyId, stepId

@@ -48,6 +48,9 @@
   App.reqres.setHandler "responses:current", ->
     API.getResponses()
 
+  App.commands.setHandler "responses:destroy", ->
+    currentResponses = false
+
   App.reqres.setHandler "response:get", (id) ->
     currentResponses = API.getResponses()
     myResponse = currentResponses.get(id)
