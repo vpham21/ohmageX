@@ -18,3 +18,7 @@
   App.commands.setHandler "response:set:not_displayed", (stepId) ->
     currentResponses = App.request "responses:current"
     API.updateResponse currentResponses, stepId, 'NOT_DISPLAYED'
+
+  App.commands.setHandler "response:set", (newResponse, stepId) ->
+    currentResponses = App.request "responses:current"
+    API.updateResponse currentResponses, stepId, newResponse
