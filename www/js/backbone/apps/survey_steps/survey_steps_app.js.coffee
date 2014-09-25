@@ -51,7 +51,10 @@
     # survey:upload gathers and submits all data
     # and will fire survey:upload:success.
     App.commands.execute "survey:upload", surveyId
+
+  App.vent.on "survey:upload:success", (response, surveyId) ->
     # Go to the next step if the submit succeeds
+    API.goNext surveyId, "#{surveyId}beforeSurveySubmit"
 
   App.vent.on "survey:aftersubmit:next:clicked", (surveyId, stepId) ->
     # for now, just go back to the beginning of the survey
