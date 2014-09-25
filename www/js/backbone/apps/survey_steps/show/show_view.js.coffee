@@ -1,5 +1,15 @@
 @Ohmage.module "SurveyStepsApp.Show", (Show, App, Backbone, Marionette, $, _) ->
 
+  class Show.PrevButton extends App.Views.ItemView
+    template: "survey_steps/show/prevbutton"
+    triggers:
+      "click button": "prev:clicked"
+
+  class Show.NextButton extends App.Views.ItemView
+    template: "survey_steps/show/nextbutton"
+    triggers:
+      "click button": "next:clicked"
+
   class Show.Layout extends App.Views.Layout
     template: "survey_steps/show/show_layout"
     regions:

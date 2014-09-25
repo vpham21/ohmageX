@@ -20,5 +20,13 @@
     stepBodyRegion: ->
       App.execute "steps:view:insert", @layout.stepBodyRegion, @stepId
 
+    getPrevButtonView: (prevStep) ->
+      new Show.PrevButton
+        model: prevStep
+
+    getNextButtonView: (nextStep) ->
+      new Show.NextButton
+        model: nextStep
+
     getLayoutView: ->
       new Show.Layout
