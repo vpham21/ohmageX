@@ -32,11 +32,12 @@
     init: ($surveyXML) ->
       throw new Error "flow already initialized, use 'flow:destroy' to remove existing flow" unless currentFlow is false
       currentFlow = new Entities.StepCollection
-      myIntroStep = @createIntroStep App.request("survey:xml:root", $surveyXML)
+      $root = App.request("survey:xml:root", $surveyXML)
+      myIntroStep = @createIntroStep $root
       currentFlow.add myIntroStep
       myContentSteps = @createContentSteps App.request("survey:xml:content", $surveyXML)
       currentFlow.add myContentSteps
-      mySurveySubmitSteps = @createSurveySubmitSteps App.request("survey:xml:root", $surveyXML)
+      mySurveySubmitSteps = @createSurveySubmitSteps $root
       currentFlow.add mySurveySubmitSteps
       console.log 'Current flow Object', currentFlow.toJSON()
     getFlow: ->
