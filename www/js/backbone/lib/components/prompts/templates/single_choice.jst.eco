@@ -1,0 +1,7 @@
+<legend>
+  <form>
+  <h3><%= @displayLabel %></h3>
+  <label for="<%= @id %>"><%= @promptText %></label><br />
+  <ul class="prompt-list"></ul>
+  </form>
+</legend>
