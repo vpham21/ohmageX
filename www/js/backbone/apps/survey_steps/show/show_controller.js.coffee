@@ -28,6 +28,8 @@
       prevEntity = App.request "stepbutton:prev:entity", @stepId
       prevView = @getPrevButtonView prevEntity
 
+      @listenTo prevView, "prev:clicked", =>
+        App.vent.trigger "survey:step:prev:clicked", @stepId
 
       @show prevView, region: @layout.prevButtonRegion
 
@@ -35,6 +37,22 @@
 
       nextEntity = App.request "stepbutton:next:entity", @stepId
       nextView = @getNextButtonView nextEntity
+
+      @listenTo nextView, "next:clicked", =>
+        myType = App.request "flow:type", @stepId
+        console.log 'nextview listento next:clicked'
+        switch myType
+          when "intro"
+            App.vent.trigger "survey:intro:next:clicked", @surveyId, @stepId
+          when "message"
+            App.vent.trigger "survey:message:next:clicked", @surveyId, @stepId
+          when "beforeSurveySubmit"
+            App.vent.trigger "survey:beforesubmit:next:clicked", @surveyId, @stepId
+          when "afterSurveySubmit"
+            App.vent.trigger "survey:aftersubmit:next:clicked", @surveyId, @stepId
+          else
+            App.vent.trigger "survey:response:get", @surveyId, @stepId
+
       @show nextView, region: @layout.nextButtonRegion
 
     getPrevButtonView: (prevStep) ->
