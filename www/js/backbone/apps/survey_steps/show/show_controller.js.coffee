@@ -8,17 +8,34 @@
   class Show.Controller extends App.Controllers.Application
     initialize: (options) ->
       console.log "SurveyStepsApp Show.Controller"
-      { stepId } = options
+      { surveyId, stepId } = options
+      @surveyId = surveyId
       @stepId = stepId
       @layout = @getLayoutView()
 
       @listenTo @layout, "show", =>
         @stepBodyRegion()
+        @prevButtonRegion()
+        @nextButtonRegion()
 
       @show @layout
 
     stepBodyRegion: ->
       App.execute "steps:view:insert", @layout.stepBodyRegion, @stepId
+
+    prevButtonRegion: ->
+
+      prevEntity = App.request "stepbutton:prev:entity", @stepId
+      prevView = @getPrevButtonView prevEntity
+
+
+      @show prevView, region: @layout.prevButtonRegion
+
+    nextButtonRegion: ->
+
+      nextEntity = App.request "stepbutton:next:entity", @stepId
+      nextView = @getNextButtonView nextEntity
+      @show nextView, region: @layout.nextButtonRegion
 
     getPrevButtonView: (prevStep) ->
       new Show.PrevButton
