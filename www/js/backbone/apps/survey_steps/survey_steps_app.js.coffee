@@ -55,6 +55,7 @@
     # for now, just go back to the beginning of the survey
     App.execute "flow:destroy"
     App.execute "responses:destroy"
+    App.navigate "survey/#{surveyId}", { trigger: true }
 
   App.vent.on "response:set:success", (response, surveyId, stepId) ->
     API.goNext surveyId, stepId
