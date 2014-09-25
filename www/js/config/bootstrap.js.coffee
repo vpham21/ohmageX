@@ -12,7 +12,7 @@
       <title>Text Survey</title>
       <description>This is a survey to test behavior of the text prompt type.</description>
       <submitText>Done with the text survey</submitText>
-      <showSummary>false</showSummary>
+      <showSummary>true</showSummary>
       <editSummary>false</editSummary>
       <summaryText>Number Test</summaryText>
       <anytime>true</anytime>

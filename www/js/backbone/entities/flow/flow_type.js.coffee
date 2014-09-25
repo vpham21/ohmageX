@@ -7,6 +7,11 @@
   # References the current Flow StepCollection object, defined in flow_init.js.coffee
   # via the interface "flow:current"
 
+  # custom Step Types (not types within Prompts):
+  # intro
+  # beforeSurveySubmit
+  # afterSurveySubmit
+
   API =
     getType: (currentStep) ->
       currentStep.get 'type'
