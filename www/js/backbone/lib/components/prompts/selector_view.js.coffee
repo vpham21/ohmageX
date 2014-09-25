@@ -1,14 +1,15 @@
 @Ohmage.module "Components.Prompts", (Prompts, App, Backbone, Marionette, $, _) ->
 
-  class Prompts.Text extends App.Views.ItemView
-    template: "prompts/prompt"
+  class Prompts.Base extends App.Views.ItemView
     initialize: ->
-      @listenTo @, 'validateStub', @validateStub
-    validateStub: ->
-      submitVal = @$el.find("input[type='text']").val()
-      console.log submitVal
-      properties = @model.get('properties')
-      if submitVal.length < properties.get('min')
-        console.log 'length too short'
-      if submitVal.length > properties.get('max')
-        console.log 'length too long'
+      # Every prompt needs a gatherResponses method,
+      # which will gather all response fields for the
+      # response:get handler, activated when the prompt
+      # needs to be validated.
+      App.vent.on "survey:response:get", @gatherResponses
+
+  class Prompts.Text extends Prompts.Base
+    template: "prompts/prompt"
+    gatherResponses: (surveyId, stepId) =>
+      response = @$el.find('input[type=text]').val()
+      @trigger "response:submit", response, surveyId, stepId
