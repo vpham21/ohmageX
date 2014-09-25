@@ -7,7 +7,18 @@
 
   class Show.Controller extends App.Controllers.Application
     initialize: (options) ->
+      console.log "SurveyStepsApp Show.Controller"
       { stepId } = options
-      myType = App.request "flow:type", stepId
-      myEntity = App.request "flow:entity", stepId
-      console.log "myEntity for #{stepId}",myEntity.toJSON()
+      @stepId = stepId
+      @layout = @getLayoutView()
+
+      @listenTo @layout, "show", =>
+        @stepBodyRegion()
+
+      @show @layout
+
+    stepBodyRegion: ->
+      App.execute "steps:view:insert", @layout.stepBodyRegion, @stepId
+
+    getLayoutView: ->
+      new Show.Layout
