@@ -48,12 +48,19 @@
     API.goNext surveyId, stepId
 
   App.vent.on "survey:beforesubmit:next:clicked", (surveyId, stepId) ->
-    # gather and submit all data
+    # survey:upload gathers and submits all data
+    # and will fire survey:upload:success.
+    App.commands.execute "survey:upload", surveyId
+
+  App.vent.on "survey:upload:success", (response, surveyId) ->
     # Go to the next step if the submit succeeds
+    API.goNext surveyId, "#{surveyId}beforeSurveySubmit"
 
   App.vent.on "survey:aftersubmit:next:clicked", (surveyId, stepId) ->
     # for now, just go back to the beginning of the survey
-    App.navigate "survey/#{surveyId}"
+    App.execute "flow:destroy"
+    App.execute "responses:destroy"
+    App.navigate "survey/#{surveyId}", { trigger: true }
 
   App.vent.on "response:set:success", (response, surveyId, stepId) ->
     API.goNext surveyId, stepId

@@ -14,7 +14,7 @@
 
   API =
     prevEntity: (stepType, stepId) ->
-      disabled = stepType is "intro"
+      disabled = stepType is "intro" or stepType is "afterSurveySubmit"
 
       new Entities.StepButtonPrev
         disabled: disabled

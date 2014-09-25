@@ -1,0 +1,2 @@
+<h2><%= @completeTitle %></h2>
+<p><%= @summary %></p>
