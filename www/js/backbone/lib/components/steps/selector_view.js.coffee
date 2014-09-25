@@ -14,3 +14,12 @@
       console.log 'Steps.BeforeSubmission data', data
       data.completeTitle = 'Survey Submit'
       data
+
+  class Steps.AfterSubmission extends App.Views.ItemView
+    template: "steps/aftersubmission"
+    serializeData: ->
+      data = @model.toJSON()
+      console.log 'Steps.AfterSubmission data', data
+      data.completeTitle = 'Survey Complete'
+      data.summary = "Survey submitted."
+      data
