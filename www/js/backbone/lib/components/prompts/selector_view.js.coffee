@@ -13,7 +13,7 @@
       App.vent.on "survey:response:get", @gatherResponses
 
   class Prompts.Text extends Prompts.Base
-    template: "prompts/prompt"
+    template: "prompts/text"
     gatherResponses: (surveyId, stepId) =>
       response = @$el.find('input[type=text]').val()
       @trigger "response:submit", response, surveyId, stepId
