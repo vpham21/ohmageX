@@ -18,6 +18,25 @@
       response = @$el.find('input[type=text]').val()
       @trigger "response:submit", response, surveyId, stepId
 
+  class Prompts.Number extends Prompts.Base
+    template: "prompts/number"
+    gatherResponses: (surveyId, stepId) =>
+      response = @$el.find('input[type=text]').val()
+      @trigger "response:submit", response, surveyId, stepId
+    initialize: ->
+      super
+      @listenTo @, 'value:increment', @incrementValue
+      @listenTo @, 'value:decrement', @decrementValue
+    incrementValue: ->
+      $valueField = @$el.find("input[type='text']")
+      $valueField.val( parseInt($valueField.val())+1 )
+    decrementValue: ->
+      $valueField = @$el.find("input[type='text']")
+      $valueField.val( parseInt($valueField.val())-1 )
+    triggers:
+      "click button.increment": "value:increment"
+      "click button.decrement": "value:decrement"
+
   class Prompts.SingleChoiceItem extends App.Views.ItemView
     tagName: 'li'
     template: "prompts/single_choice_item"
