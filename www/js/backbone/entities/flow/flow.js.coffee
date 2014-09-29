@@ -23,7 +23,6 @@
       skippable: false # Step can't be skipped
       skiplabel: false # Skip label is empty
       status: "pending" # Step hasn't been processed
-      entity: false # Step's Entity starts out uninitialized
 
   class Entities.StepCollection extends Entities.Collection
     model: Entities.Step
