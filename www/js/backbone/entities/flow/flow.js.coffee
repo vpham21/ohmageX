@@ -45,8 +45,8 @@
 
     createIntroStep: ($rootXML) ->
 
-      # no showSummary tag? assume we show this Step.
-      introCondition = !!!$rootXML.find('showSummary') or $rootXML.tagText('showSummary') is "true"
+      # Only show this Step if the introText tag exists and it's not false.
+      introCondition = !!$rootXML.find('introText').length and $rootXML.tagText('introText') isnt "false"
 
       result =
         id: "#{$rootXML.tagText('id')}Intro"
