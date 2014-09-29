@@ -33,7 +33,7 @@
       _.chain($contentXML.children()).map((child) ->
         $child = $(child)
 
-        isResponseType = $child.tagText('promptType') isnt 'message'
+        isResponseType = $child.prop('tagName') is 'prompt'
 
         if isResponseType then {id: $child.tagText('id') } else false
       ).filter((result) -> !!result).value()
