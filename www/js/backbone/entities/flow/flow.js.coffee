@@ -9,13 +9,6 @@
   # This collection is removed with "flow:destroy"
   currentFlow = false
 
-  # Possible status list:
-  # pending        - Not yet navigated to, and its Condition is not yet tested
-  # displaying     - currently rendered, no response from the user yet
-  # not_displayed  - not displayed because its condition evaluated to false
-  # complete       - has been displayed, and the user has submitted a valid value
-  # skipped        - the user intentionally skipped this Step
-
   class Entities.Step extends Entities.Model
     defaults: # default values for all Steps:
       condition: true # Step is always shown
