@@ -49,3 +49,25 @@
     gatherResponses: (surveyId, stepId) =>
       response = @$el.find('input[type=radio]').filter(':checked').val()
       @trigger "response:submit", response, surveyId, stepId
+
+  class Prompts.MultiChoiceItem extends App.Views.ItemView
+    tagName: 'li'
+    template: "prompts/multi_choice_item"
+
+  # Prompt Multi Choice
+  class Prompts.MultiChoice extends Prompts.SingleChoice
+    template: "prompts/multi_choice"
+    itemView: Prompts.MultiChoiceItem
+    itemViewContainer: ".prompt-list"
+    extractJSONString: ($responses) ->
+      # extract responses from the selected options
+      # into a JSON string
+      return false unless $responses.length > 0
+      result = _.map($responses, (response) ->
+        parseInt $(response).val()
+      )
+      JSON.stringify result
+
+    gatherResponses: (surveyId, stepId) =>
+      $responses = @$el.find('input[type=checkbox]').filter(':checked')
+      @trigger "response:submit", @extractJSONString($responses), surveyId, stepId
