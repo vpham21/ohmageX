@@ -7,6 +7,13 @@
       console.log 'Steps.Intro data', data
       data
 
+  class Steps.Message extends App.Views.ItemView
+    template: "steps/message"
+    serializeData: ->
+      data = @model.toJSON()
+      console.log 'Steps.Message data', data
+      data
+
   class Steps.BeforeSubmission extends App.Views.ItemView
     template: "steps/beforesubmission"
     serializeData: ->

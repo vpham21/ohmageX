@@ -19,6 +19,9 @@
         when "intro"
           return new Steps.Intro
             model: entity
+        when "message"
+          return new Steps.Message
+            model: entity
         when "beforeSurveySubmit"
           return new Steps.BeforeSubmission
             model: entity          
