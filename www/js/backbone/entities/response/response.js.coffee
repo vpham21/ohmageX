@@ -35,7 +35,7 @@
 
         isResponseType = $child.prop('tagName') is 'prompt'
 
-        if isResponseType then {id: $child.tagText('id') } else false
+        if isResponseType then {id: $child.tagText('id'), type: $child.tagText('promptType') } else false
       ).filter((result) -> !!result).value()
     getResponses: ->
       throw new Error "responses not initialized, use 'responses:init' to create new Responses" unless currentResponses isnt false

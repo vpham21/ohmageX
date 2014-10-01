@@ -23,6 +23,8 @@
         @goNext surveyId, stepId
 
     showStep: (surveyId, stepId) ->
+      # update URL without triggering the Router
+      App.navigate "survey/#{surveyId}/step/#{stepId}"
       new SurveyStepsApp.Show.Controller
         stepId: stepId
         surveyId: surveyId
@@ -33,7 +35,8 @@
 
     goNext: (surveyId, stepId) ->
       nextId = App.request "flow:id:next", stepId
-      App.navigate "survey/#{surveyId}/step/#{nextId}", { trigger: true }
+      # call the Router method without updating the URL
+      @checkStep surveyId, nextId
 
   App.addInitializer ->
     new SurveyStepsApp.Router
