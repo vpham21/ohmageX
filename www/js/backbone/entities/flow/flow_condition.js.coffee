@@ -26,12 +26,12 @@
       # rawCondition: Condition string from XML, to be parsed
       # currentResponses: ResponseCollection
 
-      # TODO: Implement condition parser
+      if rawCondition is true or rawCondition is false then return rawCondition
 
       # use all responses to evaluate the values of the step's Condition
-
-      # pass through the condition until implemented
-      true
+      result = App.request "oldcondition:evaluate", rawCondition, currentResponses
+      console.log "oldcondition:evaluate", result
+      result
 
   App.reqres.setHandler "flow:condition:check", (id) ->
     currentFlow = App.request "flow:current"
