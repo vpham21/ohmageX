@@ -20,3 +20,8 @@
   App.addInitializer ->
     new SurveyApp.Router
       controller: API
+
+  App.commands.setHandler "survey:exit", (surveyId) ->
+    App.execute "flow:destroy"
+    App.execute "responses:destroy"
+    App.navigate Routes.dashboard_route(), { trigger: true }
