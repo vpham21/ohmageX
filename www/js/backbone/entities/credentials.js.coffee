@@ -10,7 +10,11 @@
   API =
     getCredentials: ->
       currentCredentials
-    setCredentials: (username, password) ->
+
+    isParsedAuthValid: (response) ->
+      response.result isnt "failure"
+
+    validateCredentials: (username, password) ->
 
       $.ajax
         type: "POST"
@@ -21,11 +25,16 @@
           client: 'ohmage-ios'
         dataType: 'json'
         success: (response) =>
-          currentCredentials.set 'username', username
-          currentCredentials.set 'password', response.hashed_password
+          if @isParsedAuthValid response
+            currentCredentials.set 'username', username
+            currentCredentials.set 'password', response.hashed_password
+            App.vent.trigger "credentials:validated", username
+          else
+            App.vent.trigger "credentials:invalidated", response.errors
+
 
   App.reqres.setHandler "credentials:current", ->
     API.getCredentials()
 
-  App.commands.setHandler "credentials:set", (username, password) ->
-    API.setCredentials username, password
+  App.commands.setHandler "credentials:validate", (username, password) ->
+    API.validateCredentials username, password
