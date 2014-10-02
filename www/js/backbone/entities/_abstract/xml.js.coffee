@@ -1,6 +1,6 @@
 @Ohmage.module "Entities", (Entities, App, Backbone, Marionette, $, _) ->
 
-  $XML = {}
+  $XML = false
 
   API =
     initXML: ->
@@ -8,10 +8,12 @@
       $XML = $(XMLDoc)
 
     getItem: (item) ->
+      if !$XML then API.initXML()
       $XML.find item
-
-  App.on "initialize:before", ->
-    API.initXML()
 
   App.reqres.setHandler "xml:get", (item) ->
     API.getItem(item)
+
+  App.commands.setHandler "xml:destroy", ->
+    console.log 'destroy XML'
+    $XML = false
