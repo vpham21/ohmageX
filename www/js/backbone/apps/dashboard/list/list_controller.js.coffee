@@ -23,7 +23,7 @@
       @listenTo surveysView, "childview:survey:clicked", (child, args) ->
         console.log 'childview:survey:clicked args'
 
-      @show surveysView, region: @layout.surveysRegion
+      @show surveysView, region: @layout.listRegion
 
     getSurveysView: (surveys) ->
       new List.Surveys
