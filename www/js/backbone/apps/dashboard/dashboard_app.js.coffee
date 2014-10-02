@@ -17,3 +17,5 @@
     new DashboardApp.Router
       controller: API
   
+  App.vent.on "survey:list:item:clicked", (model) ->
+    App.navigate "survey/#{model.get 'id'}", { trigger: true }
