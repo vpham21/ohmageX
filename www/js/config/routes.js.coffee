@@ -4,6 +4,7 @@
 
   class _Routes
     default_route: ->
+      'login'
       'home'
 
   new _Routes
