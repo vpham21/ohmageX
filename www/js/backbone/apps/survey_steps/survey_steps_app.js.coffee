@@ -60,10 +60,7 @@
     API.goNext surveyId, "#{surveyId}beforeSurveySubmit"
 
   App.vent.on "survey:aftersubmit:next:clicked", (surveyId, stepId) ->
-    # for now, just go back to the beginning of the survey
-    App.execute "flow:destroy"
-    App.execute "responses:destroy"
-    App.navigate "survey/#{surveyId}", { trigger: true }
+    App.execute "survey:exit", surveyId
 
   App.vent.on "response:set:success", (response, surveyId, stepId) ->
     API.goNext surveyId, stepId
