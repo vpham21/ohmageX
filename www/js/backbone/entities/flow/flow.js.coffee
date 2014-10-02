@@ -84,6 +84,7 @@
 
   App.commands.setHandler "flow:destroy", ->
     currentFlow = false
+    App.execute "xml:destroy"
 
   App.reqres.setHandler "flow:current", ->
     API.getFlow()
