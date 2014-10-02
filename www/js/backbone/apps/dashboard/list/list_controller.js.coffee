@@ -21,7 +21,8 @@
       surveysView = @getSurveysView surveys
 
       @listenTo surveysView, "childview:survey:clicked", (child, args) ->
-        console.log 'childview:survey:clicked args'
+        console.log 'childview:survey:clicked args', args.model
+        App.vent.trigger "survey:list:item:clicked", args.model
 
       @show surveysView, region: @layout.listRegion
 
