@@ -1,0 +1,10 @@
+<legend>
+  <form>
+  <p class="error"></p>
+  <label for="username">Username</label>
+  <input class="username" type="text" name="username" />
+  <label for="pass">Password</label>
+  <input class="pass" type="password" name="pass" />
+  <button type="submit">Submit</button>
+  </form>
+</legend>
