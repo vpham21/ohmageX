@@ -14,12 +14,11 @@
       myRawCondition = result.get 'condition'
 
       if @parseCondition(myRawCondition, App.request "responses:current")
-        App.execute "flow:status:update", stepId, "displaying"
+        App.vent.trigger "flow:condition:success", stepId
         return true
       else
         # condition fails
-        App.execute "flow:status:update", stepId, "not_displayed"
-        App.execute "response:set:not_displayed", stepId
+        App.vent.trigger "flow:condition:failed", stepId
         return false
 
     parseCondition: (rawCondition, currentResponses) ->
