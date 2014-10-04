@@ -41,7 +41,13 @@
   App.addInitializer ->
     new SurveyStepsApp.Router
       controller: API
-  
+
+  App.vent.on "survey:step:skip:clicked", (surveyId, stepId) ->
+    console.log "survey:step:skip:clicked"
+    # navigate to the next item and broadcast a skipped event
+    App.vent.trigger "survey:step:skipped", stepId
+    API.goNext surveyId, stepId
+
   App.vent.on "survey:step:prev:clicked", (stepId) ->
     console.log "survey:step:prev:clicked"
     App.historyBack()
