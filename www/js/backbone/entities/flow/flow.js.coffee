@@ -54,12 +54,15 @@
 
         isMessage = $child.prop('tagName') is 'message'
         conditionExists = !!$child.find('condition').length
+        mySkipLabel = if !!$child.find('skipLabel').length then $child.tagText('skipLabel') else false
 
         result =
           id: $child.tagText('id')
           type: if isMessage then "message" else $child.tagText('promptType')
           condition: if conditionExists then $child.tagText('condition') else true
           $XML: $child
+          skippable: $child.tagText('skippable') is "true"
+          skiplabel: mySkipLabel
       )
 
     createSurveySubmitSteps: ($rootXML) ->
