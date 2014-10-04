@@ -15,7 +15,15 @@
   API =
     getType: (currentStep) ->
       currentStep.get 'type'
+    isPromptType: (currentStep) ->
+      result = switch @getType(currentStep)
+        when "intro","message","beforeSurveySubmit","afterSurveySubmit" then false
+        else true
 
   App.reqres.setHandler "flow:type", (id) ->
     currentStep = App.request "flow:step", id
     API.getType currentStep
+
+  App.reqres.setHandler "flow:type:is:prompt", (id) ->
+    currentStep = App.request "flow:step", id
+    API.isPromptType currentStep
