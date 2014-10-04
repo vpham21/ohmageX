@@ -15,6 +15,7 @@
 
       @listenTo @layout, "show", =>
         @stepBodyRegion()
+        @skipButtonRegion()
         @prevButtonRegion()
         @nextButtonRegion()
 
@@ -22,6 +23,16 @@
 
     stepBodyRegion: ->
       App.execute "steps:view:insert", @layout.stepBodyRegion, @stepId
+
+    skipButtonRegion: ->
+
+      skipEntity = App.request "stepbutton:skip:entity", @stepId
+      skipView = @getSkipButtonView skipEntity
+
+      @listenTo skipView, "skip:clicked", =>
+        App.vent.trigger "survey:step:skip:clicked", @surveyId, @stepId
+
+      @show skipView, region: @layout.skipButtonRegion
 
     prevButtonRegion: ->
 
@@ -54,6 +65,10 @@
             App.vent.trigger "survey:response:get", @surveyId, @stepId
 
       @show nextView, region: @layout.nextButtonRegion
+
+    getSkipButtonView: (skip) ->
+      new Show.SkipButton
+        model: skip
 
     getPrevButtonView: (prevStep) ->
       new Show.PrevButton
