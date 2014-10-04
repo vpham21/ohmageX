@@ -1,5 +1,10 @@
 @Ohmage.module "SurveyStepsApp.Show", (Show, App, Backbone, Marionette, $, _) ->
 
+  class Show.SkipButton extends App.Views.ItemView
+    template: "survey_steps/show/skipbutton"
+    triggers:
+      "click button": "skip:clicked"
+
   class Show.PrevButton extends App.Views.ItemView
     template: "survey_steps/show/prevbutton"
     triggers:
