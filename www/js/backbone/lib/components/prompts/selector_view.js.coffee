@@ -62,6 +62,21 @@
     template: "prompts/multi_choice"
     itemView: Prompts.MultiChoiceItem
     itemViewContainer: ".prompt-list"
+    selectCurrentValues: (currentValues) ->
+      try
+        valueParsed = JSON.parse(currentValues)
+      catch Error
+        console.log "Error, saved response string #{currentValues} failed to convert to array. ", Error
+        return false
+
+      if Array.isArray valueParsed
+        # set all the array values
+        _.each(valueParsed, (currentValue) =>
+          console.log 'currentValue', currentValue
+          @$el.find("input[value='#{currentValue}']").attr('checked', true)
+        )
+      else
+        @$el.find("input[value='#{valueParsed}']").attr('checked', true)
     extractJSONString: ($responses) ->
       # extract responses from the selected options
       # into a JSON string
