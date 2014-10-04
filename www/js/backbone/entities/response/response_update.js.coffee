@@ -15,9 +15,12 @@
       myResponse.set 'response', newResponse
       console.log 'myResponse', myResponse.toJSON()
 
-  App.commands.setHandler "response:set:not_displayed", (stepId) ->
+  App.vent.on "flow:condition:failed survey:step:skipped", (stepId) ->
     currentResponses = App.request "responses:current"
-    API.updateResponse currentResponses, stepId, 'NOT_DISPLAYED'
+    # all invalid responses are flagged as "false",
+    # and are processed into the equivalents required
+    # by the server before upload, based on their flow status.
+    API.updateResponse currentResponses, stepId, false
 
   App.commands.setHandler "response:set", (newResponse, stepId) ->
     currentResponses = App.request "responses:current"

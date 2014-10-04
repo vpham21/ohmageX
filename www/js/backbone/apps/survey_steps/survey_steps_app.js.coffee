@@ -50,6 +50,7 @@
 
   App.vent.on "survey:step:prev:clicked", (stepId) ->
     console.log "survey:step:prev:clicked"
+    App.vent.trigger "survey:step:goback", stepId
     App.historyBack()
 
   App.vent.on "survey:intro:next:clicked survey:message:next:clicked", (surveyId, stepId) ->

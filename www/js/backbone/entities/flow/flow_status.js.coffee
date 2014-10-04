@@ -19,6 +19,33 @@
       currentStep.set 'status', status
       console.log 'myStep', currentStep.toJSON()
 
+    getStatus: (currentStep) ->
+      currentStep.get 'status'
+
+  App.reqres.setHandler "flow:status", (id) ->
+    currentStep = App.request "flow:step", id
+    API.getStatus currentStep
+
   App.commands.setHandler "flow:status:update", (id, status) ->
     currentStep = App.request "flow:step", id
     API.updateStatus currentStep, status
+
+  App.vent.on "survey:step:goback", (stepId) ->
+    currentStep = App.request "flow:step", stepId
+    API.updateStatus currentStep, "pending"
+
+  App.vent.on "survey:step:skipped", (stepId) ->
+    currentStep = App.request "flow:step", stepId
+    API.updateStatus currentStep, "skipped"
+
+  App.vent.on "response:set:success", (response, surveyId, stepId) ->
+    currentStep = App.request "flow:step", stepId
+    API.updateStatus currentStep, "complete"
+
+  App.vent.on "flow:condition:failed", (stepId) ->
+    currentStep = App.request "flow:step", stepId
+    API.updateStatus currentStep, "not_displayed"
+
+  App.vent.on "flow:condition:success", (stepId) ->
+    currentStep = App.request "flow:step", stepId
+    API.updateStatus currentStep, "displaying"

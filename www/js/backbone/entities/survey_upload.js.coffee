@@ -5,18 +5,37 @@
   # This module handles the upload process.
 
   API =
+    prepResponseUpload: (currentResponses, currentFlow) ->
+      currentResponses.map( (response) =>
+        myId = response.get 'id'
+        myStatus = App.request "flow:status", myId
+        if response.get('response') is false
+          # convert false responses (aka invalid)
+          # into equivalents required by the server,
+          # based on the flow status of the step.
+          switch myStatus
+            when 'skipped'
+              myResponse = 'SKIPPED'
+            when 'not_displayed'
+              myResponse = 'NOT_DISPLAYED'
+            else
+              throw new Error "false response for step #{myId} with invalid flow status: #{myStep.get('status')}"
+        else
+          myResponse = response.get 'response'
+        {
+          prompt_id: myId
+          value: myResponse
+        }
+      )
+
     uploadSurvey: (currentResponses, surveyId) ->
       # Submit a request with placeholder default data,
       # aside from the responses.
 
-      submitResponses = currentResponses.map( (response) ->
-        prompt_id: response.get 'id'
-        value: response.get 'response'
-      )
+      submitResponses = @prepResponseUpload currentResponses
 
       # before this, requires credentials to be generated with
       # App.execute "credentials:set", username, password
-
       submitCredentials = App.request "credentials:current"
 
       submitSurveys = JSON.stringify(

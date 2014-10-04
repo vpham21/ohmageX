@@ -10,7 +10,7 @@
 
   class Entities.Response extends Entities.Model
     defaults: # default values for all Responses:
-      response: "NOT_DISPLAYED" # All submitted responses are not_displayed
+      response: false # All responses are false by default, updated with status before upload
 
   class Entities.ResponseCollection extends Entities.Collection
     model: Entities.Response
