@@ -49,6 +49,9 @@
     gatherResponses: (surveyId, stepId) =>
       response = @$el.find('input[type=radio]').filter(':checked').val()
       @trigger "response:submit", response, surveyId, stepId
+    onRender: ->
+      currentValue = @model.get('currentValue')
+      if currentValue then @$el.find("input[value='#{currentValue}']").attr('checked', true)
 
   class Prompts.MultiChoiceItem extends App.Views.ItemView
     tagName: 'li'
