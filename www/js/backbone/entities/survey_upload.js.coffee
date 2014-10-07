@@ -84,6 +84,7 @@
         data: completeSubmit
         dataType: 'json'
         success: (response) =>
+          @imageUUIDs = false
           App.vent.trigger "survey:upload:success", response, surveyId
     getLocation: (responses, surveyId) ->
       # get geolocation
