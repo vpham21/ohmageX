@@ -17,6 +17,7 @@ module.exports = (grunt) ->
       "js/vendor/backbone-routefiler.js"
       "js/vendor/placeholder_polyfill.jquery.js"
       "js/vendor/ConditionalParser.js"
+      "js/vendor/jstz.js"
       "js/build/templates.js"
       "js/build/mycoffee.js"
     ]
