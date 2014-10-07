@@ -65,6 +65,39 @@
     template: "prompts/photo"
     initialize: ->
       super
+      @listenTo @, "file:changed", @processFile
+    processFile: ->
+      fileDOM = @$el.find('input[type=file]')[0]
+      myInput = fileDOM.files[0]
+      _URL = window.URL || window.webkitURL
+      maxDimension = @model.get('properties').get('maxDimension')
+      if !!!maxDimension then maxDimension = 800
+      img = new Image()
+      imgCanvas = @$el.find('canvas')[0]
+
+      if myInput
+        if myInput.type in ['image/jpeg','image/png']
+          img.onload = =>
+            # resize image if exceeds max dimension
+            if img.width > maxDimension or img.height > maxDimension
+              ratio = Math.min(maxDimension / img.width, maxDimension / img.height)
+              img.width = img.width * ratio
+              img.height = img.height * ratio
+            # place image on canvas, base64 encode
+            context = imgCanvas.getContext('2d')
+            context.clearRect 0, 0, imgCanvas.width, imgCanvas.height
+            imgCanvas.width = img.width
+            imgCanvas.height = img.height
+            context.drawImage img, 0, 0, img.width, img.height
+            @recordImage imgCanvas.toDataURL('image/jpeg',.5)
+
+          img.src = _URL.createObjectURL myInput
+        else
+          console.log 'Please upload an image in jpeg or png format.'
+      else
+        console.log 'Please select an image.'
+    triggers:
+      'change input[type=file]': "file:changed"
 
   class Prompts.SingleChoiceItem extends App.Views.ItemView
     tagName: 'li'
