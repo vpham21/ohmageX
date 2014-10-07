@@ -102,6 +102,7 @@
     responses = App.request "responses:current"
     API.getLocation responses, surveyId
 
+
   App.vent.on "survey:geolocation:fetch:failure", (surveyId) ->
     console.log 'geolocation fetch failure', surveyId
     responses = App.request "responses:current"
