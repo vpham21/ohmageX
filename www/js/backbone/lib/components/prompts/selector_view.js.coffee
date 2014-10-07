@@ -29,10 +29,14 @@
       @listenTo @, 'value:decrement', @decrementValue
     incrementValue: ->
       $valueField = @$el.find("input[type='text']")
-      $valueField.val( parseInt($valueField.val())+1 )
+      myVal = $valueField.val()
+      myVal = if !!!myVal.length or _.isNaN(myVal) then 0 else parseInt(myVal)
+      $valueField.val(myVal+1)
     decrementValue: ->
       $valueField = @$el.find("input[type='text']")
-      $valueField.val( parseInt($valueField.val())-1 )
+      myVal = $valueField.val()
+      myVal = if !!!myVal.length or _.isNaN(myVal) then 0 else parseInt(myVal)
+      $valueField.val(myVal-1)
     triggers:
       "click button.increment": "value:increment"
       "click button.decrement": "value:decrement"
