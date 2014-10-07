@@ -8,6 +8,9 @@
   # This collection is removed with "responses:destroy"
   currentResponses = false
 
+  class Entities.ResponseProperty extends Entities.Model
+    # response properties for validation
+
   class Entities.Response extends Entities.Model
     defaults: # default values for all Responses:
       response: false # All responses are false by default, updated with status before upload
