@@ -17,6 +17,35 @@
       # properties: the getValidationProperties method initializes this
       # type: the promptType
 
+  class Entities.ResponseValidated extends Entities.Response
+    validate: (attrs, options, rulesMap) ->
+      # this expects the options to contain options.properties.
+      # properties are in the format [{propName: value}]
+      # the RulesMap is an object that maps each of these properties
+      # to a specific Rule defined in Entities.ValidationRules
+      myProperties = {}
+      _.each(rulesMap, (propName, ruleName) ->
+        if attrs.properties[propName]?
+          myProperties[ruleName] = attrs.properties[propName]
+      )
+      console.log 'myProperties', myProperties
+      RulesChecker = new Entities.ValidationRules
+        value: attrs.response
+        rulesMap: myProperties
+      if RulesChecker.errors.length > 0
+        return RulesChecker.errors
+      # this does not return if there are no errors,
+      # because the BB Model validate method
+      # only succeeds when nothing is returned
+      return
+
+  class Entities.TextResponse extends Entities.ResponseValidated
+    validate: (attrs, options) ->
+      myRulesMap =
+        minLength: 'min'
+        maxLength: 'max'
+      super attrs, options, myRulesMap
+
   class Entities.ResponseCollection extends Entities.Collection
     model: Entities.Response
 
