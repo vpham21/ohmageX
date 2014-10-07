@@ -5,6 +5,7 @@
   # This module handles the upload process.
 
   API =
+    imageUUIDs: {}
     prepResponseUpload: (currentResponses, currentFlow) ->
       currentResponses.map( (response) =>
         myId = response.get 'id'
