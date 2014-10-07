@@ -63,6 +63,16 @@
       myResponses = @createResponses App.request("survey:xml:content", $surveyXML)
       currentResponses = new Entities.ResponseCollection myResponses
       console.log 'currentResponses', currentResponses.toJSON()
+    getValidationProperties: ($xml, type) ->
+      if type in ['single_choice', 'single_choice_custom','multi_choice','multi_choice_custom']
+        return false
+      $properties = $xml.find("property")
+      propObj = {}
+      _.each($properties, (child) ->
+        $child = $(child)
+        propObj[$(child).tagText("key")] = $(child).tagText('label')
+      )
+      propObj
     createResponses: ($contentXML) ->
       # Loop through all responses.
       # Only want to create a Response for a contentItem that actually
