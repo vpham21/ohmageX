@@ -83,3 +83,18 @@
   App.commands.setHandler "survey:upload", (surveyId) ->
     responses = App.request "responses:current"
     API.uploadSurvey responses, surveyId
+  App.vent.on "survey:geolocation:fetch:failure", (surveyId) ->
+    console.log 'geolocation fetch failure', surveyId
+    responses = App.request "responses:current"
+    API.uploadSurvey
+      currentResponses: responses
+      location: false
+      surveyId: surveyId
+
+  App.vent.on "survey:geolocation:fetch:success", (surveyId) ->
+    console.log 'geolocation fetch success', App.request "geolocation:get"
+    responses = App.request "responses:current"
+    API.uploadSurvey
+      currentResponses: responses
+      location: App.request "geolocation:get"
+      surveyId: surveyId
