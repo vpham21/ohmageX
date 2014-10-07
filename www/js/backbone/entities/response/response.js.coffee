@@ -81,12 +81,18 @@
       # The .map() creates a new array, each key is object or false.
       # The .filter() removes the false keys.
 
-      _.chain($contentXML.children()).map((child) ->
+      _.chain($contentXML.children()).map((child) =>
         $child = $(child)
-
+        myType = $child.tagText('promptType')
         isResponseType = $child.prop('tagName') is 'prompt'
-
-        if isResponseType then {id: $child.tagText('id'), type: $child.tagText('promptType') } else false
+        if isResponseType 
+          return {
+            id: $child.tagText('id')
+            type: myType
+            properties: @getValidationProperties($child, myType)
+          }
+        else
+          return false
       ).filter((result) -> !!result).value()
     getResponses: ->
       throw new Error "responses not initialized, use 'responses:init' to create new Responses" unless currentResponses isnt false
