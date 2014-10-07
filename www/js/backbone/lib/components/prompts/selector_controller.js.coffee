@@ -24,6 +24,9 @@
         when "number"
           return new Prompts.Number
             model: entity
+        when "timestamp"
+          return new Prompts.Timestamp
+            model: entity
         when "single_choice"
           return new Prompts.SingleChoice
             model: entity
