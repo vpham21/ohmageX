@@ -73,4 +73,4 @@
     API.goNext surveyId, stepId
 
   App.vent.on "response:set:error", (error) ->
-    console.log "response error", error
+    console.log "response:set:error", error
