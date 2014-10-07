@@ -412,7 +412,7 @@
           <promptType>photo</promptType>
           <properties>
             <property>
-              <key>res</key>
+              <key>maxDimension</key>
               <label>720</label>
             </property>
           </properties>
