@@ -102,6 +102,10 @@
       $img = @$el.find '.preview-image'
       $img.prop 'src', img64
       $img.css 'display', 'block'
+    gatherResponses: (surveyId, stepId) =>
+      response = @model.get('currentValue')
+      @trigger "response:submit", response, surveyId, stepId
+
     triggers:
       'change input[type=file]': "file:changed"
 
