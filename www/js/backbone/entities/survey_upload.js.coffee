@@ -79,10 +79,22 @@
         dataType: 'json'
         success: (response) =>
           App.vent.trigger "survey:upload:success", response, surveyId
+    getLocation: (responses, surveyId) ->
+      # get geolocation
+      location = App.request "geolocation:get"
+      console.log 'getLocation location', location
+      if location isnt false
+        @uploadSurvey
+          currentResponses: responses
+          location: location
+          surveyId: surveyId
+      else
+        App.execute("survey:geolocation:fetch", surveyId)
 
   App.commands.setHandler "survey:upload", (surveyId) ->
     responses = App.request "responses:current"
-    API.uploadSurvey responses, surveyId
+    API.getLocation responses, surveyId
+
   App.vent.on "survey:geolocation:fetch:failure", (surveyId) ->
     console.log 'geolocation fetch failure', surveyId
     responses = App.request "responses:current"
