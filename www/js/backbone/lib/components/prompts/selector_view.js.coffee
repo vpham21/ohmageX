@@ -41,6 +41,25 @@
       "click button.increment": "value:increment"
       "click button.decrement": "value:decrement"
 
+  class Prompts.Timestamp extends Prompts.Base
+    template: "prompts/timestamp"
+    gatherResponses: (surveyId, stepId) =>
+      myDate = @$el.find('input[type=date]').val()
+      myTime = @$el.find('input[type=time]').val()
+      myDateObj = new Date(Date.parse("#{myDate} #{myTime}"))
+      console.log 'myDateObj', myDateObj
+      response = myDateObj.toISOString()
+      @trigger "response:submit", response, surveyId, stepId
+    serializeData: ->
+      data = @model.toJSON()
+      console.log 'serializeData data', data
+      if data.currentValue
+        data.currentDateValue = data.currentValue.toISOString().substring(0, 10).trim()
+        data.currentTimeValue = data.currentValue.substring(11, 19).trim()
+      else
+        data.currentDateValue = new Date().toISOString().substring(0, 10).trim()
+        data.currentTimeValue = new Date().toISOString().substring(11, 19).trim()
+      data
   class Prompts.SingleChoiceItem extends App.Views.ItemView
     tagName: 'li'
     template: "prompts/single_choice_item"
