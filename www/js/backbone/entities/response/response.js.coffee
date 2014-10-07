@@ -46,6 +46,16 @@
         maxLength: 'max'
       super attrs, options, myRulesMap
 
+  class Entities.NumberResponse extends Entities.ResponseValidated
+    validate: (attrs, options) ->
+      # set wholeNumber to default to false
+      if !attrs.properties.wholeNumber? then attrs.properties.wholeNumber = "false"
+      myRulesMap =
+        minValue: 'min'
+        maxValue: 'max'
+        wholeNumber: 'wholeNumber'
+      super attrs, options, myRulesMap
+
   class Entities.ResponseCollection extends Entities.Collection
     initialize: (options) ->
       if options.properties? then @set 'properties', new Entities.ResponseProperty options.properties
