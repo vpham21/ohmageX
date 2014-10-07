@@ -164,3 +164,23 @@
       $checkedInput = @$el.find('input[type=radio]').filter(':checked')
       response = if !!$checkedInput.length then false else $checkedInput.parent().find('label').text()
       @trigger "response:submit", response, surveyId, stepId
+
+
+  class Prompts.MultiChoiceCustom extends Prompts.SingleChoiceCustom
+    itemView: Prompts.MultiChoiceItem
+    extractJSONString: ($responses) ->
+      # extract responses from the selected options
+      # into a JSON string
+      return false unless $responses.length > 0
+      result = _.map($responses, (response) ->
+        $(response).parent().find('label').text()
+      )
+      JSON.stringify result
+
+    gatherResponses: (surveyId, stepId) =>
+      # reset the add custom form, if it's open
+      @trigger "choice:cancel"
+      # this expects the checkbox buttons to be in the format:
+      # <li><input type=checkbox ... /><label>labelText</label></li>
+      $responses = @$el.find('input[type=checkbox]').filter(':checked')
+      @trigger "response:submit", @extractJSONString($responses), surveyId, stepId
