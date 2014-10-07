@@ -28,11 +28,13 @@
         }
       )
 
-    uploadSurvey: (currentResponses, surveyId) ->
-      # Submit a request with placeholder default data,
-      # aside from the responses.
+    generateImgUUID: (img64) ->
+      # generate a UUID and put it in a group of UUIDs in this format:
+      # { UUID: base64EncodedImage }
+      myID = _.guid()
+      @imageUUIDs[myID] = img64
+      myID
 
-      submitResponses = @prepResponseUpload currentResponses
     uploadSurvey: (options) ->
       { currentResponses, location, surveyId } = options
 
