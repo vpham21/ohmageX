@@ -47,7 +47,14 @@
       super attrs, options, myRulesMap
 
   class Entities.ResponseCollection extends Entities.Collection
-    model: Entities.Response
+    initialize: (options) ->
+      if options.properties? then @set 'properties', new Entities.ResponseProperty options.properties
+    model: (attrs, options) ->
+      switch attrs.type
+        when "text"
+          new Entities.TextResponse attrs, options
+        else
+          new Entities.Response attrs, options
 
   API = 
     init: ($surveyXML) ->
