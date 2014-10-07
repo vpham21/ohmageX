@@ -60,6 +60,12 @@
         data.currentDateValue = new Date().toISOString().substring(0, 10).trim()
         data.currentTimeValue = new Date().toISOString().substring(11, 19).trim()
       data
+
+  class Prompts.Photo extends Prompts.Base
+    template: "prompts/photo"
+    initialize: ->
+      super
+
   class Prompts.SingleChoiceItem extends App.Views.ItemView
     tagName: 'li'
     template: "prompts/single_choice_item"
