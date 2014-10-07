@@ -35,6 +35,42 @@
           {value, rulesMap} = options
           if value.length > parseInt(rulesMap.maxLength)
             @errors.push 'value too long.'
+      minValue:
+        validate: (options) ->
+          {value, rulesMap} = options
+          if rulesMap.wholeNumber is "false"
+            valueNum = parseFloat(value)
+            minValue = parseFloat(rulesMap.minValue)
+          else
+            valueNum = parseInt(value)
+            minValue = parseInt(rulesMap.minValue)
+          if valueNum < minValue
+            @errors.push 'value too low.'
+      maxValue:
+        validate: (options) ->
+          {value, rulesMap} = options
+          if rulesMap.wholeNumber is "false"
+            valueNum = parseFloat(value)
+            minValue = parseFloat(rulesMap.minValue)
+          else
+            valueNum = parseInt(value)
+            maxValue = parseInt(rulesMap.maxValue)
+          if valueNum > maxValue
+            @errors.push 'value too high.'
+      wholeNumber:
+        validate: (options) ->
+          {value, rulesMap} = options
+          if rulesMap.wholeNumber is "false"
+            # allow decimal numbers only.
+            validChars = /^\-?[0-9]+(\.[0-9]+)?$/i
+            if !validChars.test(value)
+              @errors = ["Not a valid decimal number."]
+          else
+            # allow whole numbers only.
+            validChars = /^\-?[0-9]+$/i
+            if !validChars.test(value)
+              @errors = ["Not a valid whole number."]
+
     validate: (options) ->
       console.log 'rulesList', @rulesList
       _.each(@rulesList, (ruleName) =>
