@@ -38,11 +38,14 @@
       # App.execute "credentials:set", username, password
       submitCredentials = App.request "credentials:current"
 
+      currentTime = (new Date).getTime()
+      currentTZ = _.jstz()
+
       submitSurveys = JSON.stringify(
         [
           survey_key: _.guid()
-          time: 1411671421136
-          timezone: "America/Los_Angeles"
+          time: currentTime
+          timezone: currentTZ
           location_status: "valid"
           survey_id: surveyId
           survey_launch_context:
