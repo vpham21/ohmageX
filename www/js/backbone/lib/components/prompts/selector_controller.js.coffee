@@ -27,6 +27,9 @@
         when "timestamp"
           return new Prompts.Timestamp
             model: entity
+        when "photo"
+          return new Prompts.Photo
+            model: entity
         when "single_choice"
           return new Prompts.SingleChoice
             model: entity
