@@ -14,6 +14,8 @@
   class Entities.Response extends Entities.Model
     defaults: # default values for all Responses:
       response: false # All responses are false by default, updated with status before upload
+      # properties: the getValidationProperties method initializes this
+      # type: the promptType
 
   class Entities.ResponseCollection extends Entities.Collection
     model: Entities.Response
