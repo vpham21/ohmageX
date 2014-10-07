@@ -63,6 +63,8 @@
       switch attrs.type
         when "text"
           new Entities.TextResponse attrs, options
+        when "number"
+          new Entities.NumberResponse attrs, options
         else
           new Entities.Response attrs, options
 
