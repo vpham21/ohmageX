@@ -33,7 +33,10 @@
       # aside from the responses.
 
       submitResponses = @prepResponseUpload currentResponses
+    uploadSurvey: (options) ->
+      { currentResponses, location, surveyId } = options
 
+      submitResponses = @prepResponseUpload currentResponses
       # before this, requires credentials to be generated with
       # App.execute "credentials:set", username, password
       submitCredentials = App.request "credentials:current"
@@ -41,27 +44,22 @@
       currentTime = (new Date).getTime()
       currentTZ = _.jstz()
 
-      submitSurveys = JSON.stringify(
-        [
-          survey_key: _.guid()
-          time: currentTime
-          timezone: currentTZ
-          location_status: "valid"
-          survey_id: surveyId
-          survey_launch_context:
-            launch_time: 1411671398146
-            launch_timezone: "America/Los_Angeles"
-            active_triggers: []
-          responses: submitResponses
-          location:
-            provider: "GPS"
-            latitude: 34.052234
-            longitude: -118.24368499999999
-            accuracy: 22000
-            time: 1411671398316
-            timezone: "America/Los_Angeles"
-        ]
-      )
+      submitSurveys = 
+        survey_key: _.guid()
+        time: currentTime
+        timezone: currentTZ
+        location_status: if location then "valid" else "unavailable"
+        survey_id: surveyId
+        survey_launch_context:
+          launch_time: 1411671398146
+          launch_timezone: "America/Los_Angeles"
+          active_triggers: []
+        responses: submitResponses
+
+      if location
+        # if the location status is unavailable,
+        # it is an error to send a location object.
+        submitSurveys.location = location
 
       completeSubmit = 
         campaign_urn: 'urn:campaign:ca:ucla:oit:PromptTypesCondition'
@@ -70,7 +68,7 @@
         password: submitCredentials.get 'password'
         client: 'ohmage-mwf-dw'
         images: {}
-        surveys: submitSurveys
+        surveys: JSON.stringify([submitSurveys])
 
       $.ajax
         type: "POST"
