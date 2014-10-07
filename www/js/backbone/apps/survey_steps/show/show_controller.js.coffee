@@ -19,7 +19,23 @@
         @prevButtonRegion()
         @nextButtonRegion()
 
+      if App.request "flow:type:is:prompt", @stepId
+        # add special event listeners for a prompt,
+        # which will monitor the current Response for
+        # validation errors and validation success.
+        @addResponseListeners(App.request "response:get", @stepId)
+
       @show @layout
+
+    addResponseListeners: (myResponse) ->
+      @listenTo myResponse, "invalid", (responseModel) =>
+        # response validation failed
+        console.log "response invalid, errors are", responseModel.validationError
+        App.vent.trigger "response:set:error", responseModel.validationError, @surveyId, @stepId
+      @listenTo myResponse, "change:response", (responseModel) =>
+        # response validation succeeded
+        console.log "response correct, arg is", responseModel.get 'response'
+        App.vent.trigger "response:set:success", responseModel.get('response'), @surveyId, @stepId
 
     stepBodyRegion: ->
       App.execute "steps:view:insert", @layout.stepBodyRegion, @stepId
@@ -52,6 +68,7 @@
       @listenTo nextView, "next:clicked", =>
         myType = App.request "flow:type", @stepId
         console.log 'nextview listento next:clicked'
+
         switch myType
           when "intro"
             App.vent.trigger "survey:intro:next:clicked", @surveyId, @stepId

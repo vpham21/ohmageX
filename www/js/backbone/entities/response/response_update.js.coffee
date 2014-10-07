@@ -9,10 +9,11 @@
   # via the interface "responses:current"
 
   API = 
-    updateResponse: (currentResponses, id, newResponse) ->
+    updateResponse: (options) ->
+      { currentResponses, id, newResponse, validate } = options
       myResponse = currentResponses.get(id)
       throw new Error "response id #{id} does not exist in currentResponses" if typeof myResponse is 'undefined'
-      myResponse.set 'response', newResponse
+      myResponse.set {response: newResponse }, { validate: validate }
       console.log 'myResponse', myResponse.toJSON()
 
   App.vent.on "flow:condition:failed survey:step:skipped", (stepId) ->
@@ -20,8 +21,16 @@
     # all invalid responses are flagged as "false",
     # and are processed into the equivalents required
     # by the server before upload, based on their flow status.
-    API.updateResponse currentResponses, stepId, false
+    API.updateResponse 
+      currentResponses: currentResponses
+      id: stepId
+      newResponse: false
+      validate: false
 
   App.commands.setHandler "response:set", (newResponse, stepId) ->
     currentResponses = App.request "responses:current"
-    API.updateResponse currentResponses, stepId, newResponse
+    API.updateResponse 
+      currentResponses: currentResponses
+      id: stepId
+      newResponse: newResponse
+      validate: true

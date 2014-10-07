@@ -18,13 +18,12 @@
         App.vent.trigger "response:set:error", "Please enter a response."
         return false
 
-      # TODO: Add validations for each prompt type.
-      # use the entity to define properties and values
-      # for the submitted response, based on type.
-
-      # response is correct and valid
-      App.execute "response:set", response, stepId
-      App.vent.trigger "response:set:success", response, surveyId, stepId
+      if response is App.request('response:get', stepId).get('response')
+        # the response is identical, skip validation
+        App.vent.trigger "response:set:success", response, surveyId, stepId
+      else
+        # set the response, allowing its model validate methods to verify the response
+        App.execute "response:set", response, stepId
 
   App.commands.setHandler "response:validate", (response, surveyId, stepId) ->
     API.validateResponse
