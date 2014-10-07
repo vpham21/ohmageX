@@ -106,3 +106,61 @@
     gatherResponses: (surveyId, stepId) =>
       $responses = @$el.find('input[type=checkbox]').filter(':checked')
       @trigger "response:submit", @extractJSONString($responses), surveyId, stepId
+
+  # Prompt Single Choice Custom
+  class Prompts.SingleChoiceCustom extends Prompts.BaseComposite
+    initialize: ->
+      super
+      @listenTo @, 'choice:toggle', @toggleChoice
+      @listenTo @, 'choice:add', @addChoice
+      @listenTo @, 'choice:cancel', @cancelChoice
+      # TODO: Make a mini validator for custom choice,
+      # e.g. disallow duplicates
+      @listenTo @, 'choice:add:invalid', (-> console.log 'invalid custom choice, please try again')
+    toggleChoice: (args) ->
+      $addForm = @$el.find '.add-form'
+      $addForm.toggleClass 'hidden'
+
+    cancelChoice: ->
+      $addForm = @$el.find '.add-form'
+      $addForm.addClass 'hidden'
+      $addForm.find(".add-value").val('')
+    addChoice: (args) ->
+      $addForm = @$el.find '.add-form'
+      myVal = $addForm.find(".add-value").val()
+
+      if !!!myVal.length
+        # ensure a new custom choice isn't blank.
+        @trigger "choice:add:invalid"
+        return false
+
+      if not $addForm.hasClass 'hidden'
+
+        # add new choice, based on the contents of the text prompt,
+        # to the view's Collection. Validation and parsing takes
+        # place within the ChoiceCollection's model.
+
+        # Also, will add an event to clear the value of the input
+        # on successful submit.
+
+        args.collection.add([{
+          "key": _.uniqueId()
+          "label": myVal
+          "parentId": args.model.get('id')
+        }])
+
+    template: "prompts/choice_custom"
+    itemView: Prompts.SingleChoiceItem
+    itemViewContainer: ".prompt-list"
+    triggers:
+      "click button.my-add": "choice:toggle"
+      "click .add-form .add-submit": "choice:add"
+      "click .add-form .add-cancel": "choice:cancel"
+    gatherResponses: (surveyId, stepId) =>
+      # reset the add custom form, if it's open
+      @trigger "choice:cancel"
+      # this expects the radio buttons to be in the format:
+      # <li><input type=radio ... /><label>labelText</label></li>
+      $checkedInput = @$el.find('input[type=radio]').filter(':checked')
+      response = if !!$checkedInput.length then false else $checkedInput.parent().find('label').text()
+      @trigger "response:submit", response, surveyId, stepId
