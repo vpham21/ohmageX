@@ -56,12 +56,12 @@
         else
           new Entities.Response attrs, options
 
-  API = 
+
+  API =
     init: ($surveyXML) ->
       throw new Error "responses already initialized, use 'responses:destroy' to remove existing responses" unless currentResponses is false
-      currentResponses = new Entities.ResponseCollection
       myResponses = @createResponses App.request("survey:xml:content", $surveyXML)
-      currentResponses.add myResponses
+      currentResponses = new Entities.ResponseCollection myResponses
       console.log 'currentResponses', currentResponses.toJSON()
     createResponses: ($contentXML) ->
       # Loop through all responses.
