@@ -96,6 +96,12 @@
           console.log 'Please upload an image in jpeg or png format.'
       else
         console.log 'Please select an image.'
+    recordImage: (img64) ->
+      @model.set('currentValue', img64)
+      # display the image in the preview
+      $img = @$el.find '.preview-image'
+      $img.prop 'src', img64
+      $img.css 'display', 'block'
     triggers:
       'change input[type=file]': "file:changed"
 
