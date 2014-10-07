@@ -75,7 +75,7 @@
         user: submitCredentials.get 'username'
         password: submitCredentials.get 'password'
         client: 'ohmage-mwf-dw'
-        images: {}
+        images: JSON.stringify(@imageUUIDs)
         surveys: JSON.stringify([submitSurveys])
 
       $.ajax
