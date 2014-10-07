@@ -22,7 +22,12 @@
             else
               throw new Error "false response for step #{myId} with invalid flow status: #{myStep.get('status')}"
         else
-          myResponse = response.get 'response'
+          if response.get('type') is 'photo'
+            # photo responses must reference a UUID, not the base64.
+            # base64 are submitted with a separate parameter `images`
+            myResponse = @generateImgUUID(response.get 'response')
+          else
+            myResponse = response.get 'response'
         {
           prompt_id: myId
           value: myResponse
