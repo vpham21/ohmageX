@@ -46,7 +46,9 @@
     gatherResponses: (surveyId, stepId) =>
       myDate = @$el.find('input[type=date]').val()
       myTime = @$el.find('input[type=time]').val()
-      myDateObj = new Date(Date.parse("#{myDate} #{myTime}"))
+
+      offset = new Date().toString().match(/([-\+][0-9]+)\s/)[1]
+      myDateObj = new Date(Date.parse("#{myDate} #{myTime}#{offset}"))
       console.log 'myDateObj', myDateObj
       response = myDateObj.toISOString()
       @trigger "response:submit", response, surveyId, stepId
@@ -54,11 +56,12 @@
       data = @model.toJSON()
       console.log 'serializeData data', data
       if data.currentValue
-        data.currentDateValue = data.currentValue.toISOString().substring(0, 10).trim()
-        data.currentTimeValue = data.currentValue.substring(11, 19).trim()
+        currentDate = new Date(data.currentValue)
+        data.currentDateValue = data.currentValue.substring(0,10)
       else
-        data.currentDateValue = new Date().toISOString().substring(0, 10).trim()
-        data.currentTimeValue = new Date().toISOString().substring(11, 19).trim()
+        currentDate = new Date()
+        data.currentDateValue = new Date().toISOString().substring(0,10)
+      data.currentTimeValue = "#{currentDate.getHours()}:#{currentDate.getMinutes()}:#{currentDate.getSeconds()}"
       data
 
   class Prompts.Photo extends Prompts.Base
