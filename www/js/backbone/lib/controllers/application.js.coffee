@@ -9,7 +9,7 @@
       App.execute "register:instance", @, @_instance_id
 
     close: ->
-      console.log "closing", @
+      # console.log "closing", @
       App.execute "unregister:instance", @, @_instance_id
       super
 
