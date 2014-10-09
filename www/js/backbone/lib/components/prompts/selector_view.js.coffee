@@ -251,7 +251,33 @@
         $(response).parent().find('label').text()
       )
       JSON.stringify result
+    selectCurrentValues: (currentValues) ->
 
+      if currentValues.indexOf(',') isnt -1 and currentValues.indexOf('[') is -1
+        # Check for values that contain a comma-separated list of
+        # numbers with NO brackets (multi_choice default allows this)
+        # which isn't a proper JSON format to convert to an array.
+        # Add the missing brackets.
+        currentValues = "[#{currentValues}]"
+
+      try
+        valueParsed = JSON.parse(currentValues)
+      catch Error
+        console.log "Error, saved response string #{currentValues} failed to convert to array. ", Error
+        return false
+
+      if Array.isArray valueParsed
+        # set all the array values
+        _.each(valueParsed, (currentValue) =>
+          console.log 'currentValue', currentValue
+          @$el.find("label:containsExact('#{currentValue}')").parent().find('input').attr('checked', true)
+        )
+      else
+        @$el.find("label:containsExact('#{valueParsed}')").parent().find('input').attr('checked', true)
+
+    onRender: ->
+      currentValue = @model.get('currentValue')
+      if currentValue then @selectCurrentValues currentValue
     gatherResponses: (surveyId, stepId) =>
       # reset the add custom form, if it's open
       @trigger "choice:cancel"
