@@ -16,5 +16,7 @@ do ($) ->
   $.extend $.expr[":"],
     containsExact: $.expr.createPseudo((text) ->
       (elem) ->
-        $.trim(elem.innerHTML.toLowerCase()) is text.toLowerCase()
+        # use elem.textContent property - not supported in IE8 and below,
+        # but IE compatibility is not required anyway
+        $.trim(elem.textContent.toLowerCase()) is text.toLowerCase()
     )
