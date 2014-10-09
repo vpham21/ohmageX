@@ -185,6 +185,10 @@
       # TODO: Make a mini validator for custom choice,
       # e.g. disallow duplicates
       @listenTo @, 'choice:add:invalid', (-> console.log 'invalid custom choice, please try again')
+    onRender: ->
+      currentValue = @model.get('currentValue')
+      if currentValue then @$el.find("label:containsExact('#{currentValue}')").parent().find('input').attr('checked', true)
+
     toggleChoice: (args) ->
       $addForm = @$el.find '.add-form'
       $addForm.toggleClass 'hidden'
