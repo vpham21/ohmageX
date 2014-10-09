@@ -185,6 +185,10 @@
       # TODO: Make a mini validator for custom choice,
       # e.g. disallow duplicates
       @listenTo @, 'choice:add:invalid', (-> console.log 'invalid custom choice, please try again')
+    onRender: ->
+      currentValue = @model.get('currentValue')
+      if currentValue then @$el.find("label:containsExact('#{currentValue}')").parent().find('input').attr('checked', true)
+
     toggleChoice: (args) ->
       $addForm = @$el.find '.add-form'
       $addForm.toggleClass 'hidden'
@@ -230,7 +234,7 @@
       # this expects the radio buttons to be in the format:
       # <li><input type=radio ... /><label>labelText</label></li>
       $checkedInput = @$el.find('input[type=radio]').filter(':checked')
-      response = if !!$checkedInput.length then false else $checkedInput.parent().find('label').text()
+      response = if !!!$checkedInput.length then false else $checkedInput.parent().find('label').text()
       @trigger "response:submit", response, surveyId, stepId
 
 
