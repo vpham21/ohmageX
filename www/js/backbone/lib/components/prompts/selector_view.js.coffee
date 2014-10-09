@@ -230,7 +230,7 @@
       # this expects the radio buttons to be in the format:
       # <li><input type=radio ... /><label>labelText</label></li>
       $checkedInput = @$el.find('input[type=radio]').filter(':checked')
-      response = if !!$checkedInput.length then false else $checkedInput.parent().find('label').text()
+      response = if !!!$checkedInput.length then false else $checkedInput.parent().find('label').text()
       @trigger "response:submit", response, surveyId, stepId
 
 
