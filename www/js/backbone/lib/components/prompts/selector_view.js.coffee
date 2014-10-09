@@ -274,6 +274,10 @@
         )
       else
         @$el.find("label:containsExact('#{valueParsed}')").parent().find('input').attr('checked', true)
+
+    onRender: ->
+      currentValue = @model.get('currentValue')
+      if currentValue then @selectCurrentValues currentValue
     gatherResponses: (surveyId, stepId) =>
       # reset the add custom form, if it's open
       @trigger "choice:cancel"
