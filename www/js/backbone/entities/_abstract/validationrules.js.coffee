@@ -38,23 +38,15 @@
       minValue:
         validate: (options) ->
           {value, rulesMap} = options
-          if rulesMap.wholeNumber is "false"
-            valueNum = parseFloat(value)
-            minValue = parseFloat(rulesMap.minValue)
-          else
-            valueNum = parseInt(value)
-            minValue = parseInt(rulesMap.minValue)
+          valueNum = parseInt(value)
+          minValue = parseInt(rulesMap.minValue)
           if valueNum < minValue
             @errors.push 'value too low.'
       maxValue:
         validate: (options) ->
           {value, rulesMap} = options
-          if rulesMap.wholeNumber is "false"
-            valueNum = parseFloat(value)
-            minValue = parseFloat(rulesMap.minValue)
-          else
-            valueNum = parseInt(value)
-            maxValue = parseInt(rulesMap.maxValue)
+          valueNum = parseInt(value)
+          maxValue = parseInt(rulesMap.maxValue)
           if valueNum > maxValue
             @errors.push 'value too high.'
       wholeNumber:
