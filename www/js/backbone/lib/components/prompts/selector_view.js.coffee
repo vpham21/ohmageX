@@ -253,6 +253,13 @@
       JSON.stringify result
     selectCurrentValues: (currentValues) ->
 
+      if currentValues.indexOf(',') isnt -1 and currentValues.indexOf('[') is -1
+        # Check for values that contain a comma-separated list of
+        # numbers with NO brackets (multi_choice default allows this)
+        # which isn't a proper JSON format to convert to an array.
+        # Add the missing brackets.
+        currentValues = "[#{currentValues}]"
+
       try
         valueParsed = JSON.parse(currentValues)
       catch Error
