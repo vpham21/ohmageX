@@ -20,11 +20,13 @@
     prepParser: (rawCondition, responses) ->
       oldParserResponses = {}
       responses.each((response) =>
+        myId = response.get 'id'
+
         if @isArrayResponse response
           myResponse = @stringsToArrays(response.get 'response')
         else
-          myResponse = response.get 'response'
-        oldParserResponses[response.get 'id'] = myResponse
+          myResponse = App.request "response:value:parsed", { stepId: myId, addImageUUID: false }
+        oldParserResponses[myId] = myResponse
         oldParserResponses
       )
 
