@@ -5,41 +5,15 @@
   # This module handles the upload process.
 
   API =
-    imageUUIDs: {}
     prepResponseUpload: (currentResponses, currentFlow) ->
       currentResponses.map( (response) =>
         myId = response.get 'id'
-        myStatus = App.request "flow:status", myId
-        if response.get('response') is false
-          # convert false responses (aka invalid)
-          # into equivalents required by the server,
-          # based on the flow status of the step.
-          switch myStatus
-            when 'skipped'
-              myResponse = 'SKIPPED'
-            when 'not_displayed'
-              myResponse = 'NOT_DISPLAYED'
-            else
-              throw new Error "false response for step #{myId} with invalid flow status: #{myStep.get('status')}"
-        else
-          if response.get('type') is 'photo'
-            # photo responses must reference a UUID, not the base64.
-            # base64 are submitted with a separate parameter `images`
-            myResponse = @generateImgUUID(response.get 'response')
-          else
-            myResponse = response.get 'response'
+        myResponse = App.request "response:value:parsed", { stepId: myId, addImageUUID: true }
         {
           prompt_id: myId
           value: myResponse
         }
       )
-
-    generateImgUUID: (img64) ->
-      # generate a UUID and put it in a group of UUIDs in this format:
-      # { UUID: base64EncodedImage }
-      myID = _.guid()
-      @imageUUIDs[myID] = img64
-      myID
 
     uploadSurvey: (options) ->
       { currentResponses, location, surveyId } = options
@@ -75,7 +49,7 @@
         user: submitCredentials.get 'username'
         password: submitCredentials.get 'password'
         client: 'ohmage-mwf-dw'
-        images: JSON.stringify(@imageUUIDs)
+        images: App.request "survey:images:string"
         surveys: JSON.stringify([submitSurveys])
 
       $.ajax
@@ -84,7 +58,7 @@
         data: completeSubmit
         dataType: 'json'
         success: (response) =>
-          @imageUUIDs = false
+          App.execute "survey:images:destroy"
           App.vent.trigger "survey:upload:success", response, surveyId
     getLocation: (responses, surveyId) ->
       # get geolocation
@@ -101,7 +75,6 @@
   App.commands.setHandler "survey:upload", (surveyId) ->
     responses = App.request "responses:current"
     API.getLocation responses, surveyId
-
 
   App.vent.on "survey:geolocation:fetch:failure", (surveyId) ->
     console.log 'geolocation fetch failure', surveyId
