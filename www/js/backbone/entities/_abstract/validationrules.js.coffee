@@ -62,6 +62,20 @@
             validChars = /^\-?[0-9]+$/i
             if !validChars.test(value)
               @errors = ["Not a valid whole number."]
+      timestampISO:
+        validate: (options) ->
+          # we're testing that the value can be turned into
+          # a Date object, and then converted successfully
+          # into an ISO string without an issue.
+
+          # rulesMap is not used in this rule, there's
+          # no custom property XML.
+          {value} = options
+          try
+            myDateObj = new Date Date.parse(value)
+            response = myDateObj.toISOString()
+          catch
+            @errors = ['Invalid timestamp.']
 
     validate: (options) ->
       console.log 'rulesList', @rulesList

@@ -56,6 +56,15 @@
         wholeNumber: 'wholeNumber'
       super attrs, options, myRulesMap
 
+  class Entities.TimestampResponse extends Entities.ResponseValidated
+    validate: (attrs, options) ->
+      # defining a placeholder value here,
+      # so a property can be passed into the rulesMap.
+      attrs.properties.timestampISO = true
+      myRulesMap =
+        timestampISO: 'timestampISO'
+      super attrs, options, myRulesMap
+
   class Entities.ResponseCollection extends Entities.Collection
     initialize: (options) ->
       if options.properties? then @set 'properties', new Entities.ResponseProperty options.properties
@@ -65,6 +74,8 @@
           new Entities.TextResponse attrs, options
         when "number"
           new Entities.NumberResponse attrs, options
+        when "timestamp"
+          new Entities.TimestampResponse attrs, options
         else
           new Entities.Response attrs, options
 
