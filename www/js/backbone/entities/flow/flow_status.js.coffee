@@ -17,7 +17,7 @@
   API =
     updateStatus: (currentStep, status) ->
       currentStep.set 'status', status
-      console.log 'myStep', currentStep.toJSON()
+      console.log 'currentStep status', status
 
     getStatus: (currentStep) ->
       currentStep.get 'status'
@@ -39,6 +39,7 @@
     API.updateStatus currentStep, "skipped"
 
   App.vent.on "response:set:success", (response, surveyId, stepId) ->
+    console.log 'response:set:success'
     currentStep = App.request "flow:step", stepId
     API.updateStatus currentStep, "complete"
 
