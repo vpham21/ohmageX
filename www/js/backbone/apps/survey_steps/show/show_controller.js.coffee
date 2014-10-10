@@ -34,8 +34,10 @@
         App.vent.trigger "response:set:error", responseModel.validationError, @surveyId, @stepId
       @listenTo myResponse, "change:response", (responseModel) =>
         # response validation succeeded
-        console.log "response correct, arg is", responseModel.get 'response'
-        App.vent.trigger "response:set:success", responseModel.get('response'), @surveyId, @stepId
+        if responseModel.get('response') isnt false
+          # only trigger the response success event if the response isn't false.
+          console.log "response correct, arg is", responseModel.get 'response'
+          App.vent.trigger "response:set:success", responseModel.get('response'), @surveyId, @stepId
 
     stepBodyRegion: ->
       App.execute "steps:view:insert", @layout.stepBodyRegion, @stepId
