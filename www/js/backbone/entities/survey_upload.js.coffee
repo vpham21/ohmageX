@@ -45,7 +45,7 @@
 
       completeSubmit = 
         campaign_urn: 'urn:campaign:ca:ucla:oit:PromptTypesCondition'
-        campaign_creation_timestamp: '2014-06-23 20:14:35'
+        campaign_creation_timestamp: '2014-10-10 10:40:34'
         user: submitCredentials.get 'username'
         password: submitCredentials.get 'password'
         client: 'ohmage-mwf-dw'
@@ -54,7 +54,7 @@
 
       $.ajax
         type: "POST"
-        url: 'https://test.ohmage.org/app/survey/upload'
+        url: 'https://test.mobilizingcs.org/app/survey/upload'
         data: completeSubmit
         dataType: 'json'
         success: (response) =>

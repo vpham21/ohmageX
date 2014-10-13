@@ -18,7 +18,7 @@
 
       $.ajax
         type: "POST"
-        url: 'https://test.ohmage.org/app/user/auth'
+        url: 'https://test.mobilizingcs.org/app/user/auth'
         data:
           user: username
           password: password
