@@ -16,7 +16,9 @@
       # { UUID: base64EncodedImage }
       lastUUID = _.guid()
       if !currentImages then currentImages = {}
-      currentImages[lastUUID] = img64
+      # truncate encoding prefix, if it exists
+      truncatePrefixIndex = if img64.indexOf('base64,') isnt -1 then img64.indexOf('base64,')+7 else 0
+      currentImages[lastUUID] = img64.substring truncatePrefixIndex
     getImagesString: ->
       if currentImages then JSON.stringify(currentImages) else '{}'
 
