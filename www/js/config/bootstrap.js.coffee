@@ -2,120 +2,9 @@
 # sample XML with a text prompt
 @Bootstrap = """
 <campaign>
-  <campaignUrn>urn:campaign:ca:ucla:oit:PromptTypesCondition</campaignUrn>
   <campaignName>PromptTypes Condition Test</campaignName>
-  <serverUrl>https://dev1.andwellness.org/</serverUrl>
+  <campaignUrn>urn:campaign:ca:ucla:oit:PromptTypesCondition</campaignUrn>
   <surveys>
-    <survey>
-      <id>timestampSurvey</id>
-      <title>Timestamp Survey</title>
-      <description>This is a survey to test behavior of the timestamp prompt type.</description>
-      <submitText>Done with the timestamp survey.</submitText>
-      <showSummary>false</showSummary>
-      <editSummary>false</editSummary>
-      <summaryText>Timestamp Test</summaryText>
-      <anytime>true</anytime>
-      <contentList>
-        <prompt>
-          <id>timestamp</id>
-          <displayType>event</displayType>
-          <displayLabel>mTimestamp</displayLabel>
-          <promptText>What time is it?</promptText>
-          <abbreviatedText>What time is it?</abbreviatedText>
-          <promptType>timestamp</promptType>
-          <skippable>true</skippable>
-          <skipLabel>Skip</skipLabel>
-        </prompt>
-        <prompt>
-          <id>timestampSkipped</id>
-          <displayType>event</displayType>
-          <condition>(timestamp == SKIPPED)</condition>
-          <displayLabel>timestampSkipped</displayLabel>
-          <promptText>Why did you skip?.</promptText>
-          <abbreviatedText>Why did you skip?</abbreviatedText>
-          <promptType>text</promptType>
-          <properties>
-            <property>
-              <key>min</key>
-              <label>1</label>
-            </property>
-            <property>
-              <key>max</key>
-              <label>10</label>
-            </property>
-          </properties>
-          <default>Hello.</default>
-          <skippable>true</skippable>
-          <skipLabel>Skip</skipLabel>
-        </prompt>
-        <prompt>
-          <id>timestampNotSkipped</id>
-          <displayType>event</displayType>
-          <condition>(timestamp != SKIPPED)</condition>
-          <displayLabel>timestampNotSkipped</displayLabel>
-          <promptText>Why did you not skip?.</promptText>
-          <abbreviatedText>Why did you not skip?</abbreviatedText>
-          <promptType>text</promptType>
-          <properties>
-            <property>
-              <key>min</key>
-              <label>1</label>
-            </property>
-            <property>
-              <key>max</key>
-              <label>10</label>
-            </property>
-          </properties>
-          <default>Hello.</default>
-          <skippable>true</skippable>
-          <skipLabel>Skip</skipLabel>
-        </prompt>
-        <prompt>
-          <id>timestampSkippedNotDisplayed</id>
-          <displayType>event</displayType>
-          <condition>(timestampSkipped == NOT_DISPLAYED)</condition>
-          <displayLabel>timestampNotSkipped</displayLabel>
-          <promptText>Tell me more about selecting timestamp.</promptText>
-          <abbreviatedText>Tell me more about selecting timestamp.</abbreviatedText>
-          <promptType>text</promptType>
-          <properties>
-            <property>
-              <key>min</key>
-              <label>1</label>
-            </property>
-            <property>
-              <key>max</key>
-              <label>10</label>
-            </property>
-          </properties>
-          <default>Hello.</default>
-          <skippable>true</skippable>
-          <skipLabel>Skip</skipLabel>
-        </prompt>
-        <prompt>
-          <id>timestampSkippedDisplayed</id>
-          <displayType>event</displayType>
-          <condition>(timestampSkipped != NOT_DISPLAYED)</condition>
-          <displayLabel>timestampNotSkipped</displayLabel>
-          <promptText>Tell me more about skipping timestamp.</promptText>
-          <abbreviatedText>WTell me more about skipping timestamp.</abbreviatedText>
-          <promptType>text</promptType>
-          <properties>
-            <property>
-              <key>min</key>
-              <label>1</label>
-            </property>
-            <property>
-              <key>max</key>
-              <label>10</label>
-            </property>
-          </properties>
-          <default>Hello.</default>
-          <skippable>true</skippable>
-          <skipLabel>Skip</skipLabel>
-        </prompt>
-      </contentList>
-    </survey>
     <survey>
       <id>hoursBeforeNowSurvey</id>
       <title>Hours Before Now Survey</title>
@@ -224,6 +113,160 @@
       </contentList>
     </survey>
     <survey>
+      <id>multiChoiceSurvey</id>
+      <title>Multi Choice Survey</title>
+      <description>This is a survey to test behavior of the multi choice prompt type.</description>
+      <submitText>Done with the multi choice survey</submitText>
+      <showSummary>false</showSummary>
+      <editSummary>false</editSummary>
+      <summaryText>Multi Choice Test</summaryText>
+      <anytime>true</anytime>
+      <contentList>
+        <prompt>
+          <id>multiChoice</id>
+          <displayType>event</displayType>
+          <displayLabel>Multi Choice</displayLabel>
+          <promptText>The Transverse Ranges are a group of mountain ranges of southern California, in the Pacific Coast Ranges physiographic region that runs along the Pacific coast from Alaska to Mexico in North America. The Transverse Ranges begin at the southern end of the California Coast Ranges and lie between Santa Barbara and San Diego counties. They derive the name Transverse Ranges due to their East-West orientation, making them transverse to the general North-South orientation of most of California's coastal mountains.</promptText>
+          <abbreviatedText>transverse ranges</abbreviatedText>
+          <promptType>multi_choice</promptType>
+          <properties>
+            <property>
+              <key>0</key>
+              <label>Santa Ynez Mountains</label>
+            </property>
+            <property>
+              <key>1</key>
+              <label>San Rafael Mountains</label>
+            </property>
+            <property>
+              <key>2</key>
+              <label>Sierra Madre Mountains</label>
+            </property>
+            <property>
+              <key>3</key>
+              <label>Topatopa Mountains</label>
+            </property>
+            <property>
+              <key>4</key>
+              <label>Santa Susana Mountains</label>
+            </property>
+            <property>
+              <key>5</key>
+              <label>Santa Monica Mountains</label>
+            </property>
+            <property>
+              <key>6</key>
+              <label>San Gabriel Mountains</label>
+            </property>
+            <property>
+              <key>7</key>
+              <label>San Bernadino Mountains</label>
+            </property>
+            <property>
+              <key>8</key>
+              <label>Little San Bernadino Mountains</label>
+            </property>
+            <property>
+              <key>9</key>
+              <label>Tehachapi Mountains</label>
+            </property>
+          </properties>
+          <default>6</default>
+          <skippable>true</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+        <prompt>
+          <id>SanGabrielReason</id>
+          <displayType>event</displayType>
+          <condition>(multiChoice == 6)</condition>
+          <displayLabel>SanGabrielReason</displayLabel>
+          <promptText>Write the San Gabriel Reason.</promptText>
+          <abbreviatedText>Write the San Gabriel Reason.</abbreviatedText>
+          <promptType>text</promptType>
+          <properties>
+            <property>
+              <key>min</key>
+              <label>1</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>100</label>
+            </property>
+          </properties>
+          <skippable>true</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+      </contentList>
+    </survey>
+    <survey>
+      <id>multiChoiceCustomSurvey</id>
+      <title>Multi Choice Custom Survey</title>
+      <description>This is a survey to test behavior of the multi choice custom prompt type.</description>
+      <submitText>Done with the multi choice custom survey</submitText>
+      <showSummary>false</showSummary>
+      <editSummary>false</editSummary>
+      <summaryText>Multi Choice Custom Test</summaryText>
+      <anytime>true</anytime>
+      <contentList>
+        <prompt>
+          <id>multiChoiceCustom1</id>
+          <displayType>event</displayType>
+          <displayLabel>Multi Choice Custom 1</displayLabel>
+          <promptText>Add a choice:</promptText>
+          <abbreviatedText>add a choice</abbreviatedText>
+          <promptType>multi_choice_custom</promptType>
+          <skippable>true</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+        <prompt>
+          <id>multiChoiceCustom2</id>
+          <displayType>event</displayType>
+          <displayLabel>Multi Choice Custom 2</displayLabel>
+          <promptText>Geographical facets of southern California</promptText>
+          <abbreviatedText>geo facets</abbreviatedText>
+          <promptType>multi_choice_custom</promptType>
+          <properties>
+            <property>
+              <key>0</key>
+              <label>The Beach</label>
+            </property>
+            <property>
+              <key>1</key>
+              <label>The Desert</label>
+            </property>
+            <property>
+              <key>2</key>
+              <label>The Mountains</label>
+            </property>
+          </properties>
+          <default>2</default>
+          <skippable>true</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+        <prompt>
+          <id>MCCCondition</id>
+          <displayType>event</displayType>
+          <condition>(multiChoiceCustom2 == 0)</condition>
+          <displayLabel>MCCConditionReason</displayLabel>
+          <promptText>Why the desert?</promptText>
+          <abbreviatedText>Why the desert?</abbreviatedText>
+          <promptType>text</promptType>
+          <properties>
+            <property>
+              <key>min</key>
+              <label>1</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>100</label>
+            </property>
+          </properties>
+          <skippable>true</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+      </contentList>
+    </survey>
+    <survey>
       <id>numberSurvey</id>
       <title>Number Survey</title>
       <description>This is a survey to test behavior of the number prompt type.</description>
@@ -257,7 +300,7 @@
         <prompt>
           <id>numberNegTenToZeroCondition</id>
           <displayType>event</displayType>
-          <condition>(numberNegTenToZero == -7)</condition> 
+          <condition>(numberNegTenToZero == -7)</condition>
           <displayLabel>numberNegTenToZeroCondition</displayLabel>
           <promptText>Why did you pick -7?</promptText>
           <abbreviatedText>Why did you pick -7?</abbreviatedText>
@@ -271,7 +314,7 @@
               <key>max</key>
               <label>256</label>
             </property>
-          </properties>         
+          </properties>
           <skippable>false</skippable>
         </prompt>
         <prompt>
@@ -340,60 +383,6 @@
       </contentList>
     </survey>
     <survey>
-      <id>textSurvey</id>
-      <title>Text Survey</title>
-      <description>This is a survey to test behavior of the text prompt type.</description>
-      <submitText>Done with the text survey</submitText>
-      <showSummary>false</showSummary>
-      <editSummary>false</editSummary>
-      <summaryText>Number Test</summaryText>
-      <anytime>true</anytime>
-      <contentList>
-        <prompt>
-          <id>textOneToTen</id>
-          <displayType>event</displayType>
-          <displayLabel>textOneToTen</displayLabel>
-          <promptText>Write some text.</promptText>
-          <abbreviatedText>Write some text.</abbreviatedText>
-          <promptType>text</promptType>
-          <properties>
-            <property>
-              <key>min</key>
-              <label>1</label>
-            </property>
-            <property>
-              <key>max</key>
-              <label>10</label>
-            </property>
-          </properties>
-          <default>Hello.</default>
-          <skippable>true</skippable>
-          <skipLabel>Skip</skipLabel>
-        </prompt>
-        <prompt>
-          <id>textBigRange</id>
-          <displayType>event</displayType>
-          <displayLabel>textBigRange</displayLabel>
-          <promptText>Write some text.</promptText>
-          <abbreviatedText>Write some text.</abbreviatedText>
-          <promptType>text</promptType>
-          <properties>
-            <property>
-              <key>min</key>
-              <label>100</label>
-            </property>
-            <property>
-              <key>max</key>
-              <label>1000</label>
-            </property>
-          </properties>
-          <default>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</default>
-          <skippable>true</skippable>
-          <skipLabel>Skip</skipLabel>
-        </prompt>
-      </contentList>
-    </survey>
-    <survey>
       <id>photoSurvey</id>
       <title>Photo Survey</title>
       <description>This is a survey to test behavior of the photo prompt type.</description>
@@ -412,7 +401,7 @@
           <promptType>photo</promptType>
           <properties>
             <property>
-              <key>maxDimension</key>
+              <key>res</key>
               <label>720</label>
             </property>
           </properties>
@@ -756,75 +745,21 @@
       </contentList>
     </survey>
     <survey>
-      <id>multiChoiceSurvey</id>
-      <title>Multi Choice Survey</title>
-      <description>This is a survey to test behavior of the multi choice prompt type.</description>
-      <submitText>Done with the multi choice survey</submitText>
+      <id>textSurvey</id>
+      <title>Text Survey</title>
+      <description>This is a survey to test behavior of the text prompt type.</description>
+      <submitText>Done with the text survey</submitText>
       <showSummary>false</showSummary>
       <editSummary>false</editSummary>
-      <summaryText>Multi Choice Test</summaryText>
+      <summaryText>Number Test</summaryText>
       <anytime>true</anytime>
       <contentList>
         <prompt>
-          <id>multiChoice</id>
+          <id>textOneToTen</id>
           <displayType>event</displayType>
-          <displayLabel>Multi Choice</displayLabel>
-          <promptText>The Transverse Ranges are a group of mountain ranges of southern California, in the Pacific Coast Ranges physiographic region that runs along the Pacific coast from Alaska to Mexico in North America. The Transverse Ranges begin at the southern end of the California Coast Ranges and lie between Santa Barbara and San Diego counties. They derive the name Transverse Ranges due to their East-West orientation, making them transverse to the general North-South orientation of most of California's coastal mountains.</promptText>
-          <abbreviatedText>transverse ranges</abbreviatedText>
-          <promptType>multi_choice</promptType>
-          <properties>
-            <property>
-              <key>0</key>
-              <label>Santa Ynez Mountains</label>
-            </property>
-            <property>
-              <key>1</key>
-              <label>San Rafael Mountains</label>
-            </property>
-            <property>
-              <key>2</key>
-              <label>Sierra Madre Mountains</label>
-            </property>
-            <property>
-              <key>3</key>
-              <label>Topatopa Mountains</label>
-            </property>
-            <property>
-              <key>4</key>
-              <label>Santa Susana Mountains</label>
-            </property>
-            <property>
-              <key>5</key>
-              <label>Santa Monica Mountains</label>
-            </property>
-            <property>
-              <key>6</key>
-              <label>San Gabriel Mountains</label>
-            </property>
-            <property>
-              <key>7</key>
-              <label>San Bernadino Mountains</label>
-            </property>
-            <property>
-              <key>8</key>
-              <label>Little San Bernadino Mountains</label>
-            </property>
-            <property>
-              <key>9</key>
-              <label>Tehachapi Mountains</label>
-            </property>
-          </properties>
-          <default>6</default>
-          <skippable>true</skippable>
-          <skipLabel>Skip</skipLabel>
-        </prompt>
-        <prompt>
-          <id>SanGabrielReason</id>
-          <displayType>event</displayType>
-          <condition>(multiChoice == 6)</condition>
-          <displayLabel>SanGabrielReason</displayLabel>
-          <promptText>Write the San Gabriel Reason.</promptText>
-          <abbreviatedText>Write the San Gabriel Reason.</abbreviatedText>
+          <displayLabel>textOneToTen</displayLabel>
+          <promptText>Write some text.</promptText>
+          <abbreviatedText>Write some text.</abbreviatedText>
           <promptType>text</promptType>
           <properties>
             <property>
@@ -833,66 +768,63 @@
             </property>
             <property>
               <key>max</key>
-              <label>100</label>
+              <label>10</label>
             </property>
           </properties>
+          <default>Hello.</default>
+          <skippable>true</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+        <prompt>
+          <id>textBigRange</id>
+          <displayType>event</displayType>
+          <displayLabel>textBigRange</displayLabel>
+          <promptText>Write some text.</promptText>
+          <abbreviatedText>Write some text.</abbreviatedText>
+          <promptType>text</promptType>
+          <properties>
+            <property>
+              <key>min</key>
+              <label>100</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>1000</label>
+            </property>
+          </properties>
+          <default>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</default>
           <skippable>true</skippable>
           <skipLabel>Skip</skipLabel>
         </prompt>
       </contentList>
     </survey>
     <survey>
-      <id>multiChoiceCustomSurvey</id>
-      <title>Multi Choice Custom Survey</title>
-      <description>This is a survey to test behavior of the multi choice custom prompt type.</description>
-      <submitText>Done with the multi choice custom survey</submitText>
+      <id>timestampSurvey</id>
+      <title>Timestamp Survey</title>
+      <description>This is a survey to test behavior of the timestamp prompt type.</description>
+      <submitText>Done with the timestamp survey.</submitText>
       <showSummary>false</showSummary>
       <editSummary>false</editSummary>
-      <summaryText>Multi Choice Custom Test</summaryText>
+      <summaryText>Timestamp Test</summaryText>
       <anytime>true</anytime>
       <contentList>
         <prompt>
-          <id>multiChoiceCustom1</id>
+          <id>timestamp</id>
           <displayType>event</displayType>
-          <displayLabel>Multi Choice Custom 1</displayLabel>
-          <promptText>Add a choice:</promptText>
-          <abbreviatedText>add a choice</abbreviatedText>
-          <promptType>multi_choice_custom</promptType>
+          <displayLabel>mTimestamp</displayLabel>
+          <promptText>What time is it?</promptText>
+          <abbreviatedText>What time is it?</abbreviatedText>
+          <promptType>timestamp</promptType>
           <skippable>true</skippable>
           <skipLabel>Skip</skipLabel>
         </prompt>
         <prompt>
-          <id>multiChoiceCustom2</id>
+          <id>timestampSkipped</id>
           <displayType>event</displayType>
-          <displayLabel>Multi Choice Custom 2</displayLabel>
-          <promptText>Geographical facets of southern California</promptText>
-          <abbreviatedText>geo facets</abbreviatedText>
-          <promptType>multi_choice_custom</promptType>
-          <properties>
-            <property>
-              <key>0</key>
-              <label>The Beach</label>
-            </property>
-            <property>
-              <key>1</key>
-              <label>The Desert</label>
-            </property>
-            <property>
-              <key>2</key>
-              <label>The Mountains</label>
-            </property>
-          </properties>
-          <default>2</default>
-          <skippable>true</skippable>
-          <skipLabel>Skip</skipLabel>
-        </prompt>
-        <prompt>
-          <id>MCCCondition</id>
-          <displayType>event</displayType>
-          <condition>(multiChoiceCustom2 == 0)</condition>
-          <displayLabel>MCCConditionReason</displayLabel>
-          <promptText>Why the desert?</promptText>
-          <abbreviatedText>Why the desert?</abbreviatedText>
+          <condition>(timestamp == SKIPPED)</condition>
+          <displayLabel>timestampSkipped</displayLabel>
+          <promptText>Why did you skip?.</promptText>
+          <abbreviatedText>Why did you skip?</abbreviatedText>
           <promptType>text</promptType>
           <properties>
             <property>
@@ -901,11 +833,120 @@
             </property>
             <property>
               <key>max</key>
-              <label>100</label>
+              <label>10</label>
             </property>
           </properties>
+          <default>Hello.</default>
           <skippable>true</skippable>
           <skipLabel>Skip</skipLabel>
+        </prompt>
+        <prompt>
+          <id>timestampNotSkipped</id>
+          <displayType>event</displayType>
+          <condition>(timestamp != SKIPPED)</condition>
+          <displayLabel>timestampNotSkipped</displayLabel>
+          <promptText>Why did you not skip?.</promptText>
+          <abbreviatedText>Why did you not skip?</abbreviatedText>
+          <promptType>text</promptType>
+          <properties>
+            <property>
+              <key>min</key>
+              <label>1</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>10</label>
+            </property>
+          </properties>
+          <default>Hello.</default>
+          <skippable>true</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+        <prompt>
+          <id>timestampSkippedNotDisplayed</id>
+          <displayType>event</displayType>
+          <condition>(timestampSkipped == NOT_DISPLAYED)</condition>
+          <displayLabel>timestampNotSkipped</displayLabel>
+          <promptText>Tell me more about selecting timestamp.</promptText>
+          <abbreviatedText>Tell me more about selecting timestamp.</abbreviatedText>
+          <promptType>text</promptType>
+          <properties>
+            <property>
+              <key>min</key>
+              <label>1</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>10</label>
+            </property>
+          </properties>
+          <default>Hello.</default>
+          <skippable>true</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+        <prompt>
+          <id>timestampSkippedDisplayed</id>
+          <displayType>event</displayType>
+          <condition>(timestampSkipped != NOT_DISPLAYED)</condition>
+          <displayLabel>timestampNotSkipped</displayLabel>
+          <promptText>Tell me more about skipping timestamp.</promptText>
+          <abbreviatedText>WTell me more about skipping timestamp.</abbreviatedText>
+          <promptType>text</promptType>
+          <properties>
+            <property>
+              <key>min</key>
+              <label>1</label>
+            </property>
+            <property>
+              <key>max</key>
+              <label>10</label>
+            </property>
+          </properties>
+          <default>Hello.</default>
+          <skippable>true</skippable>
+          <skipLabel>Skip</skipLabel>
+        </prompt>
+      </contentList>
+    </survey>
+    <survey>
+      <id>Audio</id>
+      <title>Audio Survey</title>
+      <submitText>Submitted!</submitText>
+      <anytime>true</anytime>
+      <contentList>
+        <prompt>
+          <id>favoriteSong</id>
+          <displayLabel>favoriteSong</displayLabel>
+          <promptText>Record your favorite song.</promptText>
+          <promptType>audio</promptType>
+          <skippable>false</skippable>
+          <properties>
+            <property>
+              <key>max_milliseconds</key>
+              <label>6000</label>
+            </property>
+          </properties>
+        </prompt>
+      </contentList>
+    </survey>
+    <survey>
+      <id>Video</id>
+      <title>Video Survey</title>
+      <submitText>submitted!</submitText>
+      <anytime>true</anytime>
+      <contentList>
+        <prompt>
+          <id>favoritePlace</id>
+          <displayLabel>favorite place.</displayLabel>
+          <promptText>Record a video of your favorite place.</promptText>
+          <promptType>video</promptType>
+          <skippable>false</skippable>
+          <properties>
+            <property>
+              <key>max_seconds</key>
+              <label>180</label>
+            </property>
+          </properties>
         </prompt>
       </contentList>
     </survey>
