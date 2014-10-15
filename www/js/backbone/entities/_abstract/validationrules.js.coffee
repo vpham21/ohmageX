@@ -98,6 +98,14 @@
             response = myDateObj.toISOString()
           catch
             @errors = ['Invalid timestamp.']
+      httpHost:
+        validate: (options) ->
+          # rulesMap is not used here, no custom property XML.
+          {value} = options
+          console.log 'value', value
+          validHttp = /^http(s)?:\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,20}(:[0-9]{1,5})?(\/.*)?$/i
+          if !validHttp.test(value)
+            @errors = ["Invalid Server path."]
 
     validate: (options) ->
       console.log 'rulesList', @rulesList
