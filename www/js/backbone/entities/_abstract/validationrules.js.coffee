@@ -9,6 +9,28 @@
   # it uses the Decorator pattern to add Rules and execute all
   # added rules as needed on the passed-in properties.
 
+  class Entities.ValidatedModel extends Entities.Model
+    validate: (attrs, options, rulesMap) ->
+      # this expects the options to contain options.properties.
+      # properties are in the format [{propName: value}]
+      # the RulesMap is an object that maps each of these properties
+      # to a specific Rule defined in Entities.ValidationRules
+      myProperties = {}
+      _.each(rulesMap, (propName, ruleName) ->
+        if attrs.properties[propName]?
+          myProperties[ruleName] = attrs.properties[propName]
+      )
+      console.log 'myProperties', myProperties
+      RulesChecker = new Entities.ValidationRules
+        value: attrs.response
+        rulesMap: myProperties
+      if RulesChecker.errors.length > 0
+        return RulesChecker.errors
+      # this does not return if there are no errors,
+      # because the BB Model validate method
+      # only succeeds when nothing is returned
+      return
+
   class Entities.ValidationRules
     constructor: (options) ->
       # this expects the options object to contain:
