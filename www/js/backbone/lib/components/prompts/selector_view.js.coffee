@@ -119,8 +119,8 @@
   # Prompt Single Choice
   class Prompts.SingleChoice extends Prompts.BaseComposite
     template: "prompts/single_choice"
-    itemView: Prompts.SingleChoiceItem
-    itemViewContainer: ".prompt-list"
+    childView: Prompts.SingleChoiceItem
+    childViewContainer: ".prompt-list"
     gatherResponses: (surveyId, stepId) =>
       response = @$el.find('input[type=radio]').filter(':checked').val()
       @trigger "response:submit", response, surveyId, stepId
@@ -135,8 +135,8 @@
   # Prompt Multi Choice
   class Prompts.MultiChoice extends Prompts.SingleChoice
     template: "prompts/multi_choice"
-    itemView: Prompts.MultiChoiceItem
-    itemViewContainer: ".prompt-list"
+    childView: Prompts.MultiChoiceItem
+    childViewContainer: ".prompt-list"
     selectCurrentValues: (currentValues) ->
 
       if currentValues.indexOf(',') isnt -1 and currentValues.indexOf('[') is -1
@@ -225,8 +225,8 @@
         }])
 
     template: "prompts/choice_custom"
-    itemView: Prompts.SingleChoiceItem
-    itemViewContainer: ".prompt-list"
+    childView: Prompts.SingleChoiceItem
+    childViewContainer: ".prompt-list"
     triggers:
       "click button.my-add": "choice:toggle"
       "click .add-form .add-submit": "choice:add"
@@ -242,7 +242,7 @@
 
 
   class Prompts.MultiChoiceCustom extends Prompts.SingleChoiceCustom
-    itemView: Prompts.MultiChoiceItem
+    childView: Prompts.MultiChoiceItem
     extractJSONString: ($responses) ->
       # extract responses from the selected options
       # into a JSON string

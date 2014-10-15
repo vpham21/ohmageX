@@ -22,8 +22,8 @@
   # Prompt Single Choice
   class Show.PromptSC extends App.Views.CompositeView
     template: "dashboard/show/prompt_sc"
-    itemView: Show.PromptSCItem
-    itemViewContainer: ".prompt-list"
+    childView: Show.PromptSCItem
+    childViewContainer: ".prompt-list"
 
   # Prompt Multi Choice
   class Show.PromptMCItem extends App.Views.ItemView
@@ -32,8 +32,8 @@
 
   class Show.PromptMC extends App.Views.CompositeView
     template: "dashboard/show/prompt_mc"
-    itemView: Show.PromptMCItem
-    itemViewContainer: ".prompt-list"
+    childView: Show.PromptMCItem
+    childViewContainer: ".prompt-list"
 
   # Prompt Single Choice Custom
   class Show.PromptSCCustom extends App.Views.CompositeView
@@ -67,8 +67,8 @@
         }])
 
     template: "dashboard/show/prompt_sc_custom"
-    itemView: Show.PromptSCItem
-    itemViewContainer: ".prompt-list"
+    childView: Show.PromptSCItem
+    childViewContainer: ".prompt-list"
     triggers:
       "click button.my-add": "choice:toggle"
       "click .add-form .add-submit": "choice:add"
@@ -81,7 +81,7 @@
     # difference here is the ItemView to render,
     # and a different value to submit (JSON), which
     # will be added in a new event Trigger
-    itemView: Show.PromptMCItem
+    childView: Show.PromptMCItem
 
   class Show.PromptNumber extends App.Views.ItemView
     template: "dashboard/show/prompt_number"

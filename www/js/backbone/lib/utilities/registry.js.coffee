@@ -12,7 +12,7 @@
     resetRegistry: ->
       oldCount = @getRegistrySize()
       for key, controller of App._registry
-        controller.region.close()
+        controller.region.destroy()
 
       ret =
         count: @getRegistrySize()

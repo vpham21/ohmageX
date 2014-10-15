@@ -8,8 +8,8 @@
 
   class List.Surveys extends App.Views.CompositeView
     template: "dashboard/list/surveys"
-    itemView: List.Survey
-    itemViewContainer: ".surveys"
+    childView: List.Survey
+    childViewContainer: ".surveys"
 
   class List.Layout extends App.Views.Layout
     template: "dashboard/list/list_layout"
