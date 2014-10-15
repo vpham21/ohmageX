@@ -52,9 +52,11 @@
         images: App.request "survey:images:string"
         surveys: JSON.stringify([submitSurveys])
 
+      serverPath = App.request "serverpath:current"
+
       $.ajax
         type: "POST"
-        url: 'https://test.mobilizingcs.org/app/survey/upload'
+        url: "#{serverPath}/app/survey/upload"
         data: completeSubmit
         dataType: 'json'
         success: (response) =>

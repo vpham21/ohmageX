@@ -8,8 +8,21 @@
         @trigger "errors:reset"
         @trigger "form:submit", @formValues()
 
+      @listenTo @, "serverpath:clicked", =>
+        @trigger "serverpath:submit", @$el.find('input.server').val()
+
       @listenTo App.vent, "credentials:invalidated", (responseErrors) =>
         @showInvalidErrors responseErrors
+
+      @listenTo App.vent, "serverpath:set:error", (responseErrors) =>
+        @showInvalidErrors [
+          text: responseErrors[0]
+          code: '0000'
+        ]
+
+      @listenTo App.vent, "serverpath:set:success", =>
+        @trigger "errors:reset"
+        @trigger "path:updated"
 
     resetErrors: ->
       @$el.find('p.error').html('')
@@ -18,7 +31,7 @@
       # response errors is an array containing objects:
       # text: "error text"
       # code: "error code"
-
+      console.log responseErrors
       # append all errors into one string
       result = _.reduce(responseErrors, ((errorStr, error) ->
         return "#{error.text}<br />#{errorStr}"
@@ -34,6 +47,8 @@
       "click button[type=submit]": "submit:clicked"
       "blur input[name=username]": "errors:reset"
       "blur input[name=username]": "errors:reset"
+      "click .server-btn": "serverpath:clicked"
+
 
   class Show.Layout extends App.Views.Layout
     template: "login/show/show_layout"

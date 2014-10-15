@@ -14,15 +14,15 @@
     isParsedAuthValid: (response) ->
       response.result isnt "failure"
 
-    validateCredentials: (username, password) ->
+    validateCredentials: (path, username, password) ->
 
       $.ajax
         type: "POST"
-        url: 'https://test.mobilizingcs.org/app/user/auth'
+        url: "#{path}/app/user/auth"
         data:
           user: username
           password: password
-          client: 'ohmage-ios'
+          client: 'ohmage-mwf-dw-browser'
         dataType: 'json'
         success: (response) =>
           if @isParsedAuthValid response
@@ -37,4 +37,4 @@
     API.getCredentials()
 
   App.commands.setHandler "credentials:validate", (username, password) ->
-    API.validateCredentials username, password
+    API.validateCredentials App.request("serverpath:current"), username, password
