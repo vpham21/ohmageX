@@ -14,7 +14,7 @@
         App.execute "response:validate", response, surveyId, stepId
 
       # Ensure this controller is removed during view cleanup.
-      @listenTo @myView, "close", @close
+      @listenTo @myView, "destroy", @destroy
 
     selectView: (entity, type) ->
       switch (type)
