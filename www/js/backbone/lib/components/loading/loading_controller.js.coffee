@@ -37,7 +37,7 @@
           when "opacity"
             @region.currentView.$el.removeAttr "style"
           when "spinner"
-            return realView.close() if @region.currentView isnt loadingView
+            return realView.destroy() if @region.currentView isnt loadingView
 
         ## show the real view unless we've set debug in the loading options
         @show realView unless config.debug

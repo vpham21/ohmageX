@@ -8,7 +8,7 @@
       opts = @_getOptions()
       @$el.spin opts
 
-    onClose: ->
+    onDestroy: ->
       @$el.spin false
 
     _getOptions: ->
