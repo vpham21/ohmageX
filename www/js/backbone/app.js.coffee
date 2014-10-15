@@ -2,7 +2,7 @@
 
   App = new Marionette.Application
 
-  App.on "initialize:before", (options) ->
+  App.on "before:start", (options) ->
     App.environment = options.environment
     App.navs = App.request "nav:entities"
 
@@ -21,7 +21,7 @@
     console.log "default:region"
     App.mainRegion
 
-  App.on "initialize:after", ->
+  App.on "start", ->
     @startHistory()
     @navigate(@rootRoute, trigger: true) unless @getCurrentRoute()
 
