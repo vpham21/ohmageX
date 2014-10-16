@@ -19,3 +19,5 @@
   App.vent.on "credentials:validated", (username) ->
     App.navigate Routes.dashboard_route(), { trigger: true }
 
+  App.vent.on "credentials:cleared", ->
+    App.navigate Routes.default_route(), { trigger: true }
