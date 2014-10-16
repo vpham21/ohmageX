@@ -19,3 +19,9 @@
   
   App.vent.on "survey:list:item:clicked", (model) ->
     App.navigate "survey/#{model.get 'id'}", { trigger: true }
+
+
+  App.vent.on "survey:list:logout:clicked", ->
+    console.log "survey:list:logout:clicked"
+    if confirm 'Do you want to logout?'
+      App.execute "credentials:logout"
