@@ -102,6 +102,8 @@
     getResponses: ->
       throw new Error "responses not initialized, use 'responses:init' to create new Responses" unless currentResponses isnt false
       currentResponses
+    destroyResponses: ->
+      currentResponses = false
 
 
   App.commands.setHandler "responses:init", ($surveyXML) ->
@@ -110,11 +112,11 @@
   App.reqres.setHandler "responses:current", ->
     API.getResponses()
 
-  App.commands.setHandler "responses:destroy", ->
-    currentResponses = false
-
   App.reqres.setHandler "response:get", (id) ->
     currentResponses = API.getResponses()
     myResponse = currentResponses.get(id)
     throw new Error "response id #{id} does not exist in currentResponses" if typeof myResponse is 'undefined'
     myResponse
+
+  App.vent.on "survey:exit survey:reset", ->
+    API.destroyResponses()
