@@ -78,16 +78,15 @@
         $XML: $rootXML
 
       result
+    destroyFlow: ->
+      currentFlow = false
+      App.execute "xml:destroy"
 
   App.commands.setHandler "flow:init", ($surveyXML) ->
     API.init $surveyXML
 
   App.reqres.setHandler "flow:init:status", ->
     currentFlow isnt false
-
-  App.commands.setHandler "flow:destroy", ->
-    currentFlow = false
-    App.execute "xml:destroy"
 
   App.reqres.setHandler "flow:current", ->
     API.getFlow()
@@ -97,3 +96,6 @@
     myStep = currentFlow.get(id)
     throw new Error "step id #{id} does not exist in currentFlow" if typeof myStep is 'undefined'
     myStep
+
+  App.vent.on "survey:exit survey:reset", ->
+    API.destroyFlow()
