@@ -31,6 +31,8 @@
             App.vent.trigger "credentials:validated", username
           else
             App.vent.trigger "credentials:invalidated", response.errors
+    logout: ->
+      currentCredentials = false
 
 
   App.reqres.setHandler "credentials:current", ->
@@ -38,3 +40,6 @@
 
   App.commands.setHandler "credentials:validate", (username, password) ->
     API.validateCredentials App.request("serverpath:current"), username, password
+
+  App.commands.setHandler "credentials:logout", ->
+    API.logout()
