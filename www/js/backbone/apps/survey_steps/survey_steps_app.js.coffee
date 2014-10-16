@@ -67,7 +67,7 @@
     API.goNext surveyId, "#{surveyId}beforeSurveySubmit"
 
   App.vent.on "survey:aftersubmit:next:clicked", (surveyId, stepId) ->
-    App.execute "survey:exit", surveyId
+    App.vent.trigger "survey:exit"
 
   App.vent.on "response:set:success", (response, surveyId, stepId) ->
     API.goNext surveyId, stepId
