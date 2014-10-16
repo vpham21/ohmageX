@@ -14,7 +14,7 @@ module.exports = (grunt) ->
       "js/vendor/syphon.js"
       "js/vendor/spin.js"
       "js/vendor/jquery.spin.js"
-      "js/vendor/backbone-routefiler.js"
+      "js/vendor/backbone-routefilter.js"
       "js/vendor/placeholder_polyfill.jquery.js"
       "js/vendor/ConditionalParser.js"
       "js/vendor/jstz.js"
