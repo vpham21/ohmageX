@@ -19,7 +19,7 @@
         # via either URL or via hitting the Back Button.
         # this cleans up and exits the survey properly.
         console.log Error
-        App.execute "survey:exit"
+        App.vent.trigger "survey:exit"
         return false
 
       firstId = App.request "flow:id:first"
@@ -30,7 +30,5 @@
     new SurveyApp.Router
       controller: API
 
-  App.commands.setHandler "survey:exit", (surveyId) ->
-    App.execute "flow:destroy"
-    App.execute "responses:destroy"
+  App.vent.on "survey:exit", ->
     App.navigate Routes.dashboard_route(), { trigger: true }
