@@ -32,4 +32,8 @@
       App.rootRoute = Routes.dashboard_route()
       @navigate(@rootRoute, trigger: true) unless @getCurrentRoute()
 
+    window.onbeforeunload = ->
+      if App.request "surveytracker:active"
+        return 'Are you sure you want to leave the Survey Taking tool?'
+
   App
