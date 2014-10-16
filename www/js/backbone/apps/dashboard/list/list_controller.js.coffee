@@ -13,6 +13,7 @@
       @listenTo @layout, "show", =>
         console.log "show list layout"
         @surveysRegion()
+        @logoutRegion()
 
       @show @layout
 
@@ -25,6 +26,18 @@
         App.vent.trigger "survey:list:item:clicked", args.model
 
       @show surveysView, region: @layout.listRegion
+
+    logoutRegion: ->
+      logoutView = @getLogoutView()
+
+      @listenTo logoutView, "logout:clicked", ->
+        console.log 'logout clicked'
+        App.vent.trigger "survey:list:logout:clicked"
+
+      @show logoutView, region: @layout.logoutRegion
+
+    getLogoutView: ->
+      new List.Logout
 
     getSurveysView: (surveys) ->
       new List.Surveys
