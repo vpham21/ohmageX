@@ -5,14 +5,26 @@
 
   class Entities.Credentials extends Entities.Model
 
-  currentCredentials = new Entities.Credentials
+  currentCredentials = false
 
   API =
-    getCredentials: ->
-      currentCredentials
+    init: ->
+      App.request "storage:get", 'credentials', ((result) =>
+        # credentials is retrieved from raw JSON.
+        console.log 'credentials retrieved from storage'
+        currentCredentials = new Entities.Credentials result
+      ), =>
+        console.log 'credentials not retrieved from storage'
+        currentCredentials = false
 
     isParsedAuthValid: (response) ->
       response.result isnt "failure"
+
+    getCredentials: ->
+      if currentCredentials and currentCredentials.has('username')
+        currentCredentials
+      else
+        false
 
     validateCredentials: (path, username, password) ->
 
@@ -26,14 +38,23 @@
         dataType: 'json'
         success: (response) =>
           if @isParsedAuthValid response
-            currentCredentials.set 'username', username
-            currentCredentials.set 'password', response.hashed_password
-            App.vent.trigger "credentials:validated", username
+            currentCredentials = new Entities.Credentials
+              username: username
+              password: response.hashed_password
+            App.execute "storage:save", 'credentials', currentCredentials.toJSON(), =>
+              console.log "credentials entity API.validateCredentials success"
+              App.vent.trigger "credentials:validated", username
           else
             App.vent.trigger "credentials:invalidated", response.errors
     logout: ->
       currentCredentials = false
 
+      App.execute "storage:clear", 'credentials', ->
+        console.log 'credentials erased'
+        App.vent.trigger "credentials:cleared"
+
+  App.on "before:start", ->
+    API.init()
 
   App.reqres.setHandler "credentials:current", ->
     API.getCredentials()
