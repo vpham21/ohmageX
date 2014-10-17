@@ -17,5 +17,5 @@
   App.vent.on "survey:start", (surveyId) ->
     API.setActive()
 
-  App.vent.on "survey:exit", (surveyId) ->
+  App.vent.on "survey:exit survey:reset", (surveyId) ->
     API.setInactive()
