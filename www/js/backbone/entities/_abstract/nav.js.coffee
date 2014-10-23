@@ -27,11 +27,8 @@
   API =
     getNavs: ->
       new Entities.NavsCollection [
-        { divider: true }
-        { name: "Dashboard", url: "#dashboard", icon: ""}
-        { name: "Campaigns", url: "#campaigns", icon: ""}
-        { name: "Profile",   url: "#profile",   icon: ""}
-        { name: "Settings",  url: "#settings",  icon: ""}
+        { name: "Campaigns", url: "#campaigns", icon: "" }
+        { name: "Surveys", url: "#home", icon: "" }
       ]
 
   App.reqres.setHandler "nav:entities", ->
