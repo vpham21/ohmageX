@@ -4,7 +4,7 @@
     tagName: 'li'
     template: "campaigns/list/campaign_item"
     triggers:
-      "click": "survey:clicked"
+      "click": "campaign:clicked"
 
   class List.Campaigns extends App.Views.CompositeView
     template: "campaigns/list/campaigns"
