@@ -7,18 +7,18 @@
 
   class List.Controller extends App.Controllers.Application
 
-    initialize: ->
-      @layout = @getLayoutView()
+    initialize: (options) ->
+      surveys = App.request "campaign:surveys", options.campaign_id
+      @layout = @getLayoutView surveys
 
       @listenTo @layout, "show", =>
         console.log "show list layout"
-        @surveysRegion()
+        @surveysRegion surveys
         @logoutRegion()
 
-      @show @layout
+      @show @layout, loading: true
 
-    surveysRegion: ->
-      surveys = App.request "campaign:surveys"
+    surveysRegion: (surveys) ->
       surveysView = @getSurveysView surveys
 
       @listenTo surveysView, "childview:survey:clicked", (child, args) ->
@@ -43,5 +43,6 @@
       new List.Surveys
         collection: surveys
 
-    getLayoutView: ->
+    getLayoutView: (surveys) ->
       new List.Layout
+        collection: surveys

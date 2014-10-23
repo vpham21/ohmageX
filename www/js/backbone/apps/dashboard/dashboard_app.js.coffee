@@ -13,16 +13,17 @@
           App.historyPrevious()
           return false
     appRoutes:
-      "surveys": "list"
+      "surveys/:campaign_id": "list"
 
   API =
     show: ->
       App.vent.trigger "nav:choose", "Dashboard"
       new DashboardApp.Show.Controller
 
-    list: ->
+    list: (campaign_id) ->
       App.vent.trigger "nav:choose", "Dashboard"
       new DashboardApp.List.Controller
+        campaign_id: campaign_id
 
   App.addInitializer ->
     new DashboardApp.Router
