@@ -13,7 +13,7 @@
           App.historyPrevious()
           return false
     appRoutes:
-      "home": "list"
+      "surveys": "list"
 
   API =
     show: ->

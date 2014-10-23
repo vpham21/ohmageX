@@ -6,6 +6,6 @@
     default_route: ->
       'login'
     dashboard_route: ->
-      'home'
+      'campaigns'
 
   new _Routes
