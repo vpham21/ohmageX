@@ -28,7 +28,6 @@
     getNavs: ->
       new Entities.NavsCollection [
         { name: "Campaigns", url: "#campaigns", icon: "" }
-        { name: "Surveys", url: "#home", icon: "" }
       ]
 
   App.reqres.setHandler "nav:entities", ->
