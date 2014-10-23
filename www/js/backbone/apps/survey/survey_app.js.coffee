@@ -16,7 +16,7 @@
     show: (id) ->
       console.log 'surveyApp show'
 
-      $mySurveyXML = App.request "survey:xml", id # gets the jQuery Survey XML by ID
+      $mySurveyXML = App.request "campaign:survey:xml", id # gets the jQuery Survey XML by ID
       # initialize both the flow and response objects with jQuery Survey XML
       try
         App.execute "flow:init", $mySurveyXML
