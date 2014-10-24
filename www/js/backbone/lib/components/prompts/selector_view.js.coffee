@@ -17,6 +17,12 @@
     gatherResponses: (surveyId, stepId) =>
       response = @$el.find('input[type=text]').val()
       @trigger "response:submit", response, surveyId, stepId
+    serializeData: ->
+      data = @model.toJSON()
+      console.log 'serializeData data', data
+      if !data.currentValue
+        data.currentValue = ''
+      data
 
   class Prompts.Number extends Prompts.Base
     template: "prompts/number"
