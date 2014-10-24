@@ -46,6 +46,12 @@
     triggers:
       "click button.increment": "value:increment"
       "click button.decrement": "value:decrement"
+    serializeData: ->
+      data = @model.toJSON()
+      console.log 'serializeData data', data
+      if !data.currentValue
+        data.currentValue = ''
+      data
 
   class Prompts.Timestamp extends Prompts.Base
     template: "prompts/timestamp"
