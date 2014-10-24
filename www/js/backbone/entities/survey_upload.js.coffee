@@ -38,14 +38,17 @@
           active_triggers: []
         responses: submitResponses
 
+      campaign_urn = App.request "campaign:survey:urn", surveyId
+      myCampaign = App.request "campaign:entity", campaign_urn
+
       if location
         # if the location status is unavailable,
         # it is an error to send a location object.
         submitSurveys.location = location
 
       completeSubmit = 
-        campaign_urn: 'urn:campaign:ca:ucla:oit:PromptTypesCondition'
-        campaign_creation_timestamp: '2014-10-10 10:40:34'
+        campaign_urn: campaign_urn
+        campaign_creation_timestamp: myCampaign.get 'creation_timestamp'
         user: submitCredentials.get 'username'
         password: submitCredentials.get 'password'
         client: 'ohmage-mwf-dw'

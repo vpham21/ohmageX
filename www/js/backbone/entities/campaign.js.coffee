@@ -15,11 +15,11 @@
       urn = options.data.campaign_urn_list
       campaignXML = response.data[urn].xml
       $surveys = @getSurveyXML campaignXML
-      @parseSurveysXML $surveys
+      @parseSurveysXML $surveys, urn
     getSurveyXML: (rawXML) ->
       $XML = $( $.parseXML(rawXML) )
       $XML.find 'survey'
-    parseSurveysXML: ($surveysXML) ->
+    parseSurveysXML: ($surveysXML, urn) ->
       _.map($surveysXML, (survey) ->
         $survey = $(survey)
         {
@@ -27,6 +27,7 @@
           title: $survey.tagText('title')
           description: $survey.tagText('description')
           $xml: $survey
+          campaign_urn: urn
         }
       )
 
@@ -49,12 +50,15 @@
         error: (collection, response, options) =>
           console.log 'surveys fetch error'
       currentSurveys
-    getSurveyXML: (id) ->
+    getSurveyAttr: (id, key) ->
       mySurvey = currentSurveys.get id
-      mySurvey.get '$xml'
+      mySurvey.get key
 
   App.reqres.setHandler "campaign:surveys", (id) ->
     API.getSurveys id
 
   App.reqres.setHandler "campaign:survey:xml", (id) ->
-    API.getSurveyXML id
+    API.getSurveyAttr id, '$xml'
+
+  App.reqres.setHandler "campaign:survey:urn", (id) ->
+    API.getSurveyAttr id, 'campaign_urn'

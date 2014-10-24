@@ -52,9 +52,14 @@
         error: (collection, response, options) =>
           console.log 'campaign fetch error'
       currentCampaignsUser
+    getCampaign: (id) ->
+      currentCampaignsUser.get id
 
   App.on "before:start", ->
     API.init()
+
+  App.reqres.setHandler "campaign:entity", (id) ->
+    API.getCampaign id
 
   App.reqres.setHandler "campaigns:user", ->
     API.getCampaigns()
