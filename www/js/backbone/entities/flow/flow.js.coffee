@@ -80,7 +80,6 @@
       result
     destroyFlow: ->
       currentFlow = false
-      App.execute "xml:destroy"
 
   App.commands.setHandler "flow:init", ($surveyXML) ->
     API.init $surveyXML
