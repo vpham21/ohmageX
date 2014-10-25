@@ -16,10 +16,6 @@
       "surveys/:campaign_id": "list"
 
   API =
-    show: ->
-      App.vent.trigger "nav:choose", "Dashboard"
-      new DashboardApp.Show.Controller
-
     list: (campaign_id) ->
       App.vent.trigger "nav:choose", "Dashboard"
       new DashboardApp.List.Controller
