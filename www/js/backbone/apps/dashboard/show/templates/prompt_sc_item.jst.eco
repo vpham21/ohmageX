@@ -1,1 +1,0 @@
-<input type="radio" name="<%= @parentId %>" value="<%= @key %>" /> <%= @label %>
