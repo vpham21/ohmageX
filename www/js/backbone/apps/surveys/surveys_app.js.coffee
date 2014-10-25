@@ -1,6 +1,6 @@
-@Ohmage.module "DashboardApp", (DashboardApp, App, Backbone, Marionette, $, _) ->
+@Ohmage.module "SurveysApp", (SurveysApp, App, Backbone, Marionette, $, _) ->
 
-  class DashboardApp.Router extends Marionette.AppRouter
+  class SurveysApp.Router extends Marionette.AppRouter
     before: ->
       surveyActive = App.request "surveytracker:active"
       if surveyActive
@@ -18,11 +18,11 @@
   API =
     list: (campaign_id) ->
       App.vent.trigger "nav:choose", "Dashboard"
-      new DashboardApp.List.Controller
+      new SurveysApp.List.Controller
         campaign_id: campaign_id
 
   App.addInitializer ->
-    new DashboardApp.Router
+    new SurveysApp.Router
       controller: API
   
   App.vent.on "survey:list:item:clicked", (model) ->
