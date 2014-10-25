@@ -1,9 +1,7 @@
-@Ohmage.module "DashboardApp.List", (List, App, Backbone, Marionette, $, _) ->
+@Ohmage.module "SurveysApp.List", (List, App, Backbone, Marionette, $, _) ->
 
-  # Dashboard currently renders a series of prompts in sequence on a single page,
-  # showing that the XML is being parsed and rendering templates as a result.
-  # These are added to a Layout containing multiple individual regions
-  # with each region assigned an individual Prompt.
+  # Surveys List currently renders a list of ALL available surveys
+  # for a user, retrieved from the server.
 
   class List.Controller extends App.Controllers.Application
 
