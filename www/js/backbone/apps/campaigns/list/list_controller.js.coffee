@@ -21,6 +21,10 @@
 
       @show campaignsView, region: @layout.listRegion
 
+    getSearchView: (campaigns) ->
+      new List.Search
+        collection: campaigns
+
     getCampaignsView: (campaigns) ->
       new List.Campaigns
         collection: campaigns
