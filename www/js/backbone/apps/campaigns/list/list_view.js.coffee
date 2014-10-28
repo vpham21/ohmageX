@@ -23,6 +23,8 @@
       "click": "campaign:clicked"
 
   class List.Campaigns extends App.Views.CompositeView
+    initialize: ->
+      @listenTo @collection, 'reset', @render
     template: "campaigns/list/campaigns"
     childView: List.Campaign
     childViewContainer: ".campaigns"
