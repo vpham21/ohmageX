@@ -15,3 +15,4 @@
     template: "campaigns/list/list_layout"
     regions:
       listRegion: "#list-region"
+      searchRegion: "#search-region"
