@@ -3,14 +3,21 @@
   class List.Controller extends App.Controllers.Application
 
     initialize: ->
-      campaigns = App.request "campaigns:user"
+      campaigns = App.request "campaigns:filtered", App.request("campaigns:user")
       @layout = @getLayoutView campaigns
 
       @listenTo @layout, "show", =>
         console.log "show campaigns list layout"
+        @searchRegion campaigns
         @campaignsRegion campaigns
 
       @show @layout, loading: true
+
+    searchRegion: (campaigns) ->
+      searchView = @getSearchView campaigns
+
+      @show searchView, region: @layout.searchRegion
+
 
     campaignsRegion: (campaigns) ->
       campaignsView = @getCampaignsView campaigns
