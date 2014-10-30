@@ -21,6 +21,10 @@
       # parse the response data into values ready to be added
       # to the Collection of User Campaigns.
 
+      # Collect all savedIDs for later filtering.
+      savedIDs = options.saved_campaigns.pluck 'id'
+      console.log "savedIDs",savedIDs
+
       # Only want to create a Campaign entry for a campaign 
       # that is valid.
       # The .map() creates a new array, each key is object or false.
