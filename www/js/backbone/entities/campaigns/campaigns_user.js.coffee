@@ -111,9 +111,14 @@
         saved_campaigns: App.request 'campaigns:saved:current'
         success: (collection, response, options) =>
           console.log 'campaign fetch success', response, collection
+          @saveLocalCampaigns response, collection
         error: (collection, response, options) =>
           console.log 'campaign fetch error'
       currentCampaignsUser
+    saveLocalCampaigns: (response, collection) ->
+      # update localStorage index campaigns_user with the current version of campaignsUser entity
+      App.execute "storage:save", 'campaigns_user', collection.toJSON(), =>
+        console.log "campaignsUser entity saved in localStorage"
     getCampaign: (id) ->
       currentCampaignsUser.get id
     clear: ->
