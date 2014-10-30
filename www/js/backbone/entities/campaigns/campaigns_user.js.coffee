@@ -119,6 +119,14 @@
       # update localStorage index campaigns_user with the current version of campaignsUser entity
       App.execute "storage:save", 'campaigns_user', collection.toJSON(), =>
         console.log "campaignsUser entity saved in localStorage"
+
+    getCampaigns: ->
+      if currentCampaignsUser.length < 1
+        # fetch the campaign object from the server and sync,
+        # because our current version is empty
+        @syncCampaigns()
+      else
+        currentCampaignsUser
     getCampaign: (id) ->
       currentCampaignsUser.get id
     clear: ->
