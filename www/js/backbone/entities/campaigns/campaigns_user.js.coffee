@@ -41,6 +41,11 @@
           }
         else
           return false
+
+        # before we go through the checks, we assume that a given
+        # campaign is going to be "available"
+        myStatus = 'available'
+
         if hasMatchingSaved
           # remove the matching campaign from our list of
           # saved IDs.
