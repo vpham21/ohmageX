@@ -98,6 +98,7 @@
         console.log 'user campaigns not retrieved from storage'
         currentCampaignsUser = new Entities.CampaignsUser
 
+    syncCampaigns: ->
       credentials = App.request "credentials:current"
       currentCampaignsUser.fetch
         reset: true
@@ -107,6 +108,7 @@
           password: credentials.get 'password'
           client: 'ohmage-mwf-dw-browser'
           output_format: 'short'
+        saved_campaigns: App.request 'campaigns:saved:current'
         success: (collection, response, options) =>
           console.log 'campaign fetch success', response, collection
         error: (collection, response, options) =>
