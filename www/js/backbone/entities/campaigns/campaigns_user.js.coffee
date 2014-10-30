@@ -41,6 +41,21 @@
           }
         else
           return false
+        if hasMatchingSaved
+          # remove the matching campaign from our list of
+          # saved IDs.
+          savedIDs = _.without savedIDs, key
+
+          if hasMatchingTimestamp
+            if isRunningCampaign
+              # timestamp matches, campaign isn't running
+              myStatus = 'saved'
+            else
+              # timestamp matches, campaign isn't running
+              myStatus = 'ghost_stopped'
+          else
+            # timestamp doesn't match
+            myStatus = 'ghost_outdated'
       ).filter((result) -> !!result).value()
 
   API =
