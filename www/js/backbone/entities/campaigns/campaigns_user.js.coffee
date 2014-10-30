@@ -40,6 +40,9 @@
             description: value.description
           }
         else
+        if !hasMatchingSaved and !isRunningCampaign
+          # filter invalid (non-running without matching saved
+          # campaigns) campaigns from results completely.
           return false
 
         # before we go through the checks, we assume that a given
