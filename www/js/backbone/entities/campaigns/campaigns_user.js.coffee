@@ -25,6 +25,10 @@
       # that is valid.
       # The .map() creates a new array, each key is object or false.
       # The .filter() removes the false keys.
+        matchingSaved = options.saved_campaigns.get(key)
+        hasMatchingSaved = typeof matchingSaved isnt 'undefined'
+        isRunningCampaign = value.running_state is "running"
+        hasMatchingTimestamp = hasMatchingSaved and matchingSaved.get('timestamp') is value.timestamp
 
       _.chain(response.data).map((value, key) ->
         isValidCampaign = value.running_state is "running"
