@@ -90,8 +90,14 @@
 
   API =
     init: ->
-      currentCampaignsUser = new Entities.CampaignsUser
-    getCampaigns: ->
+      App.request "storage:get", 'campaigns_user', ((result) =>
+        # user campaigns retrieved from raw JSON.
+        console.log 'user campaigns retrieved from storage'
+        currentCampaignsUser = new Entities.CampaignsUser result
+      ), =>
+        console.log 'user campaigns not retrieved from storage'
+        currentCampaignsUser = new Entities.CampaignsUser
+
       credentials = App.request "credentials:current"
       currentCampaignsUser.fetch
         reset: true
