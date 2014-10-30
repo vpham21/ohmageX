@@ -1,8 +1,13 @@
 @Ohmage.module "Entities", (Entities, App, Backbone, Marionette, $, _) ->
 
-  # The CampaignsUser entity provides an interface for user Campaigns,
-  # which are the complete campaigns available to the current logged-in user.
+  # The CampaignsUser entity provides an interface for user Campaigns.
   # Campaigns can be retrieved by URN.
+  # Campaign Status Codes:
+  # available - campaign NOT saved, is available to the user to download
+  # saved     - campaign saved locally, and surveys can be taken
+  # ghost_stopped     - campaign saved locally, remote campaign stopped
+  # ghost_outdated    - campaign saved locally, remote campaign wrong timestamp
+  # ghost_nonexistent - campaign saved locally, remote campaign doesn't exist
 
   currentCampaignsUser = false
 
