@@ -25,21 +25,12 @@
       # that is valid.
       # The .map() creates a new array, each key is object or false.
       # The .filter() removes the false keys.
+      user = _.chain(response.data).map((value, key) =>
         matchingSaved = options.saved_campaigns.get(key)
         hasMatchingSaved = typeof matchingSaved isnt 'undefined'
         isRunningCampaign = value.running_state is "running"
         hasMatchingTimestamp = hasMatchingSaved and matchingSaved.get('timestamp') is value.timestamp
 
-      _.chain(response.data).map((value, key) ->
-        isValidCampaign = value.running_state is "running"
-        if isValidCampaign
-          return {
-            id: key # campaign URN
-            creation_timestamp: value.creation_timestamp
-            name: value.name
-            description: value.description
-          }
-        else
         if !hasMatchingSaved and !isRunningCampaign
           # filter invalid (non-running without matching saved
           # campaigns) campaigns from results completely.
@@ -64,6 +55,15 @@
           else
             # timestamp doesn't match
             myStatus = 'ghost_outdated'
+
+        return {
+          id: key # campaign URN
+          creation_timestamp: value.creation_timestamp
+          name: "#{myStatus} #{value.name}"
+          description: value.description
+          status: myStatus
+        }
+
       ).filter((result) -> !!result).value()
 
   API =
