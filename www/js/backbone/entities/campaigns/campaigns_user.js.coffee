@@ -114,6 +114,12 @@
       currentCampaignsUser
     getCampaign: (id) ->
       currentCampaignsUser.get id
+    clear: ->
+      currentCampaignsUser = new Entities.CampaignsUser
+
+      App.execute "storage:clear", 'campaigns_user', ->
+        console.log 'user campaigns erased'
+        App.vent.trigger "campaigns:user:cleared"
 
   App.on "before:start", ->
     API.init()
@@ -123,3 +129,6 @@
 
   App.reqres.setHandler "campaigns:user", ->
     API.getCampaigns()
+
+  App.commands.setHandler "campaigns:user:clear", ->
+    API.clear()
