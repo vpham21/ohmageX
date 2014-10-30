@@ -23,6 +23,20 @@
     getCampaignsSaved: ->
       currentCampaignsSaved
 
+    saveCampaign: (campaign) ->
+      currentCampaignsSaved.add campaign
+      @updateLocal()
+
+    unsaveCampaign: (id) ->
+      removed = currentCampaignsSaved.get id
+      currentCampaignsSaved.remove removed
+      @updateLocal()
+
+    updateLocal: ->
+      # update localStorage index campaigns_saved with the current version of campaignsSaved entity
+      App.execute "storage:save", 'campaigns_saved', currentCampaignsSaved.toJSON(), =>
+        console.log "campaignsSaved entity saved in localStorage"
+
     clear: ->
       currentCampaignsSaved = new Entities.CampaignsSaved
 
@@ -35,6 +49,13 @@
 
   App.reqres.setHandler "campaigns:saved:current", ->
     API.getCampaignsSaved()
+
+  App.commands.setHandler "campaign:save", (campaign) ->
+    # expects campaign to be a Model or JSON format.
+    API.saveCampaign campaign
+
+  App.commands.setHandler "campaign:unsave", (id) ->
+    API.unsaveCampaign id
 
   App.commands.setHandler "campaigns:saved:clear", ->
     API.clear()
