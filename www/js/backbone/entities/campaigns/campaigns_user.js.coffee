@@ -145,5 +145,8 @@
   App.reqres.setHandler "campaigns:user", ->
     API.getCampaigns()
 
+  App.commands.setHandler "campaigns:sync", ->
+    API.syncCampaigns()
+
   App.commands.setHandler "campaigns:user:clear", ->
     API.clear()
