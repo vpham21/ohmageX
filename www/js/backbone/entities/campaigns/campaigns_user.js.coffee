@@ -51,7 +51,7 @@
 
           if hasMatchingTimestamp
             if isRunningCampaign
-              # timestamp matches, campaign isn't running
+              # timestamp matches, campaign is running
               myStatus = 'saved'
             else
               # timestamp matches, campaign isn't running
