@@ -33,7 +33,7 @@
         matchingSaved = options.saved_campaigns.get(key)
         hasMatchingSaved = typeof matchingSaved isnt 'undefined'
         isRunningCampaign = value.running_state is "running"
-        hasMatchingTimestamp = hasMatchingSaved and matchingSaved.get('timestamp') is value.timestamp
+        hasMatchingTimestamp = hasMatchingSaved and matchingSaved.get('creation_timestamp') is value.creation_timestamp
 
         if !hasMatchingSaved and !isRunningCampaign
           # filter invalid (non-running without matching saved
