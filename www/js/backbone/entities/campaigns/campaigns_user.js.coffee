@@ -69,11 +69,14 @@
         }
 
       ).filter((result) -> !!result).value()
+      user = @_appendNonexistent savedIDs, user, options.saved_campaigns
+      user
+    _appendNonexistent: (savedIDs, user, saved_campaigns) ->
       if savedIDs.length > 0
         # We have saved IDs that are not part of the existing user campaigns.
         # Create new ghost saved campaign entries for later merging into the final result.
         saved = _.map(savedIDs, (id) =>
-          myCampaign = options.saved_campaigns.get id
+          myCampaign = saved_campaigns.get id
           myStatus = 'ghost_nonexistent'
           return {
             id: myCampaign.get 'id'
@@ -85,8 +88,9 @@
         )
         console.log "new saved", saved
         # merge ghosted campaigns into our final result.
-        user = _.uniq( _.union(user, saved), false, (item, key, id) -> item.id)
-      user
+        return _.uniq( _.union(user, saved), false, (item, key, id) -> item.id )
+      else
+        return user
 
   API =
     init: ->
