@@ -93,7 +93,7 @@
         return user
 
   API =
-    init: ->
+    init: (saved_campaigns) ->
       App.request "storage:get", 'campaigns_user', ((result) =>
         # user campaigns retrieved from raw JSON.
         console.log 'user campaigns retrieved from storage'
@@ -142,9 +142,11 @@
 
   App.vent.on "campaigns:saved:init:success", ->
     console.log "campaigns:saved:init:success"
+    API.init App.request("campaigns:saved:current")
 
   App.vent.on "campaigns:saved:init:failure", ->
     console.log "campaigns:saved:init:failure"
+    API.init false
 
   App.reqres.setHandler "campaign:entity", (id) ->
     API.getCampaign id
