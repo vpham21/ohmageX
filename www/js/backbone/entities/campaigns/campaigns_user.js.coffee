@@ -98,10 +98,38 @@
         # user campaigns retrieved from raw JSON.
         console.log 'user campaigns retrieved from storage'
         currentCampaignsUser = new Entities.CampaignsUser result
+        @syncUserWithSaved(saved_campaigns)
       ), =>
         console.log 'user campaigns not retrieved from storage'
         currentCampaignsUser = new Entities.CampaignsUser
 
+    syncUserWithSaved: (saved_campaigns) ->
+      console.log 'syncUserWithSaved', saved_campaigns
+      sync = currentCampaignsUser.chain().map((user_campaign) ->
+        myStatus = user_campaign.get 'status'
+        myId = user_campaign.get 'id'
+        if saved_campaigns isnt false
+          if myStatus is 'saved' or myStatus is 'available'
+            matchingSaved = saved_campaigns.get myId
+            hasMatchingSaved = typeof matchingSaved isnt 'undefined'
+            if hasMatchingSaved
+              user_campaign.set 'status', 'saved'
+            else
+              user_campaign.set 'status', 'available'
+          return user_campaign
+        else
+          # saved_campaigns is empty
+          if myStatus is 'saved' or myStatus is 'available'
+            # set everything to available
+            user_campaign.set 'status', 'available'
+            return user_campaign
+          else
+            # eliminate all ghosted campaigns
+            return false
+      ).filter((result) -> !!result).value()
+      console.log 'sync', sync
+      currentCampaignsUser.reset sync
+      @saveLocalCampaigns currentCampaignsUser
     syncCampaigns: ->
       credentials = App.request "credentials:current"
       currentCampaignsUser.fetch
