@@ -16,9 +16,11 @@
         # saved campaigns retrieved from raw JSON.
         console.log 'saved campaigns retrieved from storage'
         currentCampaignsSaved = new Entities.CampaignsSaved result
+        App.vent.trigger "campaigns:saved:init:success"
       ), =>
         console.log 'saved campaigns not retrieved from storage'
         currentCampaignsSaved = new Entities.CampaignsSaved
+        App.vent.trigger "campaigns:saved:init:failure"
 
     getCampaignsSaved: ->
       currentCampaignsSaved

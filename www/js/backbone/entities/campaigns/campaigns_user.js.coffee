@@ -93,15 +93,43 @@
         return user
 
   API =
-    init: ->
+    init: (saved_campaigns) ->
       App.request "storage:get", 'campaigns_user', ((result) =>
         # user campaigns retrieved from raw JSON.
         console.log 'user campaigns retrieved from storage'
         currentCampaignsUser = new Entities.CampaignsUser result
+        @syncUserWithSaved(saved_campaigns)
       ), =>
         console.log 'user campaigns not retrieved from storage'
         currentCampaignsUser = new Entities.CampaignsUser
 
+    syncUserWithSaved: (saved_campaigns) ->
+      console.log 'syncUserWithSaved', saved_campaigns
+      sync = currentCampaignsUser.chain().map((user_campaign) ->
+        myStatus = user_campaign.get 'status'
+        myId = user_campaign.get 'id'
+        if saved_campaigns isnt false
+          if myStatus is 'saved' or myStatus is 'available'
+            matchingSaved = saved_campaigns.get myId
+            hasMatchingSaved = typeof matchingSaved isnt 'undefined'
+            if hasMatchingSaved
+              user_campaign.set 'status', 'saved'
+            else
+              user_campaign.set 'status', 'available'
+          return user_campaign
+        else
+          # saved_campaigns is empty
+          if myStatus is 'saved' or myStatus is 'available'
+            # set everything to available
+            user_campaign.set 'status', 'available'
+            return user_campaign
+          else
+            # eliminate all ghosted campaigns
+            return false
+      ).filter((result) -> !!result).value()
+      console.log 'sync', sync
+      currentCampaignsUser.reset sync
+      @saveLocalCampaigns currentCampaignsUser
     syncCampaigns: ->
       credentials = App.request "credentials:current"
       currentCampaignsUser.fetch
@@ -115,11 +143,11 @@
         saved_campaigns: App.request 'campaigns:saved:current'
         success: (collection, response, options) =>
           console.log 'campaign fetch success', response, collection
-          @saveLocalCampaigns response, collection
+          @saveLocalCampaigns collection
         error: (collection, response, options) =>
           console.log 'campaign fetch error'
       currentCampaignsUser
-    saveLocalCampaigns: (response, collection) ->
+    saveLocalCampaigns: (collection) ->
       # update localStorage index campaigns_user with the current version of campaignsUser entity
       App.execute "storage:save", 'campaigns_user', collection.toJSON(), =>
         console.log "campaignsUser entity saved in localStorage"
@@ -140,8 +168,13 @@
         console.log 'user campaigns erased'
         App.vent.trigger "campaigns:user:cleared"
 
-  App.on "before:start", ->
-    API.init()
+  App.vent.on "campaigns:saved:init:success", ->
+    console.log "campaigns:saved:init:success"
+    API.init App.request("campaigns:saved:current")
+
+  App.vent.on "campaigns:saved:init:failure", ->
+    console.log "campaigns:saved:init:failure"
+    API.init false
 
   App.reqres.setHandler "campaign:entity", (id) ->
     API.getCampaign id
