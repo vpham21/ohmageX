@@ -140,8 +140,11 @@
         console.log 'user campaigns erased'
         App.vent.trigger "campaigns:user:cleared"
 
-  App.on "before:start", ->
-    API.init()
+  App.vent.on "campaigns:saved:init:success", ->
+    console.log "campaigns:saved:init:success"
+
+  App.vent.on "campaigns:saved:init:failure", ->
+    console.log "campaigns:saved:init:failure"
 
   App.reqres.setHandler "campaign:entity", (id) ->
     API.getCampaign id
