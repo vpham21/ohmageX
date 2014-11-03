@@ -179,6 +179,8 @@
     console.log "campaigns:saved:init:failure"
     API.init false
 
+  App.vent.on "campaign:saved:add", (id) ->
+    API.setCampaignStatus id, 'saved'
   App.reqres.setHandler "campaign:entity", (id) ->
     API.getCampaign id
 
