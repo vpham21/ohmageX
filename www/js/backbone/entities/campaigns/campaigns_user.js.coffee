@@ -164,6 +164,17 @@
     setCampaignStatus: (id, status) ->
       console.log 'setCampaignStatus'
       currentCampaignsUser.get(id).set('status', status)
+    removeCampaign: (id) ->
+      console.log 'removeCampaign'
+      myCampaign = currentCampaignsUser.get id
+      switch myCampaign.get('status')
+        when 'available'
+          throw new Error "Invalid attempt to remove an available campaign: #{id}"
+        when 'saved'
+          myCampaign.set('status', 'available')
+        else
+          currentCampaignsUser.remove myCampaign
+          @saveLocalCampaigns currentCampaignsUser
     clear: ->
       currentCampaignsUser = new Entities.CampaignsUser
 
@@ -181,6 +192,10 @@
 
   App.vent.on "campaign:saved:add", (id) ->
     API.setCampaignStatus id, 'saved'
+
+  App.vent.on "campaign:saved:remove", (id) ->
+    API.removeCampaign id
+
   App.reqres.setHandler "campaign:entity", (id) ->
     API.getCampaign id
 
