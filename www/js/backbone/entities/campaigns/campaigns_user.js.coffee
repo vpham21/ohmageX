@@ -161,6 +161,9 @@
         currentCampaignsUser
     getCampaign: (id) ->
       currentCampaignsUser.get id
+    setCampaignStatus: (id, status) ->
+      console.log 'setCampaignStatus'
+      currentCampaignsUser.get(id).set('status', status)
     clear: ->
       currentCampaignsUser = new Entities.CampaignsUser
 
