@@ -26,18 +26,25 @@
       currentCampaignsSaved
 
     saveCampaign: (campaign) ->
+      # expects campaign to be a Model or JSON format.
+      campaign.set 'status', 'saved'
       currentCampaignsSaved.add campaign
-      @updateLocal()
+      @updateLocal( =>
+        console.log "campaignsSaved entity saved in localStorage"
+        App.vent.trigger "campaign:saved:add", campaign.get 'id'
+      )
 
     unsaveCampaign: (id) ->
       removed = currentCampaignsSaved.get id
       currentCampaignsSaved.remove removed
-      @updateLocal()
+      @updateLocal( =>
+        console.log "campaignsSaved entity removed from localStorage"
+        App.vent.trigger "campaign:saved:remove", id
+      )
 
-    updateLocal: ->
+    updateLocal: (callback) ->
       # update localStorage index campaigns_saved with the current version of campaignsSaved entity
-      App.execute "storage:save", 'campaigns_saved', currentCampaignsSaved.toJSON(), =>
-        console.log "campaignsSaved entity saved in localStorage"
+      App.execute "storage:save", 'campaigns_saved', currentCampaignsSaved.toJSON(), callback
 
     clear: ->
       currentCampaignsSaved = new Entities.CampaignsSaved
@@ -52,9 +59,12 @@
   App.reqres.setHandler "campaigns:saved:current", ->
     API.getCampaignsSaved()
 
-  App.commands.setHandler "campaign:save", (campaign) ->
-    # expects campaign to be a Model or JSON format.
-    API.saveCampaign campaign
+  App.commands.setHandler "campaign:save", (id) ->
+    API.saveCampaign App.request('campaign:entity', id)
+
+  App.commands.setHandler "debug:campaign:modify", (id, JSON) ->
+    myCampaign = currentCampaignsSaved.get id
+    myCampaign.set JSON
 
   App.commands.setHandler "campaign:unsave", (id) ->
     API.unsaveCampaign id

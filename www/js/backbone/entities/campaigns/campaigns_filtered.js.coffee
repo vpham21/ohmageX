@@ -30,6 +30,11 @@
       campaigns.on "reset", ->
         filtered.where filtered._currentCriteria
 
+      campaigns.on "remove", (model) ->
+        # ensure the filtered list also updates when
+        # user campaigns are removed.
+        filtered.remove model
+
       if campaigns.length > 0
         # repopulates the list if our campaigns list starts out not empty,
         # such as when navigating back to the campaigns list when

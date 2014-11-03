@@ -63,7 +63,7 @@
         return {
           id: key # campaign URN
           creation_timestamp: value.creation_timestamp
-          name: "#{myStatus} #{value.name}"
+          name: value.name
           description: value.description
           status: myStatus
         }
@@ -81,7 +81,7 @@
           return {
             id: myCampaign.get 'id'
             creation_timestamp: myCampaign.get 'creation_timestamp'
-            name: "#{myStatus} #{myCampaign.get('name')}"
+            name: myCampaign.get 'name'
             description: myCampaign.get 'description'
             status: 'ghost_nonexistent'
           }
@@ -161,6 +161,20 @@
         currentCampaignsUser
     getCampaign: (id) ->
       currentCampaignsUser.get id
+    setCampaignStatus: (id, status) ->
+      console.log 'setCampaignStatus'
+      currentCampaignsUser.get(id).set('status', status)
+    removeCampaign: (id) ->
+      console.log 'removeCampaign'
+      myCampaign = currentCampaignsUser.get id
+      switch myCampaign.get('status')
+        when 'available'
+          throw new Error "Invalid attempt to remove an available campaign: #{id}"
+        when 'saved'
+          myCampaign.set('status', 'available')
+        else
+          currentCampaignsUser.remove myCampaign
+          @saveLocalCampaigns currentCampaignsUser
     clear: ->
       currentCampaignsUser = new Entities.CampaignsUser
 
@@ -175,6 +189,12 @@
   App.vent.on "campaigns:saved:init:failure", ->
     console.log "campaigns:saved:init:failure"
     API.init false
+
+  App.vent.on "campaign:saved:add", (id) ->
+    API.setCampaignStatus id, 'saved'
+
+  App.vent.on "campaign:saved:remove", (id) ->
+    API.removeCampaign id
 
   App.reqres.setHandler "campaign:entity", (id) ->
     API.getCampaign id
