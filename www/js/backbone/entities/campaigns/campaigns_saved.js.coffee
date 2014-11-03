@@ -62,6 +62,10 @@
   App.commands.setHandler "campaign:save", (id) ->
     API.saveCampaign App.request('campaign:entity', id)
 
+  App.commands.setHandler "debug:campaign:modify", (id, JSON) ->
+    myCampaign = currentCampaignsSaved.get id
+    myCampaign.set JSON
+
   App.commands.setHandler "campaign:unsave", (id) ->
     API.unsaveCampaign id
 
