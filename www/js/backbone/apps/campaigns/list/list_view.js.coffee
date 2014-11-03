@@ -20,7 +20,7 @@
     tagName: 'li'
     template: "campaigns/list/campaign_item"
     triggers:
-      "click": "campaign:clicked"
+      "click h3": "campaign:clicked"
 
   class List.Campaigns extends App.Views.CompositeView
     initialize: ->
