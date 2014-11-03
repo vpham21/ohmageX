@@ -63,7 +63,7 @@
         return {
           id: key # campaign URN
           creation_timestamp: value.creation_timestamp
-          name: "#{myStatus} #{value.name}"
+          name: value.name
           description: value.description
           status: myStatus
         }
@@ -81,7 +81,7 @@
           return {
             id: myCampaign.get 'id'
             creation_timestamp: myCampaign.get 'creation_timestamp'
-            name: "#{myStatus} #{myCampaign.get('name')}"
+            name: myCampaign.get 'name'
             description: myCampaign.get 'description'
             status: 'ghost_nonexistent'
           }
