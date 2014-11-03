@@ -27,6 +27,7 @@
   class List.Campaigns extends App.Views.CompositeView
     initialize: ->
       @listenTo @collection, 'reset', @render
+      @listenTo @collection, 'remove', @render
     template: "campaigns/list/campaigns"
     childView: List.Campaign
     childViewContainer: ".campaigns"
