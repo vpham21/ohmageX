@@ -52,9 +52,8 @@
   App.reqres.setHandler "campaigns:saved:current", ->
     API.getCampaignsSaved()
 
-  App.commands.setHandler "campaign:save", (campaign) ->
-    # expects campaign to be a Model or JSON format.
-    API.saveCampaign campaign
+  App.commands.setHandler "campaign:save", (id) ->
+    API.saveCampaign App.request('campaign:entity', id)
 
   App.commands.setHandler "campaign:unsave", (id) ->
     API.unsaveCampaign id
