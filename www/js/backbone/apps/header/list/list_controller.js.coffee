@@ -15,6 +15,13 @@
 
       @show listView, region: @layout.listRegion
 
+    buttonRegion: (navs) ->
+      buttonView = App.request "navbuttons:view", navs
+      if buttonView is false
+        @layout.buttonRegion.reset()
+      else
+        @show buttonView, region: @layout.buttonRegion
+
     getListView: (navs) ->
       new List.Header
         collection: navs
