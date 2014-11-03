@@ -17,6 +17,8 @@
       "keyup input": "search:update"
 
   class List.Campaign extends App.Views.ItemView
+    initialize: ->
+      @listenTo @model, 'change', @render
     tagName: 'li'
     template: "campaigns/list/campaign_item"
     triggers:
