@@ -34,10 +34,9 @@
       currentCampaignsSaved.remove removed
       @updateLocal()
 
-    updateLocal: ->
+    updateLocal: (callback) ->
       # update localStorage index campaigns_saved with the current version of campaignsSaved entity
-      App.execute "storage:save", 'campaigns_saved', currentCampaignsSaved.toJSON(), =>
-        console.log "campaignsSaved entity saved in localStorage"
+      App.execute "storage:save", 'campaigns_saved', currentCampaignsSaved.toJSON(), callback
 
     clear: ->
       currentCampaignsSaved = new Entities.CampaignsSaved
