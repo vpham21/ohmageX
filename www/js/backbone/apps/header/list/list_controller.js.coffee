@@ -4,9 +4,21 @@
 
     initialize: (options) ->
       { navs } = options
+      @layout = @getLayoutView navs
+
+      @listenTo @layout, "show", =>
+        @listRegion navs
+      @show @layout
+
+    listRegion: (navs) ->
       listView = @getListView navs
-      @show listView
+
+      @show listView, region: @layout.listRegion
 
     getListView: (navs) ->
       new List.Header
+        collection: navs
+
+    getLayoutView: (navs) ->
+      new List.Layout
         collection: navs
