@@ -20,3 +20,9 @@
     attributes:
       class: "right"
     childView: List.Nav
+
+  class List.Layout extends App.Views.Layout
+    template: "header/list/layout"
+    regions:
+      listRegion: "#list-region"
+      buttonRegion: "#button-region"
