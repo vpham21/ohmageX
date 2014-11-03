@@ -26,8 +26,13 @@
       currentCampaignsSaved
 
     saveCampaign: (campaign) ->
+      # expects campaign to be a Model or JSON format.
+      campaign.set 'status', 'saved'
       currentCampaignsSaved.add campaign
-      @updateLocal()
+      @updateLocal( =>
+        console.log "campaignsSaved entity saved in localStorage"
+        App.vent.trigger "campaign:saved:add", campaign.get 'id'
+      )
 
     unsaveCampaign: (id) ->
       removed = currentCampaignsSaved.get id
