@@ -8,6 +8,13 @@
 
       @listenTo @layout, "show", =>
         @listRegion navs
+
+      @listenTo navs, "change:chosen", (model) =>
+        # this event fires every time all instances of the
+        # `chosen` attribute within the model are changed.
+        # So only render the buttonRegion when our model is "chosen"
+        if model.isChosen() then @buttonRegion(navs)
+
       @show @layout
 
     listRegion: (navs) ->
