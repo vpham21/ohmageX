@@ -32,7 +32,10 @@
     unsaveCampaign: (id) ->
       removed = currentCampaignsSaved.get id
       currentCampaignsSaved.remove removed
-      @updateLocal()
+      @updateLocal( =>
+        console.log "campaignsSaved entity removed from localStorage"
+        App.vent.trigger "campaign:saved:remove", id
+      )
 
     updateLocal: (callback) ->
       # update localStorage index campaigns_saved with the current version of campaignsSaved entity
