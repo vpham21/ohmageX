@@ -21,6 +21,8 @@
     console.log "default:region"
     App.mainRegion
 
+  App.vent.on "nav:choose", (nav) -> App.navs.chooseByName nav
+
   App.on "start", ->
     @startHistory()
     credentials = App.request "credentials:current"

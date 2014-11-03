@@ -1,0 +1,5 @@
+<header>
+Header Template
+<div class="my-region" id="list-region"></div>
+<div class="my-region" id="button-region"></div>
+</header>

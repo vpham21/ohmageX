@@ -15,7 +15,14 @@
     changeChosen: (model, value, options) ->
       @$el.toggleClass "active", value
 
-  class List.Header extends App.Views.CompositeView
-    template: "header/list/header"
+  class List.Header extends App.Views.CollectionView
+    tagName: "ul"
+    attributes:
+      class: "right"
     childView: List.Nav
-    childViewContainer: "#nav-links"
+
+  class List.Layout extends App.Views.Layout
+    template: "header/list/layout"
+    regions:
+      listRegion: "#list-region"
+      buttonRegion: "#button-region"
