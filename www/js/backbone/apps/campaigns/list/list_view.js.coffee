@@ -19,10 +19,29 @@
   class List.Campaign extends App.Views.ItemView
     initialize: ->
       @listenTo @model, 'change', @render
+      @listenTo @, 'ghost:remove:clicked', @confirmRemove
     tagName: 'li'
-    template: "campaigns/list/campaign_item"
+    confirmRemove: ->
+      reason = switch @model.get 'status'
+        when 'ghost_outdated' then 'is out of date'
+        when 'ghost_stopped' then 'is stopped'
+        when 'ghost_nonexistent' then 'does not exist in the system'
+        else throw new Error "Invalid campaign ghost state: #{@model.get 'status'}"
+      if window.confirm("This campaign #{reason}.\nRemove this campaign and any related survey responses?")
+        @trigger "unsave:clicked"
+    getTemplate: ->
+      result = switch @model.get 'status'
+        when 'available' then "campaigns/list/_available_campaign"
+        when 'saved' then "campaigns/list/_saved_campaign"
+        else "campaigns/list/_ghost_campaign"
+      result
     triggers:
-      "click h3": "campaign:clicked"
+      "click .available-campaign button": "save:clicked"
+      "click .available-campaign h3": "save:clicked"
+      "click .saved-campaign button": "unsave:clicked"
+      "click .saved-campaign h3": "navigate:clicked"
+      "click .ghost-campaign button": "ghost:remove:clicked"
+      "click .ghost-campaign h3": "ghost:remove:clicked"
 
   class List.Campaigns extends App.Views.CompositeView
     initialize: ->
