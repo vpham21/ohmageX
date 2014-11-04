@@ -28,7 +28,12 @@
         else "campaigns/list/_ghost_campaign"
       result
     triggers:
-      "click h3": "campaign:clicked"
+      "click .available-campaign button": "save:clicked"
+      "click .available-campaign h3": "save:clicked"
+      "click .saved-campaign button": "unsave:clicked"
+      "click .saved-campaign h3": "navigate:clicked"
+      "click .ghost-campaign button": "ghost:remove:clicked"
+      "click .ghost-campaign h3": "ghost:remove:clicked"
 
   class List.Campaigns extends App.Views.CompositeView
     initialize: ->
