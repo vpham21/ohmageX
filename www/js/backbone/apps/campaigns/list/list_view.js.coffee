@@ -20,7 +20,6 @@
     initialize: ->
       @listenTo @model, 'change', @render
     tagName: 'li'
-    template: "campaigns/list/campaign_item"
     getTemplate: ->
       result = switch @model.get 'status'
         when 'available' then "campaigns/list/_available_campaign"
