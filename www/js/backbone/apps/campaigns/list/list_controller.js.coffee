@@ -22,9 +22,13 @@
     campaignsRegion: (campaigns) ->
       campaignsView = @getCampaignsView campaigns
 
-      @listenTo campaignsView, "childview:campaign:clicked", (child, args) ->
-        console.log 'childview:campaign:clicked args', args.model
-        App.vent.trigger "campaign:list:item:clicked", args.model
+      @listenTo campaignsView, "childview:unsave:clicked", (child, args) ->
+        console.log 'childview:unsave:clicked args', args.model
+        App.vent.trigger "campaign:list:unsave:clicked", args.model
+
+      @listenTo campaignsView, "childview:save:clicked", (child, args) ->
+        console.log 'childview:save:clicked args', args.model
+        App.vent.trigger "campaign:list:save:clicked", args.model
 
       @show campaignsView, region: @layout.listRegion
 
