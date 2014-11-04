@@ -21,6 +21,12 @@
       @listenTo @model, 'change', @render
     tagName: 'li'
     template: "campaigns/list/campaign_item"
+    getTemplate: ->
+      result = switch @model.get 'status'
+        when 'available' then "campaigns/list/_available_campaign"
+        when 'saved' then "campaigns/list/_saved_campaign"
+        else "campaigns/list/_ghost_campaign"
+      result
     triggers:
       "click h3": "campaign:clicked"
 
