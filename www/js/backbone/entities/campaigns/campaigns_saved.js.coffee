@@ -66,6 +66,9 @@
     myCampaign = currentCampaignsSaved.get id
     myCampaign.set JSON
 
+  App.commands.setHandler "campaign:save", (model) ->
+    API.saveCampaign model
+
   App.commands.setHandler "campaign:unsave", (id) ->
     API.unsaveCampaign id
 
