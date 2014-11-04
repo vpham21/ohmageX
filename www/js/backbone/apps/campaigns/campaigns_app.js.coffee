@@ -26,3 +26,9 @@
 
   App.vent.on "campaign:list:item:clicked", (model) ->
     App.navigate "surveys/#{model.get 'id'}", { trigger: true }
+
+  App.vent.on "campaign:list:save:clicked", (model) ->
+    App.execute "campaign:save", model
+
+  App.vent.on "campaign:list:unsave:clicked", (model) ->
+    App.execute "campaign:unsave", model.get 'id'
