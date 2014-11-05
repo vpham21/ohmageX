@@ -6,8 +6,10 @@
   API =
     getSurveyRoot: ($surveyXML) ->
       # return clone of passed-in $surveyXML minus content
-      $result = $('<survey></survey>')
-      $result.append( $surveyXML.children().not('contentList') )
+      $result = $('<xml></xml>')
+      $result.append( $surveyXML.children().children().not('contentList') )
+      console.log 'survey:xml:root', $result.html()
+      $result
 
     getSurveyContent: ($surveyXML) ->
       # return contentList tag from passed-in $surveyXML
