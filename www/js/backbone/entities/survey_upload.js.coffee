@@ -31,14 +31,16 @@
         time: currentTime
         timezone: currentTZ
         location_status: if location then "valid" else "unavailable"
-        survey_id: surveyId
+        survey_id: App.request "survey:saved:server_id", surveyId
         survey_launch_context:
           launch_time: 1411671398146
           launch_timezone: "America/Los_Angeles"
           active_triggers: []
         responses: submitResponses
 
-      campaign_urn = App.request "campaign:survey:urn", surveyId
+      # campaign_urn serves as the "foreign key" between
+      # surveysSaved and CampaignsUser
+      campaign_urn = App.request "survey:saved:urn", surveyId
       myCampaign = App.request "campaign:entity", campaign_urn
 
       if location
