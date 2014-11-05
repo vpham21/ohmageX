@@ -6,7 +6,10 @@
   class List.Controller extends App.Controllers.Application
 
     initialize: (options) ->
-      surveys = App.request "campaign:surveys", options.campaign_id
+      if options.campaign_id
+        surveys = App.request "surveys:saved:campaign", options.campaign_id
+      else
+        surveys = App.request "surveys:saved"
       @layout = @getLayoutView surveys
 
       @listenTo @layout, "show", =>
