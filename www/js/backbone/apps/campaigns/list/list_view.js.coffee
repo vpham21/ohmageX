@@ -28,7 +28,7 @@
         when 'ghost_nonexistent' then 'does not exist in the system'
         else throw new Error "Invalid campaign ghost state: #{@model.get 'status'}"
       if window.confirm("This campaign #{reason}.\nRemove this campaign and any related survey responses?")
-        @trigger "unsave:clicked"
+        @trigger "ghost:unsave:clicked"
     getTemplate: ->
       result = switch @model.get 'status'
         when 'available' then "campaigns/list/_available_campaign"
