@@ -190,10 +190,10 @@
     console.log "campaigns:saved:init:failure"
     API.init false
 
-  App.vent.on "campaign:saved:add", (id) ->
+  App.vent.on "surveys:saved:campaign:fetch:success", (id) ->
     API.setCampaignStatus id, 'saved'
 
-  App.vent.on "campaign:saved:remove", (id) ->
+  App.vent.on "surveys:saved:campaign:remove:success", (id) ->
     API.removeCampaign id
 
   App.reqres.setHandler "campaign:entity", (id) ->
