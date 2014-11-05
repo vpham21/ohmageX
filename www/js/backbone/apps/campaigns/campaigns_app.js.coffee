@@ -24,7 +24,7 @@
     new CampaignsApp.Router
       controller: API
 
-  App.vent.on "campaign:list:item:clicked", (model) ->
+  App.vent.on "campaign:list:navigate:clicked", (model) ->
     App.navigate "surveys/#{model.get 'id'}", { trigger: true }
 
   App.vent.on "campaign:list:save:clicked", (model) ->
