@@ -65,6 +65,7 @@
   App.commands.setHandler "debug:campaign:modify", (id, JSON) ->
     myCampaign = currentCampaignsSaved.get id
     myCampaign.set JSON
+    console.log 'modified campaign', myCampaign.toJSON()
 
   App.commands.setHandler "campaign:save", (model) ->
     API.saveCampaign model
