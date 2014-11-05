@@ -1,2 +1,2 @@
 <h3><%= @title %></h3>
-<p><small><%= @id %></small><%= @description %></p>
+<p><small><%= @server_id %></small><%= @description %></p>
