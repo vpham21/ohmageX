@@ -64,7 +64,8 @@
 
   App.vent.on "survey:upload:success", (response, surveyId) ->
     # Go to the next step if the submit succeeds
-    API.goNext surveyId, "#{surveyId}beforeSurveySubmit"
+    server_id = App.request("survey:saved:server_id", surveyId)
+    API.goNext surveyId, "#{server_id}beforeSurveySubmit"
 
   App.vent.on "survey:aftersubmit:next:clicked", (surveyId, stepId) ->
     App.vent.trigger "survey:exit"
