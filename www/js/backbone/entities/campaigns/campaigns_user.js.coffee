@@ -57,9 +57,11 @@
             else
               # timestamp matches, campaign isn't running
               myStatus = 'ghost_stopped'
+              App.vent.trigger "campaign:user:status:ghost", key, myStatus
           else
             # timestamp doesn't match
             myStatus = 'ghost_outdated'
+            App.vent.trigger "campaign:user:status:ghost", key, myStatus
 
         return {
           id: key # campaign URN
