@@ -43,3 +43,6 @@
       selectorRegion: "#selector-region"
       listRegion: "#list-region"
       logoutRegion: "#logout-region"
+    serializeData: ->
+      data = @collection.findWhere(chosen: true).toJSON()
+      data
