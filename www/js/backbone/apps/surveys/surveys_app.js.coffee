@@ -29,6 +29,9 @@
   App.addInitializer ->
     new SurveysApp.Router
       controller: API
+
+  App.vent.on "survey:list:campaign:selected", (model) ->
+    App.navigate model.get('url'), { trigger: true }
   
   App.vent.on "survey:list:running:clicked", (model) ->
     App.navigate "survey/#{model.get 'id'}", { trigger: true }
