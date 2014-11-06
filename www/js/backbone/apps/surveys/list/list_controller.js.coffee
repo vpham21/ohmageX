@@ -10,8 +10,10 @@
         surveys = App.request "surveys:saved:campaign", options.campaign_id
       else
         surveys = App.request "surveys:saved"
-      @layout = @getLayoutView surveys
+
       selector = App.request "surveys:selector:entities", options.campaign_id
+
+      @layout = @getLayoutView selector
 
       @listenTo selector, "change:chosen", (model) =>
         # this event fires every time all instances of the
@@ -65,6 +67,6 @@
       new List.Surveys
         collection: surveys
 
-    getLayoutView: (surveys) ->
+    getLayoutView: (selector) ->
       new List.Layout
-        collection: surveys
+        collection: selector
