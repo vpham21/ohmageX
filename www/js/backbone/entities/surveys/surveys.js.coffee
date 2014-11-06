@@ -121,6 +121,11 @@
   App.commands.setHandler "debug:surveys:saved:campaign:remove", (campaign_urn) ->
     API.removeSurveys campaign_urn
 
+  App.commands.setHandler "debug:surveys:modify", (id, JSON) ->
+    mySurveys = currentSurveysSaved.get id
+    mySurveys.set JSON
+    console.log 'modified surveys', mySurveys.toJSON()
+
   App.reqres.setHandler "surveys:saved", ->
     currentSurveysSaved
 
