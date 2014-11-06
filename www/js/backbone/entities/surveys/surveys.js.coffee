@@ -6,6 +6,8 @@
   currentSurveysSaved = false
 
   class Entities.SurveySaved extends Entities.Model
+    defaults:
+      status: 'running' # All surveys are running when first created
 
   class Entities.SurveysSaved extends Entities.Collection
     model: Entities.SurveySaved
@@ -18,9 +20,7 @@
       $surveys = @getSurveyXML campaignXML
       @parseSurveysXML $surveys, urn, campaignXML
     getSurveyXML: (rawXML) ->
-      console.log 'rawXML', rawXML
       $XML = $( $.parseXML(rawXML) )
-      console.log '$XML', $XML
       $XML.find 'survey'
     parseSurveysXML: ($surveysXML, urn, campaignXML) ->
       _.map($surveysXML, (survey) ->
@@ -67,15 +67,12 @@
         error: (collection, response, options) =>
           console.log 'surveys fetch error'
           App.vent.trigger 'surveys:saved:campaign:fetch:error', options.data.campaign_urn_list
-    getSurveyAttr: (id, key) ->
-      mySurvey = currentSurveysSaved.get id
-      mySurvey.get key
     getCampaignSurveys: (urn) ->
       surveys = currentSurveysSaved.where 
         campaign_urn: urn
       new Entities.SurveysSaved surveys
     removeSurveys: (urn) ->
-      currentSurveysSaved.remove @getCampaignSurveys(urn)
+      currentSurveysSaved.remove currentSurveysSaved.where(campaign_urn: urn)
       @updateLocal( =>
         App.vent.trigger 'surveys:saved:campaign:remove:success', urn
       )
@@ -122,6 +119,11 @@
 
   App.commands.setHandler "debug:surveys:saved:campaign:remove", (campaign_urn) ->
     API.removeSurveys campaign_urn
+
+  App.commands.setHandler "debug:surveys:modify", (id, JSON) ->
+    mySurveys = currentSurveysSaved.get id
+    mySurveys.set JSON
+    console.log 'modified surveys', mySurveys.toJSON()
 
   App.reqres.setHandler "surveys:saved", ->
     currentSurveysSaved
