@@ -27,7 +27,7 @@
         # someone navigates backwards via hitting the Back Button.
         # this cleans up and exits the survey properly.
         console.log Error
-        App.vent.trigger "survey:exit"
+        App.vent.trigger "survey:exit", id
         return false
 
       App.vent.trigger "survey:start", id
