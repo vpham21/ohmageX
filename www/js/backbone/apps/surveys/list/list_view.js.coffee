@@ -6,10 +6,14 @@
       "click button": "logout:clicked"
 
   class List.Survey extends App.Views.ItemView
+    initialize: ->
+      @listenTo @model, 'change', @render
     tagName: 'li'
-    template: "surveys/list/survey_item"
+    getTemplate: ->
+      if @model.get('status') is 'running' then "surveys/list/_item_running" else "surveys/list/_item_stopped"
     triggers:
-      "click": "survey:clicked"
+      "click .stopped-survey": "stopped:clicked"
+      "click .running-survey": "running:clicked"
 
   class List.Surveys extends App.Views.CompositeView
     template: "surveys/list/surveys"
