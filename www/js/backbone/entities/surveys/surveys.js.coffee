@@ -18,9 +18,7 @@
       $surveys = @getSurveyXML campaignXML
       @parseSurveysXML $surveys, urn, campaignXML
     getSurveyXML: (rawXML) ->
-      console.log 'rawXML', rawXML
       $XML = $( $.parseXML(rawXML) )
-      console.log '$XML', $XML
       $XML.find 'survey'
     parseSurveysXML: ($surveysXML, urn, campaignXML) ->
       _.map($surveysXML, (survey) ->
