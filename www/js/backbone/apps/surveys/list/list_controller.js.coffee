@@ -13,6 +13,12 @@
       @layout = @getLayoutView surveys
       selector = App.request "surveys:selector:entities", options.campaign_id
 
+      @listenTo selector, "change:chosen", (model) =>
+        # this event fires every time all instances of the
+        # `chosen` attribute within the model are changed.
+        # So only activate when our model is "chosen"
+        if model.isChosen() then App.vent.trigger("survey:list:campaign:selected", model)
+
       @listenTo @layout, "show", =>
         console.log "show list layout"
         @selectorRegion selector
