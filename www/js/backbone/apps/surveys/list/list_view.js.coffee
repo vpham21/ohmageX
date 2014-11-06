@@ -15,6 +15,14 @@
       "click .stopped-survey": "stopped:clicked"
       "click .running-survey": "running:clicked"
 
+  class List.SelectorItem extends App.Views.ItemView
+    tagName: "option"
+    template: "surveys/list/_selector_item"
+    attributes: ->
+      options = {}
+      options['value'] = @model.get 'id'
+      if @model.isChosen() then options['selected'] = 'selected'
+      options
   class List.Surveys extends App.Views.CompositeView
     template: "surveys/list/surveys"
     childView: List.Survey
