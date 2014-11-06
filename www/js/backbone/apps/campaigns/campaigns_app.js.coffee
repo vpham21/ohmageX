@@ -32,3 +32,7 @@
 
   App.vent.on "campaign:list:unsave:clicked", (model) ->
     App.execute "campaign:unsave", model.get 'id'
+
+  App.vent.on "campaign:list:ghost:remove:clicked", (model) ->
+    console.log 'model', model
+    App.execute "campaign:ghost:remove", model.get('id'), model.get('status')
