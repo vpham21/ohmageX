@@ -40,5 +40,6 @@
     new SurveyApp.Router
       controller: API
 
-  App.vent.on "survey:exit", ->
-    App.navigate Routes.dashboard_route(), { trigger: true }
+  App.vent.on "survey:exit", (surveyId) ->
+    campaign_urn = App.request "survey:saved:urn", surveyId
+    App.navigate "surveys/#{campaign_urn}", { trigger: true }
