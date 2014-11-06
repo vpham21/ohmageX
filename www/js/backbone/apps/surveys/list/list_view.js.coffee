@@ -23,6 +23,15 @@
       options['value'] = @model.get 'id'
       if @model.isChosen() then options['selected'] = 'selected'
       options
+
+  class List.CampaignsSelector extends App.Views.CollectionView
+    initialize: ->
+      @listenTo @, "campaign:selected", (-> @collection.chooseById @$el.val())
+    tagName: "select"
+    childView: List.SelectorItem
+    triggers: ->
+      "change": "campaign:selected"
+
   class List.Surveys extends App.Views.CompositeView
     template: "surveys/list/surveys"
     childView: List.Survey
