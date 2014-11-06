@@ -53,6 +53,7 @@
             if isRunningCampaign
               # timestamp matches, campaign is running
               myStatus = 'saved'
+              App.vent.trigger "campaign:user:status:saved", key
             else
               # timestamp matches, campaign isn't running
               myStatus = 'ghost_stopped'
