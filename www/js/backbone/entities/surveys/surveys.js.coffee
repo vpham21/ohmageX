@@ -65,9 +65,6 @@
         error: (collection, response, options) =>
           console.log 'surveys fetch error'
           App.vent.trigger 'surveys:saved:campaign:fetch:error', options.data.campaign_urn_list
-    getSurveyAttr: (id, key) ->
-      mySurvey = currentSurveysSaved.get id
-      mySurvey.get key
     getCampaignSurveys: (urn) ->
       surveys = currentSurveysSaved.where 
         campaign_urn: urn
