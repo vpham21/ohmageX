@@ -30,10 +30,8 @@
         console.log 'childview:navigate:clicked args', args.model
         App.vent.trigger "campaign:list:navigate:clicked", args.model
 
-      @listenTo campaignsView, "childview:ghost:unsave:clicked", (args) ->
-        console.log 'childview:ghost:unsave:clicked args', args.model
-        App.vent.trigger "campaign:list:unsave:clicked", args.model
-
+      @listenTo campaignsView, "childview:ghost:remove:clicked", (child, args) ->
+        App.vent.trigger "campaign:list:ghost:remove:clicked", args.model
 
       @listenTo campaignsView, "childview:save:clicked", (child, args) ->
         console.log 'childview:save:clicked args', args.model
