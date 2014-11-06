@@ -24,11 +24,10 @@
         App.execute "responses:init", $mySurveyXML
       catch Error
         # flow was already initialized. This happens if
-        # someone navigates backwards out of a survey
-        # via either URL or via hitting the Back Button.
+        # someone navigates backwards via hitting the Back Button.
         # this cleans up and exits the survey properly.
         console.log Error
-        App.vent.trigger "survey:exit"
+        App.vent.trigger "survey:exit", id
         return false
 
       App.vent.trigger "survey:start", id
@@ -41,5 +40,6 @@
     new SurveyApp.Router
       controller: API
 
-  App.vent.on "survey:exit", ->
-    App.navigate Routes.dashboard_route(), { trigger: true }
+  App.vent.on "survey:exit", (surveyId) ->
+    campaign_urn = App.request "survey:saved:urn", surveyId
+    App.navigate "surveys/#{campaign_urn}", { trigger: true }
