@@ -35,7 +35,8 @@
 
   App.vent.on "survey:list:stopped:clicked", (model) ->
     # Trigger the confirmation box for removing the ghosted campaign.
-    console.log "survey:list:stopped:clicked"
+    campaign_urn = App.request "survey:saved:urn", model.get('id')
+    App.execute "campaign:ghost:remove", campaign_urn, model.get('status')
 
   App.vent.on "survey:list:logout:clicked", ->
     console.log "survey:list:logout:clicked"
