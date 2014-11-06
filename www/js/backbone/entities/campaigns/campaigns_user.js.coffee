@@ -81,12 +81,13 @@
         saved = _.map(savedIDs, (id) =>
           myCampaign = saved_campaigns.get id
           myStatus = 'ghost_nonexistent'
+          App.vent.trigger "campaign:user:status:ghost", id, myStatus
           return {
             id: myCampaign.get 'id'
             creation_timestamp: myCampaign.get 'creation_timestamp'
             name: myCampaign.get 'name'
             description: myCampaign.get 'description'
-            status: 'ghost_nonexistent'
+            status: myStatus
           }
         )
         console.log "new saved", saved
@@ -97,6 +98,7 @@
 
   API =
     init: (saved_campaigns) ->
+
       App.request "storage:get", 'campaigns_user', ((result) =>
         # user campaigns retrieved from raw JSON.
         console.log 'user campaigns retrieved from storage'
