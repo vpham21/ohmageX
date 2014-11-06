@@ -6,6 +6,8 @@
   currentSurveysSaved = false
 
   class Entities.SurveySaved extends Entities.Model
+    defaults:
+      status: 'running' # All surveys are running when first created
 
   class Entities.SurveysSaved extends Entities.Collection
     model: Entities.SurveySaved
