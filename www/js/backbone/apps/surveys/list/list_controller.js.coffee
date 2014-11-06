@@ -11,13 +11,26 @@
       else
         surveys = App.request "surveys:saved"
       @layout = @getLayoutView surveys
+      selector = App.request "surveys:selector:entities", options.campaign_id
+
+      @listenTo selector, "change:chosen", (model) =>
+        # this event fires every time all instances of the
+        # `chosen` attribute within the model are changed.
+        # So only activate when our model is "chosen"
+        if model.isChosen() then App.vent.trigger("survey:list:campaign:selected", model)
 
       @listenTo @layout, "show", =>
         console.log "show list layout"
+        @selectorRegion selector
         @surveysRegion surveys
         @logoutRegion()
 
-      @show @layout, loading: true
+      @show @layout, loading: false
+
+    selectorRegion: (selector) ->
+      selectorView = @getSelectorView selector
+
+      @show selectorView, region: @layout.selectorRegion
 
     surveysRegion: (surveys) ->
       surveysView = @getSurveysView surveys
@@ -43,6 +56,10 @@
 
     getLogoutView: ->
       new List.Logout
+
+    getSelectorView: (selector) ->
+      new List.CampaignsSelector
+        collection: selector
 
     getSurveysView: (surveys) ->
       new List.Surveys
