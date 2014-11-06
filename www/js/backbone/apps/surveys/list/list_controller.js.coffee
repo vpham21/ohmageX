@@ -11,6 +11,7 @@
       else
         surveys = App.request "surveys:saved"
       @layout = @getLayoutView surveys
+      selector = App.request "surveys:selector:entities", options.campaign_id
 
       @listenTo @layout, "show", =>
         console.log "show list layout"
