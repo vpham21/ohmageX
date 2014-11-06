@@ -17,7 +17,7 @@
         @surveysRegion surveys
         @logoutRegion()
 
-      @show @layout, loading: true
+      @show @layout, loading: false
 
     surveysRegion: (surveys) ->
       surveysView = @getSurveysView surveys
