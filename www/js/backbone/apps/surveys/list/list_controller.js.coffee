@@ -45,6 +45,10 @@
     getLogoutView: ->
       new List.Logout
 
+    getSelectorView: (selector) ->
+      new List.CampaignsSelector
+        collection: selector
+
     getSurveysView: (surveys) ->
       new List.Surveys
         collection: surveys
