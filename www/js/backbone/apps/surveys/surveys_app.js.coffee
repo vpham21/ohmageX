@@ -30,9 +30,12 @@
     new SurveysApp.Router
       controller: API
   
-  App.vent.on "survey:list:item:clicked", (model) ->
+  App.vent.on "survey:list:running:clicked", (model) ->
     App.navigate "survey/#{model.get 'id'}", { trigger: true }
 
+  App.vent.on "survey:list:stopped:clicked", (model) ->
+    # Trigger the confirmation box for removing the ghosted campaign.
+    console.log "survey:list:stopped:clicked"
 
   App.vent.on "survey:list:logout:clicked", ->
     console.log "survey:list:logout:clicked"

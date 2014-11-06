@@ -22,9 +22,13 @@
     surveysRegion: (surveys) ->
       surveysView = @getSurveysView surveys
 
-      @listenTo surveysView, "childview:survey:clicked", (child, args) ->
-        console.log 'childview:survey:clicked args', args.model
-        App.vent.trigger "survey:list:item:clicked", args.model
+      @listenTo surveysView, "childview:running:clicked", (child, args) ->
+        console.log 'childview:running:clicked args', args.model
+        App.vent.trigger "survey:list:running:clicked", args.model
+
+      @listenTo surveysView, "childview:stopped:clicked", (child, args) ->
+        console.log 'childview:stopped:clicked args', args.model
+        App.vent.trigger "survey:list:stopped:clicked", args.model
 
       @show surveysView, region: @layout.listRegion
 
