@@ -24,7 +24,6 @@
     selectorRegion: (selector) ->
       selectorView = @getSelectorView selector
 
-
       @show selectorView, region: @layout.selectorRegion
 
     surveysRegion: (surveys) ->
