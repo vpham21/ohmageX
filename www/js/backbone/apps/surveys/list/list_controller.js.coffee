@@ -15,10 +15,17 @@
 
       @listenTo @layout, "show", =>
         console.log "show list layout"
+        @selectorRegion selector
         @surveysRegion surveys
         @logoutRegion()
 
       @show @layout, loading: false
+
+    selectorRegion: (selector) ->
+      selectorView = @getSelectorView selector
+
+
+      @show selectorView, region: @layout.selectorRegion
 
     surveysRegion: (surveys) ->
       surveysView = @getSurveysView surveys
