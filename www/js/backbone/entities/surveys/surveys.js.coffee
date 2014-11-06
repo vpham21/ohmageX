@@ -73,7 +73,7 @@
         campaign_urn: urn
       new Entities.SurveysSaved surveys
     removeSurveys: (urn) ->
-      currentSurveysSaved.remove @getCampaignSurveys(urn)
+      currentSurveysSaved.remove currentSurveysSaved.where(campaign_urn: urn)
       @updateLocal( =>
         App.vent.trigger 'surveys:saved:campaign:remove:success', urn
       )
