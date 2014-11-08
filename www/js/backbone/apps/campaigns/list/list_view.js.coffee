@@ -31,6 +31,9 @@
   class List.SavedSelector extends App.Views.CollectionView
     initialize: ->
       @listenTo @, "saved:selected", @chooseItem
+      @listenTo @collection, 'filter:saved:clear', @clearSaved
+    clearSaved: ->
+      if @$el.val() is 'Saved' then @$el.val('All')
     chooseItem: (options) ->
       console.log 'chooseItem options', options
       @collection.chooseByName @$el.val()
