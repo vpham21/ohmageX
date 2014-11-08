@@ -48,6 +48,10 @@
       new List.Search
         collection: campaigns
 
+    getSelectorView: (selector) ->
+      new List.SavedSelector
+        collection: selector
+
     getCampaignsView: (campaigns) ->
       new List.Campaigns
         collection: campaigns
