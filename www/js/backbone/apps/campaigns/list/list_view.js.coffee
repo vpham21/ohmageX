@@ -3,6 +3,9 @@
   class List.Search extends App.Views.ItemView
     initialize: ->
       @listenTo @, 'search:update', @updateSearch
+      @listenTo @collection, 'filter:search:clear', @clearSearch
+    clearSearch: ->
+      @$el.find('input').val('')
     updateSearch: ->
       val = @$el.find('input').val()
       console.log 'updateSearch val', val
@@ -28,6 +31,9 @@
   class List.SavedSelector extends App.Views.CollectionView
     initialize: ->
       @listenTo @, "saved:selected", @chooseItem
+      @listenTo @collection, 'filter:saved:clear', @clearSaved
+    clearSaved: ->
+      if @$el.val() is 'Saved' then @$el.val('All')
     chooseItem: (options) ->
       console.log 'chooseItem options', options
       @collection.chooseByName @$el.val()

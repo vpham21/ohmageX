@@ -9,6 +9,12 @@
 
       if selector.chosenName() is 'Saved'
         campaigns.where({ saved: true })
+
+      @listenTo campaigns, "filter:saved:clear", =>
+        # pass the filter clearing in campaigns
+        # to the selector entity, so its view can update
+        selector.trigger "filter:saved:clear"
+
       @listenTo selector, "change:chosen", (model) =>
         # this event fires every time all instances of the
         # `chosen` attribute within the model are changed.
