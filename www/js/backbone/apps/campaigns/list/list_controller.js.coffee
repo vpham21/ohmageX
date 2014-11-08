@@ -13,6 +13,7 @@
 
       @listenTo @layout, "show", =>
         console.log "show campaigns list layout"
+        @selectorRegion selector
         @searchRegion campaigns
         @campaignsRegion campaigns
 
