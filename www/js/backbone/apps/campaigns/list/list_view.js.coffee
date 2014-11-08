@@ -16,6 +16,26 @@
     triggers:
       "keyup input": "search:update"
 
+  class List.SelectorItem extends App.Views.ItemView
+    tagName: "option"
+    template: "campaigns/list/_selector_item"
+    attributes: ->
+      options = {}
+      options['value'] = @model.get 'name'
+      if @model.isChosen() then options['selected'] = 'selected'
+      options
+
+  class List.SavedSelector extends App.Views.CollectionView
+    initialize: ->
+      @listenTo @, "saved:selected", @chooseItem
+    chooseItem: (options) ->
+      console.log 'chooseItem options', options
+      @collection.chooseByName @$el.val()
+    tagName: "select"
+    childView: List.SelectorItem
+    triggers: ->
+      "change": "saved:selected"
+
   class List.Campaign extends App.Views.ItemView
     initialize: ->
       @listenTo @model, 'change', @render
@@ -45,5 +65,6 @@
   class List.Layout extends App.Views.Layout
     template: "campaigns/list/list_layout"
     regions:
+      selectorRegion: "#selector-region"
       listRegion: "#list-region"
       searchRegion: "#search-region"

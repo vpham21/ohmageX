@@ -4,14 +4,35 @@
 
     initialize: ->
       campaigns = App.request "campaigns:filtered", App.request("campaigns:user")
+
+      selector = App.request "campaigns:selector:entities"
+
+      if selector.chosenName() is 'Saved'
+        campaigns.where({ saved: true })
+      @listenTo selector, "change:chosen", (model) =>
+        # this event fires every time all instances of the
+        # `chosen` attribute within the model are changed.
+        # So only activate when our model is "chosen"
+        if model.isChosen()
+          if model.get('name') is 'Saved'
+            campaigns.where({ saved: true })
+          else
+            campaigns.where()
+
       @layout = @getLayoutView campaigns
 
       @listenTo @layout, "show", =>
         console.log "show campaigns list layout"
+        @selectorRegion selector
         @searchRegion campaigns
         @campaignsRegion campaigns
 
       @show @layout, loading: true
+
+    selectorRegion: (selector) ->
+      selectorView = @getSelectorView selector
+
+      @show selectorView, region: @layout.selectorRegion
 
     searchRegion: (campaigns) ->
       searchView = @getSearchView campaigns
@@ -42,6 +63,10 @@
     getSearchView: (campaigns) ->
       new List.Search
         collection: campaigns
+
+    getSelectorView: (selector) ->
+      new List.SavedSelector
+        collection: selector
 
     getCampaignsView: (campaigns) ->
       new List.Campaigns
