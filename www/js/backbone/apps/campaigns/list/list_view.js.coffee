@@ -3,6 +3,9 @@
   class List.Search extends App.Views.ItemView
     initialize: ->
       @listenTo @, 'search:update', @updateSearch
+      @listenTo @collection, 'filter:search:clear', @clearSearch
+    clearSearch: ->
+      @$el.find('input').val('')
     updateSearch: ->
       val = @$el.find('input').val()
       console.log 'updateSearch val', val
