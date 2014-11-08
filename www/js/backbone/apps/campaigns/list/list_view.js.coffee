@@ -16,6 +16,14 @@
     triggers:
       "keyup input": "search:update"
 
+  class List.SelectorItem extends App.Views.ItemView
+    tagName: "option"
+    template: "campaigns/list/_selector_item"
+    attributes: ->
+      options = {}
+      options['value'] = @model.get 'name'
+      if @model.isChosen() then options['selected'] = 'selected'
+      options
   class List.Campaign extends App.Views.ItemView
     initialize: ->
       @listenTo @model, 'change', @render
