@@ -9,6 +9,16 @@
 
       if selector.chosenName() is 'Saved'
         campaigns.where({ saved: true })
+      @listenTo selector, "change:chosen", (model) =>
+        # this event fires every time all instances of the
+        # `chosen` attribute within the model are changed.
+        # So only activate when our model is "chosen"
+        if model.isChosen()
+          if model.get('name') is 'Saved'
+            campaigns.where({ saved: true })
+          else
+            campaigns.where()
+
       @layout = @getLayoutView campaigns
 
       @listenTo @layout, "show", =>
