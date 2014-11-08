@@ -4,6 +4,8 @@
 
     initialize: ->
       campaigns = App.request "campaigns:filtered", App.request("campaigns:user")
+
+      selector = App.request "campaigns:selector:entities"
       @layout = @getLayoutView campaigns
 
       @listenTo @layout, "show", =>
