@@ -11,12 +11,17 @@
       filtered._callbacks = {}
 
       filtered.where = (criteria) ->
-        if (criteria)
+        if criteria and criteria.name?
           # name search with fuzzy matching
           nameSearch = new RegExp criteria.name.split('').join('\\w*').replace(/\W/,""), "i"
           items = campaigns.filter((campaign) ->
             myName = campaign.get('name')
             myName.match(nameSearch)
+          )
+        else if criteria and criteria.saved?
+          items = campaigns.filter((campaign) ->
+            myStatus = campaign.get('status')
+            myStatus isnt 'available'
           )
         else
           items = campaigns.models
