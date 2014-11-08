@@ -14,6 +14,8 @@
         { name: 'All' }
         { name: 'Saved' }
       ]
+      # choose Saved campaigns by default if the user has
+      # saved any campaigns.
       chosen = if saved.length > 0 then 'Saved' else 'All'
       navs.chooseByName(chosen)
       navs
