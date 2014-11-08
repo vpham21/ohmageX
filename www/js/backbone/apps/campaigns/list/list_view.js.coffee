@@ -65,5 +65,6 @@
   class List.Layout extends App.Views.Layout
     template: "campaigns/list/list_layout"
     regions:
+      selectorRegion: "#selector-region"
       listRegion: "#list-region"
       searchRegion: "#search-region"
