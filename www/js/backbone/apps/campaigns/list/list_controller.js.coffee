@@ -18,6 +18,11 @@
 
       @show @layout, loading: true
 
+    selectorRegion: (selector) ->
+      selectorView = @getSelectorView selector
+
+      @show selectorView, region: @layout.selectorRegion
+
     searchRegion: (campaigns) ->
       searchView = @getSearchView campaigns
 
