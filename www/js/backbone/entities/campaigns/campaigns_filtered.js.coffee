@@ -18,6 +18,9 @@
             myName = campaign.get('name')
             myName.match(nameSearch)
           )
+          # Initiating a search must clear out any saved campaign selection.
+          # Broadcast this event so views may update
+          filtered.trigger "filter:saved:clear"
         else if criteria and criteria.saved?
           items = campaigns.filter((campaign) ->
             myStatus = campaign.get('status')
