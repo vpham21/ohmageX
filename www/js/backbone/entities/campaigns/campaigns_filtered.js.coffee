@@ -26,6 +26,9 @@
             myStatus = campaign.get('status')
             myStatus isnt 'available'
           )
+          # Choosing a saved item must clear out any search terms when it gets
+          # selected. Broadcast this event so views may update
+          filtered.trigger "filter:search:clear"
         else
           items = campaigns.models
 
