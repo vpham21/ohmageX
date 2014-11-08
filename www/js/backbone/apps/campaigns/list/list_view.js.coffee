@@ -24,6 +24,18 @@
       options['value'] = @model.get 'name'
       if @model.isChosen() then options['selected'] = 'selected'
       options
+
+  class List.SavedSelector extends App.Views.CollectionView
+    initialize: ->
+      @listenTo @, "saved:selected", @chooseItem
+    chooseItem: (options) ->
+      console.log 'chooseItem options', options
+      @collection.chooseByName @$el.val()
+    tagName: "select"
+    childView: List.SelectorItem
+    triggers: ->
+      "change": "saved:selected"
+
   class List.Campaign extends App.Views.ItemView
     initialize: ->
       @listenTo @model, 'change', @render
