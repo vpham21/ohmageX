@@ -23,6 +23,7 @@
 
       @listenTo @layout, "show", =>
         console.log "show list layout"
+        @infobuttonRegion selector
         @selectorRegion selector
         @surveysRegion surveys
         @logoutRegion()
