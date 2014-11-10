@@ -32,10 +32,35 @@
     triggers: ->
       "change": "campaign:selected"
 
+  class List.CampaignInfoButton extends App.Views.ItemView
+    initialize: ->
+      @model = @collection.findWhere(chosen: true)
+      @listenTo @collection, 'change:chosen', @chosenRender
+    chosenRender: (model) ->
+      if model.isChosen()
+        @model = model
+        @render
+    tagName: "button"
+    template: "surveys/list/info_button"
+    attributes: ->
+      if @collection.findWhere(chosen: true).get('name') is 'All'
+        return {
+          class: "hidden"
+        }
+    triggers:
+      "click": "info:clicked"
+    serializeData: ->
+      data = @model.toJSON()
+      data
+
+  class List.SurveysEmpty extends App.Views.ItemView
+    template: "surveys/list/_surveys_empty"
+
   class List.Surveys extends App.Views.CompositeView
     template: "surveys/list/surveys"
     childView: List.Survey
     childViewContainer: ".surveys"
+    emptyView: List.SurveysEmpty
 
   class List.Layout extends App.Views.Layout
     template: "surveys/list/list_layout"
