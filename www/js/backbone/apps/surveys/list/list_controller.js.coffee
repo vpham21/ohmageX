@@ -38,6 +38,11 @@
     infobuttonRegion: (selector) ->
       infoView = @getInfoButtonView selector
 
+      @listenTo infoView, "info:clicked", (args) =>
+        console.log 'info:clicked args', args
+        @infoRegion args.model
+
+
       @show infoView, region: @layout.infobuttonRegion
 
     selectorRegion: (selector) ->
