@@ -59,6 +59,10 @@
     getLogoutView: ->
       new List.Logout
 
+    getInfoButtonView: (selector) ->
+      new List.CampaignInfoButton
+        collection: selector
+
     getSelectorView: (selector) ->
       new List.CampaignsSelector
         collection: selector
