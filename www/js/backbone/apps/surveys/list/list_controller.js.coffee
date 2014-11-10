@@ -29,6 +29,11 @@
 
       @show @layout, loading: false
 
+    infobuttonRegion: (selector) ->
+      infoView = @getInfoButtonView selector
+
+      @show infoView, region: @layout.infobuttonRegion
+
     selectorRegion: (selector) ->
       selectorView = @getSelectorView selector
 
