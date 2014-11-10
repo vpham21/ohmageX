@@ -30,6 +30,11 @@
 
       @show @layout, loading: false
 
+    infoRegion: (campaign) ->
+      infoView = App.request "campaigninfo:view", campaign
+
+      @show infoView, region: @layout.infoRegion
+
     infobuttonRegion: (selector) ->
       infoView = @getInfoButtonView selector
 
