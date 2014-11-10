@@ -53,8 +53,9 @@
         else "campaigns/list/_ghost_campaign"
       result
     triggers:
-      "click .available-campaign button": "save:clicked"
+      "click .available-campaign .action-button": "save:clicked"
       "click .available-campaign h3": "save:clicked"
+      "click .available-campaign .info-button": "info:clicked"
       "click .saved-campaign button": "unsave:clicked"
       "click .saved-campaign h3": "navigate:clicked"
       "click .ghost-campaign button": "ghost:remove:clicked"
@@ -71,6 +72,7 @@
   class List.Layout extends App.Views.Layout
     template: "campaigns/list/list_layout"
     regions:
+      infoRegion: "#info-region"
       selectorRegion: "#selector-region"
       listRegion: "#list-region"
       searchRegion: "#search-region"

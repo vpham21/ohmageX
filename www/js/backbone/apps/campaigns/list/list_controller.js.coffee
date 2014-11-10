@@ -45,9 +45,17 @@
 
       @show searchView, region: @layout.searchRegion
 
+    infoRegion: (campaign) ->
+      infoView = App.request "campaigninfo:view", campaign
+
+      @show infoView, region: @layout.infoRegion
 
     campaignsRegion: (campaigns) ->
       campaignsView = @getCampaignsView campaigns
+
+      @listenTo campaignsView, "childview:info:clicked", (child, args) =>
+        console.log 'childview:info:clicked model', args.model
+        @infoRegion args.model
 
       @listenTo campaignsView, "childview:unsave:clicked", (child, args) ->
         console.log 'childview:unsave:clicked args', args.model
