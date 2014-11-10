@@ -53,6 +53,10 @@
     campaignsRegion: (campaigns) ->
       campaignsView = @getCampaignsView campaigns
 
+      @listenTo campaignsView, "childview:info:clicked", (child, args) =>
+        console.log 'childview:info:clicked model', args.model
+        @infoRegion args.model
+
       @listenTo campaignsView, "childview:unsave:clicked", (child, args) ->
         console.log 'childview:unsave:clicked args', args.model
         App.vent.trigger "campaign:list:unsave:clicked", args.model
