@@ -1,4 +1,5 @@
 <div id="selector-region"></div>
+<div id="infobutton-region"></div>
 <h3><%= @name %> Saved Surveys</h3>
 <div id="list-region"></div>
 <div id="logout-region"></div>
