@@ -53,7 +53,7 @@
         else "campaigns/list/_ghost_campaign"
       result
     triggers:
-      "click .available-campaign button": "save:clicked"
+      "click .available-campaign .action-button": "save:clicked"
       "click .available-campaign h3": "save:clicked"
       "click .saved-campaign button": "unsave:clicked"
       "click .saved-campaign h3": "navigate:clicked"
