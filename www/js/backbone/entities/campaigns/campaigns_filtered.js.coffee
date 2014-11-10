@@ -41,6 +41,12 @@
       campaigns.on "reset", ->
         filtered.where filtered._currentCriteria
 
+      campaigns.on "sync:stop", ->
+        console.log 'sync stop'
+        filtered.trigger "filter:search:clear"
+        filtered.trigger "filter:saved:clear"
+        filtered.where()
+
       campaigns.on "remove", (model) ->
         # ensure the filtered list also updates when
         # user campaigns are removed.
