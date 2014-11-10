@@ -45,6 +45,10 @@
 
       @show searchView, region: @layout.searchRegion
 
+    infoRegion: (campaign) ->
+      infoView = App.request "campaigninfo:view", campaign
+
+      @show infoView, region: @layout.infoRegion
 
     campaignsRegion: (campaigns) ->
       campaignsView = @getCampaignsView campaigns
