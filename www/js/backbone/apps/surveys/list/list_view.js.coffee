@@ -40,6 +40,7 @@
   class List.Layout extends App.Views.Layout
     template: "surveys/list/list_layout"
     regions:
+      infoRegion: "#info-region"
       selectorRegion: "#selector-region"
       listRegion: "#list-region"
       logoutRegion: "#logout-region"
