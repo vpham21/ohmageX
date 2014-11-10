@@ -61,6 +61,9 @@
       "click .ghost-campaign button": "ghost:remove:clicked"
       "click .ghost-campaign h3": "ghost:remove:clicked"
 
+  class List.CampaignsEmpty extends App.Views.ItemView
+    template: "campaigns/list/_campaigns_empty"
+
   class List.Campaigns extends App.Views.CompositeView
     initialize: ->
       @listenTo @collection, 'reset', @render
@@ -68,6 +71,7 @@
     template: "campaigns/list/campaigns"
     childView: List.Campaign
     childViewContainer: ".campaigns"
+    emptyView: List.CampaignsEmpty
 
   class List.Layout extends App.Views.Layout
     template: "campaigns/list/list_layout"

@@ -23,11 +23,27 @@
 
       @listenTo @layout, "show", =>
         console.log "show list layout"
+        @infobuttonRegion selector
         @selectorRegion selector
         @surveysRegion surveys
         @logoutRegion()
 
       @show @layout, loading: false
+
+    infoRegion: (campaign) ->
+      infoView = App.request "campaigninfo:view", campaign
+
+      @show infoView, region: @layout.infoRegion
+
+    infobuttonRegion: (selector) ->
+      infoView = @getInfoButtonView selector
+
+      @listenTo infoView, "info:clicked", (args) =>
+        console.log 'info:clicked args', args
+        @infoRegion args.model
+
+
+      @show infoView, region: @layout.infobuttonRegion
 
     selectorRegion: (selector) ->
       selectorView = @getSelectorView selector
@@ -58,6 +74,10 @@
 
     getLogoutView: ->
       new List.Logout
+
+    getInfoButtonView: (selector) ->
+      new List.CampaignInfoButton
+        collection: selector
 
     getSelectorView: (selector) ->
       new List.CampaignsSelector
