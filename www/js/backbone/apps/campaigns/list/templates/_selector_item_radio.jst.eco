@@ -1,0 +1,1 @@
+<input type="radio" name="saved-selector" value="<%= @name %>" <%= @checked %> /> <%= @name %>
