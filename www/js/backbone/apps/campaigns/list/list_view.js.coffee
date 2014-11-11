@@ -19,6 +19,8 @@
     triggers:
       "keyup input": "search:update"
 
+  ###
+  # Render Selector using Dropdown
   class List.SelectorItem extends App.Views.ItemView
     tagName: "option"
     template: "campaigns/list/_selector_item"
@@ -41,6 +43,30 @@
     childView: List.SelectorItem
     triggers: ->
       "change": "saved:selected"
+  ###
+
+  # Render selector using Radio
+  class List.SelectorItem extends App.Views.ItemView
+    tagName: "div"
+    template: "campaigns/list/_selector_item_radio"
+    serializeData: ->
+      data = @model.toJSON()
+      data.checked = if @model.isChosen() then 'checked' else ''
+      data
+
+  class List.SavedSelector extends App.Views.CollectionView
+    initialize: ->
+      @listenTo @, "saved:selected", @chooseItem
+      @listenTo @collection, 'filter:saved:clear', @clearSaved
+    clearSaved: ->
+      if @$el.find('input:checked').val() is 'Saved' then @$el.find('input[value="All"]').prop('checked', true)
+    chooseItem: (options) ->
+      console.log 'chooseItem options', options
+      @collection.chooseByName @$el.find('input:checked').val()
+    tagName: "div"
+    childView: List.SelectorItem
+    triggers: ->
+      "change input": "saved:selected"
 
   class List.Campaign extends App.Views.ItemView
     initialize: ->
