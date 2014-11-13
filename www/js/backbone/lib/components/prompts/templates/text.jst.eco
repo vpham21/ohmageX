@@ -1,0 +1,7 @@
+<legend>
+  <form>
+  <h3><%= @displayLabel %></h3>
+  <label for="<%= @id %>"><%= @promptText %></label><br />
+  <input name="<%= @id %>" type="text" <% if @currentValue: %> value="<%= @currentValue %>" <% end %> />
+  </form>
+</legend>

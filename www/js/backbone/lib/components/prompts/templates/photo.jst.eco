@@ -1,0 +1,9 @@
+<legend>
+  <form>
+  <h3><%= @displayLabel %></h3>
+  <label for="<%= @id %>"><%= @promptText %></label><br />
+  <input name="<%= @id %>" type="file" accepts="image/*" capture />
+  </form>
+  <img src="" style="display:none" class="preview-image" />
+  <canvas style="display:none"></canvas>
+</legend>

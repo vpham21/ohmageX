@@ -1,0 +1,9 @@
+<legend>
+  <form>
+  <h3><%= @displayLabel %></h3>
+  <label for="<%= @id %>"><%= @promptText %></label><br />
+  <button class="increment"><span class="icon icon-up"></span></button>
+  <input name="<%= @id %>" type="text" value="<%= @currentValue %>"/>
+  <button class="decrement"><span class="icon icon-down"></span></button>
+  </form>
+</legend>

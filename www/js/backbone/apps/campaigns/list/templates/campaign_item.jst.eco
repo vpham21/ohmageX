@@ -1,0 +1,2 @@
+<h3><small><%= @status %></small> <%= @name %></h3>
+<p><small><%= @id %></small><%= @description %></p>
