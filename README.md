@@ -19,3 +19,5 @@
 > The name "Dragon Well" comes from a variety of Chinese green tea (龍井茶).
 
 #### 0.0.1 - Initial Setup
+
+- Set up Phonegap, Backbone + Marionette, and vendor libraries
