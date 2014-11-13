@@ -75,4 +75,4 @@
 
   App.vent.on "response:set:error", (error) ->
     console.log "response:set:error", error
-    alert "Reponse contains errors: #{error.toString()}"
+    alert "Response contains errors: #{error.toString()}"

@@ -13,7 +13,7 @@
 </head>
 <body>
   <header class="bar bar-nav"></header>
-  <section class="content">
+  <section class="content wrap">
     <article class="primary"></article>
     <footer></footer>
   </section>
