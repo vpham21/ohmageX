@@ -1,4 +1,4 @@
 <div class="running-survey">
 <h3><%= @title %></h3>
-<p><%= @status %><small><%= @server_id %></small><%= @description %></p>
+<p><%= @status %><small><%= @server_id %></small><%= @description %> <i>clock</i> <span class="time">12:30pm</span></p>
 </div>
