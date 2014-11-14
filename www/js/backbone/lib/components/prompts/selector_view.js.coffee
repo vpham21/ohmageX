@@ -15,7 +15,7 @@
   class Prompts.Text extends Prompts.Base
     template: "prompts/text"
     gatherResponses: (surveyId, stepId) =>
-      response = @$el.find('input[type=text]').val()
+      response = @$el.find('textarea').val()
       @trigger "response:submit", response, surveyId, stepId
     serializeData: ->
       data = @model.toJSON()
