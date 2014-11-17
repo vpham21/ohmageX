@@ -1,7 +1,7 @@
 @Ohmage.module "Entities", (Entities, App, Backbone, Marionette, $, _) ->
 
-  # The Response Entity contains data related to the responses
-  # within a given Survey.
+  # The survey Entity deals with data relating to a single survey.
+  # This module handles image processing for a single survey upload.
 
   # currentImages
   currentImages = false
