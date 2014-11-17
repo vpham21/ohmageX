@@ -11,8 +11,6 @@
         else return false
 
     getPromptEntity: (promptType, $promptXML) ->
-      # Based on getPrompt() method in prompt.js.coffee
-      # TODO: Remove getPrompt() method when removing Dashboard code
       result = {}
       isChoice = @isChoicePrompt promptType
       myId = $promptXML.tagText('id')
