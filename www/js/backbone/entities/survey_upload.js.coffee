@@ -1,7 +1,6 @@
 @Ohmage.module "Entities", (Entities, App, Backbone, Marionette, $, _) ->
 
-  # The survey Entity deals with data relating to all surveys,
-  # and single surveys.
+  # The survey Entity deals with data relating to a single survey.
   # This module handles the upload process.
 
   API =
