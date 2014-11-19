@@ -40,10 +40,6 @@
         submitSurveys.location = location
 
       completeSubmit = 
-        campaign_urn: campaign_urn
-        campaign_creation_timestamp: myCampaign.get 'creation_timestamp'
-        user: submitCredentials.get 'username'
-        password: submitCredentials.get 'password'
         client: 'ohmage-mwf-dw'
         images: App.request "survey:images:string"
         surveys: JSON.stringify([submitSurveys])
