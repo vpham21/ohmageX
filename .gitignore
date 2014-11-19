@@ -79,7 +79,3 @@ nbproject/*
 *.sublime-workspace
 _reference
 _local-notes
-
-/node_modules
-/.bundle
-/vendor/bundle
