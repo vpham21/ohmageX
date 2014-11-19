@@ -46,6 +46,15 @@
               App.vent.trigger "credentials:validated", username
           else
             App.vent.trigger "credentials:invalidated", response.errors
+    getParams: ->
+      # currently using hashed password auth.
+      # this will change when using other auth methods.
+      if @getCredentials()
+        return {
+          user: currentCredentials.get('username')
+          password: currentCredentials.get('password')
+        }
+      else return false
     logout: ->
       currentCredentials = false
 
@@ -58,6 +67,9 @@
 
   App.reqres.setHandler "credentials:current", ->
     API.getCredentials()
+
+  App.reqres.setHandler "credentials:upload:params", ->
+    API.getParams()
 
   App.commands.setHandler "credentials:validate", (username, password) ->
     API.validateCredentials App.request("serverpath:current"), username, password

@@ -18,9 +18,6 @@
       { currentResponses, location, surveyId } = options
 
       submitResponses = @prepResponseUpload currentResponses
-      # before this, requires credentials to be generated with
-      # App.execute "credentials:set", username, password
-      submitCredentials = App.request "credentials:current"
 
       currentTime = (new Date).getTime()
       currentTZ = _.jstz()
@@ -37,35 +34,18 @@
           active_triggers: []
         responses: submitResponses
 
-      # campaign_urn serves as the "foreign key" between
-      # surveysSaved and CampaignsUser
-      campaign_urn = App.request "survey:saved:urn", surveyId
-      myCampaign = App.request "campaign:entity", campaign_urn
-
       if location
         # if the location status is unavailable,
         # it is an error to send a location object.
         submitSurveys.location = location
 
       completeSubmit = 
-        campaign_urn: campaign_urn
-        campaign_creation_timestamp: myCampaign.get 'creation_timestamp'
-        user: submitCredentials.get 'username'
-        password: submitCredentials.get 'password'
-        client: 'ohmage-mwf-dw'
+        client: 'ohmage-mwf-dw-browser'
         images: App.request "survey:images:string"
         surveys: JSON.stringify([submitSurveys])
 
-      serverPath = App.request "serverpath:current"
+      App.execute "uploader:new", completeSubmit, surveyId
 
-      $.ajax
-        type: "POST"
-        url: "#{serverPath}/app/survey/upload"
-        data: completeSubmit
-        dataType: 'json'
-        success: (response) =>
-          App.execute "survey:images:destroy"
-          App.vent.trigger "survey:upload:success", response, surveyId
     getLocation: (responses, surveyId) ->
       # get geolocation
       location = App.request "geolocation:get"
