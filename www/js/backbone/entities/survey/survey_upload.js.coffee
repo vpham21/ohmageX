@@ -34,11 +34,6 @@
           active_triggers: []
         responses: submitResponses
 
-      # campaign_urn serves as the "foreign key" between
-      # surveysSaved and CampaignsUser
-      campaign_urn = App.request "survey:saved:urn", surveyId
-      myCampaign = App.request "campaign:entity", campaign_urn
-
       if location
         # if the location status is unavailable,
         # it is an error to send a location object.
