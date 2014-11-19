@@ -40,7 +40,7 @@
         submitSurveys.location = location
 
       completeSubmit = 
-        client: 'ohmage-mwf-dw'
+        client: 'ohmage-mwf-dw-browser'
         images: App.request "survey:images:string"
         surveys: JSON.stringify([submitSurveys])
 
