@@ -18,9 +18,6 @@
       { currentResponses, location, surveyId } = options
 
       submitResponses = @prepResponseUpload currentResponses
-      # before this, requires credentials to be generated with
-      # App.execute "credentials:set", username, password
-      submitCredentials = App.request "credentials:current"
 
       currentTime = (new Date).getTime()
       currentTZ = _.jstz()
