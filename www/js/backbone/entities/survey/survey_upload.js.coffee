@@ -44,7 +44,6 @@
         images: App.request "survey:images:string"
         surveys: JSON.stringify([submitSurveys])
 
-      serverPath = App.request "serverpath:current"
 
       $.ajax
         type: "POST"
