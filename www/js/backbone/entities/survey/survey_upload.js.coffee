@@ -44,15 +44,8 @@
         images: App.request "survey:images:string"
         surveys: JSON.stringify([submitSurveys])
 
+      App.execute "uploader:new", completeSubmit, surveyId
 
-      $.ajax
-        type: "POST"
-        url: "#{serverPath}/app/survey/upload"
-        data: completeSubmit
-        dataType: 'json'
-        success: (response) =>
-          App.execute "survey:images:destroy"
-          App.vent.trigger "survey:upload:success", response, surveyId
     getLocation: (responses, surveyId) ->
       # get geolocation
       location = App.request "geolocation:get"
