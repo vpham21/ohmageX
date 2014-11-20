@@ -39,10 +39,17 @@
         # it is an error to send a location object.
         submitSurveys.location = location
 
+      # campaign_urn serves as the "foreign key" between
+      # surveysSaved and CampaignsUser
+      campaign_urn = App.request "survey:saved:urn", surveyId
+      myCampaign = App.request "campaign:entity", campaign_urn
+
       completeSubmit = 
         client: 'ohmage-mwf-dw-browser'
         images: App.request "survey:images:string"
         surveys: JSON.stringify([submitSurveys])
+        campaign_creation_timestamp: myCampaign.get('creation_timestamp')
+        campaign_urn: campaign_urn
 
       App.execute "uploader:new", completeSubmit, surveyId
 

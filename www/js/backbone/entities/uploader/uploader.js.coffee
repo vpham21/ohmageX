@@ -47,13 +47,6 @@
           App.vent.trigger "survey:upload:failure:network", responseData, response, surveyId
 
   App.commands.setHandler "uploader:new", (responseData, surveyId) ->
-    # campaign_urn serves as the "foreign key" between
-    # surveysSaved and CampaignsUser
-    campaign_urn = App.request "survey:saved:urn", surveyId
-    myCampaign = App.request "campaign:entity", campaign_urn
 
-    responsePackage = _.extend responseData, 
-      campaign_urn: campaign_urn
-      campaign_creation_timestamp: myCampaign.get('creation_timestamp')
 
     API.newUploader responsePackage, surveyId
