@@ -29,6 +29,7 @@
       new Entities.NavsCollection [
         { name: "Campaigns", url: "#campaigns", icon: "" }
         { name: "Surveys", url: "#surveys", icon: "" }
+        { name: "Upload Queue", url: "#uploadqueue", icon: "" }
       ]
 
   App.reqres.setHandler "nav:entities", ->

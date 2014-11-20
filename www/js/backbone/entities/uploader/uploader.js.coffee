@@ -5,12 +5,12 @@
   class Entities.Uploader extends Entities.Model
 
   API =
-    parseUploadErrors: (responseData, response, surveyId) ->
+    parseUploadErrors: (context, responseData, response, itemId) ->
       console.log 'parseUploadErrors'
       if response.result is "success"
-        App.execute "survey:images:destroy"
+        if context is 'survey' then App.execute "survey:images:destroy"
         console.log 'newUploader Success!'
-        App.vent.trigger "survey:upload:success", response, surveyId
+        App.vent.trigger "#{context}:upload:success", response, itemId
       else
         console.log 'response.errors[0].code', response.errors[0].code
         type = switch response.errors[0].code
@@ -19,9 +19,9 @@
           when '0600','0307','0302' then "response"
           when '0200' then "auth"
         console.log 'type', type
-        App.vent.trigger "survey:upload:failure:#{type}", responseData, response.errors[0].text, surveyId
+        App.vent.trigger "#{context}:upload:failure:#{type}", responseData, response.errors[0].text, itemId
 
-    newUploader: (responseData, surveyId) ->
+    newUploader: (context, responseData, itemId) ->
 
       # add auth credentials to the response before saving.
       # may later move this to the model's custom "sync" method.
@@ -30,9 +30,9 @@
 
       # uploader = new Entities.Uploader _.extend(myAuth, responseData)
 
-
       # Uses $.ajax() instead of Backbone.save() because of server error.
       # See Issue #208
+
 
       $.ajax
         type: 'POST' # not RESTful but the Ohmage 2.0 API requires it
@@ -40,20 +40,21 @@
         url: "#{App.request("serverpath:current")}/app/survey/upload"
         dataType: 'json'
         success: (response) =>
-          @parseUploadErrors responseData, response, surveyId
+          @parseUploadErrors context, responseData, response, itemId
         error: (response) =>
           console.log 'survey upload error'
-          # assume all error callbacks here are network related
-          App.vent.trigger "survey:upload:failure:network", responseData, response, surveyId
+          # assume all error callbacks here are network relate
+          App.vent.trigger "#{context}:upload:failure:network", responseData, response, itemId
 
-  App.commands.setHandler "uploader:new", (responseData, surveyId) ->
-    # campaign_urn serves as the "foreign key" between
-    # surveysSaved and CampaignsUser
-    campaign_urn = App.request "survey:saved:urn", surveyId
-    myCampaign = App.request "campaign:entity", campaign_urn
+  App.commands.setHandler "uploader:new", (context, responseData, itemId) ->
+    # context is a means of determining the 
+    # execution context of the `uploader:new` command.
+    # 'survey' - it's launched from a survey context.
+    # 'uploadqueue' - it's launched from the upload queue.
 
-    responsePackage = _.extend responseData, 
-      campaign_urn: campaign_urn
-      campaign_creation_timestamp: myCampaign.get('creation_timestamp')
+    # itemId
+    # in a 'survey' context, this is a reference to the surveyId.
+    # in an 'uploadqueue' context, this is a reference to the queue item's
+    # model id.
 
-    API.newUploader responsePackage, surveyId
+    API.newUploader context, responseData, itemId
