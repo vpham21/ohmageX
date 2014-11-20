@@ -14,7 +14,7 @@
       else
         console.log 'response.errors[0].code', response.errors[0].code
         type = switch response.errors[0].code
-          when '0710','0703','0617' then "campaign"
+          when '0710','0703','0617','0700' then "campaign"
           when '0100' then "server"
           when '0600','0307' then "response"
           when '0200' then "auth"
