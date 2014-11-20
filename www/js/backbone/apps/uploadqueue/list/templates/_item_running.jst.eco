@@ -1,0 +1,5 @@
+<div class="running-item">
+  <h3 class="item-label"><span><%= @name %></span> - Last Submitted <%= @prettyTimestamp %></h3>
+  <button class="upload-button">Upload</button>
+  <button class="delete-button">Remove</button>
+</div>
