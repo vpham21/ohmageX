@@ -51,7 +51,7 @@
         campaign_creation_timestamp: myCampaign.get('creation_timestamp')
         campaign_urn: campaign_urn
 
-      App.execute "uploader:new", completeSubmit, surveyId
+      App.execute "uploader:new", 'survey', completeSubmit, surveyId
 
     getLocation: (responses, surveyId) ->
       # get geolocation
