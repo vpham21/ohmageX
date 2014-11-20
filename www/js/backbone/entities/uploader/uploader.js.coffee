@@ -5,6 +5,22 @@
   class Entities.Uploader extends Entities.Model
 
   API =
+    parseUploadErrors: (responseData, response, surveyId) ->
+      console.log 'parseUploadErrors'
+      if response.result is "success"
+        App.execute "survey:images:destroy"
+        console.log 'newUploader Success!'
+        App.vent.trigger "survey:upload:success", response, surveyId
+      else
+        console.log 'response.errors[0].code', response.errors[0].code
+        type = switch response.errors[0].code
+          when '0710','0703','0617' then "campaign"
+          when '0100' then "server"
+          when '0600','0307' then "response"
+          when '0200' then "auth"
+        console.log 'type', type
+        App.vent.trigger "survey:upload:failure:#{type}", responseData, response.errors[0].text, surveyId
+
     newUploader: (responseData, surveyId) ->
 
       # add auth credentials to the response before saving.
@@ -24,13 +40,11 @@
         url: "#{App.request("serverpath:current")}/app/survey/upload"
         dataType: 'json'
         success: (response) =>
-          App.execute "survey:images:destroy"
-          console.log 'newUploader Success!'
-          App.vent.trigger "survey:upload:success", response, surveyId
+          @parseUploadErrors responseData, response, surveyId
         error: (response) =>
           console.log 'survey upload error'
-          # broadcast an error event for survey uploader to respond to
-          App.vent.trigger "survey:upload:failure", response, surveyId
+          # assume all error callbacks here are network related
+          App.vent.trigger "survey:upload:failure:network", responseData, response, surveyId
 
   App.commands.setHandler "uploader:new", (responseData, surveyId) ->
     # campaign_urn serves as the "foreign key" between
