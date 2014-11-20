@@ -1,0 +1,4 @@
+<div class="stopped-item">
+  <h3 class="item-label"><span><%= @name %></span> - Last Submitted <%= @prettyTimestamp %></h3>
+  <button>Remove</button>
+</div>
