@@ -5,7 +5,8 @@
 
   class Notice.ShowController extends App.Controllers.Application
 
-    initialize: (options) ->
+    initialize: (options) -> 
+
       { region, data, cancelListener, okListener } = options
       
       if !region then throw new Error "Notice component instantiated with invalid region"
@@ -24,7 +25,7 @@
       new Notice.Show
         model: entity
 
-  App.commands.setHandler "notice:show:view", (data) ->
+  App.commands.setHandler "notice:show", (data) ->
 
     _.defaults data,
       cancelListener: false
@@ -34,5 +35,3 @@
       data: data.data
       cancelListener: data.cancelListener
       okListener: data.okListener
-
-    result.myView
