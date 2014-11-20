@@ -16,7 +16,7 @@
         type = switch response.errors[0].code
           when '0710','0703','0617','0700' then "campaign"
           when '0100' then "server"
-          when '0600','0307' then "response"
+          when '0600','0307','0302' then "response"
           when '0200' then "auth"
         console.log 'type', type
         App.vent.trigger "survey:upload:failure:#{type}", responseData, response.errors[0].text, surveyId
