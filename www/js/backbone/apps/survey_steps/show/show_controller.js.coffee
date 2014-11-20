@@ -14,6 +14,7 @@
       @layout = @getLayoutView()
 
       @listenTo @layout, "show", =>
+        @noticeRegion()
         @stepBodyRegion()
         @skipButtonRegion()
         @prevButtonRegion()
@@ -38,6 +39,9 @@
           # only trigger the response success event if the response isn't false.
           console.log "response correct, arg is", responseModel.get 'response'
           App.vent.trigger "response:set:success", responseModel.get('response'), @surveyId, @stepId
+
+    noticeRegion: ->
+      App.execute "notice:region:set", @layout.noticeRegion
 
     stepBodyRegion: ->
       App.execute "steps:view:insert", @layout.stepBodyRegion, @stepId
