@@ -6,7 +6,7 @@
     uploadFailureCampaign: (responseData, errorText, surveyId) ->
       # show notice to let them retry.
       console.log 'survey:upload:failure:campaign'
-      noticeView = App.execute "notice:show:view",
+      App.execute "notice:show",
         data:
           title: "Survey Upload Error"
           description: "Problem with Survey Campaign: #{errorText}"
@@ -15,13 +15,16 @@
           okLabel: "Retry"
         cancelListener: =>
           # After Queue implemented: Put the survey item in the upload queue.
+          console.log 'responseData in cancelListener', responseData
+          App.execute "uploadqueue:item:add", responseData
           # After Notice Center: Notify the user that the item was put into their upload queue.
           # Exit the survey.
           App.vent.trigger "survey:exit", surveyId
         okListener: =>
-          App.commands.execute "survey:upload", surveyId
+          App.execute "survey:upload", surveyId
 
   App.vent.on "survey:upload:failure:campaign", (responseData, errorText, surveyId) ->
+    console.log responseData
     API.uploadFailureCampaign responseData, errorText, surveyId
 
   App.vent.on "survey:upload:failure:response", (responseData, errorText, surveyId) ->
