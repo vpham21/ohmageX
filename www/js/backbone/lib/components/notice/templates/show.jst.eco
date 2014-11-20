@@ -1,0 +1,3 @@
+<h3><%= @title %></h3>
+<p><%= @description %></p>
+<% if @showCancel is true: %><button class="cancel-button"><%= @cancelLabel %></button><% end %><button class="ok-button"><%= @okLabel %></button>
