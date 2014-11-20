@@ -18,6 +18,7 @@
   class Show.Layout extends App.Views.Layout
     template: "survey_steps/show/show_layout"
     regions:
+      noticeRegion: '#notice'
       stepBodyRegion: '#step-body'
       skipButtonRegion: '#skip-button'
       prevButtonRegion: '#prev-button'
