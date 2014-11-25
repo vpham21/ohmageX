@@ -1,10 +1,5 @@
 @Ohmage.module "SurveysApp.List", (List, App, Backbone, Marionette, $, _) ->
 
-  class List.Logout extends App.Views.ItemView
-    template: "surveys/list/logout"
-    triggers:
-      "click button": "logout:clicked"
-
   class List.Survey extends App.Views.ItemView
     initialize: ->
       @listenTo @model, 'change', @render
