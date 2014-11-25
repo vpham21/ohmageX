@@ -30,7 +30,7 @@
     currentStep = App.request "flow:step", id
     API.updateStatus currentStep, status
 
-  App.vent.on "survey:step:goback", (stepId) ->
+  App.vent.on "survey:step:goback", (surveyId, stepId) ->
     currentStep = App.request "flow:step", stepId
     API.updateStatus currentStep, "pending"
 

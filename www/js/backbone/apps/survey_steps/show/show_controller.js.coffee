@@ -62,7 +62,7 @@
       prevView = @getPrevButtonView prevEntity
 
       @listenTo prevView, "prev:clicked", =>
-        App.vent.trigger "survey:step:prev:clicked", @stepId
+        App.vent.trigger "survey:step:prev:clicked", @surveyId, @stepId
 
       @show prevView, region: @layout.prevButtonRegion
 

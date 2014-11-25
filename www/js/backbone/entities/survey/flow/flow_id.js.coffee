@@ -31,11 +31,29 @@
       result.get 'id'
 
     prevId: (currentFlow, id) ->
-      myIndex = @currentIndex currentFlow, id
-      throw new Error "id #{id} is the first in currentFlow, no previous" unless myIndex > 0
+      # returns the previous ID that has a status of "complete".
 
-      result = currentFlow.at(myIndex-1)
-      throw new Error "id #{id} in currentFlow has no previous id" if typeof result is 'undefined'
+      myIndex = @currentIndex currentFlow, id
+
+      firstId = API.firstId(currentFlow)
+      firstIndex = currentFlow.indexOf currentFlow.get(firstId)
+
+      # return false if we're on the first flow step.
+      if myIndex is firstIndex then return false
+
+      prevIndex = false
+      currentFlow.each( (model, key) ->
+        if key < myIndex and model.get('status') is 'complete'
+          prevIndex = key
+      )
+
+      # No prevIndex was found, meaning there were no
+      # "complete" steps before this one. But we're not at
+      # the first index, so jump to the first step.
+      if !prevIndex then prevIndex = firstIndex
+
+      result = currentFlow.at prevIndex
+
       result.get 'id'
 
   App.reqres.setHandler "flow:id:first", ->
