@@ -26,7 +26,6 @@
         @infobuttonRegion selector
         @selectorRegion selector
         @surveysRegion surveys
-        @logoutRegion()
 
       @show @layout, loading: false
 
@@ -62,18 +61,6 @@
         App.vent.trigger "survey:list:stopped:clicked", args.model
 
       @show surveysView, region: @layout.listRegion
-
-    logoutRegion: ->
-      logoutView = @getLogoutView()
-
-      @listenTo logoutView, "logout:clicked", ->
-        console.log 'logout clicked'
-        App.vent.trigger "survey:list:logout:clicked"
-
-      @show logoutView, region: @layout.logoutRegion
-
-    getLogoutView: ->
-      new List.Logout
 
     getInfoButtonView: (selector) ->
       new List.CampaignInfoButton
