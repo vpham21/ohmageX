@@ -7,6 +7,7 @@
   class Entities.CampaignsFiltered extends Entities.CampaignsUser
     initialize: (options) ->
       @campaigns = options
+      @_meta = {}
 
       @listenTo @campaigns, "reset", ->
         @where @_currentCriteria
@@ -21,6 +22,11 @@
         # ensure the filtered list also updates when
         # user campaigns are removed.
         @remove model
+    meta: (prop, value) ->
+      if value is undefined
+        return @_meta[prop]
+      else
+        @_meta[prop] = value
 
     where: (criteria) ->
       if criteria and criteria.name?
@@ -32,6 +38,7 @@
         )
         # Initiating a search must clear out any saved campaign selection.
         # Broadcast this event so views may update
+        @meta('filterType', 'search')
         @trigger "filter:saved:clear"
       else if criteria and criteria.saved?
         items = @campaigns.filter((campaign) ->
@@ -40,8 +47,10 @@
         )
         # Choosing a saved item must clear out any search terms when it gets
         # selected. Broadcast this event so views may update
+        @meta('filterType', 'saved')
         @trigger "filter:search:clear"
       else
+        @meta('filterType', 'none')
         items = @campaigns.models
 
       console.log 'items', items
