@@ -17,6 +17,7 @@
     model: Entities.CampaignUser
     url: ->
       "#{App.request("serverpath:current")}/app/campaign/read"
+    comparator: "name"
     parse: (response, options) ->
       # parse the response data into values ready to be added
       # to the Collection of User Campaigns.
