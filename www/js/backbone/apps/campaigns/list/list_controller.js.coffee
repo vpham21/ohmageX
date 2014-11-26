@@ -59,7 +59,7 @@
 
       @listenTo campaignsView, "childview:unsave:clicked", (child, args) ->
         console.log 'childview:unsave:clicked args', args.model
-        App.vent.trigger "campaign:list:unsave:clicked", args.model
+        App.vent.trigger "campaign:list:unsave:clicked", args.model, child, campaigns.meta('filterType')
 
       @listenTo campaignsView, "childview:navigate:clicked", (child, args) ->
         console.log 'childview:navigate:clicked args', args.model
