@@ -13,14 +13,14 @@
 
       @listenTo @campaigns, "sync:stop", ->
         console.log 'sync stop'
-        filtered.trigger "filter:search:clear"
-        filtered.trigger "filter:saved:clear"
-        filtered.where()
+        @trigger "filter:search:clear"
+        @trigger "filter:saved:clear"
+        @where()
 
       @listenTo @campaigns, "remove", (model) ->
         # ensure the filtered list also updates when
         # user campaigns are removed.
-        filtered.remove model
+        @remove model
 
     where: (criteria) ->
       if criteria and criteria.name?
