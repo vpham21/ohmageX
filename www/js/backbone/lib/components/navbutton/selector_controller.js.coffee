@@ -14,6 +14,10 @@
           console.log "button:sync in Navbutton Component"
           App.execute "campaigns:sync"
 
+        @listenTo @myView, "button:upload", (type) ->
+          console.log "button:upload in Navbutton Component"
+          App.execute "uploadqueue:upload:all"
+
         # Ensure this controller is removed during view cleanup.
         @listenTo @myView, "destroy", @destroy
 
@@ -21,6 +25,9 @@
       switch selected
         when "Campaigns"
           return new Navbutton.Sync
+            collection: navs
+        when "Upload Queue"
+          return new Navbutton.Upload
             collection: navs
         else
           return false
