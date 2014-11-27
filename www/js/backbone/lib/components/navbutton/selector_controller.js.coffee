@@ -22,6 +22,9 @@
         when "Campaigns"
           return new Navbutton.Sync
             collection: navs
+        when "Upload Queue"
+          return new Navbutton.Upload
+            collection: navs
         else
           return false
 
