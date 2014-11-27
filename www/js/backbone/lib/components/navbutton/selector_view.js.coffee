@@ -11,3 +11,15 @@
 
     triggers:
       "click": "button:clicked"
+
+  class Navbutton.Upload extends App.Views.ItemView
+    template: "navbutton/upload"
+    tagName: "button"
+    initialize: ->
+      # TODO: Add handlers for disabling the button
+      # when sync is happening
+      @listenTo @, "button:clicked", ->
+        @trigger "button:upload"
+
+    triggers:
+      "click": "button:clicked"
