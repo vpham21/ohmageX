@@ -3,13 +3,13 @@
   # All survey upload failure handlers are consolidated in this module.
 
   API =
-    uploadFailureCampaign: (responseData, errorText, surveyId) ->
+    uploadFailureGeneral: (responseData, errorPrefix, errorText, surveyId) ->
       # show notice to let them retry.
       console.log 'survey:upload:failure:campaign'
       App.execute "notice:show",
         data:
           title: "Survey Upload Error"
-          description: "Problem with Survey Campaign: #{errorText}"
+          description: "#{errorPrefix} #{errorText}"
           showCancel: true
           cancelLabel: "Cancel"
           okLabel: "Retry"
