@@ -17,8 +17,14 @@
 
   API =
     init: ->
-      currentServer = new Entities.ServerPath
-        path: 'https://test.mobilizingcs.org'
+      App.request "storage:get", 'serverpath', ((result) =>
+        # serverpath is retrieved from raw JSON.
+        console.log 'serverpath retrieved from storage'
+        currentServer = new Entities.ServerPath result
+      ), =>
+        console.log 'serverpath not retrieved from storage'
+        currentServer = new Entities.ServerPath
+          path: 'https://test.mobilizingcs.org'
 
     updateServer: (newPath) ->
       # remove trailing slash if it exists
