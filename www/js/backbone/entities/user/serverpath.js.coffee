@@ -17,8 +17,14 @@
 
   API =
     init: ->
-      currentServer = new Entities.ServerPath
-        path: 'https://test.mobilizingcs.org'
+      App.request "storage:get", 'serverpath', ((result) =>
+        # serverpath is retrieved from raw JSON.
+        console.log 'serverpath retrieved from storage'
+        currentServer = new Entities.ServerPath result
+      ), =>
+        console.log 'serverpath not retrieved from storage'
+        currentServer = new Entities.ServerPath
+          path: 'https://test.mobilizingcs.org'
 
     updateServer: (newPath) ->
       # remove trailing slash if it exists
@@ -26,7 +32,16 @@
       newPath = newPath.replace(slash, "").trim()
       console.log 'newPath', newPath
       currentServer.set {path: newPath }, { validate: true }
-      console.log 'currentServer', currentServer.toJSON()
+      App.execute "storage:save", 'serverpath', currentServer.toJSON(), =>
+        console.log "serverpath entity API.updateServer success"
+
+    clear: ->
+      App.execute "storage:clear", 'serverpath', ->
+        console.log 'serverpath erased'
+        App.vent.trigger "serverpath:cleared"
+
+  App.on "before:start", ->
+    API.init()
 
   App.reqres.setHandler "serverpath:entity", ->
     currentServer
@@ -36,6 +51,9 @@
 
   App.commands.setHandler "serverpath:update", (newPath) ->
     API.updateServer newPath
+
+  App.vent.on "credentials:cleared", ->
+    API.clear()
 
   Entities.on "start", ->
     API.init()
