@@ -32,7 +32,16 @@
       newPath = newPath.replace(slash, "").trim()
       console.log 'newPath', newPath
       currentServer.set {path: newPath }, { validate: true }
-      console.log 'currentServer', currentServer.toJSON()
+      App.execute "storage:save", 'serverpath', currentServer.toJSON(), =>
+        console.log "serverpath entity API.updateServer success"
+
+    clear: ->
+      App.execute "storage:clear", 'serverpath', ->
+        console.log 'serverpath erased'
+        App.vent.trigger "serverpath:cleared"
+
+  App.on "before:start", ->
+    API.init()
 
   App.reqres.setHandler "serverpath:entity", ->
     currentServer
@@ -42,6 +51,9 @@
 
   App.commands.setHandler "serverpath:update", (newPath) ->
     API.updateServer newPath
+
+  App.vent.on "credentials:cleared", ->
+    API.clear()
 
   Entities.on "start", ->
     API.init()
