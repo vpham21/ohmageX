@@ -68,6 +68,11 @@
   App.reqres.setHandler "credentials:current", ->
     API.getCredentials()
 
+  App.reqres.setHandler "credentials:username", ->
+    credentials = API.getCredentials()
+    if !credentials then return false
+    credentials.get 'username'
+
   App.reqres.setHandler "credentials:upload:params", ->
     API.getParams()
 
