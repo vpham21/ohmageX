@@ -46,6 +46,9 @@
           return new Prompts.MultiChoiceCustom
             model: entity
             collection: entity.get('properties')
+        else
+          return new Prompts.Unsupported
+            model: App.request('prompt:unsupported:entity', type)
 
   App.reqres.setHandler "prompts:view", (entity, type) ->
     selector = new Prompts.SelectorController
