@@ -297,3 +297,13 @@
       # <li><input type=checkbox ... /><label>labelText</label></li>
       $responses = @$el.find('input[type=checkbox]').filter(':checked')
       @trigger "response:submit", @extractJSONString($responses), surveyId, stepId
+
+  class Prompts.Unsupported extends Prompts.Base
+    template: "prompts/unsupported"
+    gatherResponses: (surveyId, stepId) =>
+      # just submit an unsupported prompt response as "NOT_DISPLAYED".
+      # The status within Flow isn't actually set as "not_displayed"
+      # because we still need to render the unsupported prompt
+      # placeholder. Also, this is a Prompt because we still need
+      # to submit a value for this Response inside the Response object.
+      @trigger "response:submit", "NOT_DISPLAYED", surveyId, stepId
