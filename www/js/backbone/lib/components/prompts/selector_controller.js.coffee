@@ -50,8 +50,10 @@
           return new Prompts.Unsupported
             model: App.request('prompt:unsupported:entity', type)
 
-  App.reqres.setHandler "prompts:view", (entity, type) ->
+  App.reqres.setHandler "prompts:view", (surveyId, stepId, entity, type) ->
     selector = new Prompts.SelectorController
+      surveyId: surveyId
+      stepId: stepId
       entity: entity
       type: type
 
