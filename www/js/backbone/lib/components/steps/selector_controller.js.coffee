@@ -35,9 +35,10 @@
     showSelectedView: (view) ->
       @show view
 
-  App.commands.setHandler "steps:view:insert", (region, stepId) ->
+  App.commands.setHandler "steps:view:insert", (region, surveyId, stepId) ->
     result = new Steps.SelectorController
       region: region
+      surveyId: surveyId
       stepId: stepId
       type: App.request "flow:type", stepId
       entity: App.request "flow:entity", stepId
