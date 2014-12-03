@@ -12,6 +12,10 @@
 
       @myView = @selectView entity, type
 
+      @listenTo @myView, "customchoice:add:success", (myVal) =>
+        console.log "customchoice:add:success handler", myVal
+        App.execute "prompt:customchoice:add", @surveyId, @stepId, myVal
+
       @listenTo @myView, "response:submit", (response, surveyId, stepId) ->
         console.log "response:submit"
         App.execute "response:validate", response, surveyId, stepId
