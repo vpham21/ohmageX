@@ -194,10 +194,10 @@
   class Prompts.SingleChoiceCustom extends Prompts.BaseComposite
     initialize: ->
       super
-      @listenTo @, 'choice:toggle', @toggleChoice
-      @listenTo @, 'choice:add', @addChoice
-      @listenTo @, 'choice:cancel', @cancelChoice
-      @listenTo @, 'choice:add:invalid', (-> console.log 'invalid custom choice, please try again')
+      @listenTo @, 'customchoice:toggle', @toggleChoice
+      @listenTo @, 'customchoice:add', @addChoice
+      @listenTo @, 'customchoice:cancel', @cancelChoice
+      @listenTo @, 'customchoice:add:invalid', (-> alert('invalid custom choice, please try again.'))
       @listenTo @, 'customchoice:add:exists', (-> alert('Custom choice exists, please try again.'))
     onRender: ->
       currentValue = @model.get('currentValue')
@@ -217,7 +217,7 @@
 
       if !!!myVal.length
         # ensure a new custom choice isn't blank.
-        @trigger "choice:add:invalid"
+        @trigger "customchoice:add:invalid"
         return false
 
       if not $addForm.hasClass 'hidden'
@@ -242,12 +242,12 @@
     childView: Prompts.SingleChoiceItem
     childViewContainer: ".prompt-list"
     triggers:
-      "click button.my-add": "choice:toggle"
-      "click .add-form .add-submit": "choice:add"
-      "click .add-form .add-cancel": "choice:cancel"
+      "click button.my-add": "customchoice:toggle"
+      "click .add-form .add-submit": "customchoice:add"
+      "click .add-form .add-cancel": "customchoice:cancel"
     gatherResponses: (surveyId, stepId) =>
       # reset the add custom form, if it's open
-      @trigger "choice:cancel"
+      @trigger "customchoice:cancel"
       # this expects the radio buttons to be in the format:
       # <li><input type=radio ... /><label>labelText</label></li>
       $checkedInput = @$el.find('input[type=radio]').filter(':checked')
@@ -294,7 +294,7 @@
       if currentValue then @selectCurrentValues currentValue
     gatherResponses: (surveyId, stepId) =>
       # reset the add custom form, if it's open
-      @trigger "choice:cancel"
+      @trigger "customchoice:cancel"
       # this expects the checkbox buttons to be in the format:
       # <li><input type=checkbox ... /><label>labelText</label></li>
       $responses = @$el.find('input[type=checkbox]').filter(':checked')
