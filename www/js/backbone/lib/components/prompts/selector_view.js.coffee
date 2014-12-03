@@ -127,6 +127,8 @@
   class Prompts.SingleChoiceItem extends App.Views.ItemView
     tagName: 'li'
     template: "prompts/single_choice_item"
+    triggers:
+      "click .delete-button": "customchoice:remove"
 
   # Prompt Single Choice
   class Prompts.SingleChoice extends Prompts.BaseComposite
@@ -140,8 +142,7 @@
       currentValue = @model.get('currentValue')
       if currentValue then @$el.find("input[value='#{currentValue}']").attr('checked', true)
 
-  class Prompts.MultiChoiceItem extends App.Views.ItemView
-    tagName: 'li'
+  class Prompts.MultiChoiceItem extends Prompts.SingleChoiceItem
     template: "prompts/multi_choice_item"
 
   # Prompt Multi Choice
@@ -194,15 +195,21 @@
   class Prompts.SingleChoiceCustom extends Prompts.BaseComposite
     initialize: ->
       super
-      @listenTo @, 'choice:toggle', @toggleChoice
-      @listenTo @, 'choice:add', @addChoice
-      @listenTo @, 'choice:cancel', @cancelChoice
-      @listenTo @, 'choice:add:invalid', (-> console.log 'invalid custom choice, please try again')
+      @listenTo @, 'customchoice:toggle', @toggleChoice
+      @listenTo @, 'customchoice:add', @addChoice
+      @listenTo @, 'customchoice:cancel', @cancelChoice
+
+      @listenTo @, 'childview:customchoice:remove', @removeChoice
+
+      @listenTo @, 'customchoice:add:invalid', (-> alert('invalid custom choice, please try again.'))
       @listenTo @, 'customchoice:add:exists', (-> alert('Custom choice exists, please try again.'))
     onRender: ->
       currentValue = @model.get('currentValue')
       if currentValue then @$el.find("label:containsExact('#{currentValue}')").parent().find('input').attr('checked', true)
-
+    removeChoice: (args) ->
+      value = args.model.get 'label'
+      @collection.remove @collection.where(label: value)
+      @trigger "customchoice:remove", value
     toggleChoice: (args) ->
       $addForm = @$el.find '.add-form'
       $addForm.toggleClass 'hidden'
@@ -213,11 +220,11 @@
       $addForm.find(".add-value").val('')
     addChoice: (args) ->
       $addForm = @$el.find '.add-form'
-      myVal = $addForm.find(".add-value").val()
+      myVal = $addForm.find(".add-value").val().trim()
 
       if !!!myVal.length
         # ensure a new custom choice isn't blank.
-        @trigger "choice:add:invalid"
+        @trigger "customchoice:add:invalid"
         return false
 
       if not $addForm.hasClass 'hidden'
@@ -235,18 +242,22 @@
           "key": _.uniqueId()
           "label": myVal
           "parentId": args.model.get('id')
+          "custom": true
         }])
 
+        # clear the input on successful submit.
+        @trigger "customchoice:add:success", myVal
+        $addForm.find(".add-value").val('')
     template: "prompts/choice_custom"
     childView: Prompts.SingleChoiceItem
     childViewContainer: ".prompt-list"
     triggers:
-      "click button.my-add": "choice:toggle"
-      "click .add-form .add-submit": "choice:add"
-      "click .add-form .add-cancel": "choice:cancel"
+      "click button.my-add": "customchoice:toggle"
+      "click .add-form .add-submit": "customchoice:add"
+      "click .add-form .add-cancel": "customchoice:cancel"
     gatherResponses: (surveyId, stepId) =>
       # reset the add custom form, if it's open
-      @trigger "choice:cancel"
+      @trigger "customchoice:cancel"
       # this expects the radio buttons to be in the format:
       # <li><input type=radio ... /><label>labelText</label></li>
       $checkedInput = @$el.find('input[type=radio]').filter(':checked')
@@ -293,7 +304,7 @@
       if currentValue then @selectCurrentValues currentValue
     gatherResponses: (surveyId, stepId) =>
       # reset the add custom form, if it's open
-      @trigger "choice:cancel"
+      @trigger "customchoice:cancel"
       # this expects the checkbox buttons to be in the format:
       # <li><input type=checkbox ... /><label>labelText</label></li>
       $responses = @$el.find('input[type=checkbox]').filter(':checked')
