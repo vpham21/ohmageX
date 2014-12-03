@@ -198,12 +198,18 @@
       @listenTo @, 'customchoice:toggle', @toggleChoice
       @listenTo @, 'customchoice:add', @addChoice
       @listenTo @, 'customchoice:cancel', @cancelChoice
+
+      @listenTo @, 'childview:customchoice:remove', @removeChoice
+
       @listenTo @, 'customchoice:add:invalid', (-> alert('invalid custom choice, please try again.'))
       @listenTo @, 'customchoice:add:exists', (-> alert('Custom choice exists, please try again.'))
     onRender: ->
       currentValue = @model.get('currentValue')
       if currentValue then @$el.find("label:containsExact('#{currentValue}')").parent().find('input').attr('checked', true)
-
+    removeChoice: (args) ->
+      value = args.model.get 'label'
+      @collection.remove @collection.where(label: value)
+      @trigger "customchoice:remove", value
     toggleChoice: (args) ->
       $addForm = @$el.find '.add-form'
       $addForm.toggleClass 'hidden'
