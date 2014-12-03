@@ -142,8 +142,7 @@
       currentValue = @model.get('currentValue')
       if currentValue then @$el.find("input[value='#{currentValue}']").attr('checked', true)
 
-  class Prompts.MultiChoiceItem extends App.Views.ItemView
-    tagName: 'li'
+  class Prompts.MultiChoiceItem extends Prompts.SingleChoiceItem
     template: "prompts/multi_choice_item"
 
   # Prompt Multi Choice
