@@ -80,3 +80,6 @@
 
   App.commands.setHandler "uploadqueue:clear", ->
     API.clear()
+
+  App.vent.on "credentials:cleared", ->
+    API.clear()
