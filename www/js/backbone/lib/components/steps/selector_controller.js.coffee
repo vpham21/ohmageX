@@ -32,7 +32,7 @@
             model: entity
         else
           # handle all other view types in the Prompts component.
-          return App.request "prompts:view", entity, type
+          return App.request "prompts:view", @surveyId, @stepId, entity, type
 
     showSelectedView: (view) ->
       @show view
