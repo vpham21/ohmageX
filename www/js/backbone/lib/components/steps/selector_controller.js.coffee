@@ -8,7 +8,9 @@
   class Steps.SelectorController extends App.Controllers.Application
 
     initialize: (options) ->
-      { stepId, type, entity } = options
+      { surveyId, stepId, type, entity } = options
+
+      @surveyId = surveyId
       @stepId = stepId
 
       myView = @selectView entity, type
