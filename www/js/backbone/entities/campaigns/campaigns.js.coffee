@@ -213,3 +213,6 @@
 
   App.commands.setHandler "campaigns:user:clear", ->
     API.clear()
+
+  App.vent.on "credentials:cleared", ->
+    API.clear()

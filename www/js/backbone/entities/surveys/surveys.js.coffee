@@ -130,3 +130,6 @@
 
   App.reqres.setHandler "surveys:saved:campaign", (campaign_urn) ->
     API.getCampaignSurveys campaign_urn
+
+  App.vent.on "credentials:cleared", ->
+    API.clear()

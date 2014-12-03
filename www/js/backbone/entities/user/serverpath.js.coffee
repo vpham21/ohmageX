@@ -36,6 +36,8 @@
         console.log "serverpath entity API.updateServer success"
 
     clear: ->
+      # Don't reset current server if they log out - next time the app loads
+      # it will refresh the server properly.
       App.execute "storage:clear", 'serverpath', ->
         console.log 'serverpath erased'
         App.vent.trigger "serverpath:cleared"
