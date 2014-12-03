@@ -235,6 +235,7 @@
           "key": _.uniqueId()
           "label": myVal
           "parentId": args.model.get('id')
+          "custom": true
         }])
 
     template: "prompts/choice_custom"
