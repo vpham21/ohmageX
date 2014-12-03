@@ -245,6 +245,7 @@
           "custom": true
         }])
 
+        @trigger "customchoice:add:success", myVal
     template: "prompts/choice_custom"
     childView: Prompts.SingleChoiceItem
     childViewContainer: ".prompt-list"
