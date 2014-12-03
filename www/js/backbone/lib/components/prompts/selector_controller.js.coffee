@@ -48,7 +48,7 @@
         when "single_choice_custom"
           return new Prompts.SingleChoiceCustom
             model: entity
-            collection: entity.get('properties')
+            collection: App.request "prompt:customchoices:merged", @surveyId, @stepId, entity.get('properties')
         when "multi_choice"
           return new Prompts.MultiChoice
             model: entity
@@ -56,7 +56,7 @@
         when "multi_choice_custom"
           return new Prompts.MultiChoiceCustom
             model: entity
-            collection: entity.get('properties')
+            collection: App.request "prompt:customchoices:merged", @surveyId, @stepId, entity.get('properties')
         else
           return new Prompts.Unsupported
             model: App.request('prompt:unsupported:entity', type)
