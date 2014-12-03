@@ -197,9 +197,8 @@
       @listenTo @, 'choice:toggle', @toggleChoice
       @listenTo @, 'choice:add', @addChoice
       @listenTo @, 'choice:cancel', @cancelChoice
-      # TODO: Make a mini validator for custom choice,
-      # e.g. disallow duplicates
       @listenTo @, 'choice:add:invalid', (-> console.log 'invalid custom choice, please try again')
+      @listenTo @, 'customchoice:add:exists', (-> alert('Custom choice exists, please try again.'))
     onRender: ->
       currentValue = @model.get('currentValue')
       if currentValue then @$el.find("label:containsExact('#{currentValue}')").parent().find('input').attr('checked', true)
@@ -227,8 +226,10 @@
         # to the view's Collection. Validation and parsing takes
         # place within the ChoiceCollection's model.
 
-        # Also, will add an event to clear the value of the input
-        # on successful submit.
+        if args.collection.where(label: myVal).length > 0
+          # the custom choice already exists
+          @trigger "customchoice:add:exists"
+          return false
 
         args.collection.add([{
           "key": _.uniqueId()
