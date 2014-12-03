@@ -5,7 +5,10 @@
 
   class Prompts.SelectorController extends App.Controllers.Application
     initialize: (options) ->
-      { entity, type } = options
+      { surveyId, stepId, type, entity } = options
+
+      @surveyId = surveyId
+      @stepId = stepId
 
       @myView = @selectView entity, type
 
