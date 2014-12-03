@@ -213,7 +213,7 @@
       $addForm.find(".add-value").val('')
     addChoice: (args) ->
       $addForm = @$el.find '.add-form'
-      myVal = $addForm.find(".add-value").val()
+      myVal = $addForm.find(".add-value").val().trim()
 
       if !!!myVal.length
         # ensure a new custom choice isn't blank.
