@@ -44,7 +44,7 @@
       App.execute "notice:region:set", @layout.noticeRegion
 
     stepBodyRegion: ->
-      App.execute "steps:view:insert", @layout.stepBodyRegion, @stepId
+      App.execute "steps:view:insert", @layout.stepBodyRegion, @surveyId, @stepId
 
     skipButtonRegion: ->
 
