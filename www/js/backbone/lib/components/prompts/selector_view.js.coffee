@@ -245,7 +245,9 @@
           "custom": true
         }])
 
+        # clear the input on successful submit.
         @trigger "customchoice:add:success", myVal
+        $addForm.find(".add-value").val('')
     template: "prompts/choice_custom"
     childView: Prompts.SingleChoiceItem
     childViewContainer: ".prompt-list"
