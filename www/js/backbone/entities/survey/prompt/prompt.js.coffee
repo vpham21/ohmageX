@@ -3,6 +3,8 @@
   # The prompt entity defines data for a single prompt.
 
   class Entities.ChoiceModel extends Entities.Model
+    defaults:
+      custom: false # individual choices may be custom.
 
   class Entities.ChoiceCollection extends Entities.Collection
     model: Entities.ChoiceModel
