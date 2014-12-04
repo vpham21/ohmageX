@@ -17,6 +17,12 @@
       # saved a response for), or a default value, defined in the prompt's
       # XML config.
 
+      # the currentValueType is an attribute that indicates the source
+      # of where the currentValue came from. This is currently needed for specific prompts
+      # multi_choice_custom and single_choice_custom, where the source of the currentValue
+      # determines how it must be parsed in the View.
+      # Values for this are 'response' and 'default'
+
       currentValue = false
 
       if App.request "flow:type:is:prompt", id
@@ -27,8 +33,10 @@
 
         if validResponse
           currentValue = myResponse
+          responseEntity.set 'currentValueType', 'response'
         else if validDefault
           currentValue = myDefault
+          responseEntity.set 'currentValueType', 'default'
 
       responseEntity.set 'currentValue', currentValue
       responseEntity

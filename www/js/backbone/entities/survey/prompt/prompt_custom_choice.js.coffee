@@ -63,7 +63,7 @@
 
       # merge the currentChoices formatted array with the original ChoiceCollection
       # into a new collection for output. 
-      new Entities.ChoiceCollection _.union(customArr, original.toJSON())
+      new Entities.ChoiceCollection _.union(original.toJSON(), customArr)
 
     updateLocal: (callback) ->
       # update localStorage index custom_choices with the current version of campaignsSaved entity
