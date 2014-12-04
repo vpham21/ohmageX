@@ -218,7 +218,7 @@
       @listenTo @, 'customchoice:add:exists', (-> alert('Custom choice exists, please try again.'))
     onRender: ->
       currentValue = @model.get('currentValue')
-      if currentValue then @$el.find("label:containsExact('#{currentValue}')").parent().find('input').attr('checked', true)
+      if currentValue then @chooseValue currentValue
     chooseValue: (currentValue) ->
       # activate a choice selection based on the currentValueType.
       switch @model.get('currentValueType')
