@@ -301,6 +301,8 @@
       JSON.stringify result
     selectCurrentValues: (currentValues) ->
 
+      valueType = @model.get 'currentValueType'
+
       if currentValues.indexOf(',') isnt -1 and currentValues.indexOf('[') is -1
         # Check for values that contain a comma-separated list of
         # numbers with NO brackets (multi_choice default allows this)
