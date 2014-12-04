@@ -219,6 +219,17 @@
     onRender: ->
       currentValue = @model.get('currentValue')
       if currentValue then @$el.find("label:containsExact('#{currentValue}')").parent().find('input').attr('checked', true)
+    chooseValue: (currentValue) ->
+      # activate a choice selection based on the currentValueType.
+      switch @model.get('currentValueType')
+        when 'response'
+          # Saved responses use the label, not the key.
+          matchingValue = @$el.find("label:containsExact('#{currentValue}')").parent().find('input').attr('checked', true)
+        when 'default'
+          # Default responses match keys instead of labels.
+          # Select based on value.
+          @$el.find("input[value='#{currentValue}']").attr('checked', true)
+
     removeChoice: (args) ->
       value = args.model.get 'label'
       @collection.remove @collection.where(label: value)
