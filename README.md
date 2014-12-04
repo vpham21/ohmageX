@@ -6,9 +6,47 @@
 
 ## Installation and Setup
 
-- [Installation Instructions (wiki)](https://github.com/ucla/ohmage-mwf-dw/wiki/Installation-Instructions)
-- [Build Dependencies (wiki)](https://github.com/ucla/ohmage-mwf-dw/wiki/Build-Dependencies)
-  - [Versions, IDs and Naming (wiki)](https://github.com/ucla/ohmage-mwf-dw/wiki/Versions,-IDs-and-Naming)
+#### Prerequisites
+
+* Ruby 2.1+
+* Node.js 0.10+
+* Java JDK 1.6+
+
+#### Global Setup
+
+```
+./local-setup.sh
+```
+
+#### Build Web Assets
+
+Install dependencies for local build:
+
+```
+cd www
+bundle
+npm install
+```
+
+Compile assets:
+
+```
+node_modules/grunt-cli/bin/grunt dev
+```
+
+#### Build Cordova for iOS
+
+Install required platforms for iOS build:
+
+```
+cordova platform add ios
+```
+
+Build the iOS app:
+
+```
+cordova build ios
+```
 
 ## Development using **ohmage-mwf-DW**
 
