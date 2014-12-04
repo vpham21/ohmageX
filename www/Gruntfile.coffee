@@ -18,7 +18,8 @@ module.exports = (grunt) ->
       "js/vendor/ConditionalParser.js"
       "js/vendor/jstz.js"
       "js/build/templates.js"
-      "js/build/mycoffee.js"
+      "js/build/mycoffee.js",
+      ".blocks/build/blocks.js"
     ]
     my_template_files: [
       "js/backbone/apps/**/*.eco"

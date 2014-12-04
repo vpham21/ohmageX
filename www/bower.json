@@ -1,0 +1,7 @@
+{
+  "name": "ohmage-mwf-dw",
+  "version": "1.0.0",
+  "dependencies": {
+    "WebBlocks-wrapper-normalize.csss": "WebBlocks/wrapper-normalize.css"
+  }
+}

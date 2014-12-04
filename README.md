@@ -28,7 +28,13 @@ bundle
 npm install
 ```
 
-Compile assets:
+Compile assets with WebBlocks and Grunt:
+
+```
+bundle exec blocks build && node_modules/grunt-cli/bin/grunt dev
+```
+
+If files in `/blocks` weren't updated, skip the WebBlocks build:
 
 ```
 node_modules/grunt-cli/bin/grunt dev
