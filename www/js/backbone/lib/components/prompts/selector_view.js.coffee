@@ -320,10 +320,12 @@
         # set all the array values
         _.each(valueParsed, (currentValue) =>
           console.log 'currentValue', currentValue
-          @$el.find("label:containsExact('#{currentValue}')").parent().find('input').attr('checked', true)
+          # method from parent SingleChoiceCustom
+          @chooseValue currentValue
         )
       else
-        @$el.find("label:containsExact('#{valueParsed}')").parent().find('input').attr('checked', true)
+        # method from parent SingleChoiceCustom
+        @chooseValue valueParsed
 
     onRender: ->
       currentValue = @model.get('currentValue')
