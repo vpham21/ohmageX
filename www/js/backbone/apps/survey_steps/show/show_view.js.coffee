@@ -19,6 +19,7 @@
     template: "survey_steps/show/show_layout"
     regions:
       noticeRegion: '#notice'
+      progressRegion: '#progress'
       stepBodyRegion: '#step-body'
       skipButtonRegion: '#skip-button'
       prevButtonRegion: '#prev-button'
