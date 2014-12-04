@@ -71,7 +71,9 @@
         data.currentDateValue = data.currentValue.substring(0,10)
       else
         currentDate = new Date()
-        data.currentDateValue = new Date().toISOString().substring(0,10)
+        dd = @padWithZero(currentDate.getDate())
+        mm = @padWithZero(currentDate.getMonth()+1) # January is 0
+        yyyy = currentDate.getFullYear()
       data.currentTimeValue = "#{@padWithZero(currentDate.getHours())}:#{@padWithZero(currentDate.getMinutes())}:#{@padWithZero(currentDate.getSeconds())}"
       data
 
