@@ -15,6 +15,7 @@
 
       @listenTo @layout, "show", =>
         @noticeRegion()
+        @progressRegion()
         @stepBodyRegion()
         @skipButtonRegion()
         @prevButtonRegion()
@@ -42,6 +43,14 @@
 
     noticeRegion: ->
       App.execute "notice:region:set", @layout.noticeRegion
+
+    progressRegion: ->
+
+      progress = App.request 'flow:progress', @stepId
+      progressView = @getProgressView progress
+
+      @show progressView, region: @layout.progressRegion
+
 
     stepBodyRegion: ->
       App.execute "steps:view:insert", @layout.stepBodyRegion, @surveyId, @stepId
@@ -88,6 +97,10 @@
             App.vent.trigger "survey:response:get", @surveyId, @stepId
 
       @show nextView, region: @layout.nextButtonRegion
+
+    getProgressView: (progress) ->
+      new Show.Progress
+        model: progress
 
     getSkipButtonView: (skip) ->
       new Show.SkipButton
