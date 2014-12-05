@@ -40,6 +40,15 @@ If files in `/blocks` weren't updated, skip the WebBlocks build:
 node_modules/grunt-cli/bin/grunt dev
 ```
 
+#### Cordova Plugins
+
+For web links that intend to launch the [in-app browser](http://docs.phonegap.com/en/2.9
+.0/cordova_inappbrowser_inappbrowser.md.html#InAppBrowserEvent):
+
+```
+cordova plugin add org.apache.cordova.inappbrowser
+```
+
 #### Build Cordova for iOS
 
 Install required platforms for iOS build:
