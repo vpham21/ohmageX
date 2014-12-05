@@ -23,6 +23,7 @@
       "click button": "next:clicked"
 
   class Show.Layout extends App.Views.Layout
+    className: 'survey-step'
     template: "survey_steps/show/show_layout"
     regions:
       noticeRegion: '#notice'

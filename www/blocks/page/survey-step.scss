@@ -1,0 +1,33 @@
+.survey-step {
+
+  #progress {
+    line-height: 1em;
+  }
+
+  progress {
+
+    -webkit-appearance: none;
+    appearance: none;
+
+    width: 100%;
+    border-radius: 0;
+    font-size: 1rem;
+    line-height: 1em;
+    border: 0;
+
+    // container (in WebKit)
+    &::-webkit-progress-bar {
+      background-color: #eee;
+    }
+
+    &::-webkit-progress-value {
+      background-image:
+      -webkit-linear-gradient(-45deg, transparent 33%, rgba(0, 0, 0, .1) 33%, rgba(0,0, 0, .1) 66%, transparent 66%),
+      -webkit-linear-gradient(top, rgba(255, 255, 255, .25), rgba(0, 0, 0, .25)),
+      -webkit-linear-gradient(left, #09c, #07a);
+      background-size: 2rem 1rem, 100% 100%, 100% 100%;
+    }
+
+  }
+
+}

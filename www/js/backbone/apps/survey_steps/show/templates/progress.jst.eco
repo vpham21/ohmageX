@@ -1,1 +1,1 @@
-<h3><%= @percentage %>%</h3>
+<progress value="<%= @percentage %>" max="100"><%= @percentage %>%</progress>
