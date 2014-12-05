@@ -75,3 +75,22 @@
 
   App.vent.on "uqall:upload:success", (response, itemId) ->
     API.queueSuccess itemId
+
+  App.vent.on "uqall:upload:failure:campaign", (responseData, errorText, itemId) ->
+    API.queueFailureGeneral "Problem with Survey Campaign:", errorText, itemId
+
+  App.vent.on "uqall:upload:failure:response", (responseData, errorText, itemId) ->
+    # placeholder for response errors handler.
+    API.queueFailureGeneral "Problem with Survey Response:", errorText, itemId
+
+  App.vent.on "uqall:upload:failure:server", (responseData, errorText, itemId) ->
+    # placeholder for server errors handler.
+    API.queueFailureGeneral "Problem with Server:", errorText, itemId
+
+  App.vent.on "uqall:upload:failure:auth", (responseData, errorText, itemId) ->
+    # placeholder for auth errors handler.
+    API.queueFailureGeneral "Problem with Auth:", errorText, itemId
+
+  App.vent.on "uqall:upload:failure:network", (responseData, errorText, itemId) ->
+    # placeholder for network errors handler.
+    API.queueFailureGeneral "Problem with Network:", errorText, itemId
