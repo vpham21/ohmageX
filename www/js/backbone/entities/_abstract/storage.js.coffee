@@ -11,7 +11,13 @@
 
     saveToStorage: (label, value, callback) ->
       value = JSON.stringify value 
-      item = localStorage.setItem label, value
+
+      try
+        item = localStorage.setItem label, value
+      catch domException
+        if domException.name is "QuotaExceededError" or domException.name is "NS_ERROR_DOM_QUOTA_REACHED"
+          alert 'browser storage limit exceeded, please clear some space to continue using the app.'
+
       callback value
 
     clearFromStorage: (label, callback) ->
