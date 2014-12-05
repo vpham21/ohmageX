@@ -19,7 +19,7 @@
     list: (campaign_id) ->
       App.vent.trigger "nav:choose", "Upload Queue"
       new Uploadqueue.List.Controller
-    queueFailureCampaign: (responseData, errorText, itemId) ->
+    queueFailureGeneral: (responseData, errorPrefix, errorText, itemId) ->
       # show notice that it failed.
       console.log 'uploadqueue:upload:failure:campaign itemId', itemId
 
@@ -29,7 +29,7 @@
       App.execute "notice:show",
         data:
           title: "Response Upload Error"
-          description: "Problem with Response's Campaign: #{errorText}"
+          description: "Problem with Response: #{errorPrefix} #{errorText}"
 
   App.addInitializer ->
     new Uploadqueue.Router
