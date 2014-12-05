@@ -28,6 +28,12 @@
       $.when( currentDeferred... ).done =>
         @whenComplete(oldLength)
 
+      # Fire an upload event for ALL of the items in the queue.
+      # note the 'uqall' event prefix.
+      queue.each( (item) ->
+        App.execute "uploader:new", 'uqall', item.get('data'), item.get('id')
+      )
+
     whenComplete: (oldLength) ->
       newLength = App.request 'uploadqueue:length'
       App.vent.trigger "uploadqueue:all:complete"
