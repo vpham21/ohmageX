@@ -83,13 +83,14 @@
         else "campaigns/list/_ghost_campaign"
       result
     triggers:
-      "click .available-campaign .action-button": "save:clicked"
-      "click .available-campaign h3": "save:clicked"
-      "click .available-campaign .info-button": "info:clicked"
-      "click .saved-campaign button": "unsave:clicked"
-      "click .saved-campaign h3": "navigate:clicked"
-      "click .ghost-campaign button": "ghost:remove:clicked"
-      "click .ghost-campaign h3": "ghost:remove:clicked"
+      "click .available.campaign button.save": "save:clicked"
+      "click .available.campaign [role=\"link\"]": "save:clicked"
+      "click .available.campaign button.info": "info:clicked"
+      "click .saved.campaign button.delete": "unsave:clicked"
+      "click .saved.campaign [role=\"link\"]": "navigate:clicked"
+      "click .saved.campaign button.navigate": "navigate:clicked"
+      "click .ghost.campaign button.delete": "ghost:remove:clicked"
+      "click .ghost.campaign [role=\"link\"]": "ghost:remove:clicked"
 
   class List.CampaignsEmpty extends App.Views.ItemView
     template: "campaigns/list/_campaigns_empty"

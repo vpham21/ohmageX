@@ -4,29 +4,87 @@
     @include -clearfix;
     margin: 1em;
     position: relative;
+    height: ((3/2) * $global-form-control-font-size + 2 * $global-form-control-padding); /* same as .icon.search.form-control in components/_icon.scss */
+    overflow: hidden;
   }
 
   #selector-region {
-    float: left;
+    position: absolute;
   }
 
   #search-region div {
-    position: absolute;
     height: ((3/2) * $global-form-control-font-size + 2 * $global-form-control-padding); /* same as .icon.search.form-control in components/_icon.scss */
+    float: right;
     overflow: hidden;
-    z-index: 10;
     width: 100%;
     > * {
       position: absolute;
     }
     .icon {
       right: 0;
-      z-index: 21;
+      z-index: 12;
     }
     #search-box {
       left: 0;
       width: 100%;
     }
+    #search-box {
+      width: calc(100% - #{((3/2) * $global-form-control-font-size + 4 * $global-form-control-padding)});
+    }
+  }
+
+  ul.campaigns {
+
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    > li {
+
+      border-bottom: 1px solid #ccc;
+
+      &:first-child {
+        border-top: 1px solid #ccc;
+      }
+
+    }
+
+    .campaign {
+
+      @include -clearfix;
+      padding: 1rem;
+
+      div.action {
+        float: left;
+        width: 40px;
+      }
+
+      div.action.right {
+        float: right;
+      }
+
+      [role="link"] {
+        margin: 0 60px;
+        overflow-x: hidden;
+      }
+
+
+    }
+
+    h3 {
+      font-weight: bold;
+      font-size: 1rem;
+    }
+    h3, p {
+      margin: 0;
+    }
+    p {
+      font-size: 0.8rem;
+      small {
+        font-size: 1em;
+      }
+    }
+
   }
 
 }

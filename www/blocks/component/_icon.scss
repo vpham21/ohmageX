@@ -23,6 +23,34 @@
     width: 55px;
   }
 
+  &.info {
+    background-image: url("../img/icon/info.png");
+  }
+
+  &.delete {
+    background-image: url("../img/icon/delete.png");
+  }
+
+  &.save {
+    background-image: url("../img/icon/save.png");
+  }
+
+  &.delete, &.save, &.info {
+    background-size: 40px;
+  }
+
+  &.right-arrow {
+    background-size: 23px 36px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("../img/icon/right-arrow.png");
+  }
+
+  &.delete, &.save, &.info, &.right-arrow {
+    height: 40px;
+    width: 40px;
+  }
+
   &.search {
     background-image: url("../img/icon/search.png");
     height: 56px;
