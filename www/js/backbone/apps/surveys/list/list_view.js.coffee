@@ -52,9 +52,11 @@
     template: "surveys/list/_surveys_empty"
 
   class List.Surveys extends App.Views.CompositeView
+    tagName: 'nav'
+    className: 'list'
     template: "surveys/list/surveys"
     childView: List.Survey
-    childViewContainer: ".surveys"
+    childViewContainer: "ul"
     emptyView: List.SurveysEmpty
 
   class List.Layout extends App.Views.Layout

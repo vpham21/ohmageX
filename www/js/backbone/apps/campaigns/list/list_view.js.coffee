@@ -96,12 +96,14 @@
     template: "campaigns/list/_campaigns_empty"
 
   class List.Campaigns extends App.Views.CompositeView
+    tagName: 'nav'
+    className: 'list'
     initialize: ->
       @listenTo @collection, 'reset', @render
       @listenTo @collection, 'remove', @render
     template: "campaigns/list/campaigns"
     childView: List.Campaign
-    childViewContainer: ".campaigns"
+    childViewContainer: "ul"
     emptyView: List.CampaignsEmpty
 
   class List.Layout extends App.Views.Layout

@@ -1,6 +1,6 @@
 <div class="ghost campaign">
   <div class="action">
-    <button>Remove</button>
+    <button class="icon delete">Remove</button>
   </div>
   <div role="link">
     <h3><%= @name %></h3>

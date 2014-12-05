@@ -2,7 +2,7 @@
   <div class="action">
     <button class="icon save">Save</button>
   </div>
-  <div class="action right">
+  <div class="action">
     <button class="icon info">Info</button>
   </div>
   <div role="link">

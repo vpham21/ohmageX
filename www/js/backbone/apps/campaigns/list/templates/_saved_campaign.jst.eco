@@ -2,7 +2,7 @@
   <div class="action">
     <button class="icon delete">Unsave</button>
   </div>
-  <div class="action right">
+  <div class="action">
     <button class="icon right-arrow navigate">View</button>
   </div>
   <div role="link">
