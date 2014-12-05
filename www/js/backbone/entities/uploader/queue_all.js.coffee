@@ -6,8 +6,10 @@
   currentIndices = []
 
   API =
-    uploadAll: ->
+    uploadAll: (queue) ->
       console.log "uploadqueue uploadAll"
 
   App.commands.setHandler "uploadqueue:upload:all", ->
-    API.uploadAll()
+    queue = App.request 'uploadqueue:entity'
+
+    API.uploadAll queue
