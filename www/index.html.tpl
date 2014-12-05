@@ -12,11 +12,9 @@
   <script src="<%= js_modernizr_path %>"></script>
 </head>
 <body>
-  <header class="bar bar-nav"></header>
-  <section class="content wrap">
-    <article class="primary"></article>
-    <footer></footer>
-  </section>
+  <header></header>
+  <main></main>
+  <footer></footer>
   <script src="<%= js_jquery_path %>"></script>
   <script src="<%= js_path %>"></script>
   <script type="text/javascript">

@@ -6,6 +6,7 @@ module.exports = (grunt) ->
       "js/vendor/jquery-1.10.2.min.js"
     ]
     my_build_files: [
+      ".blocks/build/blocks.js"
       "js/vendor/underscore.js"
       "js/vendor/backbone.js"
       "js/vendor/backbone.touch.js"
@@ -18,8 +19,7 @@ module.exports = (grunt) ->
       "js/vendor/ConditionalParser.js"
       "js/vendor/jstz.js"
       "js/build/templates.js"
-      "js/build/mycoffee.js",
-      ".blocks/build/blocks.js"
+      "js/build/mycoffee.js"
     ]
     my_template_files: [
       "js/backbone/apps/**/*.eco"

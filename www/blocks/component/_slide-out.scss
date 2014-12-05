@@ -1,0 +1,35 @@
+.slide-out {
+
+  display: none;
+
+  &[data-state="active"]{
+    right: $component-slide-out-width-fallback; // fallback in case browser sucks
+  }
+
+  > .overlay {
+    left: $component-slide-out-width-fallback; // fallback in case browser sucks
+  }
+
+  &[data-state="active"] {
+    display: block;
+    position: fixed;
+    background: rgba(0,0,0,0.95);
+    right: calc(-1 * (#{$component-slide-out-width} - 100%));
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1001;
+  }
+
+  > .overlay {
+    background-color: rgba(0,0,0,0.3);
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    left: calc(-1 * (0% - #{$component-slide-out-width})); // written oddly to make sure if the [data-state] fails, this one fails too
+    z-index: 1000;
+    cursor: pointer;
+  }
+
+}

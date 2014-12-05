@@ -24,5 +24,8 @@
   class List.Layout extends App.Views.Layout
     template: "header/list/layout"
     regions:
-      listRegion: "#list-region"
+      listRegion: "#app-menu .list-container"
       buttonRegion: "#button-region"
+    onRender: ->
+      menu = new SlideOutComponent('#app-menu', @$el)
+      menu.addToggle('click', '.app-menu-trigger', @$el)

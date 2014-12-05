@@ -1,0 +1,9 @@
+body > main {
+
+  // Lobotomized Owl Selector
+  // -> http://alistapart.com/article/axiomatic-css-and-lobotomized-owls
+  * + * {
+    margin-top: 1em;
+  }
+
+}
