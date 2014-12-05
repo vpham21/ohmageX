@@ -7,6 +7,6 @@
   <div class="list-container"></div>
 </nav>
 <button class="app-menu-trigger hamburger icon">Open Menu</button>
-<h1>Header Template</h1>
+<h1 id="page-title"></h1>
 <div id="button-region"></div>
 </header>
