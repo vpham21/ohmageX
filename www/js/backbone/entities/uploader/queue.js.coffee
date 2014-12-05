@@ -45,10 +45,13 @@
       @updateLocal( =>
         App.vent.trigger 'uploadqueue:remove:success', id
       )
-    changeStatus: (id, status) ->
-      console.log 'changeStatus id', id
+    changeError: (id, errorText) ->
+      console.log 'changeError id', id
       queueItem = currentQueue.get id
-      queueItem.set 'status', status
+      queueItem.set 'errorText', errorText
+      @updateLocal( =>
+        App.vent.trigger 'uploadqueue:change:error:success', id
+      )
     updateLocal: (callback) ->
       # update localStorage index upload_queue with the current version of campaignsSaved entity
       App.execute "storage:save", 'upload_queue', currentQueue.toJSON(), callback
