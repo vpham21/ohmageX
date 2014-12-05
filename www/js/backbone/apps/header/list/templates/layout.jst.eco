@@ -1,10 +1,12 @@
 <header>
 <nav id="app-menu">
-  <button class="app-menu-trigger">Close Menu</button>
-  <h1>Menu</h1>
+  <header>
+    <button class="app-menu-trigger close icon">Close Menu</button>
+    <h1>Menu</h1>
+  </header>
   <div class="list-container"></div>
 </nav>
-<button class="app-menu-trigger">Open Menu</button>
+<button class="app-menu-trigger hamburger icon">Open Menu</button>
 <h1>Header Template</h1>
 <div id="button-region"></div>
 </header>

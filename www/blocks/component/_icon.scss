@@ -1,0 +1,21 @@
+.icon {
+
+  text-indent: -999px;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  background: transparent;
+
+  &.hamburger {
+    background-image: url("../img/app/header-menu-open.png");
+    height: 38px;
+    width: 36px;
+  }
+
+  &.close {
+    background: url("../img/app/header-menu-close.png") center no-repeat;
+    height: 40px;
+    width: 40px;
+  }
+
+}

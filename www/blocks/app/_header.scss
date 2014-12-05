@@ -1,9 +1,44 @@
 #app-menu {
 
-  ul {
+  color: #fff;
+
+  > header {
+    background-color: #262626;
+    overflow: auto;
+    .close {
+      background-color: #484848;
+      float: left;
+      margin-right: ($app-header-menu-height - $app-header-menu-font-size)/2;
+      height: $app-header-menu-header-height;
+      width: $app-header-menu-header-height;
+      background-size: $app-header-menu-header-font-size $app-header-menu-header-font-size;
+    }
+    h1 {
+      font-size: $app-header-menu-header-font-size;
+      line-height: $app-header-menu-header-height;
+      margin: 0;
+      font-weight: bold;
+    }
+  }
+
+  > .list-container > ul {
     list-style: none;
     margin: 0;
     padding: 0;
+    > li {
+      display: block;
+      > a {
+        font-size: $app-header-menu-font-size;
+        text-transform: uppercase;
+        display: block;
+        padding: ($app-header-menu-height - $app-header-menu-font-size)/2;
+        border-bottom: 1px solid #484848;
+        color: #fff;
+        &:hover {
+          background-color: #161616;
+        }
+      }
+    }
   }
 
 }
