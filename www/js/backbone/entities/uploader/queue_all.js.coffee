@@ -72,3 +72,6 @@
     queue = App.request 'uploadqueue:entity'
 
     API.uploadAll queue
+
+  App.vent.on "uqall:upload:success", (response, itemId) ->
+    API.queueSuccess itemId
