@@ -68,11 +68,8 @@
   App.commands.setHandler "uploadqueue:item:remove", (id) ->
     API.removeItem id
 
-  App.commands.setHandler "uploadqueue:item:disable", (id) ->
-    API.changeStatus id, 'stopped'
-
-  App.commands.setHandler "uploadqueue:item:enable", (id) ->
-    API.changeStatus id, 'running'
+  App.commands.setHandler "uploadqueue:item:error:set", (id, errorText) ->
+    API.changeError id, errorText
 
   App.reqres.setHandler "uploadqueue:entity", ->
     currentQueue
