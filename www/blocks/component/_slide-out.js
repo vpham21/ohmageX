@@ -17,7 +17,15 @@ var SlideOutComponent = function(ele, context){
         $ele.attr('data-state', $ele.attr('data-state') == 'active' ? false : 'active');
     };
 
-    __self__.addToggle = function(event, ele, context){
+    __self__.open = function(){
+        $ele.attr('data-state', 'active');
+    };
+
+    __self__.close = function(){
+        $ele.attr('data-state', false);
+    };
+
+    __self__.toggleOn = function(event, ele, context){
         $(context ? context : 'body').find(ele).on(event, function(){
             __self__.toggle();
         });

@@ -38,6 +38,10 @@
           background-color: #161616;
         }
       }
+      &.active > a {
+        background-color: #161616;
+        cursor: default;
+      }
     }
   }
 

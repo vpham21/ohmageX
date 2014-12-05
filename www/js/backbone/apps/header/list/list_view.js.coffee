@@ -22,10 +22,13 @@
     childView: List.Nav
 
   class List.Layout extends App.Views.Layout
+    initialize: ->
+      @listenTo @collection, "change:chosen", (model) ->
+        if model.isChosen() then @menu.close();
     template: "header/list/layout"
     regions:
       listRegion: "#app-menu .list-container"
       buttonRegion: "#button-region"
     onRender: ->
-      menu = new SlideOutComponent('#app-menu', @$el)
-      menu.addToggle('click', '.app-menu-trigger', @$el)
+      @menu = new SlideOutComponent('#app-menu', @$el)
+      @menu.toggleOn('click', '.app-menu-trigger', @$el)
