@@ -68,17 +68,21 @@
     App.execute "uploadqueue:item:remove", itemId
 
   App.vent.on "uploadqueue:upload:failure:campaign", (responseData, errorText, itemId) ->
-    API.queueFailureCampaign responseData, errorText, itemId
+    API.queueFailureGeneral responseData, "Problem with Survey Campaign:", errorText, itemId
 
   App.vent.on "uploadqueue:upload:failure:response", (responseData, errorText, itemId) ->
     # placeholder for response errors handler.
+    API.queueFailureGeneral responseData, "Problem with Survey Response:", errorText, itemId
 
   App.vent.on "uploadqueue:upload:failure:server", (responseData, errorText, itemId) ->
     # placeholder for server errors handler.
+    API.queueFailureGeneral responseData, "Problem with Server:", errorText, itemId
 
-  App.vent.on "uploadqueue:upload:failure:auth", (responseData, errorText, surveyId) ->
+  App.vent.on "uploadqueue:upload:failure:auth", (responseData, errorText, itemId) ->
     # placeholder for auth errors handler.
+    API.queueFailureGeneral responseData, "Problem with Auth:", errorText, itemId
 
-  App.vent.on "uploadqueue:upload:failure:network", (responseData, errorText, surveyId) ->
+  App.vent.on "uploadqueue:upload:failure:network", (responseData, errorText, itemId) ->
     # placeholder for network errors handler.
+    API.queueFailureGeneral responseData, "Problem with Network:", errorText, itemId
 
