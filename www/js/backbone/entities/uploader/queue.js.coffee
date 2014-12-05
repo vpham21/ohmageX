@@ -26,15 +26,14 @@
         console.log 'user upload queue not retrieved from storage'
         currentQueue = new Entities.UploadQueue
 
-    addItem: (responseData, status) ->
+    addItem: (responseData, errorText) ->
       console.log 'addItem responseData', responseData
 
       result = 
         data: responseData
         name: 'test'
         id: _.guid()
-
-      if status isnt false then result['status'] = status
+        errorText: errorText
 
       currentQueue.add result
       @updateLocal( =>
