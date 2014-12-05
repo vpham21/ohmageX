@@ -1,0 +1,18 @@
+input[type="button"],
+input[type="email"],
+input[type="reset"],
+input[type="search"],
+input[type="submit"],
+input[type="tel"],
+input[type="text"],
+input[type="url"],
+button {
+
+  font-size: $global-form-control-font-size;
+  padding: $global-form-control-padding;
+  background-color: $global-form-control-background-color;
+  border: 1px solid $global-form-control-border-color;
+  color: $global-form-control-text-color;
+  line-height: 1;
+
+}

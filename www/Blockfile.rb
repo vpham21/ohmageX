@@ -41,10 +41,24 @@ block 'ohmage', :path => BLOCKS_PATH do |n|
   end
 
   # Define the "components" sub-block of general-purpose elements.
-  components = block 'components', path: 'component' do |components|
+  global = block 'global', path: 'global' do |components|
+
+    # Define dependencies that should be loaded before the site block.
+    dependency config.route
 
     # Components all depend on Normalize.css
     dependency framework.route 'normalize.css'
+
+    # For the components block, load all component files with their name as their block name.
+    instance_exec(BLOCKS_PATH + 'global', &autoload_files_as_blocks)
+
+  end
+
+  # Define the "components" sub-block of general-purpose elements.
+  components = block 'components', path: 'component' do |components|
+
+    # Define dependencies that should be loaded before the site block.
+    dependency global.route
 
     # For the components block, load all component files with their name as their block name.
     instance_exec(BLOCKS_PATH + 'component', &autoload_files_as_blocks)
@@ -55,7 +69,7 @@ block 'ohmage', :path => BLOCKS_PATH do |n|
   app = block 'app', :path => 'app' do |site|
 
     # Define dependencies that should be loaded before the site block.
-    dependency config.route
+    dependency global.route
     dependency components.route
 
     # For the site block, load all site definition files with their name as their block name.
@@ -67,8 +81,6 @@ block 'ohmage', :path => BLOCKS_PATH do |n|
   page = block 'page', :path => 'page' do |site|
 
     # Define dependencies that should be loaded before the site block.
-    dependency config.route
-    dependency components.route
     dependency app.route
 
     # For the site block, load all site definition files with their name as their block name.

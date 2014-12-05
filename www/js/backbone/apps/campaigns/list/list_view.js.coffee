@@ -18,8 +18,11 @@
     template: "campaigns/list/search"
     triggers:
       "keyup input": "search:update"
+    onRender: ->
+      @menu = new VisibilityToggleComponent('input', @$el)
+      @menu.toggleOn('click', '.icon.search', @$el)
 
-  ###
+
   # Render Selector using Dropdown
   class List.SelectorItem extends App.Views.ItemView
     tagName: "option"
@@ -43,8 +46,8 @@
     childView: List.SelectorItem
     triggers: ->
       "change": "saved:selected"
-  ###
 
+  ###
   # Render selector using Radio
   class List.SelectorItem extends App.Views.ItemView
     tagName: "div"
@@ -67,6 +70,7 @@
     childView: List.SelectorItem
     triggers: ->
       "change input": "saved:selected"
+  ###
 
   class List.Campaign extends App.Views.ItemView
     initialize: ->
@@ -101,6 +105,7 @@
 
   class List.Layout extends App.Views.Layout
     template: "campaigns/list/list_layout"
+    id: 'campaigns'
     regions:
       infoRegion: "#info-region"
       selectorRegion: "#selector-region"

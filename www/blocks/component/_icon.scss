@@ -3,25 +3,38 @@
   text-indent: -999px;
   overflow: hidden;
   border: 0;
-  padding: 0;
   background: transparent;
 
   &.hamburger {
-    background-image: url("../img/app/header-menu-open.png");
+    background-image: url("../img/icon/menu-open.png");
     height: 38px;
     width: 36px;
   }
 
   &.close {
-    background: url("../img/app/header-menu-close.png") center no-repeat;
+    background: url("../img/icon/menu-close.png") center no-repeat;
     height: 40px;
     width: 40px;
   }
 
   &.sync {
-    background-image: url("../img/app/header-sync.png");
+    background-image: url("../img/icon/sync.png");
     height: 55px;
     width: 55px;
+  }
+
+  &.search {
+    background-image: url("../img/icon/search.png");
+    height: 56px;
+    width: 56px;
+
+    &.form-control {
+      height: ((3/2) * $global-form-control-font-size + 2 * $global-form-control-padding);
+      width: ((3/2) * $global-form-control-font-size + 2 * $global-form-control-padding);
+      background-size: ((3/2) * $global-form-control-font-size + 2 * $global-form-control-padding);
+      border: 1px solid $global-form-control-border-color;
+    }
+
   }
 
 }

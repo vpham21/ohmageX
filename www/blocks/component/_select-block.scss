@@ -1,0 +1,52 @@
+.select-block {
+
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  background-color: $global-form-control-background-color;
+  border: 1px solid $global-form-control-border-color;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+  }
+
+  &::before {
+    width: 2em;
+    right: 0; top: 0; bottom: 0;
+    border-radius: 0 3px 3px 0;
+  }
+
+  &::after {
+    height: 1em;
+    content: "\25BC";
+    color: $global-form-control-text-color;
+    font-size: .625em;
+    line-height: 1;
+    right: 1.2em;
+    top: 50%;
+    margin-top: -.5em;
+  }
+
+  select {
+
+    color: $global-form-control-text-color;
+    font-size: $global-form-control-font-size;
+    background-color: transparent;
+    margin: 0;
+    padding: $global-form-control-padding (3.5 * $global-form-control-font-size) $global-form-control-padding ($global-form-control-padding + (0.25 * $global-form-control-font-size));
+    border: 0;
+    border-radius: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    @-moz-document url-prefix() {
+      padding-right: .9em;
+    }
+
+  }
+
+}
