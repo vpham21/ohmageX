@@ -77,6 +77,9 @@
   App.reqres.setHandler "uploadqueue:entity", ->
     currentQueue
 
+  App.reqres.setHandler "uploadqueue:length", ->
+    currentQueue.length
+
   App.commands.setHandler "uploadqueue:clear", ->
     API.clear()
 
