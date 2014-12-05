@@ -25,7 +25,7 @@ nav.list {
         width: 40px;
       }
 
-      div.action + div.action {
+      div.action + div.action, div.action.right {
         float: right;
       }
 
@@ -33,11 +33,11 @@ nav.list {
         display: none; /* not allowed more than two actions currently */
       }
 
-      div.action + [role="link"] {
+      div.action:first-child:not(.right) + [role="link"] {
         margin-left: 60px;
       }
 
-      div.action + div.action + [role="link"] {
+      div.action + div.action + [role="link"], div.action.right + [role="link"] {
         margin-right: 60px;
       }
 

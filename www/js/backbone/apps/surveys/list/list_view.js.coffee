@@ -7,8 +7,10 @@
     getTemplate: ->
       if @model.get('status') is 'running' then "surveys/list/_item_running" else "surveys/list/_item_stopped"
     triggers:
-      "click .stopped-survey": "stopped:clicked"
-      "click .running-survey": "running:clicked"
+      "click .stopped.survey [role=\"link\"]": "stopped:clicked"
+      "click .stopped.survey button.navigate": "stopped:clicked"
+      "click .running.survey [role=\"link\"]": "running:clicked"
+      "click .running.survey button.navigate": "running:clicked"
 
   class List.SelectorItem extends App.Views.ItemView
     tagName: "option"

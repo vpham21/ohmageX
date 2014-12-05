@@ -10,4 +10,28 @@
     float: right;
   }
 
+  .survey [role="link"] {
+    position: relative;
+    .reminder {
+      position: absolute;
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: #777;
+      top: 0;
+      right: 0;
+      padding-top: 0.6rem;
+      &::before {
+        float: left;
+        margin-right: 0.5rem;
+        width: 1rem;
+        height: 1rem;
+        background-color: red;
+        content: ' ';
+        display: inline-block;
+        background-image: url("../img/icon/clock.png");
+        background-size: 1rem;
+      }
+    }
+  }
+
 }
