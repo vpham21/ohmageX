@@ -35,12 +35,12 @@
       if model.isChosen()
         @model = model
         @render
-    tagName: "button"
+    tagName: "div"
     template: "surveys/list/info_button"
     attributes: ->
       if @collection.findWhere(chosen: true).get('name') is 'All'
         return {
-          class: "hidden"
+          class: "hide"
         }
     triggers:
       "click": "info:clicked"
@@ -58,6 +58,7 @@
     emptyView: List.SurveysEmpty
 
   class List.Layout extends App.Views.Layout
+    id: 'surveys'
     template: "surveys/list/list_layout"
     regions:
       infoRegion: "#info-region"

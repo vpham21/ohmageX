@@ -1,5 +1,5 @@
-<div id="info-region"></div>
 <header>
+  <div id="info-region"></div>
   <div id="selector-region" class="select-block"></div>
   <div id="search-region"></div>
 </header>

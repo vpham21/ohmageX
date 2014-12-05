@@ -19,10 +19,10 @@ body > header > div  {
   }
 
   > h1 {
-    font-size: 0.9*$app-header-font-size;
+    font-size: $app-header-font-size;
     margin: 0;
     line-height: 1;
-    padding: (($app-header-height - 1.1*$app-header-font-size) / 2) (($app-header-height - $app-header-font-size) / 2) 0;
+    padding: (($app-header-height - $app-header-font-size) / 2) (($app-header-height - $app-header-font-size) / 2) 0;
   }
 
 }

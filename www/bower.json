@@ -2,6 +2,7 @@
   "name": "ohmage-mwf-dw",
   "version": "1.0.0",
   "dependencies": {
+    "WebBlocks-block-visibility": "WebBlocks/block-visibility",
     "WebBlocks-wrapper-normalize.csss": "WebBlocks/wrapper-normalize.css"
   }
 }

@@ -48,6 +48,8 @@ block 'ohmage', :path => BLOCKS_PATH do |n|
 
     # Components all depend on Normalize.css
     dependency framework.route 'normalize.css'
+    dependency framework.route 'WebBlocks-visibility', 'hide'
+    dependency framework.route 'WebBlocks-visibility', 'accessible'
 
     # For the components block, load all component files with their name as their block name.
     instance_exec(BLOCKS_PATH + 'global', &autoload_files_as_blocks)

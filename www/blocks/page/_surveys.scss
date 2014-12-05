@@ -1,0 +1,13 @@
+#surveys {
+
+  > header {
+    @include -clearfix;
+    margin: 1em;
+    overflow: hidden;
+  }
+
+  #infobutton-region {
+    float: right;
+  }
+
+}
