@@ -52,6 +52,14 @@
             title: "Upload Failure"
             description: "#{newLength} out of #{oldLength} responses failed to upload."
             showCancel: false
+    queueSuccess: (itemId) ->
+      App.execute "uploadqueue:item:remove", itemId
+      # the uqall events - whether error or success -
+      # must resolve each individual Deferred object.
+      myIndex = currentIndices.indexOf(itemId)
+      currentDeferred[myIndex].resolve()
+
+
   App.commands.setHandler "uploadqueue:upload:all", ->
     queue = App.request 'uploadqueue:entity'
 
