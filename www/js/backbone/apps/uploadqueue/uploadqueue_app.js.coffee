@@ -23,9 +23,8 @@
       # show notice that it failed.
       console.log 'uploadqueue:upload:failure:campaign itemId', itemId
 
-      # a campaign error upload can be attempted again, enable
-      # uploading if it's not enabled already.
-      App.execute "uploadqueue:item:enable", itemId
+      App.execute "uploadqueue:item:error:set", itemId, "#{errorPrefix} #{errorText}"
+
       App.execute "notice:show",
         data:
           title: "Response Upload Error"
