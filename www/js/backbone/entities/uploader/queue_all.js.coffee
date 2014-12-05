@@ -21,6 +21,13 @@
         return new $.Deferred()
       )
 
+      # tracking indices in a separate array.
+      # Required if using Coffeescript splats to pass
+      # arguments to Deferred (which map to .apply())
+      # can't use an "associative" array
+      $.when( currentDeferred... ).done =>
+        @whenComplete(oldLength)
+
     whenComplete: (oldLength) ->
       newLength = App.request 'uploadqueue:length'
       App.vent.trigger "uploadqueue:all:complete"
