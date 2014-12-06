@@ -1,6 +1,7 @@
 @Ohmage.module "Uploadqueue.List", (List, App, Backbone, Marionette, $, _) ->
 
   class List.QueueEmpty extends App.Views.ItemView
+    tagName: 'li'
     template: "uploadqueue/list/_queue_empty"
 
   class List.QueueItem extends App.Views.ItemView
