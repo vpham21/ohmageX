@@ -1,5 +1,4 @@
-<legend>
-  <form>
+<form>
   <p class="error"></p>
   <label for="server">Server</label>
   <input class="server" type="text" value="<%= @path %>" name="server" /> <button class="server-btn" type=button>Update Server</button><br />
@@ -8,5 +7,4 @@
   <label for="pass">Password</label>
   <input class="pass" type="password" name="pass" />
   <button type="submit">Submit</button>
-  </form>
-</legend>
+</form>

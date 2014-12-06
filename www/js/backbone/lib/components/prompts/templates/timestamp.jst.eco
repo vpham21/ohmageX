@@ -1,10 +1,8 @@
-<legend>
-  <form>
-  <h3><%= @displayLabel %></h3>
-  <label for="<%= @id %>"><%= @promptText %></label><br />
+<form>
+  <h3 class="hide-accessible"><%= @displayLabel %></h3>
+  <label for="<%= @id %>" class="inset-block"><%= @promptText %></label>
   <label for="date<%= @id %>">Select Date</label>
-  <input name="date<%= @id %>" value="<%= @currentDateValue %>" type="date" /><br />
+  <input name="date<%= @id %>" value="<%= @currentDateValue %>" type="date" />
   <label for="time<%= @id %>">Select Time</label>
   <input name="time<%= @id %>" value="<%= @currentTimeValue %>"type="time" />
-  </form>
-</legend>
+</form>

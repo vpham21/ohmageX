@@ -1,1 +1,3 @@
-<input type="radio" name="<%= @parentId %>" value="<%= @key %>" /> <label><%= @label %></label> <% if @custom: %><button class="delete-button">Delete</button><% end %>
+<input type="radio" name="<%= @parentId %>" id="choice-<%= @key %>" value="<%= @key %>" />
+<label for="choice-<%= @key %>"><%= @label %></label>
+<% if @custom: %><button class="delete-button">Delete</button><% end %>
