@@ -1,12 +1,15 @@
+button,
 input[type="button"],
+input[type="date"],
 input[type="email"],
 input[type="reset"],
 input[type="search"],
 input[type="submit"],
 input[type="tel"],
 input[type="text"],
+input[type="time"],
 input[type="url"],
-button {
+textarea {
 
   font-size: $global-form-control-font-size;
   padding: $global-form-control-padding;

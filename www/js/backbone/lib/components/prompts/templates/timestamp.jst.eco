@@ -1,8 +1,12 @@
 <form>
   <h3 class="hide-accessible"><%= @displayLabel %></h3>
-  <label for="<%= @id %>" class="inset-block"><%= @promptText %></label>
-  <label for="date<%= @id %>">Select Date</label>
-  <input name="date<%= @id %>" value="<%= @currentDateValue %>" type="date" />
-  <label for="time<%= @id %>">Select Time</label>
-  <input name="time<%= @id %>" value="<%= @currentTimeValue %>"type="time" />
+  <fieldset>
+    <legend class="inset-block"><%= @promptText %></legend>
+    <div class="datetime-control">
+      <label for="date<%= @id %>">Select Date</label>
+      <input name="date<%= @id %>" value="<%= @currentDateValue %>" type="date">
+      <label for="time<%= @id %>">Select Time</label>
+      <input name="time<%= @id %>" value="<%= @currentTimeValue %>" type="time">
+    </div>
+  </fieldset>
 </form>

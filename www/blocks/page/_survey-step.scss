@@ -7,7 +7,14 @@
     }
   }
 
+  fieldset { // used for semantic reasons only
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+
   .inset-block {
+    width: 100%;
     overflow: auto;
     display: block;
     padding: 0.9rem;
@@ -137,6 +144,25 @@
       content: '\203A';
       right: $global-form-control-padding;
       color: #0C0;
+    }
+  }
+
+  .datetime-control {
+    @extend .control-container;
+    label {
+      font-size: $global-form-control-font-size;
+      padding: $global-form-control-padding;
+      width: 8rem;
+    }
+    label {
+      padding: calc(#{$global-form-control-padding} + 2px);
+    }
+    label, input {
+      float: left;
+      margin-bottom: 1rem;
+    }
+    label:first-child + input ~ label {
+      clear: both;
     }
   }
 
