@@ -1,7 +1,21 @@
 <form>
   <h3 class="hide-accessible"><%= @displayLabel %></h3>
-  <label for="<%= @id %>" class="inset-block"><%= @promptText %></label>
-  <button class="increment"><span class="icon icon-up"></span></button>
-  <input name="<%= @id %>" type="text" value="<%= @currentValue %>"/>
-  <button class="decrement"><span class="icon icon-down"></span></button>
+  <fieldset>
+    <legend class="inset-block"><%= @promptText %></legend>
+    <div class="number-control">
+      <button class="increment">
+        <span class="hide-accessible">Increment</span>
+        <span aria-hidden="true">+</span>
+      </button>
+      <input name="<%= @id %>"
+             type="number"
+             <% if @properties.get('min') isnt undefined: %>min="<%= @properties.get('min') %>"<% end %>
+             <% if @properties.get('max') isnt undefined: %>max="<%= @properties.get('max') %>"<% end %>
+             step="any" value="<%= @currentValue %>"/>
+      <button class="decrement">
+        <span class="hide-accessible">Decrement</span>
+        <span aria-hidden="true">-</span>
+      </button>
+    </div>
+  </fieldset>
 </form>

@@ -166,4 +166,32 @@
     }
   }
 
+  .number-control {
+    width: 10rem;
+    margin: 1rem auto;
+    button, input {
+      width: 100%;
+      border-color: $global-form-control-border-color-dark;
+    }
+    button {
+      background: #00aeff;
+      background: linear-gradient(to bottom, #47c4ff 0%, #00aeff 100%);
+      font-weight: bold;
+      color: #fff;
+      font-size: 1.5rem;
+      padding: 0.25rem;
+    }
+    input {
+      text-align: center;
+      font-size: 1.5rem;
+      padding: 1rem;
+    }
+    button + input {
+      border-top: 0;
+    }
+    input + button {
+      border-top: 0;
+    }
+  }
+
 }

@@ -27,21 +27,25 @@
   class Prompts.Number extends Prompts.Base
     template: "prompts/number"
     gatherResponses: (surveyId, stepId) =>
-      response = @$el.find('input[type=text]').val()
+      response = @$el.find('input[type="number"]').val()
       @trigger "response:submit", response, surveyId, stepId
     initialize: ->
       super
       @listenTo @, 'value:increment', @incrementValue
       @listenTo @, 'value:decrement', @decrementValue
     incrementValue: ->
-      $valueField = @$el.find("input[type='text']")
+      $valueField = @$el.find("input[type='number']")
       myVal = $valueField.val()
       myVal = if !!!myVal.length or _.isNaN(myVal) then 0 else parseInt(myVal)
+      if @model.get('properties').get('max') isnt undefined
+        return if parseInt(@model.get('properties').get('max')) <= myVal
       $valueField.val(myVal+1)
     decrementValue: ->
-      $valueField = @$el.find("input[type='text']")
+      $valueField = @$el.find("input[type='number']")
       myVal = $valueField.val()
       myVal = if !!!myVal.length or _.isNaN(myVal) then 0 else parseInt(myVal)
+      if @model.get('properties').get('min') isnt undefined
+        return if parseInt(@model.get('properties').get('min')) >= myVal
       $valueField.val(myVal-1)
     triggers:
       "click button.increment": "value:increment"
