@@ -2,6 +2,7 @@
 
   class List.QueueEmpty extends App.Views.ItemView
     tagName: 'li'
+    className: 'empty'
     template: "uploadqueue/list/_queue_empty"
 
   class List.QueueItem extends App.Views.ItemView
@@ -26,6 +27,7 @@
     childView: List.QueueItem
 
   class List.Layout extends App.Views.Layout
+    id: 'upload-queue'
     template: "uploadqueue/list/layout"
     regions:
       noticeRegion: "#notice-region"
