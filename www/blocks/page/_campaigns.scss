@@ -4,7 +4,6 @@
     @include -clearfix;
     margin: 1rem;
     position: relative;
-    height: ((3/2) * $global-form-control-font-size + 2 * $global-form-control-padding); /* same as .icon.search.form-control in components/_icon.scss */
     overflow: hidden;
   }
 
