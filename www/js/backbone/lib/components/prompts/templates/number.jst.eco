@@ -11,7 +11,8 @@
              type="number"
              <% if @properties.get('min') isnt undefined: %>min="<%= @properties.get('min') %>"<% end %>
              <% if @properties.get('max') isnt undefined: %>max="<%= @properties.get('max') %>"<% end %>
-             step="any" value="<%= @currentValue %>"/>
+             step="<%= if @properties.get('wholeNumber') == "false" then "any" else "1"  %>"
+             value="<%= @currentValue %>"/>
       <button class="decrement">
         <span class="hide-accessible">Decrement</span>
         <span aria-hidden="true">-</span>
