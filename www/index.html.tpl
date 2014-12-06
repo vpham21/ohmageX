@@ -12,9 +12,9 @@
   <script src="<%= js_modernizr_path %>"></script>
 </head>
 <body>
-  <header></header>
-  <main></main>
-  <footer></footer>
+  <header role="banner"></header>
+  <main role="main"></main>
+  <footer role="contentinfo"></footer>
   <script src="<%= js_jquery_path %>"></script>
   <script src="<%= js_path %>"></script>
   <script type="text/javascript">
