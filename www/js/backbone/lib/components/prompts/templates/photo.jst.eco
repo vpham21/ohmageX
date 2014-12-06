@@ -1,7 +1,11 @@
 <form>
   <h3 class="hide-accessible"><%= @displayLabel %></h3>
-  <label for="<%= @id %>" class="inset-block"><%= @promptText %></label>
-  <input name="<%= @id %>" type="file" accepts="image/*" capture />
-  </form>
-<img src="" style="display:none" class="preview-image" />
-<canvas style="display:none"></canvas>
+  <div class="photo-control">
+    <label for="<%= @id %>" class="inset-block"><%= @promptText %></label>
+    <div class="container">
+      <input name="<%= @id %>" type="file" accepts="image/*" capture />
+      <img src="" style="display:none" class="preview-image" />
+      <canvas style="display:none"></canvas>
+    </div>
+  </div>
+</form>
