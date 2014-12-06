@@ -339,6 +339,7 @@
       @trigger "response:submit", @extractJSONString($responses), surveyId, stepId
 
   class Prompts.Unsupported extends Prompts.Base
+    className: "text-container"
     template: "prompts/unsupported"
     gatherResponses: (surveyId, stepId) =>
       # just submit an unsupported prompt response as "NOT_DISPLAYED".
