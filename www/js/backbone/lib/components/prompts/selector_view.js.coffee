@@ -141,7 +141,7 @@
     tagName: 'li'
     template: "prompts/single_choice_item"
     triggers:
-      "click .delete-button": "customchoice:remove"
+      "click button.delete": "customchoice:remove"
 
   # Prompt Single Choice
   class Prompts.SingleChoice extends Prompts.BaseComposite
