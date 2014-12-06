@@ -102,6 +102,7 @@
     button {
       width: 100%;
       background-color: #fff;
+      padding: 0.75rem;
       &[disabled] {
         background-color: #ccc;
       }
@@ -114,13 +115,13 @@
       padding: $global-form-control-padding;
       line-height: 1;
       top: 0;
+      padding: 0.75rem;
     }
   }
 
   #prev-button {
     button {
-      text-align: right;
-      padding-right: 2*$global-form-control-padding;
+      padding-left: 2*$global-form-control-padding;
     }
     &::before {
       content: '\2039';
@@ -129,16 +130,9 @@
     }
   }
 
-  #skip-button {
-    button {
-      text-align: center;
-    }
-  }
-
   #next-button {
     button {
-      text-align: left;
-      padding-left: 2*$global-form-control-padding;
+      padding-right: 2*$global-form-control-padding;
     }
     &::before {
       content: '\203A';
