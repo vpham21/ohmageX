@@ -33,7 +33,7 @@ nav.list {
         display: none; /* not allowed more than two actions currently */
       }
 
-      div.action:first-child:not(.right) + [role="link"] {
+      div.action:first-child:not(.right) ~ [role="link"] {
         margin-left: 60px;
       }
 

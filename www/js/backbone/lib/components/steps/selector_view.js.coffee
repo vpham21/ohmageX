@@ -1,7 +1,7 @@
 @Ohmage.module "Components.Steps", (Steps, App, Backbone, Marionette, $, _) ->
 
   class Steps.Intro extends App.Views.ItemView
-    className: "plaintext"
+    className: "text-container"
     template: "steps/intro"
     serializeData: ->
       data = @model.toJSON()
@@ -9,7 +9,7 @@
       data
 
   class Steps.Message extends App.Views.ItemView
-    className: "plaintext"
+    className: "text-container"
     template: "steps/message"
     serializeData: ->
       data = @model.toJSON()
@@ -17,7 +17,7 @@
       data
 
   class Steps.BeforeSubmission extends App.Views.ItemView
-    className: "plaintext"
+    className: "text-container"
     template: "steps/beforesubmission"
     serializeData: ->
       data = @model.toJSON()
@@ -26,7 +26,7 @@
       data
 
   class Steps.AfterSubmission extends App.Views.ItemView
-    className: "plaintext"
+    className: "text-container"
     template: "steps/aftersubmission"
     serializeData: ->
       data = @model.toJSON()

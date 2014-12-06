@@ -11,7 +11,7 @@
   class Entities.StepButtonPrev extends Entities.Model
     defaults: # default values for all StepButtonPrevs
       disabled: false # enable all by default
-      label: "Previous"
+      label: "Prev"
 
   class Entities.StepButtonNext extends Entities.Model
     defaults: # default values for all StepButtonNexts

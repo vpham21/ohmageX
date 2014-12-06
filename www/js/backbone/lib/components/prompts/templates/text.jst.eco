@@ -1,5 +1,7 @@
 <form>
   <h3 class="hide-accessible"><%= @displayLabel %></h3>
-  <label for="<%= @id %>" class="inset-block"><%= @promptText %></label><br />
-  <textarea name="<%= @id %>"><% if @currentValue: %><%= @currentValue %><% end %></textarea>
+  <label for="<%= @id %>" class="inset-block"><%= @promptText %></label>
+  <div class="control-container">
+    <textarea name="<%= @id %>"><% if @currentValue: %><%= @currentValue %><% end %></textarea>
+  </div>
 </form>

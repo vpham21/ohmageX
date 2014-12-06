@@ -16,7 +16,12 @@
     color: #fff;
   }
 
-  .plaintext {
+  textarea {
+    width: 100%;
+    height: 6rem;
+  }
+
+  .text-container, .control-container {
     margin: 1rem;
   }
 
@@ -106,6 +111,10 @@
   }
 
   #prev-button {
+    button {
+      text-align: right;
+      padding-right: 2*$global-form-control-padding;
+    }
     &::before {
       content: '\2039';
       left: $global-form-control-padding;
@@ -113,7 +122,17 @@
     }
   }
 
+  #skip-button {
+    button {
+      text-align: center;
+    }
+  }
+
   #next-button {
+    button {
+      text-align: left;
+      padding-left: 2*$global-form-control-padding;
+    }
     &::before {
       content: '\203A';
       right: $global-form-control-padding;
