@@ -1,6 +1,6 @@
 <div class="running-item">
   <h3 class="item-label"><span><%= @name %></span> - Last Submitted <%= @prettyTimestamp %></h3>
   <p>Last Error: <%= @errorText %></p>
-  <button class="upload-button">Upload</button>
-  <button class="delete-button">Remove</button>
+  <button class="upload icon">Upload</button>
+  <button class="delete icon">Remove</button>
 </div>

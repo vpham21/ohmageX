@@ -13,9 +13,9 @@
       if @model.get('status') is 'running' then "uploadqueue/list/_item_running" else "uploadqueue/list/_item_stopped"
     triggers:
       "click .stopped-item": "stopped:clicked"
-      "click .delete-button": "delete:clicked"
+      "click button.delete": "delete:clicked"
       "click .running-item .item-label": "running:clicked"
-      "click .running-item .upload-button": "upload:clicked"
+      "click .running-item button.upload": "upload:clicked"
     serializeData: ->
       data = @model.toJSON()
       data.prettyTimestamp = new Date(data.timestamp).toString()

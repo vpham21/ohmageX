@@ -16,7 +16,7 @@
   class Navbutton.Upload extends App.Views.ItemView
     template: "navbutton/upload"
     tagName: "button"
-    className: "sync icon"
+    className: "upload icon"
     initialize: ->
       # TODO: Add handlers for disabling the button
       # when sync is happening
