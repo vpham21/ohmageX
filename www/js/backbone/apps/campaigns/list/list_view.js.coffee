@@ -93,6 +93,7 @@
       "click .ghost.campaign [role=\"link\"]": "ghost:remove:clicked"
 
   class List.CampaignsEmpty extends App.Views.ItemView
+    className: "text-container"
     template: "campaigns/list/_campaigns_empty"
 
   class List.Campaigns extends App.Views.CompositeView
