@@ -1,6 +1,10 @@
 <footer>
     <p class="subheader">
-      <strong>Powered by <a href="#" target="_blank" onclick="window.open('http://ohmage.org', '_system');">Ohmage</a>.</strong>
-      <br><small>Copyright &copy; 2012-2014 UC Regents.</small>
+      <strong>Powered by <a href="#" target="_blank" onclick="window.open('http://ohmage.org', '_system');
+      ">Ohmage</a></strong>
+      <br><small class="text-muted"><em>v. Dragon Well (龍井)<em></small>
+    </p>
+    <p>
+      <small>Copyright &copy; 2012-2014 UC Regents.</small>
     </p>
 </footer>
