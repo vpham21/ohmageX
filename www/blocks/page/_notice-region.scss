@@ -2,7 +2,7 @@
 
   > div {
     padding: 1rem;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid $app-list-border-color;
     h3 {
       margin: -1rem -1rem 1rem;
       height: $info-region-header-height;
@@ -10,7 +10,7 @@
       font-size: $info-region-header-font-size;
       line-height: 1;
       background-color: #f4f4f4;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 1px solid $app-list-border-color;
     }
   }
 

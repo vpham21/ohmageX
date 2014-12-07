@@ -82,7 +82,7 @@
   }
 
   .my-add, .prompt-list > li {
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid $app-list-border-color;
     width: 100%;
     height: 3rem;
   }

@@ -22,7 +22,7 @@ form.login {
     margin-top: 1rem;
     background-color: #3ac;
     color: #fff;
-    border-color: #555;
+    border-color: $global-form-control-border-color-dark;
     padding: 0.75rem;
   }
 }
