@@ -26,15 +26,14 @@
         console.log 'user upload queue not retrieved from storage'
         currentQueue = new Entities.UploadQueue
 
-    addItem: (responseData, status) ->
+    addItem: (responseData, errorText) ->
       console.log 'addItem responseData', responseData
 
       result = 
         data: responseData
         name: 'test'
         id: _.guid()
-
-      if status isnt false then result['status'] = status
+        errorText: errorText
 
       currentQueue.add result
       @updateLocal( =>
@@ -46,10 +45,13 @@
       @updateLocal( =>
         App.vent.trigger 'uploadqueue:remove:success', id
       )
-    changeStatus: (id, status) ->
-      console.log 'changeStatus id', id
+    changeError: (id, errorText) ->
+      console.log 'changeError id', id
       queueItem = currentQueue.get id
-      queueItem.set 'status', status
+      queueItem.set 'errorText', errorText
+      @updateLocal( =>
+        App.vent.trigger 'uploadqueue:change:error:success', id
+      )
     updateLocal: (callback) ->
       # update localStorage index upload_queue with the current version of campaignsSaved entity
       App.execute "storage:save", 'upload_queue', currentQueue.toJSON(), callback
@@ -63,20 +65,20 @@
   App.on "before:start", ->
     API.init()
 
-  App.commands.setHandler "uploadqueue:item:add", (responseData, status = false) ->
-    API.addItem responseData, status
+  App.commands.setHandler "uploadqueue:item:add", (responseData, errorText) ->
+    API.addItem responseData, errorText
 
   App.commands.setHandler "uploadqueue:item:remove", (id) ->
     API.removeItem id
 
-  App.commands.setHandler "uploadqueue:item:disable", (id) ->
-    API.changeStatus id, 'stopped'
-
-  App.commands.setHandler "uploadqueue:item:enable", (id) ->
-    API.changeStatus id, 'running'
+  App.commands.setHandler "uploadqueue:item:error:set", (id, errorText) ->
+    API.changeError id, errorText
 
   App.reqres.setHandler "uploadqueue:entity", ->
     currentQueue
+
+  App.reqres.setHandler "uploadqueue:length", ->
+    currentQueue.length
 
   App.commands.setHandler "uploadqueue:clear", ->
     API.clear()

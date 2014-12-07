@@ -19,17 +19,16 @@
     list: (campaign_id) ->
       App.vent.trigger "nav:choose", "Upload Queue"
       new Uploadqueue.List.Controller
-    queueFailureCampaign: (responseData, errorText, itemId) ->
+    queueFailureGeneral: (responseData, errorPrefix, errorText, itemId) ->
       # show notice that it failed.
       console.log 'uploadqueue:upload:failure:campaign itemId', itemId
 
-      # a campaign error upload can be attempted again, enable
-      # uploading if it's not enabled already.
-      App.execute "uploadqueue:item:enable", itemId
+      App.execute "uploadqueue:item:error:set", itemId, "#{errorPrefix} #{errorText}"
+
       App.execute "notice:show",
         data:
           title: "Response Upload Error"
-          description: "Problem with Response's Campaign: #{errorText}"
+          description: "Problem with Response: #{errorPrefix} #{errorText}"
 
   App.addInitializer ->
     new Uploadqueue.Router
@@ -68,17 +67,21 @@
     App.execute "uploadqueue:item:remove", itemId
 
   App.vent.on "uploadqueue:upload:failure:campaign", (responseData, errorText, itemId) ->
-    API.queueFailureCampaign responseData, errorText, itemId
+    API.queueFailureGeneral responseData, "Problem with Survey Campaign:", errorText, itemId
 
   App.vent.on "uploadqueue:upload:failure:response", (responseData, errorText, itemId) ->
     # placeholder for response errors handler.
+    API.queueFailureGeneral responseData, "Problem with Survey Response:", errorText, itemId
 
   App.vent.on "uploadqueue:upload:failure:server", (responseData, errorText, itemId) ->
     # placeholder for server errors handler.
+    API.queueFailureGeneral responseData, "Problem with Server:", errorText, itemId
 
-  App.vent.on "uploadqueue:upload:failure:auth", (responseData, errorText, surveyId) ->
+  App.vent.on "uploadqueue:upload:failure:auth", (responseData, errorText, itemId) ->
     # placeholder for auth errors handler.
+    API.queueFailureGeneral responseData, "Problem with Auth:", errorText, itemId
 
-  App.vent.on "uploadqueue:upload:failure:network", (responseData, errorText, surveyId) ->
+  App.vent.on "uploadqueue:upload:failure:network", (responseData, errorText, itemId) ->
     # placeholder for network errors handler.
+    API.queueFailureGeneral responseData, "Problem with Network:", errorText, itemId
 

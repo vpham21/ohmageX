@@ -6,6 +6,7 @@
     uploadFailureGeneral: (responseData, errorPrefix, errorText, surveyId) ->
       # show notice to let them retry.
       console.log 'survey:upload:failure:campaign'
+
       App.execute "notice:show",
         data:
           title: "Survey Upload Error"
@@ -16,7 +17,7 @@
         cancelListener: =>
           # After Queue implemented: Put the survey item in the upload queue.
           console.log 'responseData in cancelListener', responseData
-          App.execute "uploadqueue:item:add", responseData
+          App.execute "uploadqueue:item:add", responseData, "#{errorPrefix} #{errorText}"
           # After Notice Center: Notify the user that the item was put into their upload queue.
           # Exit the survey.
           App.vent.trigger "survey:exit", surveyId
