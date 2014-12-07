@@ -12,12 +12,13 @@
     getTemplate: ->
       if @model.get('status') is 'running' then "uploadqueue/list/_item_running" else "uploadqueue/list/_item_stopped"
     triggers:
-      "click .stopped-item": "stopped:clicked"
+      "click .stopped.item [role=\"link\"]": "stopped:clicked"
       "click button.delete": "delete:clicked"
-      "click .running-item .item-label": "running:clicked"
-      "click .running-item button.upload": "upload:clicked"
+      "click .running.item [role=\"link\"]": "running:clicked"
+      "click .running.item button.upload": "upload:clicked"
     serializeData: ->
       data = @model.toJSON()
+      console.log(data)
       data.prettyTimestamp = new Date(data.timestamp).toString()
       data
 
