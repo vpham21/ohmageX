@@ -5,6 +5,8 @@
   vertical-align: middle;
   background-color: $global-form-control-background-color;
   border: 1px solid $global-form-control-border-color;
+  border-radius: $global-form-control-border-radius;
+  box-shadow: $global-form-control-box-shadow;
 
   &::before,
   &::after {

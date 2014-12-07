@@ -9,9 +9,14 @@ nav.list {
     > li {
 
       border-bottom: 1px solid $app-list-border-color;
+      box-shadow: $app-list-box-shadow;
 
       &:first-child {
         border-top: 1px solid $app-list-border-color;
+      }
+
+      &:hover {
+        background-color: $app-list-hover-background-color
       }
 
     }
@@ -19,15 +24,16 @@ nav.list {
     li {
 
       @include -clearfix;
-      padding: 1rem;
 
       div.action {
+        padding: 1rem;
         float: left;
         width: 40px;
       }
 
       div.action + div.action, div.action.right {
         float: right;
+        padding-left: 0rem;
       }
 
       div.action + div.action + div.action {
@@ -43,6 +49,7 @@ nav.list {
       }
 
       [role="link"] {
+        padding: 1rem;
         overflow-x: hidden;
       }
 

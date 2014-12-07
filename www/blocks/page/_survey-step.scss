@@ -17,10 +17,10 @@
     width: 100%;
     overflow: auto;
     display: block;
-    padding: 0.9rem;
-    background-color: #555;
+    padding: 1rem;
+    background-color: $survey-step-inset-block-background-color;
     font-weight: bold;
-    color: #fff;
+    color: $survey-step-inset-block-font-color;
   }
 
   textarea {

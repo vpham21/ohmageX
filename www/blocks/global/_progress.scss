@@ -11,14 +11,14 @@ progress {
   border: 0;
 
   &::-webkit-progress-bar {
-    background-color: #fff;
+    background-color: $global-progress-gradient-background-color;
   }
 
   &::-webkit-progress-value {
     background-image:
     -webkit-linear-gradient(-45deg, transparent 33%, rgba(0, 0, 0, .1) 33%, rgba(0,0, 0, .1) 66%, transparent 66%),
     -webkit-linear-gradient(top, rgba(255, 255, 255, .25), rgba(0, 0, 0, .25)),
-    -webkit-linear-gradient(left, #09c, #07a);
+    -webkit-linear-gradient(left, $global-progress-gradient-start, $global-progress-gradient-end);
     background-size: 2rem 1rem, 100% 100%, 100% 100%;
   }
 
@@ -26,11 +26,11 @@ progress {
     background-image:
     -moz-linear-gradient(135deg, transparent 33%, rgba(0, 0, 0, 0.1) 33%, rgba(0, 0, 0, 0.1) 66%, transparent 66%),
     -moz-linear-gradient(top, rgba(255, 255, 255, 0.25), rgba(0, 0, 0, 0.25) ),
-    -moz-linear-gradient(left, #09c, #07a);
+    -moz-linear-gradient(left, $global-progress-gradient-start, $global-progress-gradient-end);
     background-size: 2rem 1rem, 100% 100%, 100% 100%;
   }
 
   /* For IE10 */
-  color: blue;
+  color: $global-progress-color-ie;
 
 }

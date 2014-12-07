@@ -17,7 +17,7 @@ textarea {
   padding: $global-form-control-padding;
   background-color: $global-form-control-background-color;
   border: 1px solid $global-form-control-border-color;
-  border-radius: 4px;
+  border-radius: $global-form-control-border-radius;
   color: $global-form-control-text-color;
   line-height: 1;
 
