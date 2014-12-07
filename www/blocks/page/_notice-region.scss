@@ -1,0 +1,47 @@
+#notice-region {
+
+  > div {
+    padding: 1rem;
+    border-bottom: 1px solid #ccc;
+    h3 {
+      margin: -1rem -1rem 1rem;
+      height: $info-region-header-height;
+      padding: (($info-region-header-height - $info-region-header-font-size) / 2) 1rem;
+      font-size: $info-region-header-font-size;
+      line-height: 1;
+      background-color: #f4f4f4;
+      border-bottom: 1px solid #ccc;
+    }
+  }
+
+  /* Falls back gracefully to what's above if :not(:empty) is not a recognized selector. */
+  &:not(:empty) {
+
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(55, 55, 55, 0.4);
+    z-index: 1000;
+
+    > div {
+      position: fixed;
+      background-color: #fff;
+      top: 2rem;
+      right: 2rem;
+      left: 2rem;
+      padding: 1rem;
+      z-index: 1001;
+      overflow: hidden;
+      word-wrap: break-word;
+      border: 1px solid #777;
+      h3 {
+        background-color: #eee;
+      }
+    }
+
+  }
+
+}
+

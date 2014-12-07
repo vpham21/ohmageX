@@ -10,17 +10,17 @@
 
       @listenTo @layout, "show", =>
         console.log "showing layout"
-        @infoRegion profile
+        @profileRegion profile
 
       @show @layout
 
-    infoRegion: (profile) ->
-      infoView = @getInfoView profile
+    profileRegion: (profile) ->
+      profileView = @getInfoView profile
 
-      @show infoView, region: @layout.infoRegion
+      @show profileView, region: @layout.profileRegion
 
     getInfoView: (profile) ->
-      new Show.Info
+      new Show.Profile
         model: profile
 
     getLayoutView: ->
