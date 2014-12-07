@@ -2,8 +2,9 @@
 
   > header {
     @include -clearfix;
-    margin: 1em;
+    padding: 1rem;
     overflow: hidden;
+    background-color: $component-header-background-color;
   }
 
   #infobutton-region {

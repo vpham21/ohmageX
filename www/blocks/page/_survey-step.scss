@@ -198,6 +198,7 @@
     .container {
       position: relative;
       min-height: 200px;
+      background-color: $component-background-color;
     }
     input[type="file"] {
       top: 50%;
