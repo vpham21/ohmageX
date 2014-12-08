@@ -28,6 +28,7 @@
     > div {
       position: fixed;
       background-color: #fff;
+      border-radius: 8px;
       top: 2rem;
       right: 2rem;
       left: 2rem;
@@ -35,7 +36,7 @@
       z-index: 1001;
       overflow: hidden;
       word-wrap: break-word;
-      border: 1px solid #777;
+      border: 1px solid #999;
       h3 {
         background-color: #eee;
       }
