@@ -1,7 +1,7 @@
-<legend>
-  <form>
-  <h3><%= @displayLabel %></h3>
-  <label for="<%= @id %>"><%= @promptText %></label><br />
-  <textarea name="<%= @id %>"><% if @currentValue: %><%= @currentValue %><% end %></textarea>
-  </form>
-</legend>
+<form>
+  <h3 class="hide-accessible"><%= @displayLabel %></h3>
+  <label for="<%= @id %>" class="inset-block"><%= @promptText %></label>
+  <div class="control-container">
+    <textarea name="<%= @id %>"><% if @currentValue: %><%= @currentValue %><% end %></textarea>
+  </div>
+</form>

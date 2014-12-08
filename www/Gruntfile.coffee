@@ -6,11 +6,11 @@ module.exports = (grunt) ->
       "js/vendor/jquery-1.10.2.min.js"
     ]
     my_build_files: [
+      ".blocks/build/blocks.js"
       "js/vendor/underscore.js"
       "js/vendor/backbone.js"
       "js/vendor/backbone.touch.js"
       "js/vendor/backbone.marionette.js"
-      "js/vendor/ratchet.js" # customized Ratchet, minus push.js
       "js/vendor/syphon.js"
       "js/vendor/spin.js"
       "js/vendor/jquery.spin.js"

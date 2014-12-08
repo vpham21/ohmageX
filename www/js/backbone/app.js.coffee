@@ -8,8 +8,8 @@
 
   App.addRegions
     headerRegion: "body > header"
-    mainRegion:    "body > section > article.primary"
-    footerRegion: "body > section > footer"
+    mainRegion:    "body > main"
+    footerRegion: "body > footer"
 
   App.rootRoute = Routes.default_route()
 

@@ -1,4 +1,9 @@
-<div class="ghost-campaign">
-<button>Remove</button> <h3><small><%= @status %></small> <%= @name %></h3>
-<p><small><%= @id %></small><%= @description %></p>
+<div class="ghost campaign">
+  <div class="action">
+    <button class="icon delete">Remove</button>
+  </div>
+  <div role="link">
+    <h3><%= @name %></h3>
+    <p><small><%= @id %></small></p>
+  </div>
 </div>

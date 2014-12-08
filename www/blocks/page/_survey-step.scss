@@ -1,0 +1,254 @@
+.survey-step {
+
+  #progress {
+    line-height: 0.8;
+    progress {
+      width: 100%;
+    }
+  }
+
+  fieldset { // used for semantic reasons only
+    border: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .inset-block {
+    width: 100%;
+    overflow: auto;
+    display: block;
+    padding: $app-main-footer-padding;
+    background-color: $survey-step-inset-block-background-color;
+    font-weight: bold;
+    color: $survey-step-inset-block-font-color;
+  }
+
+  textarea {
+    width: 100%;
+    height: 6rem;
+  }
+
+  .control-container {
+    margin: $app-main-footer-padding;
+  }
+
+  .prompt-list {
+
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    > li {
+      background-color: #ddd;
+      position: relative;
+      overflow: hidden;
+    }
+
+    input[type="checkbox"], input[type="radio"], button.delete {
+      margin: $app-main-footer-padding;
+      line-height: 1;
+    }
+
+    label {
+      background-color: #fff;
+      position: absolute;
+      height: 3rem;
+      right: 0;
+      left: (3 * $app-main-footer-padding);
+      padding: $app-main-footer-padding;
+      line-height: 1;
+      z-index: 10;
+    }
+
+    button.delete {
+      position: absolute;
+      right: 0;
+      z-index: 11;
+      background-size: 1rem;
+      height: 1rem;
+      width: 1rem;
+    }
+
+  }
+
+  .my-add {
+    border: 0;
+    text-align: left;
+    &::before {
+      content: '+';
+      padding-right: 0.5rem;
+      color: #3a3;
+    }
+  }
+
+  .my-add, .prompt-list > li {
+    border-bottom: 1px solid $app-list-border-color;
+    width: 100%;
+    height: 3rem;
+  }
+
+  .add-form {
+    padding: 1rem
+  }
+
+  #prev-button, #next-button, #skip-button {
+    float: left;
+    width: 33%;
+    padding: 0 0.5rem;
+    position: relative;
+    line-height: 1;
+    &:first-child {
+      padding-left: 0;
+    }
+    &:last-child {
+      padding-right: 0;
+    }
+    button {
+      width: 100%;
+      background-color: #fff;
+      padding: 0.75rem;
+      &[disabled] {
+        background-color: #ccc;
+      }
+    }
+  }
+
+  #prev-button, #next-button {
+    &::before {
+      position: absolute;
+      padding: $global-form-control-padding;
+      line-height: 1;
+      top: 0;
+      padding: 0.75rem;
+    }
+  }
+
+  #prev-button {
+    button {
+      padding-left: 2*$global-form-control-padding;
+    }
+    &::before {
+      content: '\2039';
+      left: $global-form-control-padding;
+      color: #F00;
+    }
+  }
+
+  #next-button {
+    button {
+      padding-right: 2*$global-form-control-padding;
+    }
+    &::before {
+      content: '\203A';
+      right: $global-form-control-padding;
+      color: #0C0;
+    }
+  }
+
+  .datetime-control {
+    @extend .control-container;
+    label {
+      font-size: $global-form-control-font-size;
+      padding: $global-form-control-padding;
+      width: 8rem;
+    }
+    label {
+      padding: calc(#{$global-form-control-padding} + 2px);
+    }
+    label, input {
+      float: left;
+      margin-bottom: $app-main-footer-padding;
+    }
+    label:first-child + input ~ label {
+      clear: both;
+    }
+  }
+
+  .number-control {
+    width: 10rem;
+    margin: $app-main-footer-padding auto;
+    button, input {
+      width: 100%;
+      border-color: $global-form-control-border-color-dark;
+    }
+    button {
+      background: #00aeff;
+      background: linear-gradient(to bottom, #47c4ff 0%, #00aeff 100%);
+      font-weight: bold;
+      color: #fff;
+      font-size: 1.5rem;
+      padding: 0.25rem;
+    }
+    input {
+      text-align: center;
+      font-size: 1.5rem;
+      padding: 1rem;
+    }
+    button:first-child {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    button:last-child {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border-top: 0;
+    }
+    input:not(:first-child){
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border-top: 0;
+    }
+    input:not(:last-child){
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    input[type="number"]{
+      &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
+        appearance: none;
+        -webkit-appearance: none;
+      }
+    }
+  }
+
+  .photo-control {
+    .container {
+      position: relative;
+      min-height: 200px;
+      background-color: $component-background-color;
+    }
+    input[type="file"] {
+      top: 50%;
+      position: absolute;
+      height: 3rem;
+      width: 100%;
+      color: transparent;
+      &::-webkit-file-upload-button {
+        visibility: hidden;
+      }
+      &::before {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        content: '[TAKE PICTURE ICON HERE]';
+        text-align: center;
+        color: #fff;
+        font-weight: bold;
+        background-color: rgba(55,55,55,0.9);
+        border: solid rgba(255,255,255,0.8);
+        border-width: 2px 0;
+        padding: 1rem;
+        font-size: 1rem;
+        line-height: 1;
+        outline: none;
+        white-space: nowrap;
+        -webkit-user-select: none;
+        cursor: pointer;
+      }
+    }
+    .preview-image {
+      width: 100%;
+    }
+  }
+
+}

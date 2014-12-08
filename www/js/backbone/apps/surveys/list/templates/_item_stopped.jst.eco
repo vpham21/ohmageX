@@ -1,4 +1,8 @@
-<div class="stopped-survey">
-<h3><%= @title %></h3>
-<p><%= @status %><small><%= @server_id %></small><%= @description %></p>
+<div class="survey stopped">
+  <div class="action right">
+    <button class="icon right-arrow navigate">View</button>
+  </div>
+  <div role="link">
+    <h3><%= @title %></h3>
+  </div>
 </div>

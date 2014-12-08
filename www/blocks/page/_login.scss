@@ -1,0 +1,28 @@
+form.login {
+  margin: $app-main-footer-padding;
+  > :first-child {
+    margin-top: 0;
+  }
+  > * {
+    display: block;
+  }
+  label {
+    text-align: center;
+    font-weight: bold;
+    margin-top: $app-main-footer-padding;
+  }
+  .error + label {
+    margin-top: 0;
+  }
+  input, button[type="submit"] {
+    width: 100%;
+    margin-bottom: 0.4rem;
+  }
+  button[type="submit"] {
+    margin-top: $app-main-footer-padding;
+    background-color: #3ac;
+    color: #fff;
+    border-color: $global-form-control-border-color-dark;
+    padding: 0.75rem;
+  }
+}

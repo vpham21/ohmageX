@@ -1,4 +1,12 @@
-<div class="saved-campaign">
-<button>Unsave</button> <h3><small><%= @status %></small> <%= @name %></h3>
-<p><small><%= @id %></small><%= @description %></p>
+<div class="saved campaign">
+  <div class="action">
+    <button class="icon delete">Unsave</button>
+  </div>
+  <div class="action">
+    <button class="icon right-arrow navigate">View</button>
+  </div>
+  <div role="link">
+    <h3><%= @name %></h3>
+    <p><small><%= @id %></small></p>
+  </div>
 </div>

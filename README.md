@@ -6,9 +6,62 @@
 
 ## Installation and Setup
 
-- [Installation Instructions (wiki)](https://github.com/ucla/ohmage-mwf-dw/wiki/Installation-Instructions)
-- [Build Dependencies (wiki)](https://github.com/ucla/ohmage-mwf-dw/wiki/Build-Dependencies)
-  - [Versions, IDs and Naming (wiki)](https://github.com/ucla/ohmage-mwf-dw/wiki/Versions,-IDs-and-Naming)
+#### Prerequisites
+
+* Ruby 2.1+
+* Node.js 0.10+
+* Java JDK 1.6+
+
+#### Global Setup
+
+```
+./local-setup.sh
+```
+
+#### Build Web Assets
+
+Install dependencies for local build:
+
+```
+cd www
+bundle
+npm install
+```
+
+Compile assets with WebBlocks and Grunt:
+
+```
+bundle exec blocks build && node_modules/grunt-cli/bin/grunt dev
+```
+
+If files in `/blocks` weren't updated, skip the WebBlocks build:
+
+```
+node_modules/grunt-cli/bin/grunt dev
+```
+
+#### Cordova Plugins
+
+For web links that intend to launch the [in-app browser](http://docs.phonegap.com/en/2.9
+.0/cordova_inappbrowser_inappbrowser.md.html#InAppBrowserEvent):
+
+```
+cordova plugin add org.apache.cordova.inappbrowser
+```
+
+#### Build Cordova for iOS
+
+Install required platforms for iOS build:
+
+```
+cordova platform add ios
+```
+
+Build the iOS app:
+
+```
+cordova build ios
+```
 
 ## Development using **ohmage-mwf-DW**
 

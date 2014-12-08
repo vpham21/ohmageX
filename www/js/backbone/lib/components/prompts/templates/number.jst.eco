@@ -1,9 +1,22 @@
-<legend>
-  <form>
-  <h3><%= @displayLabel %></h3>
-  <label for="<%= @id %>"><%= @promptText %></label><br />
-  <button class="increment"><span class="icon icon-up"></span></button>
-  <input name="<%= @id %>" type="text" value="<%= @currentValue %>"/>
-  <button class="decrement"><span class="icon icon-down"></span></button>
-  </form>
-</legend>
+<form>
+  <h3 class="hide-accessible"><%= @displayLabel %></h3>
+  <fieldset>
+    <legend class="inset-block"><%= @promptText %></legend>
+    <div class="number-control">
+      <button class="increment">
+        <span class="hide-accessible">Increment</span>
+        <span aria-hidden="true">+</span>
+      </button>
+      <input name="<%= @id %>"
+             type="number"
+             <% if @properties.get('min') isnt undefined: %>min="<%= @properties.get('min') %>"<% end %>
+             <% if @properties.get('max') isnt undefined: %>max="<%= @properties.get('max') %>"<% end %>
+             step="<%= if @properties.get('wholeNumber') == "false" then "any" else "1"  %>"
+             value="<%= @currentValue %>"/>
+      <button class="decrement">
+        <span class="hide-accessible">Decrement</span>
+        <span aria-hidden="true">-</span>
+      </button>
+    </div>
+  </fieldset>
+</form>

@@ -1,5 +1,10 @@
-<header>
-Header Template
-<div class="my-region" id="list-region"></div>
-<div class="my-region" id="button-region"></div>
-</header>
+<nav id="app-menu">
+  <header>
+    <button class="app-menu-trigger close icon">Close Menu</button>
+    <h1>Menu</h1>
+  </header>
+  <div class="list-container"></div>
+</nav>
+<button class="app-menu-trigger hamburger icon">Open Menu</button>
+<h1 id="page-title"></h1>
+<div id="button-region"></div>

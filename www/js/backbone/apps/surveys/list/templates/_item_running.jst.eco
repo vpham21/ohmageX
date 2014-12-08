@@ -1,4 +1,11 @@
-<div class="running-survey">
-<h3><%= @title %></h3>
-<p><%= @status %><small><%= @server_id %></small><%= @description %> <i>clock</i> <span class="time">12:30pm</span></p>
+<div class="survey running">
+  <div class="action right">
+    <button class="icon right-arrow navigate">View</button>
+  </div>
+  <div role="link">
+    <h3><%= @title %></h3>
+    <aside class="reminder">
+      <span class="time">12:30pm</span></p>
+    </aside>
+  </div>
 </div>

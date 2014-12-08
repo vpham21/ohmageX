@@ -15,6 +15,15 @@
     changeChosen: (model, value, options) ->
       @$el.toggleClass "active", value
 
+  class List.Title extends App.Views.ItemView
+    tagName: "span"
+    template: "header/list/_title"
+    serializeData: ->
+      chosenModel = @collection.findWhere(chosen: true)
+      data = {}
+      data.pageTitle = if chosenModel isnt undefined then chosenModel.get("name") else "Ohmage"
+      data
+
   class List.Header extends App.Views.CollectionView
     tagName: "ul"
     attributes:
@@ -22,7 +31,14 @@
     childView: List.Nav
 
   class List.Layout extends App.Views.Layout
+    initialize: ->
+      @listenTo @collection, "change:chosen", (model) ->
+        if model.isChosen() then @menu.close();
     template: "header/list/layout"
     regions:
-      listRegion: "#list-region"
+      listRegion: "#app-menu .list-container"
       buttonRegion: "#button-region"
+      titleRegion: "#page-title"
+    onRender: ->
+      @menu = new SlideOutComponent('#app-menu', @$el)
+      @menu.toggleOn('click', '.app-menu-trigger', @$el)
