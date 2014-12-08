@@ -2,7 +2,7 @@
 
   > header {
     @include -clearfix;
-    padding: 1rem;
+    padding: $app-main-footer-padding;
     overflow: hidden;
     background-color: $component-header-background-color;
   }
@@ -22,7 +22,7 @@
       top: 0;
       right: 0;
       margin-top: 1.5rem;
-      padding-top: 0.1rem;
+      padding-top: 0.2rem;
       font-size: 0.8rem;
       &::before {
         float: left;

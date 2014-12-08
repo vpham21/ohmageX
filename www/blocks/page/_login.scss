@@ -1,5 +1,5 @@
 form.login {
-  margin: 1rem;
+  margin: $app-main-footer-padding;
   > :first-child {
     margin-top: 0;
   }
@@ -9,7 +9,7 @@ form.login {
   label {
     text-align: center;
     font-weight: bold;
-    margin-top: 1rem;
+    margin-top: $app-main-footer-padding;
   }
   .error + label {
     margin-top: 0;
@@ -19,7 +19,7 @@ form.login {
     margin-bottom: 0.4rem;
   }
   button[type="submit"] {
-    margin-top: 1rem;
+    margin-top: $app-main-footer-padding;
     background-color: #3ac;
     color: #fff;
     border-color: $global-form-control-border-color-dark;

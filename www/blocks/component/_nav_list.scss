@@ -26,14 +26,28 @@ nav.list {
       @include -clearfix;
 
       div.action {
-        padding: 1rem;
+        padding: $app-main-padding;
         float: left;
-        width: 40px;
+        width: 2rem;
+        height: 2rem;
+        .icon {
+          margin: 0.25rem;
+          width: 2rem;
+          height: 2rem;
+          &.delete {
+            background-size: 2rem;
+          }
+          &.navigate {
+            background-position: left;
+            background-size: 1.2rem 2rem;
+          }
+        }
       }
 
       div.action + div.action, div.action.right {
         float: right;
         padding-left: 0rem;
+        margin-right: 1rem;
       }
 
       div.action + div.action + div.action {
@@ -41,15 +55,15 @@ nav.list {
       }
 
       div.action:first-child:not(.right) ~ [role="link"] {
-        margin-left: 60px;
+        margin-left: 2.5rem + $app-main-padding;
       }
 
       div.action + div.action + [role="link"], div.action.right + [role="link"] {
-        margin-right: 60px;
+        margin-right: 2.5rem + $app-main-padding;
       }
 
       [role="link"] {
-        padding: 1rem;
+        padding: $app-main-footer-padding;
         overflow-x: hidden;
       }
 

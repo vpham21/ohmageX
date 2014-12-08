@@ -17,7 +17,7 @@
     width: 100%;
     overflow: auto;
     display: block;
-    padding: 1rem;
+    padding: $app-main-footer-padding;
     background-color: $survey-step-inset-block-background-color;
     font-weight: bold;
     color: $survey-step-inset-block-font-color;
@@ -29,7 +29,7 @@
   }
 
   .control-container {
-    margin: 1rem;
+    margin: $app-main-footer-padding;
   }
 
   .prompt-list {
@@ -45,7 +45,7 @@
     }
 
     input[type="checkbox"], input[type="radio"], button.delete {
-      margin: 1rem;
+      margin: $app-main-footer-padding;
       line-height: 1;
     }
 
@@ -54,8 +54,8 @@
       position: absolute;
       height: 3rem;
       right: 0;
-      left: 3rem;
-      padding: 1rem;
+      left: (3 * $app-main-footer-padding);
+      padding: $app-main-footer-padding;
       line-height: 1;
       z-index: 10;
     }
@@ -153,7 +153,7 @@
     }
     label, input {
       float: left;
-      margin-bottom: 1rem;
+      margin-bottom: $app-main-footer-padding;
     }
     label:first-child + input ~ label {
       clear: both;
@@ -162,7 +162,7 @@
 
   .number-control {
     width: 10rem;
-    margin: 1rem auto;
+    margin: $app-main-footer-padding auto;
     button, input {
       width: 100%;
       border-color: $global-form-control-border-color-dark;
@@ -180,11 +180,23 @@
       font-size: 1.5rem;
       padding: 1rem;
     }
-    button + input {
+    button:first-child {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    button:last-child {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
       border-top: 0;
     }
-    input + button {
+    input:not(:first-child){
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
       border-top: 0;
+    }
+    input:not(:last-child){
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
     }
     input[type="number"]{
       &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {

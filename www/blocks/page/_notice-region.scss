@@ -1,12 +1,12 @@
 #notice-region {
 
   > div {
-    padding: 1rem;
+    padding: $app-main-footer-padding;
     border-bottom: 1px solid $app-list-border-color;
     h3 {
-      margin: -1rem -1rem 1rem;
+      margin: (-1 * $app-main-footer-padding) (-1 * $app-main-footer-padding) $app-main-footer-padding;
       height: $info-region-header-height;
-      padding: (($info-region-header-height - $info-region-header-font-size) / 2) 1rem;
+      padding: (($info-region-header-height - $info-region-header-font-size) / 2) $app-main-footer-padding;
       font-size: $info-region-header-font-size;
       line-height: 1;
       background-color: #f4f4f4;
@@ -31,7 +31,7 @@
       top: 2rem;
       right: 2rem;
       left: 2rem;
-      padding: 1rem;
+      padding: $app-main-footer-padding;
       z-index: 1001;
       overflow: hidden;
       word-wrap: break-word;

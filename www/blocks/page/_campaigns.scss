@@ -2,7 +2,7 @@
 
   > header {
     @include -clearfix;
-    padding: 1rem;
+    padding: $app-main-footer-padding;
     position: relative;
     overflow: hidden;
   }
@@ -20,11 +20,11 @@
       position: absolute;
     }
     .icon {
-      right: 0;
+      right: $app-main-footer-padding;
       z-index: 12;
     }
     #search-box {
-      left: 0;
+      left: $app-main-footer-padding;
       width: 100%;
     }
     #search-box {

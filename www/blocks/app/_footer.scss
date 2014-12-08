@@ -1,5 +1,5 @@
 body > footer {
-  padding-top: 1rem;
+  padding-top: $app-main-footer-padding;
   text-align: center;
-  font-size: 0.8rem;
+  font-size: $app-main-footer-font-size;
 }

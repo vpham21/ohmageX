@@ -1,21 +1,22 @@
 #app-menu {
 
-  color: #fff;
-
   > header {
-    background-color: #262626;
+    background: $app-header-menu-header-background;
+    border-bottom: 1px solid $app-header-menu-header-border-color;
     overflow: auto;
     .close {
-      background-color: #484848;
       float: left;
-      margin-right: ($app-header-menu-height - $app-header-menu-font-size)/2;
-      height: $app-header-menu-header-height;
+      border-radius: 0;
+      background-color: $app-header-menu-header-close-background-color;
+      margin-right: ($app-header-menu-height - $app-header-menu-header-icon-size)/2;
+      height: $app-header-menu-height;
       width: $app-header-menu-header-height;
       background-size: $app-header-menu-header-font-size $app-header-menu-header-font-size;
     }
     h1 {
       font-size: $app-header-menu-header-font-size;
       line-height: $app-header-menu-header-height;
+      color: $app-header-menu-header-font-color;
       margin: 0;
       font-weight: bold;
     }
@@ -25,21 +26,23 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    background: $app-header-menu-header-list-background;
     > li {
       display: block;
+      background: $app-header-menu-header-list-item-background;
       > a {
         font-size: $app-header-menu-font-size;
         text-transform: uppercase;
         display: block;
         padding: ($app-header-menu-height - $app-header-menu-font-size)/2;
-        border-bottom: 1px solid #484848;
-        color: #fff;
+        border-bottom: 1px solid $app-header-menu-list-border-color;
+        color: $app-header-menu-font-color;
         &:hover {
-          background-color: #161616;
+          background: $app-header-menu-header-list-item-hover-background;
         }
       }
       &.active > a {
-        background-color: #161616;
+        background: $app-header-menu-header-list-item-active-background;
         cursor: default;
       }
     }
