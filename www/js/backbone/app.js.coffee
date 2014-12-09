@@ -25,14 +25,8 @@
 
   App.on "start", ->
     @startHistory()
-    credentials = App.request "credentials:current"
-
-    if !!!credentials or !credentials.has('username')
-      # the user isn't logged in, redirect them to the login page.
-      @navigate(Routes.default_route(), trigger: true)
-    else
-      App.rootRoute = Routes.dashboard_route()
-      @navigate(@rootRoute, trigger: true) unless @getCurrentRoute()
+    App.rootRoute = if @request("credentials:isloggedin") then Routes.dashboard_route() else Routes.default_route()
+    @navigate(@rootRoute, trigger: true) unless @getCurrentRoute()
 
     window.onbeforeunload = ->
       if App.request "surveytracker:active"
