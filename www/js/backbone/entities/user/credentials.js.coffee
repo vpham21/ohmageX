@@ -5,26 +5,22 @@
 
   class Entities.Credentials extends Entities.Model
 
-  currentCredentials = false
-
   API =
     init: ->
       App.request "storage:get", 'credentials', ((result) =>
         # credentials is retrieved from raw JSON.
         console.log 'credentials retrieved from storage'
-        currentCredentials = new Entities.Credentials result
+        App.credentials = new Entities.Credentials result
       ), =>
         console.log 'credentials not retrieved from storage'
-        currentCredentials = false
+        App.credentials = false
 
     isParsedAuthValid: (response) ->
       response.result isnt "failure"
 
     getCredentials: ->
-      if currentCredentials and currentCredentials.has('username')
-        currentCredentials
-      else
-        false
+      if App.credentials isnt false and App.credentials.has('username') then App.credentials else false
+
 
     validateCredentials: (path, username, password) ->
 
@@ -38,10 +34,10 @@
         dataType: 'json'
         success: (response) =>
           if @isParsedAuthValid response
-            currentCredentials = new Entities.Credentials
+            App.credentials = new Entities.Credentials
               username: username
               password: response.hashed_password
-            App.execute "storage:save", 'credentials', currentCredentials.toJSON(), =>
+            App.execute "storage:save", 'credentials', App.credentials.toJSON(), =>
               console.log "credentials entity API.validateCredentials success"
               App.vent.trigger "credentials:validated", username
           else
@@ -51,12 +47,12 @@
       # this will change when using other auth methods.
       if @getCredentials()
         return {
-          user: currentCredentials.get('username')
-          password: currentCredentials.get('password')
+          user: App.credentials.get('username')
+          password: App.credentials.get('password')
         }
       else return false
     logout: ->
-      currentCredentials = false
+      App.credentials = false
 
       App.execute "storage:clear", 'credentials', ->
         console.log 'credentials erased'
