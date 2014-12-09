@@ -60,3 +60,9 @@
 
   App.reqres.setHandler "nav:entities", ->
     API.getNavs()
+
+  App.vent.on "credentials:cleared", ->
+    API.reveal false
+
+  App.vent.on "credentials:validated", ->
+    API.reveal true
