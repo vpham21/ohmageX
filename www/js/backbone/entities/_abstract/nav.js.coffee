@@ -25,6 +25,26 @@
       @choose (@findWhere(name: nav) or @first())
 
   API =
+    reveal: (isLoggedIn) ->
+      console.log 'reveal isLoggedIn', isLoggedIn
+      if isLoggedIn
+        visibleItems = [
+          "Campaigns"
+          "Surveys"
+          "Upload Queue"
+          "Profile"
+          "Logout"
+        ]
+      else
+        visibleItems = [
+          "Login"
+        ]
+      App.navs.each((nav) ->
+        visible = nav.get('name') in visibleItems
+        nav.set 'visible', visible
+      )
+      App.navs.trigger "reveal"
+
     getNavs: ->
       App.navs = new Entities.NavsCollection [
         { name: "Login", url: "#login", icon: "", visible: false }
