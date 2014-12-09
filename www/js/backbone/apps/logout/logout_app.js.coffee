@@ -2,6 +2,9 @@
 
   class LogoutApp.Router extends Marionette.AppRouter
     before: ->
+      if !App.request("credentials:isloggedin")
+        App.navigate Routes.default_route(), trigger: true
+        return false
       surveyActive = App.request "surveytracker:active"
       if surveyActive
         if confirm('do you want to logout and exit the survey?')
