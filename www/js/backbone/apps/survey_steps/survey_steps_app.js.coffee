@@ -1,6 +1,10 @@
 @Ohmage.module "SurveyStepsApp", (SurveyStepsApp, App, Backbone, Marionette, $, _) ->
 
   class SurveyStepsApp.Router extends Marionette.AppRouter
+    before: ->
+      if !App.request("credentials:isloggedin")
+        App.navigate Routes.default_route(), trigger: true
+        return false
     appRoutes:
       "survey/:surveyId/step/:stepId": "checkStep"
 

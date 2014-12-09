@@ -12,6 +12,12 @@
     onRender: ->
       @$el.addClass "divider" if @model.isDivider()
 
+    attributes: ->
+      # TODO: Replace inline style with proper style
+      # Attempted using ".hide" and "data-visible=[false]"
+      # but both were exceeded in precedence by other selectors
+      if @model.get('visible') is false then {style: "display: none !important"} else {}
+
     changeChosen: (model, value, options) ->
       @$el.toggleClass "active", value
 
@@ -25,6 +31,8 @@
       data
 
   class List.Header extends App.Views.CollectionView
+    initialize: ->
+      @listenTo @collection, "reveal", @render
     tagName: "ul"
     attributes:
       class: "right"
