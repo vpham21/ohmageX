@@ -3,7 +3,7 @@
   <p class="error"></p>
   <label for="server">Server</label>
   <input class="server" type="text" value="<%= @path %>" name="server" />
-  <button class="server-btn" type=button>Update Server</button>
+  <button type="button" class="server-btn" type=button>Update Server</button>
   <label for="username">Username</label>
   <input class="username" type="text" name="username" />
   <label for="pass">Password</label>
