@@ -25,6 +25,8 @@
       data
 
   class List.Header extends App.Views.CollectionView
+    initialize: ->
+      @listenTo @collection, "reveal", @render
     tagName: "ul"
     attributes:
       class: "right"
