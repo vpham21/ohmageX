@@ -2,6 +2,9 @@
 
   class LoginApp.Router extends Marionette.AppRouter
     before: ->
+      if App.request("credentials:isloggedin")
+        App.navigate Routes.dashboard_route(), trigger: true
+        return false
       surveyActive = App.request "surveytracker:active"
       if surveyActive
         if confirm('do you want to exit the survey?')
@@ -17,6 +20,7 @@
 
   API =
     show: (id) ->
+      App.vent.trigger "nav:choose", "Login"
       console.log 'loginApp show'
       new LoginApp.Show.Controller
 
