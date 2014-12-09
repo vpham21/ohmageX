@@ -55,5 +55,8 @@
         { name: "Logout", url: "#logout", icon: "", visible: false }
       ]
 
+  App.vent.on "credentials:storage:load:success credentials:storage:load:failure", ->
+    API.reveal App.request("credentials:isloggedin")
+
   App.reqres.setHandler "nav:entities", ->
     API.getNavs()
