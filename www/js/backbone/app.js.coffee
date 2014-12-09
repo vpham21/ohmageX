@@ -18,7 +18,7 @@
     App.module("HeaderApp").start(App.navs)
     App.module("FooterApp").start()
 
-  App.reqres.setHandler "default:region", -> 
+  App.reqres.setHandler "default:region", ->
     console.log "default:region"
     App.mainRegion
 
