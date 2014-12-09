@@ -1,9 +1,9 @@
 <div class="saved campaign">
   <div class="action">
-    <button class="icon delete">Unsave</button>
+    <button type="button" class="icon delete">Unsave</button>
   </div>
   <div class="action">
-    <button class="icon right-arrow navigate">View</button>
+    <button type="button" class="icon right-arrow navigate">View</button>
   </div>
   <div role="link">
     <h3><%= @name %></h3>

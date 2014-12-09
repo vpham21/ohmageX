@@ -1,1 +1,1 @@
-<button><%= @label %></button>
+<button type="button"><%= @label %></button>

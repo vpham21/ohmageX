@@ -1,9 +1,9 @@
 <div class="available campaign">
   <div class="action">
-    <button class="icon save">Save</button>
+    <button type="button" class="icon save">Save</button>
   </div>
   <div class="action">
-    <button class="icon info">Info</button>
+    <button type="button" class="icon info">Info</button>
   </div>
   <div role="link">
     <h3><%= @name %></h3>

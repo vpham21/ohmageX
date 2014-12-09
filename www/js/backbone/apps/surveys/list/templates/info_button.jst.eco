@@ -1,1 +1,1 @@
-<button class="info icon">Info for <%= @name %></button>
+<button type="button" class="info icon">Info for <%= @name %></button>

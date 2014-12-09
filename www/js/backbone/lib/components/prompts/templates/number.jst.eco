@@ -3,7 +3,7 @@
   <fieldset>
     <legend class="inset-block"><%= @promptText %></legend>
     <div class="number-control">
-      <button class="increment">
+      <button type="button" class="increment">
         <span class="hide-accessible">Increment</span>
         <span aria-hidden="true">+</span>
       </button>
@@ -13,7 +13,7 @@
              <% if @properties.get('max') isnt undefined: %>max="<%= @properties.get('max') %>"<% end %>
              step="<%= if @properties.get('wholeNumber') == "false" then "any" else "1"  %>"
              value="<%= @currentValue %>"/>
-      <button class="decrement">
+      <button type="button" class="decrement">
         <span class="hide-accessible">Decrement</span>
         <span aria-hidden="true">-</span>
       </button>
