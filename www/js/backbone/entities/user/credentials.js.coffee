@@ -54,9 +54,9 @@
     logout: ->
       App.credentials = false
 
+      App.vent.trigger "credentials:cleared"
       App.execute "storage:clear", 'credentials', ->
         console.log 'credentials erased'
-        App.vent.trigger "credentials:cleared"
 
   App.on "before:start", ->
     API.init()
