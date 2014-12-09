@@ -1,4 +1,4 @@
 <h3><%= @name %></h3>
 <p><%= @description %></p>
 <p class="text-muted"><small><%= @id %><br><em>Created on <%= @creation_timestamp %></em></small></p>
-<button class='button-close'>Close</button>
+<button type="button" class='button-close'>Close</button>
