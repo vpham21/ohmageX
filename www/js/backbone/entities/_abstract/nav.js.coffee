@@ -26,12 +26,13 @@
 
   API =
     getNavs: ->
-      new Entities.NavsCollection [
-        { name: "Campaigns", url: "#campaigns", icon: "" }
-        { name: "Surveys", url: "#surveys", icon: "" }
-        { name: "Upload Queue", url: "#uploadqueue", icon: "" }
-        { name: "Profile", url: "#profile", icon: "" }
-        { name: "Logout", url: "#logout", icon: "" }
+      App.navs = new Entities.NavsCollection [
+        { name: "Login", url: "#login", icon: "", visible: false }
+        { name: "Campaigns", url: "#campaigns", icon: "", visible: false }
+        { name: "Surveys", url: "#surveys", icon: "", visible: false }
+        { name: "Upload Queue", url: "#uploadqueue", icon: "", visible: false }
+        { name: "Profile", url: "#profile", icon: "", visible: false }
+        { name: "Logout", url: "#logout", icon: "", visible: false }
       ]
 
   App.reqres.setHandler "nav:entities", ->
