@@ -61,6 +61,9 @@
   App.on "before:start", ->
     API.init()
 
+  App.reqres.setHandler "credentials:isloggedin", ->
+    !!API.getCredentials()
+
   App.reqres.setHandler "credentials:current", ->
     API.getCredentials()
 
