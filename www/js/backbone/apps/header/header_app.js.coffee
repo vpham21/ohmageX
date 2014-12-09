@@ -9,4 +9,3 @@
 
   HeaderApp.on "start", (navs) ->
     API.list navs
-
