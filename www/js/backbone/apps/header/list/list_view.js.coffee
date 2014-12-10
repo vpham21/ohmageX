@@ -41,12 +41,15 @@
   class List.Layout extends App.Views.Layout
     initialize: ->
       @listenTo @collection, "change:chosen", (model) ->
-        if model.isChosen() then @menu.close();
+        if model.isChosen() then @menu.close()
     template: "header/list/layout"
+    attributes: ->
+      if App.device.isiOS7 then { class: "ios7" }
     regions:
       listRegion: "#app-menu .list-container"
       buttonRegion: "#button-region"
       titleRegion: "#page-title"
     onRender: ->
       @menu = new SlideOutComponent('#app-menu', @$el)
-      @menu.toggleOn('click', '.app-menu-trigger', @$el)
+      triggerEvent = if App.device.isNative then 'touchstart' else 'click'
+      @menu.toggleOn(triggerEvent, '.app-menu-trigger', @$el)
