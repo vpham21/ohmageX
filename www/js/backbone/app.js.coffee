@@ -4,6 +4,7 @@
 
   App.on "before:start", (options) ->
     App.environment = options.environment
+    App.device = App.request "device:init"
     App.credentials = false
     App.navs = App.request "nav:entities"
 
