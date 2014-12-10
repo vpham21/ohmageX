@@ -71,6 +71,38 @@ cordova build ios
 
 > The name "Dragon Well" comes from a variety of Chinese green tea (龍井茶).
 
+#### 0.2.0 - GUI Release
+
+- Build updates
+  - Standardized build process
+
+- GUI now integrated
+  - Webblocks CSS and UI Components
+  - Hamburger Menu
+  - Progress Bar
+  - Notice Regions on select pages
+  - Custom Choice
+  - Basic Profile Page placeholder
+
+- Storage
+  - Custom Choices now saved
+  - Custom choices can be individually deleted
+  - User data deleted on logout
+
+- PhoneGap optimizations
+  - status bar overlay
+  - Device Detection
+  - Touch event optimization
+
+- Error handling
+  - Unsupported prompt types
+  - Survey Upload errors
+
+- Login Flow
+  - Multi-modal menu, shows Logged-In and Not Logged-In items
+  - Redirect when not logged in
+
+
 #### 0.1.0 - First Release
 
 Includes the following functionality:
