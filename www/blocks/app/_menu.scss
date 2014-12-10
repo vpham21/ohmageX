@@ -49,3 +49,11 @@
   }
 
 }
+
+.ios7 #app-menu {
+  top: $app-status-bar-offset;
+}
+
+.ios7 #app-menu .overlay {
+  top: $app-status-bar-offset;
+}
