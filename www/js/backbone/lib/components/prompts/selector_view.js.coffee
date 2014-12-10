@@ -142,8 +142,12 @@
       'change input[type=file]': "file:changed"
 
   class Prompts.SingleChoiceItem extends App.Views.ItemView
+    initialize: ->
+      @listenTo @, "item:select", @selectItem
     tagName: 'li'
     template: "prompts/single_choice_item"
+    selectItem: (args) ->
+      @$el.find( "input" ).prop('checked', true)
     triggers:
       "click label": "item:select"
       "click button.delete": "customchoice:remove"
