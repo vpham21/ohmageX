@@ -145,6 +145,7 @@
     tagName: 'li'
     template: "prompts/single_choice_item"
     triggers:
+      "click label": "item:select"
       "click button.delete": "customchoice:remove"
 
   # Prompt Single Choice
