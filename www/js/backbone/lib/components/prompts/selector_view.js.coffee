@@ -167,6 +167,10 @@
 
   class Prompts.MultiChoiceItem extends Prompts.SingleChoiceItem
     template: "prompts/multi_choice_item"
+    selectItem: (args) ->
+      oldValue = @$el.find( "input" ).prop('checked')
+      # flip the item to its opposite value.
+      @$el.find( "input" ).prop('checked', !oldValue)
 
   # Prompt Multi Choice
   class Prompts.MultiChoice extends Prompts.SingleChoice
