@@ -2,6 +2,9 @@
 
   class SurveysApp.Router extends Marionette.AppRouter
     before: ->
+      if !App.request("credentials:isloggedin")
+        App.navigate Routes.default_route(), trigger: true
+        return false
       surveyActive = App.request "surveytracker:active"
       if surveyActive
         if confirm('do you want to exit the survey?')
@@ -40,8 +43,3 @@
     # Trigger the confirmation box for removing the ghosted campaign.
     campaign_urn = App.request "survey:saved:urn", model.get('id')
     App.execute "campaign:ghost:remove", campaign_urn, model.get('status')
-
-  App.vent.on "survey:list:logout:clicked", ->
-    console.log "survey:list:logout:clicked"
-    if confirm 'Do you want to logout?'
-      App.execute "credentials:logout"

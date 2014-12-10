@@ -1,5 +1,12 @@
-<div class="available-campaign">
-<button class="action-button">Save</button> <h3><small><%= @status %></small> <%= @name %></h3>
-<p><small><%= @id %></small><%= @description %></p>
-<button class="info-button">Info</button>
+<div class="available campaign">
+  <div class="action">
+    <button type="button" class="icon save">Save</button>
+  </div>
+  <div class="action">
+    <button type="button" class="icon info">Info</button>
+  </div>
+  <div role="link">
+    <h3><%= @name %></h3>
+    <p><small><%= @id %></small></p>
+  </div>
 </div>

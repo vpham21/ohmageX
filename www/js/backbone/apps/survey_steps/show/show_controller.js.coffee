@@ -14,6 +14,8 @@
       @layout = @getLayoutView()
 
       @listenTo @layout, "show", =>
+        @noticeRegion()
+        @progressRegion()
         @stepBodyRegion()
         @skipButtonRegion()
         @prevButtonRegion()
@@ -39,8 +41,19 @@
           console.log "response correct, arg is", responseModel.get 'response'
           App.vent.trigger "response:set:success", responseModel.get('response'), @surveyId, @stepId
 
+    noticeRegion: ->
+      App.execute "notice:region:set", @layout.noticeRegion
+
+    progressRegion: ->
+
+      progress = App.request 'flow:progress', @stepId
+      progressView = @getProgressView progress
+
+      @show progressView, region: @layout.progressRegion
+
+
     stepBodyRegion: ->
-      App.execute "steps:view:insert", @layout.stepBodyRegion, @stepId
+      App.execute "steps:view:insert", @layout.stepBodyRegion, @surveyId, @stepId
 
     skipButtonRegion: ->
 
@@ -58,7 +71,7 @@
       prevView = @getPrevButtonView prevEntity
 
       @listenTo prevView, "prev:clicked", =>
-        App.vent.trigger "survey:step:prev:clicked", @stepId
+        App.vent.trigger "survey:step:prev:clicked", @surveyId, @stepId
 
       @show prevView, region: @layout.prevButtonRegion
 
@@ -84,6 +97,10 @@
             App.vent.trigger "survey:response:get", @surveyId, @stepId
 
       @show nextView, region: @layout.nextButtonRegion
+
+    getProgressView: (progress) ->
+      new Show.Progress
+        model: progress
 
     getSkipButtonView: (skip) ->
       new Show.SkipButton

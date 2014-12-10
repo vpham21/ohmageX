@@ -1,0 +1,80 @@
+.icon {
+
+  text-indent: -999px;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+
+  &.hamburger {
+    background-image: url("../img/icon/menu-open.png");
+    height: 38px;
+    width: 36px;
+  }
+
+  &.close {
+    background: url("../img/icon/menu-close.png") center no-repeat;
+    height: 40px;
+    width: 40px;
+  }
+
+  &.sync {
+    background-image: url("../img/icon/sync.png");
+    height: 55px;
+    width: 55px;
+  }
+
+  &.upload {
+    background-image: url("../img/icon/sync.png");
+    height: 55px;
+    width: 55px;
+  }
+
+  &.clock {
+    background-image: url("../img/icon/clock.png");
+    height: 31px;
+    width: 31px;
+  }
+
+  &.info {
+    background-image: url("../img/icon/info.png");
+  }
+
+  &.delete {
+    background-image: url("../img/icon/delete.png");
+  }
+
+  &.save {
+    background-image: url("../img/icon/save.png");
+  }
+
+  &.delete, &.save, &.info {
+    background-size: 40px;
+  }
+
+  &.right-arrow {
+    background-size: 23px 36px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("../img/icon/right-arrow.png");
+  }
+
+  &.delete, &.save, &.info, &.right-arrow {
+    height: 40px;
+    width: 40px;
+  }
+
+  &.search {
+    background-image: url("../img/icon/search.png");
+    height: 56px;
+    width: 56px;
+
+    &.form-control {
+      height: ((3/2) * $global-form-control-font-size + 2 * $global-form-control-padding);
+      width: ((3/2) * $global-form-control-font-size + 2 * $global-form-control-padding);
+      background-size: ((3/2) * $global-form-control-font-size + 2 * $global-form-control-padding);
+      border: 1px solid $global-form-control-border-color;
+    }
+
+  }
+
+}

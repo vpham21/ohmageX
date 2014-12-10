@@ -15,6 +15,12 @@
         # So only render the buttonRegion when our model is "chosen"
         if model.isChosen() then @buttonRegion(navs)
 
+      @listenTo navs, "change:chosen", (model) =>
+        if model.isChosen() then @titleRegion(navs)
+
+      @listenTo navs, "change:chosen", (model) =>
+        $('body').scrollTop(0)
+
       @show @layout
 
     listRegion: (navs) ->
@@ -29,8 +35,16 @@
       else
         @show buttonView, region: @layout.buttonRegion
 
+    titleRegion: (navs) ->
+      titleView = @getTitleView navs
+      @show titleView, region: @layout.titleRegion
+
     getListView: (navs) ->
       new List.Header
+        collection: navs
+
+    getTitleView: (navs) ->
+      new List.Title
         collection: navs
 
     getLayoutView: (navs) ->

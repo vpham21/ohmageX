@@ -2,6 +2,9 @@
 
   class SurveyApp.Router extends Marionette.AppRouter
     before: ->
+      if !App.request("credentials:isloggedin")
+        App.navigate Routes.default_route(), trigger: true
+        return false
       surveyActive = App.request "surveytracker:active"
       if surveyActive
         if !confirm('do you want to exit the survey?')
@@ -14,6 +17,7 @@
 
   API =
     show: (id) ->
+      App.vent.trigger "nav:choose", "Surveys"
       console.log 'surveyApp show'
 
       $mySurveyXML = App.request "survey:saved:xml", id # gets the jQuery Survey XML by ID

@@ -8,7 +8,9 @@
   class Steps.SelectorController extends App.Controllers.Application
 
     initialize: (options) ->
-      { stepId, type, entity } = options
+      { surveyId, stepId, type, entity } = options
+
+      @surveyId = surveyId
       @stepId = stepId
 
       myView = @selectView entity, type
@@ -30,14 +32,15 @@
             model: entity
         else
           # handle all other view types in the Prompts component.
-          return App.request "prompts:view", entity, type
+          return App.request "prompts:view", @surveyId, @stepId, entity, type
 
     showSelectedView: (view) ->
       @show view
 
-  App.commands.setHandler "steps:view:insert", (region, stepId) ->
+  App.commands.setHandler "steps:view:insert", (region, surveyId, stepId) ->
     result = new Steps.SelectorController
       region: region
+      surveyId: surveyId
       stepId: stepId
       type: App.request "flow:type", stepId
       entity: App.request "flow:entity", stepId

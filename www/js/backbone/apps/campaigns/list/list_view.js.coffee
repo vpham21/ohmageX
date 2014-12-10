@@ -18,8 +18,11 @@
     template: "campaigns/list/search"
     triggers:
       "keyup input": "search:update"
+    onRender: ->
+      @menu = new VisibilityToggleComponent('input', @$el)
+      @menu.toggleOn('click', '.icon.search', @$el)
 
-  ###
+
   # Render Selector using Dropdown
   class List.SelectorItem extends App.Views.ItemView
     tagName: "option"
@@ -43,8 +46,8 @@
     childView: List.SelectorItem
     triggers: ->
       "change": "saved:selected"
-  ###
 
+  ###
   # Render selector using Radio
   class List.SelectorItem extends App.Views.ItemView
     tagName: "div"
@@ -67,6 +70,7 @@
     childView: List.SelectorItem
     triggers: ->
       "change input": "saved:selected"
+  ###
 
   class List.Campaign extends App.Views.ItemView
     initialize: ->
@@ -79,28 +83,33 @@
         else "campaigns/list/_ghost_campaign"
       result
     triggers:
-      "click .available-campaign .action-button": "save:clicked"
-      "click .available-campaign h3": "save:clicked"
-      "click .available-campaign .info-button": "info:clicked"
-      "click .saved-campaign button": "unsave:clicked"
-      "click .saved-campaign h3": "navigate:clicked"
-      "click .ghost-campaign button": "ghost:remove:clicked"
-      "click .ghost-campaign h3": "ghost:remove:clicked"
+      "click .available.campaign button.save": "save:clicked"
+      "click .available.campaign [role=\"link\"]": "save:clicked"
+      "click .available.campaign button.info": "info:clicked"
+      "click .saved.campaign button.delete": "unsave:clicked"
+      "click .saved.campaign [role=\"link\"]": "navigate:clicked"
+      "click .saved.campaign button.navigate": "navigate:clicked"
+      "click .ghost.campaign button.delete": "ghost:remove:clicked"
+      "click .ghost.campaign [role=\"link\"]": "ghost:remove:clicked"
 
   class List.CampaignsEmpty extends App.Views.ItemView
+    className: "text-container"
     template: "campaigns/list/_campaigns_empty"
 
   class List.Campaigns extends App.Views.CompositeView
+    tagName: 'nav'
+    className: 'list'
     initialize: ->
       @listenTo @collection, 'reset', @render
       @listenTo @collection, 'remove', @render
     template: "campaigns/list/campaigns"
     childView: List.Campaign
-    childViewContainer: ".campaigns"
+    childViewContainer: "ul"
     emptyView: List.CampaignsEmpty
 
   class List.Layout extends App.Views.Layout
     template: "campaigns/list/list_layout"
+    id: 'campaigns'
     regions:
       infoRegion: "#info-region"
       selectorRegion: "#selector-region"

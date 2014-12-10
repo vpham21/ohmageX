@@ -1,0 +1,35 @@
+#campaigns {
+
+  > header {
+    @include -clearfix;
+    padding: $app-main-footer-padding;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #selector-region {
+    position: absolute;
+  }
+
+  #search-region div {
+    height: ((3/2) * $global-form-control-font-size + 2 * $global-form-control-padding); /* same as .icon.search.form-control in components/_icon.scss */
+    float: right;
+    overflow: hidden;
+    width: 100%;
+    > * {
+      position: absolute;
+    }
+    .icon {
+      right: $app-main-footer-padding;
+      z-index: 12;
+    }
+    #search-box {
+      left: $app-main-footer-padding;
+      width: 100%;
+    }
+    #search-box {
+      width: calc(100% - #{((3/2) * $global-form-control-font-size + 4 * $global-form-control-padding)});
+    }
+  }
+
+}

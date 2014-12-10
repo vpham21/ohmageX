@@ -2,6 +2,9 @@
 
   class CampaignsApp.Router extends Marionette.AppRouter
     before: ->
+      if !App.request("credentials:isloggedin")
+        App.navigate Routes.default_route(), trigger: true
+        return false
       surveyActive = App.request "surveytracker:active"
       if surveyActive
         if confirm('do you want to exit the survey?')
@@ -30,8 +33,10 @@
   App.vent.on "campaign:list:save:clicked", (model) ->
     App.execute "campaign:save", model
 
-  App.vent.on "campaign:list:unsave:clicked", (model) ->
-    App.execute "campaign:unsave", model.get 'id'
+  App.vent.on "campaign:list:unsave:clicked", (model, view, filterType) ->
+    if confirm "are you sure you want to unsave this campaign?"
+      App.execute "campaign:unsave", model.get 'id'
+      if filterType is 'saved' then view.destroy()
 
   App.vent.on "campaign:list:ghost:remove:clicked", (model) ->
     console.log 'model', model

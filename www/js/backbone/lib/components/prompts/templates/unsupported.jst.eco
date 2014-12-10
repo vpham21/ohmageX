@@ -1,0 +1,2 @@
+<h2>Unsupported Prompt Type</h2>
+<p>The prompt type <strong><%= @type %></strong> is not supported.</p>

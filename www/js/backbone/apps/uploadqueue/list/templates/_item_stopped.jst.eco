@@ -1,0 +1,8 @@
+<div class="stopped item">
+  <button type="button" class="delete icon">Discard</button>
+  <div role="link">
+    <h3><%= @name %></h3>
+    <p class="text-error"><%= @errorText %></p>
+    <footer><small>Last Submitted <%= @prettyTimestamp %><small></footer>
+  </div>
+</div>

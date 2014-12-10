@@ -15,7 +15,7 @@
   class Prompts.Text extends Prompts.Base
     template: "prompts/text"
     gatherResponses: (surveyId, stepId) =>
-      response = @$el.find('input[type=text]').val()
+      response = @$el.find('textarea').val()
       @trigger "response:submit", response, surveyId, stepId
     serializeData: ->
       data = @model.toJSON()
@@ -27,21 +27,25 @@
   class Prompts.Number extends Prompts.Base
     template: "prompts/number"
     gatherResponses: (surveyId, stepId) =>
-      response = @$el.find('input[type=text]').val()
+      response = @$el.find('input[type="number"]').val()
       @trigger "response:submit", response, surveyId, stepId
     initialize: ->
       super
       @listenTo @, 'value:increment', @incrementValue
       @listenTo @, 'value:decrement', @decrementValue
     incrementValue: ->
-      $valueField = @$el.find("input[type='text']")
+      $valueField = @$el.find("input[type='number']")
       myVal = $valueField.val()
       myVal = if !!!myVal.length or _.isNaN(myVal) then 0 else parseInt(myVal)
+      if @model.get('properties').get('max') isnt undefined
+        return if parseInt(@model.get('properties').get('max')) <= myVal
       $valueField.val(myVal+1)
     decrementValue: ->
-      $valueField = @$el.find("input[type='text']")
+      $valueField = @$el.find("input[type='number']")
       myVal = $valueField.val()
       myVal = if !!!myVal.length or _.isNaN(myVal) then 0 else parseInt(myVal)
+      if @model.get('properties').get('min') isnt undefined
+        return if parseInt(@model.get('properties').get('min')) >= myVal
       $valueField.val(myVal-1)
     triggers:
       "click button.increment": "value:increment"
@@ -71,7 +75,20 @@
         data.currentDateValue = data.currentValue.substring(0,10)
       else
         currentDate = new Date()
-        data.currentDateValue = new Date().toISOString().substring(0,10)
+        dd = @padWithZero(currentDate.getDate())
+        mm = @padWithZero(currentDate.getMonth()+1) # January is 0
+        yyyy = currentDate.getFullYear()
+
+        # browser environment date input checks
+        if (Modernizr.inputtypes.date)
+          # use a value that will be detected and converted
+          # by the browser datepicker.
+          data.currentDateValue = "#{yyyy}-#{mm}-#{dd}"
+        else
+          # no native support for input type 'date'.
+          # Set the value in the proper format.
+          data.currentDateValue = "#{mm}/#{dd}/#{yyyy}"
+
       data.currentTimeValue = "#{@padWithZero(currentDate.getHours())}:#{@padWithZero(currentDate.getMinutes())}:#{@padWithZero(currentDate.getSeconds())}"
       data
 
@@ -125,8 +142,16 @@
       'change input[type=file]': "file:changed"
 
   class Prompts.SingleChoiceItem extends App.Views.ItemView
+    initialize: ->
+      @listenTo @, "item:select", @selectItem
     tagName: 'li'
     template: "prompts/single_choice_item"
+    selectItem: (args) ->
+      @$el.find( "input" ).prop('checked', true)
+    triggers:
+      "click label": "item:select"
+      "touchstart input": "item:select"
+      "click button.delete": "customchoice:remove"
 
   # Prompt Single Choice
   class Prompts.SingleChoice extends Prompts.BaseComposite
@@ -138,11 +163,14 @@
       @trigger "response:submit", response, surveyId, stepId
     onRender: ->
       currentValue = @model.get('currentValue')
-      if currentValue then @$el.find("input[value='#{currentValue}']").attr('checked', true)
+      if currentValue then @$el.find("input[value='#{currentValue}']").prop('checked', true)
 
-  class Prompts.MultiChoiceItem extends App.Views.ItemView
-    tagName: 'li'
+  class Prompts.MultiChoiceItem extends Prompts.SingleChoiceItem
     template: "prompts/multi_choice_item"
+    selectItem: (args) ->
+      oldValue = @$el.find( "input" ).prop('checked')
+      # flip the item to its opposite value.
+      @$el.find( "input" ).prop('checked', !oldValue)
 
   # Prompt Multi Choice
   class Prompts.MultiChoice extends Prompts.SingleChoice
@@ -168,10 +196,10 @@
         # set all the array values
         _.each(valueParsed, (currentValue) =>
           console.log 'currentValue', currentValue
-          @$el.find("input[value='#{currentValue}']").attr('checked', true)
+          @$el.find("input[value='#{currentValue}']").prop('checked', true)
         )
       else
-        @$el.find("input[value='#{valueParsed}']").attr('checked', true)
+        @$el.find("input[value='#{valueParsed}']").prop('checked', true)
 
     onRender: ->
       currentValue = @model.get('currentValue')
@@ -194,16 +222,32 @@
   class Prompts.SingleChoiceCustom extends Prompts.BaseComposite
     initialize: ->
       super
-      @listenTo @, 'choice:toggle', @toggleChoice
-      @listenTo @, 'choice:add', @addChoice
-      @listenTo @, 'choice:cancel', @cancelChoice
-      # TODO: Make a mini validator for custom choice,
-      # e.g. disallow duplicates
-      @listenTo @, 'choice:add:invalid', (-> console.log 'invalid custom choice, please try again')
+      @listenTo @, 'customchoice:toggle', @toggleChoice
+      @listenTo @, 'customchoice:add', @addChoice
+      @listenTo @, 'customchoice:cancel', @cancelChoice
+
+      @listenTo @, 'childview:customchoice:remove', @removeChoice
+
+      @listenTo @, 'customchoice:add:invalid', (-> alert('invalid custom choice, please try again.'))
+      @listenTo @, 'customchoice:add:exists', (-> alert('Custom choice exists, please try again.'))
     onRender: ->
       currentValue = @model.get('currentValue')
-      if currentValue then @$el.find("label:containsExact('#{currentValue}')").parent().find('input').attr('checked', true)
+      if currentValue then @chooseValue currentValue
+    chooseValue: (currentValue) ->
+      # activate a choice selection based on the currentValueType.
+      switch @model.get('currentValueType')
+        when 'response'
+          # Saved responses use the label, not the key.
+          matchingValue = @$el.find("label:containsExact('#{currentValue}')").parent().find('input').prop('checked', true)
+        when 'default'
+          # Default responses match keys instead of labels.
+          # Select based on value.
+          @$el.find("input[value='#{currentValue}']").prop('checked', true)
 
+    removeChoice: (args) ->
+      value = args.model.get 'label'
+      @collection.remove @collection.where(label: value)
+      @trigger "customchoice:remove", value
     toggleChoice: (args) ->
       $addForm = @$el.find '.add-form'
       $addForm.toggleClass 'hidden'
@@ -214,11 +258,11 @@
       $addForm.find(".add-value").val('')
     addChoice: (args) ->
       $addForm = @$el.find '.add-form'
-      myVal = $addForm.find(".add-value").val()
+      myVal = $addForm.find(".add-value").val().trim()
 
       if !!!myVal.length
         # ensure a new custom choice isn't blank.
-        @trigger "choice:add:invalid"
+        @trigger "customchoice:add:invalid"
         return false
 
       if not $addForm.hasClass 'hidden'
@@ -227,25 +271,31 @@
         # to the view's Collection. Validation and parsing takes
         # place within the ChoiceCollection's model.
 
-        # Also, will add an event to clear the value of the input
-        # on successful submit.
+        if args.collection.where(label: myVal).length > 0
+          # the custom choice already exists
+          @trigger "customchoice:add:exists"
+          return false
 
         args.collection.add([{
           "key": _.uniqueId()
           "label": myVal
           "parentId": args.model.get('id')
+          "custom": true
         }])
 
+        # clear the input on successful submit.
+        @trigger "customchoice:add:success", myVal
+        $addForm.find(".add-value").val('')
     template: "prompts/choice_custom"
     childView: Prompts.SingleChoiceItem
     childViewContainer: ".prompt-list"
     triggers:
-      "click button.my-add": "choice:toggle"
-      "click .add-form .add-submit": "choice:add"
-      "click .add-form .add-cancel": "choice:cancel"
+      "click button.my-add": "customchoice:toggle"
+      "click .add-form .add-submit": "customchoice:add"
+      "click .add-form .add-cancel": "customchoice:cancel"
     gatherResponses: (surveyId, stepId) =>
       # reset the add custom form, if it's open
-      @trigger "choice:cancel"
+      @trigger "customchoice:cancel"
       # this expects the radio buttons to be in the format:
       # <li><input type=radio ... /><label>labelText</label></li>
       $checkedInput = @$el.find('input[type=radio]').filter(':checked')
@@ -265,6 +315,8 @@
       JSON.stringify result
     selectCurrentValues: (currentValues) ->
 
+      valueType = @model.get 'currentValueType'
+
       if currentValues.indexOf(',') isnt -1 and currentValues.indexOf('[') is -1
         # Check for values that contain a comma-separated list of
         # numbers with NO brackets (multi_choice default allows this)
@@ -282,18 +334,31 @@
         # set all the array values
         _.each(valueParsed, (currentValue) =>
           console.log 'currentValue', currentValue
-          @$el.find("label:containsExact('#{currentValue}')").parent().find('input').attr('checked', true)
+          # method from parent SingleChoiceCustom
+          @chooseValue currentValue
         )
       else
-        @$el.find("label:containsExact('#{valueParsed}')").parent().find('input').attr('checked', true)
+        # method from parent SingleChoiceCustom
+        @chooseValue valueParsed
 
     onRender: ->
       currentValue = @model.get('currentValue')
       if currentValue then @selectCurrentValues currentValue
     gatherResponses: (surveyId, stepId) =>
       # reset the add custom form, if it's open
-      @trigger "choice:cancel"
+      @trigger "customchoice:cancel"
       # this expects the checkbox buttons to be in the format:
       # <li><input type=checkbox ... /><label>labelText</label></li>
       $responses = @$el.find('input[type=checkbox]').filter(':checked')
       @trigger "response:submit", @extractJSONString($responses), surveyId, stepId
+
+  class Prompts.Unsupported extends Prompts.Base
+    className: "text-container"
+    template: "prompts/unsupported"
+    gatherResponses: (surveyId, stepId) =>
+      # just submit an unsupported prompt response as "NOT_DISPLAYED".
+      # The status within Flow isn't actually set as "not_displayed"
+      # because we still need to render the unsupported prompt
+      # placeholder. Also, this is a Prompt because we still need
+      # to submit a value for this Response inside the Response object.
+      @trigger "response:submit", "NOT_DISPLAYED", surveyId, stepId

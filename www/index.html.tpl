@@ -9,14 +9,13 @@
   <link rel="shortcut icon" href="/favicon.ico?v=1.1">
 
   <link rel="stylesheet" href="<%= css_path %>" />
+  <script src="cordova.js"></script>
   <script src="<%= js_modernizr_path %>"></script>
 </head>
 <body>
-  <header class="bar bar-nav"></header>
-  <section class="content wrap">
-    <article class="primary"></article>
-    <footer></footer>
-  </section>
+  <header role="banner"></header>
+  <main role="main"></main>
+  <footer role="contentinfo"></footer>
   <script src="<%= js_jquery_path %>"></script>
   <script src="<%= js_path %>"></script>
   <script type="text/javascript">

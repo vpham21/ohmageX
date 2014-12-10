@@ -6,9 +6,62 @@
 
 ## Installation and Setup
 
-- [Installation Instructions (wiki)](https://github.com/ucla/ohmage-mwf-dw/wiki/Installation-Instructions)
-- [Build Dependencies (wiki)](https://github.com/ucla/ohmage-mwf-dw/wiki/Build-Dependencies)
-  - [Versions, IDs and Naming (wiki)](https://github.com/ucla/ohmage-mwf-dw/wiki/Versions,-IDs-and-Naming)
+#### Prerequisites
+
+* Ruby 2.1+
+* Node.js 0.10+
+* Java JDK 1.6+
+
+#### Global Setup
+
+```
+./local-setup.sh
+```
+
+#### Build Web Assets
+
+Install dependencies for local build:
+
+```
+cd www
+bundle
+npm install
+```
+
+Compile assets with WebBlocks and Grunt:
+
+```
+bundle exec blocks build && node_modules/grunt-cli/bin/grunt dev
+```
+
+If files in `/blocks` weren't updated, skip the WebBlocks build:
+
+```
+node_modules/grunt-cli/bin/grunt dev
+```
+
+#### Cordova Plugins
+
+For web links that intend to launch the [in-app browser](http://docs.phonegap.com/en/2.9
+.0/cordova_inappbrowser_inappbrowser.md.html#InAppBrowserEvent):
+
+```
+cordova plugin add org.apache.cordova.inappbrowser
+```
+
+#### Build Cordova for iOS
+
+Install required platforms for iOS build:
+
+```
+cordova platform add ios
+```
+
+Build the iOS app:
+
+```
+cordova build ios
+```
 
 ## Development using **ohmage-mwf-DW**
 
@@ -17,6 +70,38 @@
 ## Version Notes
 
 > The name "Dragon Well" comes from a variety of Chinese green tea (龍井茶).
+
+#### 0.2.0 - GUI Release
+
+- Build updates
+  - Standardized build process
+
+- GUI now integrated
+  - Webblocks CSS and UI Components
+  - Hamburger Menu
+  - Progress Bar
+  - Notice Regions on select pages
+  - Custom Choice
+  - Basic Profile Page placeholder
+
+- Storage
+  - Custom Choices now saved
+  - Custom choices can be individually deleted
+  - User data deleted on logout
+
+- PhoneGap optimizations
+  - status bar overlay
+  - Device Detection
+  - Touch event optimization
+
+- Error handling
+  - Unsupported prompt types
+  - Survey Upload errors
+
+- Login Flow
+  - Multi-modal menu, shows Logged-In and Not Logged-In items
+  - Redirect when not logged in
+
 
 #### 0.1.0 - First Release
 

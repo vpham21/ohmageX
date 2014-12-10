@@ -1,1 +1,2 @@
-<input type="search" id="search-box" />
+<button type="button" class="icon search form-control">Search Campaigns</button>
+<input type="search" id="search-box" data-visible="false" />

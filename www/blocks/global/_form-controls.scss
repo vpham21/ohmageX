@@ -1,0 +1,41 @@
+button,
+input[type="button"],
+input[type="date"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="reset"],
+input[type="search"],
+input[type="submit"],
+input[type="tel"],
+input[type="text"],
+input[type="time"],
+input[type="url"],
+textarea {
+
+  font-size: $global-form-control-font-size;
+  padding: $global-form-control-padding;
+  background-color: $global-form-control-background-color;
+  border: 1px solid $global-form-control-border-color;
+  border-radius: $global-form-control-border-radius;
+  color: $global-form-control-text-color;
+  line-height: 1;
+
+}
+
+input[type="date"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+input[type="reset"],
+input[type="search"],
+input[type="submit"],
+input[type="tel"],
+input[type="text"],
+input[type="time"],
+input[type="url"],
+textarea {
+
+  box-shadow: $global-form-control-box-shadow;
+
+}

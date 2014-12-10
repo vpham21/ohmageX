@@ -1,0 +1,37 @@
+body > header > div  {
+
+  background: $app-header-background;
+  height: $app-header-height;
+  border-bottom: 1px solid $app-header-border-color;
+
+  > * {
+    float: left;
+  }
+
+  button.icon {
+    &.hamburger, &.sync, &.upload {
+      margin-left: 1rem;
+      height: $app-header-height;
+      background-position: center;
+      background-size: $app-header-image-size;
+      background-repeat: no-repeat;
+    }
+  }
+
+  > h1 {
+    font-size: $app-header-font-size;
+    color: $app-header-font-color;
+    margin: 0;
+    line-height: 1;
+    padding: (($app-header-height - $app-header-font-size) / 2) (($app-header-height - $app-header-font-size) / 2) 0;
+  }
+
+  &.ios7 {
+    margin-top: $app-status-bar-offset;
+  }
+
+}
+
+#button-region {
+  float: right;
+}

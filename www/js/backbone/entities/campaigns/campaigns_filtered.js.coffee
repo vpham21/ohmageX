@@ -4,53 +4,64 @@
   # allowing campaigns to be filtered into different parts based on their
   # attributes, such as name.
 
-  API =
-    getFiltered: (campaigns) ->
-      filtered = new campaigns.constructor()
+  class Entities.CampaignsFiltered extends Entities.CampaignsUser
+    initialize: (options) ->
+      @campaigns = options
+      @_meta = {}
 
-      filtered._callbacks = {}
+      @listenTo @campaigns, "reset", ->
+        @where @_currentCriteria
 
-      filtered.where = (criteria) ->
-        if criteria and criteria.name?
-          # name search with fuzzy matching
-          nameSearch = new RegExp criteria.name.split('').join('\\w*').replace(/\W/,""), "i"
-          items = campaigns.filter((campaign) ->
-            myName = campaign.get('name')
-            myName.match(nameSearch)
-          )
-          # Initiating a search must clear out any saved campaign selection.
-          # Broadcast this event so views may update
-          filtered.trigger "filter:saved:clear"
-        else if criteria and criteria.saved?
-          items = campaigns.filter((campaign) ->
-            myStatus = campaign.get('status')
-            myStatus isnt 'available'
-          )
-          # Choosing a saved item must clear out any search terms when it gets
-          # selected. Broadcast this event so views may update
-          filtered.trigger "filter:search:clear"
-        else
-          items = campaigns.models
-
-        console.log 'items', items
-        console.log 'criteria', criteria
-        filtered._currentCriteria = criteria
-
-        filtered.reset items
-
-      campaigns.on "reset", ->
-        filtered.where filtered._currentCriteria
-
-      campaigns.on "sync:stop", ->
+      @listenTo @campaigns, "sync:stop", ->
         console.log 'sync stop'
-        filtered.trigger "filter:search:clear"
-        filtered.trigger "filter:saved:clear"
-        filtered.where()
+        @trigger "filter:search:clear"
+        @trigger "filter:saved:clear"
+        @where()
 
-      campaigns.on "remove", (model) ->
+      @listenTo @campaigns, "remove", (model) ->
         # ensure the filtered list also updates when
         # user campaigns are removed.
-        filtered.remove model
+        @remove model
+    meta: (prop, value) ->
+      if value is undefined
+        return @_meta[prop]
+      else
+        @_meta[prop] = value
+
+    where: (criteria) ->
+      if criteria and criteria.name?
+        # name search with fuzzy matching
+        nameSearch = new RegExp criteria.name.split('').join('\\w*').replace(/\W/,""), "i"
+        items = @campaigns.filter((campaign) ->
+          myName = campaign.get('name')
+          myName.match(nameSearch)
+        )
+        # Initiating a search must clear out any saved campaign selection.
+        # Broadcast this event so views may update
+        @meta('filterType', 'search')
+        @trigger "filter:saved:clear"
+      else if criteria and criteria.saved?
+        items = @campaigns.filter((campaign) ->
+          myStatus = campaign.get('status')
+          myStatus isnt 'available'
+        )
+        # Choosing a saved item must clear out any search terms when it gets
+        # selected. Broadcast this event so views may update
+        @meta('filterType', 'saved')
+        @trigger "filter:search:clear"
+      else
+        @meta('filterType', 'none')
+        items = @campaigns.models
+
+      console.log 'criteria', criteria
+      @_currentCriteria = criteria
+
+      @reset items
+
+
+  API =
+    getFiltered: (campaigns) ->
+      filtered = new Entities.CampaignsFiltered campaigns
 
       if campaigns.length > 0
         # repopulates the list if our campaigns list starts out not empty,

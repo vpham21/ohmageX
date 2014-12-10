@@ -5,9 +5,20 @@
 
   class Prompts.SelectorController extends App.Controllers.Application
     initialize: (options) ->
-      { entity, type } = options
+      { surveyId, stepId, type, entity } = options
+
+      @surveyId = surveyId
+      @stepId = stepId
 
       @myView = @selectView entity, type
+
+      @listenTo @myView, "customchoice:add:success", (myVal) =>
+        console.log "customchoice:add:success handler", myVal
+        App.execute "prompt:customchoice:add", @surveyId, @stepId, myVal
+
+      @listenTo @myView, "customchoice:remove", (myVal) =>
+        console.log "customchoice:remove handler", myVal
+        App.execute "prompt:customchoice:remove", @surveyId, @stepId, myVal
 
       @listenTo @myView, "response:submit", (response, surveyId, stepId) ->
         console.log "response:submit"
@@ -37,7 +48,7 @@
         when "single_choice_custom"
           return new Prompts.SingleChoiceCustom
             model: entity
-            collection: entity.get('properties')
+            collection: App.request "prompt:customchoices:merged", @surveyId, @stepId, entity.get('properties')
         when "multi_choice"
           return new Prompts.MultiChoice
             model: entity
@@ -45,10 +56,15 @@
         when "multi_choice_custom"
           return new Prompts.MultiChoiceCustom
             model: entity
-            collection: entity.get('properties')
+            collection: App.request "prompt:customchoices:merged", @surveyId, @stepId, entity.get('properties')
+        else
+          return new Prompts.Unsupported
+            model: App.request('prompt:unsupported:entity', type)
 
-  App.reqres.setHandler "prompts:view", (entity, type) ->
+  App.reqres.setHandler "prompts:view", (surveyId, stepId, entity, type) ->
     selector = new Prompts.SelectorController
+      surveyId: surveyId
+      stepId: stepId
       entity: entity
       type: type
 

@@ -1,6 +1,10 @@
 @Ohmage.module "SurveyStepsApp", (SurveyStepsApp, App, Backbone, Marionette, $, _) ->
 
   class SurveyStepsApp.Router extends Marionette.AppRouter
+    before: ->
+      if !App.request("credentials:isloggedin")
+        App.navigate Routes.default_route(), trigger: true
+        return false
     appRoutes:
       "survey/:surveyId/step/:stepId": "checkStep"
 
@@ -30,8 +34,14 @@
         surveyId: surveyId
 
     goPrev: (surveyId, stepId) ->
-      prevId = App.request "flow:id:prev", stepId
-      App.navigate "survey/#{surveyId}/step/#{prevId}", { trigger: true }
+      prevId = App.request "flow:id:previous", stepId
+      if prevId
+        App.vent.trigger "survey:step:goback", surveyId, stepId
+        App.navigate "survey/#{surveyId}/step/#{prevId}", { trigger: true }
+      else
+        # There is no previous ID.
+        if confirm('Do you want to exit the survey?')
+          App.vent.trigger "survey:exit", surveyId
 
     goNext: (surveyId, stepId) ->
       nextId = App.request "flow:id:next", stepId
@@ -48,10 +58,9 @@
     App.vent.trigger "survey:step:skipped", stepId
     API.goNext surveyId, stepId
 
-  App.vent.on "survey:step:prev:clicked", (stepId) ->
+  App.vent.on "survey:step:prev:clicked", (surveyId, stepId) ->
     console.log "survey:step:prev:clicked"
-    App.vent.trigger "survey:step:goback", stepId
-    App.historyBack()
+    API.goPrev surveyId, stepId
 
   App.vent.on "survey:intro:next:clicked survey:message:next:clicked", (surveyId, stepId) ->
     console.log "survey:intro:next:clicked survey:message:next:clicked"
@@ -76,3 +85,4 @@
   App.vent.on "response:set:error", (error) ->
     console.log "response:set:error", error
     alert "Response contains errors: #{error.toString()}"
+

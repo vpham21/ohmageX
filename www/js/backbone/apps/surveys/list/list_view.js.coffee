@@ -1,10 +1,5 @@
 @Ohmage.module "SurveysApp.List", (List, App, Backbone, Marionette, $, _) ->
 
-  class List.Logout extends App.Views.ItemView
-    template: "surveys/list/logout"
-    triggers:
-      "click button": "logout:clicked"
-
   class List.Survey extends App.Views.ItemView
     initialize: ->
       @listenTo @model, 'change', @render
@@ -12,8 +7,10 @@
     getTemplate: ->
       if @model.get('status') is 'running' then "surveys/list/_item_running" else "surveys/list/_item_stopped"
     triggers:
-      "click .stopped-survey": "stopped:clicked"
-      "click .running-survey": "running:clicked"
+      "click .stopped.survey [role=\"link\"]": "stopped:clicked"
+      "click .stopped.survey button.navigate": "stopped:clicked"
+      "click .running.survey [role=\"link\"]": "running:clicked"
+      "click .running.survey button.navigate": "running:clicked"
 
   class List.SelectorItem extends App.Views.ItemView
     tagName: "option"
@@ -40,12 +37,12 @@
       if model.isChosen()
         @model = model
         @render
-    tagName: "button"
+    tagName: "div"
     template: "surveys/list/info_button"
     attributes: ->
       if @collection.findWhere(chosen: true).get('name') is 'All'
         return {
-          class: "hidden"
+          class: "hide"
         }
     triggers:
       "click": "info:clicked"
@@ -54,15 +51,19 @@
       data
 
   class List.SurveysEmpty extends App.Views.ItemView
+    className: "text-container"
     template: "surveys/list/_surveys_empty"
 
   class List.Surveys extends App.Views.CompositeView
+    tagName: 'nav'
+    className: 'list'
     template: "surveys/list/surveys"
     childView: List.Survey
-    childViewContainer: ".surveys"
+    childViewContainer: "ul"
     emptyView: List.SurveysEmpty
 
   class List.Layout extends App.Views.Layout
+    id: 'surveys'
     template: "surveys/list/list_layout"
     regions:
       infoRegion: "#info-region"
