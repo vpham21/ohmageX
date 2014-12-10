@@ -142,9 +142,15 @@
       'change input[type=file]': "file:changed"
 
   class Prompts.SingleChoiceItem extends App.Views.ItemView
+    initialize: ->
+      @listenTo @, "item:select", @selectItem
     tagName: 'li'
     template: "prompts/single_choice_item"
+    selectItem: (args) ->
+      @$el.find( "input" ).prop('checked', true)
     triggers:
+      "click label": "item:select"
+      "touchstart input": "item:select"
       "click button.delete": "customchoice:remove"
 
   # Prompt Single Choice
@@ -157,10 +163,14 @@
       @trigger "response:submit", response, surveyId, stepId
     onRender: ->
       currentValue = @model.get('currentValue')
-      if currentValue then @$el.find("input[value='#{currentValue}']").attr('checked', true)
+      if currentValue then @$el.find("input[value='#{currentValue}']").prop('checked', true)
 
   class Prompts.MultiChoiceItem extends Prompts.SingleChoiceItem
     template: "prompts/multi_choice_item"
+    selectItem: (args) ->
+      oldValue = @$el.find( "input" ).prop('checked')
+      # flip the item to its opposite value.
+      @$el.find( "input" ).prop('checked', !oldValue)
 
   # Prompt Multi Choice
   class Prompts.MultiChoice extends Prompts.SingleChoice
@@ -186,10 +196,10 @@
         # set all the array values
         _.each(valueParsed, (currentValue) =>
           console.log 'currentValue', currentValue
-          @$el.find("input[value='#{currentValue}']").attr('checked', true)
+          @$el.find("input[value='#{currentValue}']").prop('checked', true)
         )
       else
-        @$el.find("input[value='#{valueParsed}']").attr('checked', true)
+        @$el.find("input[value='#{valueParsed}']").prop('checked', true)
 
     onRender: ->
       currentValue = @model.get('currentValue')
@@ -228,11 +238,11 @@
       switch @model.get('currentValueType')
         when 'response'
           # Saved responses use the label, not the key.
-          matchingValue = @$el.find("label:containsExact('#{currentValue}')").parent().find('input').attr('checked', true)
+          matchingValue = @$el.find("label:containsExact('#{currentValue}')").parent().find('input').prop('checked', true)
         when 'default'
           # Default responses match keys instead of labels.
           # Select based on value.
-          @$el.find("input[value='#{currentValue}']").attr('checked', true)
+          @$el.find("input[value='#{currentValue}']").prop('checked', true)
 
     removeChoice: (args) ->
       value = args.model.get 'label'

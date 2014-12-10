@@ -133,7 +133,6 @@
             # eliminate all ghosted campaigns
             return false
       ).filter((result) -> !!result).value()
-      console.log 'sync', sync
       currentCampaignsUser.reset sync
       @saveLocalCampaigns currentCampaignsUser
     syncCampaigns: ->

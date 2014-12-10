@@ -53,7 +53,6 @@
         @meta('filterType', 'none')
         items = @campaigns.models
 
-      console.log 'items', items
       console.log 'criteria', criteria
       @_currentCriteria = criteria
 

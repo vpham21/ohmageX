@@ -18,6 +18,9 @@
       @listenTo navs, "change:chosen", (model) =>
         if model.isChosen() then @titleRegion(navs)
 
+      @listenTo navs, "change:chosen", (model) =>
+        $('body').scrollTop(0)
+
       @show @layout
 
     listRegion: (navs) ->
