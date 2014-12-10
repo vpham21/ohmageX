@@ -9,6 +9,7 @@
   <link rel="shortcut icon" href="/favicon.ico?v=1.1">
 
   <link rel="stylesheet" href="<%= css_path %>" />
+  <script src="cordova.js"></script>
   <script src="<%= js_modernizr_path %>"></script>
 </head>
 <body>
