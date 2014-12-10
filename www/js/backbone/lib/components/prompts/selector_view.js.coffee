@@ -150,6 +150,7 @@
       @$el.find( "input" ).prop('checked', true)
     triggers:
       "click label": "item:select"
+      "touchstart input": "item:select"
       "click button.delete": "customchoice:remove"
 
   # Prompt Single Choice
