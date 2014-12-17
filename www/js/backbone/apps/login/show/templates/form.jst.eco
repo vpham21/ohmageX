@@ -5,7 +5,7 @@
   <input class="server" type="text" value="<%= @path %>" name="server" />
   <button type="button" class="server-btn" type=button>Update Server</button>
   <label for="username">Username</label>
-  <input class="username" type="text" name="username" />
+  <input class="username" type="text" name="username" autocapitalize="none" autocorrect="off" />
   <label for="pass">Password</label>
   <input class="pass" type="password" name="pass" />
   <button type="submit">Submit</button>
