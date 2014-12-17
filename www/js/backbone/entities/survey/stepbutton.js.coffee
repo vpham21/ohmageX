@@ -34,7 +34,7 @@
       myLabel = switch stepType
         when "intro" then "Begin Survey"
         when "beforeSurveySubmit" then "Submit"
-        when "afterSurveySubmit" then "Exit Survey"
+        when "afterSurveySubmit" then "Exit"
         else "Next"
 
       new Entities.StepButtonNext
