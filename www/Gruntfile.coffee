@@ -101,7 +101,7 @@ module.exports = (grunt) ->
         separator: ";"
       dist:
         src: ["<%= my_build_files %>"]
-        dest: "js/<%= pkg.name %>.js"
+        dest: "<%= web_root_folder %>/js/<%= pkg.name %>.js"
 
     uglify:
       options:
