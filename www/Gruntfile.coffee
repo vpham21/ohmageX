@@ -181,6 +181,28 @@ module.exports = (grunt) ->
       cordova_www: ["<%= cordova_project_folder %>/www/*"]
       cordova_config: ["<%= cordova_project_folder %>/config.xml"]
       cordova_ios_splash: ["<%= cordova_project_folder %>/platforms/ios/<%= pkg.config.app_name %>/Resources/splash/*"]
+
+    copy:
+      hybrid_build:
+        files: [
+          { expand: true, cwd: 'www/', src: ['css/**'], dest: "<%= hybrid_build_folder %>/" }
+          { expand: true, cwd: 'www/', src: ['img/**'], dest: "<%= hybrid_build_folder %>/" }
+          { expand: true, cwd: 'www/', src: ['js/vendor/**'], dest: "<%= hybrid_build_folder %>" }
+          { expand: true, cwd: 'www/', src: ["js/<%= pkg.name %>.js"], dest: "<%= hybrid_build_folder %>/" }
+          { expand: true, cwd: 'www/', src: ['index.html'], dest: "<%= hybrid_build_folder %>/" }
+        ]
+      cordova_www:
+        files: [
+          { expand: true, cwd: "<%= hybrid_build_folder %>/", src: ["**"], dest: "<%= cordova_project_folder %>/www/" }
+        ]
+      cordova_config:
+        files: [
+          { expand: true, src: ['config.xml'], dest: "<%= cordova_project_folder %>/" }
+        ]
+      cordova_ios_splash:
+        files: [
+          { expand: true, cwd: "res/ios/splash/", src: ['**'], dest: "<%= cordova_project_folder %>/platforms/ios/<%= pkg.config.app_name %>/Resources/splash/" }
+        ]
   grunt.loadNpmTasks "grunt-contrib-clean"
   grunt.loadNpmTasks "grunt-contrib-coffee"
   grunt.loadNpmTasks "grunt-contrib-watch"
