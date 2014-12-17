@@ -242,6 +242,17 @@ module.exports = (grunt) ->
     "connect:server"
     "watch"
   ]
+  grunt.registerTask "mobile_dev", [
+    "template:dev"
+    "eco"
+    "coffee"
+    "concat"
+    "compass"
+    "clean:hybrid_build"
+    "copy:hybrid_build"
+    "connect:mobile_web"
+    "watch"
+  ]
   grunt.registerTask "dev", [
     "template:dev"
     "eco"
