@@ -109,8 +109,8 @@ module.exports = (grunt) ->
           except: ["jQuery", "$", "Backbone", "_", "Marionette"]
       my_target:
         files:
-          "js/<%= pkg.name %>.min.js": ['js/<%= pkg.name %>.js']
-          "js/lib/modernizr-2.6.2.custom.min.js": ["js/lib/modernizr-2.6.2.custom.js"]
+          "<%= web_root_folder %>/js/<%= pkg.name %>.min.js": ["<%= web_root_folder %>/js/<%= pkg.name %>.js"]
+          "<%= web_root_folder %>/js/lib/modernizr-2.6.2.custom.min.js": ["<%= web_root_folder %>/js/lib/modernizr-2.6.2.custom.js"]
 
     template:
       dev:
