@@ -50,6 +50,6 @@
       buttonRegion: "#button-region"
       titleRegion: "#page-title"
     onRender: ->
-      @menu = new SlideOutComponent('#app-menu', @$el)
       triggerEvent = if App.device.isNative then 'touchstart' else 'click'
-      @menu.toggleOn(triggerEvent, '.app-menu-trigger', @$el)
+      @menu = new SlideOutComponent('#app-menu', @$el, triggerEvent)
+      @menu.toggleOn('.app-menu-trigger', @$el)
