@@ -67,9 +67,6 @@ module.exports = (grunt) ->
         src: ["*.css", "!*.min.css", "!lib/*", "!fonts/*"]
         dest: "css/"
         ext: ".min.css"
-      compress:
-        files:
-          "css/lib/groundwork-core.min.css" : ["css/lib/groundwork-core.css"]
 
     connect:
       server:
