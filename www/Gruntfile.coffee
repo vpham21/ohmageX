@@ -75,6 +75,12 @@ module.exports = (grunt) ->
           port: '8088'
           useAvailablePort: true
           hostname: '*' # using '*' makes the server accessible from anywhere, for development
+      mobile_web:
+        options:
+          base: "./<%= hybrid_build_folder %>"
+          port: '8089'
+          useAvailablePort: true
+          hostname: '*' # using '*' makes the server accessible from anywhere, for development
 
     watch:
       templates:
