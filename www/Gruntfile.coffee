@@ -53,7 +53,7 @@ module.exports = (grunt) ->
       compile:
         options: {}
         files:
-          "js/build/mycoffee.js": "<%= my_coffeescript_files %>" # concat then compile into single file
+          "<%= web_root_folder %>/js/build/mycoffee.js": "<%= my_coffeescript_files %>" # concat then compile into single file
 
     compass:
       dist:
