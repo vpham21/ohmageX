@@ -285,3 +285,12 @@ module.exports = (grunt) ->
     "clean:cordova_ios_splash"
     "copy:cordova_ios_splash"
   ]
+
+  grunt.registerTask "mobile_www_build", [
+    "dev"
+    "clean:hybrid_build"
+    "copy:hybrid_build"
+    "clean:cordova_www"
+    "copy:cordova_www"
+    "exec:mobile_build" # must pass it through a custom exec to change cwd
+  ]
