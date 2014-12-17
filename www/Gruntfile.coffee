@@ -1,6 +1,9 @@
 module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON("package.json")
+    cordova_project_folder: "cordova-build"
+    web_root_folder: "www"
+    hybrid_build_folder: "www-mobile"
     my_js_lib_prod_files: [
       "js/vendor/modernizr-2.6.2.custom.min.js"
       "js/vendor/jquery-1.10.2.min.js"
