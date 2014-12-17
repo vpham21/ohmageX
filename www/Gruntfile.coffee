@@ -43,8 +43,10 @@ module.exports = (grunt) ->
 
     eco:
       app:
+        options:
+          basePath: "<%= web_root_folder %>/"
         files:
-          "js/build/templates.js": ["<%= my_template_files %>"]
+          "<%= web_root_folder %>/js/build/templates.js": ["<%= my_template_files %>"]
 
 
     coffee:
