@@ -175,7 +175,12 @@ module.exports = (grunt) ->
           command: "build"
           platforms: [ "ios" ]
 
-  
+    clean:
+      cordova_project: ["<%= cordova_project_folder %>"]
+      hybrid_build: ["<%= hybrid_build_folder %>"]
+      cordova_www: ["<%= cordova_project_folder %>/www/*"]
+      cordova_config: ["<%= cordova_project_folder %>/config.xml"]
+      cordova_ios_splash: ["<%= cordova_project_folder %>/platforms/ios/<%= pkg.config.app_name %>/Resources/splash/*"]
   grunt.loadNpmTasks "grunt-contrib-clean"
   grunt.loadNpmTasks "grunt-contrib-coffee"
   grunt.loadNpmTasks "grunt-contrib-watch"
