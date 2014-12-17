@@ -12,18 +12,12 @@
 * Node.js 0.10+
 * Java JDK 1.6+
 
-#### Global Setup
-
-```
-./local-setup.sh
-```
 
 #### Build Web Assets
 
 Install dependencies for local build:
 
 ```
-cd www
 bundle
 npm install
 ```
@@ -40,28 +34,49 @@ If files in `/blocks` weren't updated, skip the WebBlocks build:
 node_modules/grunt-cli/bin/grunt dev
 ```
 
-#### Cordova Plugins
-
-For web links that intend to launch the [in-app browser](http://docs.phonegap.com/en/2.9
-.0/cordova_inappbrowser_inappbrowser.md.html#InAppBrowserEvent):
-
-```
-cordova plugin add org.apache.cordova.inappbrowser
-```
-
 #### Build Cordova for iOS
 
-Install required platforms for iOS build:
+The following task prepares the app for mobile builds, and is required before the first mobile build:
 
 ```
-cordova platform add ios
+grunt mobile_firstrun
 ```
 
-Build the iOS app:
+After this, the mobile app can be built at any time with the following:
 
 ```
-cordova build ios
+grunt mobile_www_build
 ```
+
+Note that `mobile_www_build` creates a build with updated contents of the `www` folder. If other assets need to be updated in the build, check the **Cordova Build Process Notes** section.
+
+##### Troubleshooting
+
+During the first time that `mobile_www_build` is executed, Grunt may stop it with an error. The error resolves if the `mobile_www_build` task is repeated again.
+
+
+##### Cordova Build Process Details
+
+`grunt mobile_firstrun` does the following:
+
+- cleans any mobile build folders, if they exist
+- creates a cordova project in a build folder
+- creates a hybrid_build folder containing only core assets, that are copied to the build folder
+- overwrites the base config.xml with a custom config.xml
+- replaces default icon and splash screens with custom icons
+- adds cordova target platforms (defined in Gruntfile)
+- adds plugins (defined in Gruntfile)
+
+This task may be run again at any time if major changes to any of these assets are made.
+
+There are also individual Grunt tasks, defined in the Gruntfile, for each of these actions, if needed to be performed separately.
+
+##### Note on Using `cordovacli` tasks
+
+If you need to execute a Grunt `cordovacli` task, you must navigate to the Cordova project build folder first. `cordovacli` tasks will **only** execute in the current directory that the `grunt` command is executed in, regardless of `options.path` settings in the `Gruntfile`. This is an open issue on the Github page for `cordovacli` [https://github.com/csantanapr/grunt-cordovacli/issues/12](https://github.com/csantanapr/grunt-cordovacli/issues/12). 
+
+The `mobile_firstrun` task executes in the root folder without issues, and avoids this problem by executing a custom `grunt-exec` task with a forced `cwd` context from the shell.
+
 
 ## Development using **ohmage-mwf-DW**
 
