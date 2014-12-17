@@ -269,3 +269,19 @@ module.exports = (grunt) ->
   grunt.registerTask "cordova_build_ios", [
     "cordovacli:build_ios"
   ]
+
+  grunt.registerTask "mobile_firstrun", [
+    "clean:cordova_project"
+    "clean:hybrid_build"
+    "cordovacli:create"
+    "template:cordova_config"
+    "clean:cordova_config"
+    "copy:cordova_config"
+    "dev"
+    "copy:hybrid_build"
+    "clean:cordova_www"
+    "copy:cordova_www"
+    "exec:mobile_init" # must pass it through a custom exec to change cwd
+    "clean:cordova_ios_splash"
+    "copy:cordova_ios_splash"
+  ]
