@@ -1,9 +1,9 @@
-var SlideOutComponent = function(ele, context){
+var SlideOutComponent = function(ele, context, activationEvent){
 
     var $ele = $(context ? context : 'body').find(ele),
         $overlay = $ele.children('.overlay'),
         id = $ele.attr('id'),
-        triggerEvent = 'click',
+        triggerEvent = activationEvent,
         __self__ = this;
 
     $ele.addClass('slide-out');
@@ -12,7 +12,7 @@ var SlideOutComponent = function(ele, context){
         $overlay = $('<div class="overlay"></div>').appendTo($ele);
     }
 
-    $overlay.on(triggerEvent,function(){ __self__.toggle(); });
+    $overlay.on(triggerEvent,function(e){ __self__.toggle(); e.stopPropagation; return false; });
 
     __self__.toggle = function(){
         $ele.attr('data-state', $ele.attr('data-state') == 'active' ? false : 'active');
@@ -26,10 +26,11 @@ var SlideOutComponent = function(ele, context){
         $ele.attr('data-state', false);
     };
 
-    __self__.toggleOn = function(event, ele, context){
-        triggerEvent = event;
-        $(context ? context : 'body').find(ele).on(event, function(){
+    __self__.toggleOn = function(ele, context){
+        $(context ? context : 'body').find(ele).on(triggerEvent, function(e){
             __self__.toggle();
+            e.stopPropagation;
+            return false;
         });
     };
 };
