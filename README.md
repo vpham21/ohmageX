@@ -22,17 +22,20 @@ bundle
 npm install
 ```
 
-Compile assets with WebBlocks and Grunt:
+Compile assets with WebBlocks:
 
 ```
-bundle exec blocks build && node_modules/grunt-cli/bin/grunt dev
+node_modules/grunt-cli/bin/grunt exec:blocks_build
 ```
 
-If files in `/blocks` weren't updated, skip the WebBlocks build:
+Compile assets with Grunt:
 
 ```
 node_modules/grunt-cli/bin/grunt dev
 ```
+
+If files in `/blocks` weren't updated, you may skip the WebBlocks build.
+
 
 #### Build Cordova for iOS
 
