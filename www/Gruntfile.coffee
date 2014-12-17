@@ -71,7 +71,7 @@ module.exports = (grunt) ->
     connect:
       server:
         options:
-          base: '.'
+          base: './www'
           port: '8088'
           useAvailablePort: true
           hostname: '*' # using '*' makes the server accessible from anywhere, for development
