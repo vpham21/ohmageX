@@ -135,11 +135,15 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-connect"
   grunt.loadNpmTasks "grunt-contrib-compass"
 
+  # Command line interface for Cordova
+  grunt.loadNpmTasks "grunt-cordovacli"
+
   # grunt-eco generates compatible JS from ECO-style templates.
   grunt.loadNpmTasks "grunt-eco"
   grunt.loadNpmTasks "grunt-contrib-cssmin"
   grunt.loadNpmTasks "grunt-contrib-uglify"
   grunt.loadNpmTasks "grunt-contrib-copy"
+  grunt.loadNpmTasks "grunt-exec"
   
   # Here grunt-template is used to allow grunt to generate alternate index.html for different environments.
   grunt.loadNpmTasks "grunt-template"
