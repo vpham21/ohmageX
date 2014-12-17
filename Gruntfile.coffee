@@ -205,6 +205,9 @@ module.exports = (grunt) ->
         ]
 
     exec:
+      blocks_build:
+        cmd: "bundle exec blocks build"
+        cwd: "<%= web_root_folder %>"
       mobile_init:
         cmd: "grunt cordova_init"
         cwd: "<%= cordova_project_folder %>"
