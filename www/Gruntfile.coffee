@@ -239,3 +239,12 @@ module.exports = (grunt) ->
     "concat"
     "compass"
   ]
+
+  grunt.registerTask "cordova_init", [
+    "cordovacli:add_platforms"
+    "cordovacli:add_plugins"
+  ]
+
+  grunt.registerTask "cordova_build_ios", [
+    "cordovacli:build_ios"
+  ]
