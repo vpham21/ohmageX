@@ -126,6 +126,54 @@ module.exports = (grunt) ->
             root_path: "/"
         files:
           "<%= web_root_folder %>/index.html": ["<%= web_root_folder %>/index.html.tpl"]
+      cordova_config:
+        options:
+          data:
+            # TODO: add formal version number to config.xml later,
+            # may cause certificate issues.
+            app_name: "<%= pkg.config.app_name %>"
+            bundle_id: "<%= pkg.config.bundle_id %>"
+            description: "<%= pkg.description %>"
+            author: "<%= pkg.author %>"
+        files:
+          "config.xml": ["config.xml.tpl"]
+
+    cordovacli:
+      options:
+        path: "<%= cordova_project_folder %>"
+        cwd: "<%= cordova_project_folder %>"
+
+      cordova:
+        options:
+          command: [ "create", "platform", "plugin", "build" ]
+          platforms: [ "ios", "android" ]
+          plugins: [ "device", "dialogs" ]
+          path: "<%= cordova_project_folder %>"
+          id: "<%= pkg.config.bundle_id %>"
+          name: "<%= pkg.name %>"
+
+      create:
+        options:
+          command: "create"
+          id: "<%= pkg.config.bundle_id %>"
+          name: "<%= pkg.name %>"
+
+      add_platforms:
+        options:
+          command: "platform"
+          action: "add"
+          platforms: [ "ios" ]
+
+      add_plugins:
+        options:
+          command: "plugin"
+          action: "add"
+          plugins: [ "battery-status", "camera", "console", "contacts", "device", "device-motion", "device-orientation", "dialogs", "file", "geolocation", "globalization", "inappbrowser", "media", "media-capture", "network-information", "splashscreen", "vibration" ]
+
+      build_ios:
+        options:
+          command: "build"
+          platforms: [ "ios" ]
 
   
   grunt.loadNpmTasks "grunt-contrib-clean"
