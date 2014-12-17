@@ -203,6 +203,16 @@ module.exports = (grunt) ->
         files: [
           { expand: true, cwd: "res/ios/splash/", src: ['**'], dest: "<%= cordova_project_folder %>/platforms/ios/<%= pkg.config.app_name %>/Resources/splash/" }
         ]
+
+    exec:
+      mobile_init:
+        cmd: "grunt cordova_init"
+        cwd: "<%= cordova_project_folder %>"
+      mobile_build:
+        cmd: "grunt cordova_build_ios"
+        cwd: "<%= cordova_project_folder %>"
+
+
   grunt.loadNpmTasks "grunt-contrib-clean"
   grunt.loadNpmTasks "grunt-contrib-coffee"
   grunt.loadNpmTasks "grunt-contrib-watch"
