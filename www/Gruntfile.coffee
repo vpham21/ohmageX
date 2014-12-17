@@ -125,7 +125,7 @@ module.exports = (grunt) ->
             js_url: "http://0.0.0.0:8088/"
             root_path: "/"
         files:
-          "index.html": ["index.html.tpl"]
+          "<%= web_root_folder %>/index.html": ["<%= web_root_folder %>/index.html.tpl"]
 
   
   grunt.loadNpmTasks "grunt-contrib-clean"
