@@ -90,10 +90,10 @@ module.exports = (grunt) ->
         files: ["<%= my_coffeescript_files %>"]
         tasks: ["coffee", "concat"]
       template:
-        files: ["index.html.tpl"]
+        files: ["<%= web_root_folder %>/index.html.tpl"]
         tasks: ["template:dev"]
       css:
-        files: '**/*.sass'
+        files: "<%= web_root_folder %>/**/*.sass"
         tasks: ['compass']
 
     concat:
