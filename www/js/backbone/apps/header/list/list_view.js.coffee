@@ -21,6 +21,9 @@
     changeChosen: (model, value, options) ->
       @$el.toggleClass "active", value
 
+    triggers:
+      "click": "chosen:check"
+
   class List.Title extends App.Views.ItemView
     tagName: "span"
     template: "header/list/_title"
