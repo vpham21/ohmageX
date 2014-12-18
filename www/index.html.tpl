@@ -23,7 +23,11 @@
     Ohmage.start({
       environment: "<%= js_env %>",
       root_path: "<%= root_path %>",
-      url: "<%= js_url %>"
+      url: "<%= js_url %>",
+      package_info: {
+        app_name: "<%= app_name %>",
+        bundle_id: "<%= bundle_id %>"
+      }
     });
   });
   </script>

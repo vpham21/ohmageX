@@ -6,7 +6,7 @@
         navigator.notification.confirm message, ((buttonIndex) ->
           if buttonIndex is 2 then activateCallback()
           else if cancelCallback isnt false then cancelCallback()
-        ), 'Confirm', ['Cancel', 'OK']
+        ), App.package_info.app_name, ['Cancel', 'OK']
       else
         if confirm(message)
           activateCallback()
@@ -14,7 +14,7 @@
           cancelCallback()
     alert: (message) ->
       if App.device.isNative
-        navigator.notification.alert message, (->), 'Alert'
+        navigator.notification.alert message, (->), App.package_info.app_name
       else
         alert(message)
 
