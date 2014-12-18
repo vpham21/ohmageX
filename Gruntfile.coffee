@@ -124,6 +124,8 @@ module.exports = (grunt) ->
             js_env: "development"
             js_url: "http://0.0.0.0:8088/"
             root_path: "/"
+            app_name: "<%= pkg.config.app_name %>"
+            bundle_id: "<%= pkg.config.bundle_id %>"
         files:
           "<%= web_root_folder %>/index.html": ["<%= web_root_folder %>/index.html.tpl"]
       cordova_config:
