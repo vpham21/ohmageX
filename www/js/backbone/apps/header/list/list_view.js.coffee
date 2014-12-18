@@ -42,6 +42,8 @@
     initialize: ->
       @listenTo @collection, "change:chosen", (model) ->
         if model.isChosen() then @menu.close()
+      @listenTo @collection, "chosen:canceled", ->
+        @menu.close()
     template: "header/list/layout"
     attributes: ->
       if App.device.isiOS7 then { class: "ios7" }
