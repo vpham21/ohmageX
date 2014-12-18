@@ -168,7 +168,7 @@ module.exports = (grunt) ->
         options:
           command: "plugin"
           action: "add"
-          plugins: [ "battery-status", "camera", "console", "contacts", "device", "device-motion", "device-orientation", "dialogs", "file", "geolocation", "globalization", "inappbrowser", "media", "media-capture", "network-information", "splashscreen", "vibration" ]
+          plugins: [ "battery-status", "camera", "console", "contacts", "device", "device-motion", "device-orientation", "dialogs", "file", "globalization", "inappbrowser", "media", "media-capture", "network-information", "splashscreen", "vibration" ]
 
       build_ios:
         options:
