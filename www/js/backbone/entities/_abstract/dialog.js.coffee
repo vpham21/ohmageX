@@ -12,6 +12,14 @@
           activateCallback()
         else if cancelCallback isnt false
           cancelCallback()
+    alert: (message) ->
+      if App.device.isNative
+        navigator.notification.alert message, (->), 'Alert'
+      else
+        alert(message)
 
   App.commands.setHandler "dialog:confirm", (message, activateCallback, cancelCallback = false) ->
     API.confirm message, activateCallback, cancelCallback
+
+  App.commands.setHandler "dialog:alert", (message) ->
+    API.alert message
