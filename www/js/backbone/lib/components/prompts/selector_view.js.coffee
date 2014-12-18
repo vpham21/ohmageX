@@ -218,8 +218,8 @@
 
       @listenTo @, 'childview:customchoice:remove', @removeChoice
 
-      @listenTo @, 'customchoice:add:invalid', (-> alert('invalid custom choice, please try again.'))
-      @listenTo @, 'customchoice:add:exists', (-> alert('Custom choice exists, please try again.'))
+      @listenTo @, 'customchoice:add:invalid', (-> App.execute "dialog:alert", 'invalid custom choice, please try again.')
+      @listenTo @, 'customchoice:add:exists', (-> App.execute "dialog:alert", 'Custom choice exists, please try again.')
     onRender: ->
       currentValue = @model.get('currentValue')
       if currentValue then @chooseValue currentValue
