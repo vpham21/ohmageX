@@ -31,8 +31,9 @@
     App.rootRoute = if @request("credentials:isloggedin") then Routes.dashboard_route() else Routes.default_route()
     @navigate(@rootRoute, trigger: true) unless @getCurrentRoute()
 
-    window.onbeforeunload = ->
-      if App.request "surveytracker:active"
-        return 'Are you sure you want to leave the Survey Taking tool?'
+    if !App.device.isNative
+      window.onbeforeunload = ->
+        if App.request "surveytracker:active"
+          return 'Are you sure you want to leave the Survey Taking tool?'
 
   App
