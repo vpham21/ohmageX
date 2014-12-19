@@ -8,7 +8,7 @@
   "description": "An open-source participatory sensing technology platform.",
   "version": "0.2.0",
   "config": {
-    "app_name": "Ohmage MWF",
+    "app_name": "ohmage MWF",
     "bundle_id": "org.ohmage.mwf"
   },
   "devDependencies": {
