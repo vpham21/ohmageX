@@ -24,9 +24,10 @@
     App.execute "campaign:save", model
 
   App.vent.on "campaign:list:unsave:clicked", (model, view, filterType) ->
-    if confirm "are you sure you want to unsave this campaign?"
+    App.execute "dialog:confirm", "Are you sure you want to unsave this campaign?", (=>
       App.execute "campaign:unsave", model.get 'id'
       if filterType is 'saved' then view.destroy()
+    )
 
   App.vent.on "campaign:list:ghost:remove:clicked", (model) ->
     console.log 'model', model
