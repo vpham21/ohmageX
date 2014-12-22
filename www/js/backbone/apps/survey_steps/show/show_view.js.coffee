@@ -10,17 +10,17 @@
   class Show.SkipButton extends App.Views.ItemView
     template: "survey_steps/show/skipbutton"
     triggers:
-      "click button": "skip:clicked"
+      "click": "skip:clicked"
 
   class Show.PrevButton extends App.Views.ItemView
     template: "survey_steps/show/prevbutton"
     triggers:
-      "click button": "prev:clicked"
+      "click": "prev:clicked"
 
   class Show.NextButton extends App.Views.ItemView
     template: "survey_steps/show/nextbutton"
     triggers:
-      "click button": "next:clicked"
+      "click": "next:clicked"
 
   class Show.Layout extends App.Views.Layout
     className: 'survey-step'
