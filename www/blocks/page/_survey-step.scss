@@ -114,7 +114,7 @@
   }
 
   #prev-button, #next-button {
-    &::before {
+    div::before {
       position: absolute;
       padding: $global-form-control-padding;
       line-height: 1;
@@ -127,7 +127,7 @@
     button {
       padding-left: 2*$global-form-control-padding;
     }
-    &::before {
+    div::before {
       content: '\2039';
       left: $global-form-control-padding;
       color: #F00;
@@ -138,7 +138,7 @@
     button {
       padding-right: 2*$global-form-control-padding;
     }
-    &::before {
+    div::before {
       content: '\203A';
       right: $global-form-control-padding;
       color: #0C0;
