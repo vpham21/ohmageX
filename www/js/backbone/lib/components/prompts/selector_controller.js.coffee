@@ -39,6 +39,24 @@
           return new Prompts.Timestamp
             model: entity
         when "photo"
+          ###
+          Note: If images ever need to be stored anywhere but in the Responses
+          object before submitting, this may need to be refactored to merge images
+          from a separate data store. The following is recommended:
+
+          Entity used in `survey_upload_images` is used immediately when an
+          image is saved, and not just before survey upload. This requires a
+          `survey:images:get` method that fetches a base64 images by UUID.
+          Why? Because the Response object, instead of containing the raw
+          base64, would contain the UUID, as it does immediately before
+          survey upload.
+
+          Before a Photo prompt is rendered, it must fetch a new Prompt Photo
+          entity instead of the basic entity that most other Prompts get
+          (currently the other exception being Custom Choice prompts). This
+          entity gets the response UUID and fetches the base64 so it can be
+          inserted into the prompt's `<canvas>` thumbnail.
+          ###
           return new Prompts.Photo
             model: entity
         when "single_choice"
