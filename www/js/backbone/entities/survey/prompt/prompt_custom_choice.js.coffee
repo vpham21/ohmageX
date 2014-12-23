@@ -1,7 +1,6 @@
 @Ohmage.module "Entities", (Entities, App, Backbone, Marionette, $, _) ->
 
-  # The ServerPath Entity contains the initializer for server configuration.
-  # Used when the user selects a server.
+  # The Custom Choice Entity saves and restores custom choices for a user.
 
   currentChoices = false
 
