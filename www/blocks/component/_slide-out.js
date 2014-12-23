@@ -15,15 +15,20 @@ var SlideOutComponent = function(ele, context, activationEvent){
     $overlay.on(triggerEvent,function(e){ __self__.toggle(); e.stopPropagation; return false; });
 
     __self__.toggle = function(){
-        $ele.attr('data-state', $ele.attr('data-state') == 'active' ? false : 'active');
+        var active = $ele.attr('data-state') == 'active' ? false : 'active';
+        $ele.attr('data-state', active);
+        // add body 'slideout-state' so body can be modified when slideout is active.
+        $('body').attr('slideout-state', active);
     };
 
     __self__.open = function(){
         $ele.attr('data-state', 'active');
+        $('body').attr('slideout-state', 'active');
     };
 
     __self__.close = function(){
         $ele.attr('data-state', false);
+        $('body').attr('slideout-state', false);
     };
 
     __self__.toggleOn = function(ele, context){
