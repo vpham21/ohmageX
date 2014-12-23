@@ -19,16 +19,31 @@ var SlideOutComponent = function(ele, context, activationEvent){
         $ele.attr('data-state', active);
         // add body 'slideout-state' so body can be modified when slideout is active.
         $('body').attr('slideout-state', active);
+
+        if (active === false) {
+            // Re-enable scrolling in mobile views.
+            $('body').off('touchmove.slideout');
+        } else {
+            // Disable scrolling in mobile views.
+            $('body').on('touchmove.slideout', function(e) {
+                e.preventDefault();
+            });
+        }
     };
 
     __self__.open = function(){
         $ele.attr('data-state', 'active');
         $('body').attr('slideout-state', 'active');
+
+        $('body').on('touchmove.slideout', function(e) {
+            e.preventDefault();
+        });
     };
 
     __self__.close = function(){
         $ele.attr('data-state', false);
         $('body').attr('slideout-state', false);
+        $('body').off('touchmove.slideout');
     };
 
     __self__.toggleOn = function(ele, context){
