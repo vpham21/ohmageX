@@ -130,6 +130,11 @@
         console.log 'Please select an image.'
     recordImage: (img64) ->
       @model.set('currentValue', img64)
+      @renderImageThumb img64
+    onRender: ->
+      savedImage = @model.get('currentValue')
+      if savedImage then @renderImageThumb(savedImage)
+    renderImageThumb: (img64) ->
       # display the image in the preview
       $img = @$el.find '.preview-image'
       $img.prop 'src', img64
