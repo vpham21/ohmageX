@@ -7,17 +7,21 @@
       data.percentage = ((data.position / data.duration)*100).toFixed(1)
       data
 
-  class Show.SkipButton extends App.Views.ItemView
+  class Show.BaseButton extends App.Views.ItemView
+    attributes: ->
+      if @model.get('disabled') then { class: "disabled" }
+
+  class Show.SkipButton extends Show.BaseButton
     template: "survey_steps/show/skipbutton"
     triggers:
       "click": "skip:clicked"
 
-  class Show.PrevButton extends App.Views.ItemView
+  class Show.PrevButton extends Show.BaseButton
     template: "survey_steps/show/prevbutton"
     triggers:
       "click": "prev:clicked"
 
-  class Show.NextButton extends App.Views.ItemView
+  class Show.NextButton extends Show.BaseButton
     template: "survey_steps/show/nextbutton"
     triggers:
       "click": "next:clicked"
