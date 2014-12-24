@@ -84,5 +84,5 @@
 
   App.vent.on "response:set:error", (error) ->
     console.log "response:set:error", error
-    App.execute "dialog:alert", "Response contains errors: #{error.toString()}"
+    App.execute "dialog:alert", "#{error.toString()}"
 
