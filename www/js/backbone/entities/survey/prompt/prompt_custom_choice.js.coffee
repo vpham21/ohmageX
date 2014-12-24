@@ -48,6 +48,17 @@
         App.vent.trigger "prompt:customchoice:remove:success", surveyId, stepId, value
       )
 
+    removeCampaignChoices: (campaign_urn) ->
+      removed = currentChoices.where
+        campaign_urn: campaign_urn
+
+      currentChoices.remove removed
+      @updateLocal( =>
+        console.log "campaign custom choices removed from localStorage"
+        App.vent.trigger "prompt:customchoice:campaign:remove:success", campaign_urn
+      )
+
+
     getMergedChoices: (surveyId, stepId, original) ->
       
       # map currentChoices to an array that matches the format of ChoiceCollection Models.
