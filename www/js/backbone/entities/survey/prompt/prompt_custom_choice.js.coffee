@@ -99,6 +99,9 @@
   App.commands.setHandler "prompt:customchoice:remove", (surveyId, stepId, value) ->
     API.removeChoice surveyId, stepId, value
 
+  App.vent.on "campaign:saved:remove", (campaign_urn) ->
+    API.removeCampaignChoices campaign_urn
+
   App.vent.on "credentials:cleared", ->
     API.clear()
 
