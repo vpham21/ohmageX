@@ -26,6 +26,7 @@
       if !currentChoices then currentChoices = new Entities.CustomChoices
 
       currentChoices.add
+        campaign_urn: App.request "survey:saved:urn", surveyId
         surveyId: surveyId
         stepId: stepId
         value: value
