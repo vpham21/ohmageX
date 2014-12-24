@@ -63,14 +63,14 @@
           valueNum = parseInt(value)
           minValue = parseInt(rulesMap.minValue)
           if valueNum < minValue
-            @errors.push 'value too low.'
+            @errors.push "Value too low, must be greater than #{minValue}."
       maxValue:
         validate: (options) ->
           {value, rulesMap} = options
           valueNum = parseInt(value)
           maxValue = parseInt(rulesMap.maxValue)
           if valueNum > maxValue
-            @errors.push 'value too high.'
+            @errors.push "Value too high, must be less than #{maxValue}."
       wholeNumber:
         validate: (options) ->
           {value, rulesMap} = options
