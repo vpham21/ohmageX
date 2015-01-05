@@ -62,7 +62,11 @@
 
       # merge the currentChoices formatted array with the original ChoiceCollection
       # into a new collection for output. 
-      new Entities.ChoiceCollection _.union(original.toJSON(), customArr)
+      result = new Entities.ChoiceCollection _.union(original.toJSON(), customArr)
+
+      # saving the merged collection to a variable before returning it prevents the 
+      # "duplicate custom choice" error that may happen when re-displaying a custom choice
+      result
 
     updateLocal: (callback) ->
       # update localStorage index custom_choices with the current version of campaignsSaved entity
