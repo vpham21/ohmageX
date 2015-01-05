@@ -146,6 +146,12 @@
     }
   }
 
+  #prev-button, #skip-button, #next-button {
+    .disabled {
+      visibility: hidden;
+    }
+  }
+
   .datetime-control {
     @extend .control-container;
     label {

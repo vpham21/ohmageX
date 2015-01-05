@@ -26,6 +26,7 @@
       if !currentChoices then currentChoices = new Entities.CustomChoices
 
       currentChoices.add
+        campaign_urn: App.request "survey:saved:urn", surveyId
         surveyId: surveyId
         stepId: stepId
         value: value
@@ -46,6 +47,17 @@
         console.log "custom_choices entity removed from localStorage"
         App.vent.trigger "prompt:customchoice:remove:success", surveyId, stepId, value
       )
+
+    removeCampaignChoices: (campaign_urn) ->
+      removed = currentChoices.where
+        campaign_urn: campaign_urn
+
+      currentChoices.remove removed
+      @updateLocal( =>
+        console.log "campaign custom choices removed from localStorage"
+        App.vent.trigger "prompt:customchoice:campaign:remove:success", campaign_urn
+      )
+
 
     getMergedChoices: (surveyId, stepId, original) ->
       
@@ -90,6 +102,9 @@
 
   App.commands.setHandler "prompt:customchoice:remove", (surveyId, stepId, value) ->
     API.removeChoice surveyId, stepId, value
+
+  App.vent.on "campaign:saved:remove", (campaign_urn) ->
+    API.removeCampaignChoices campaign_urn
 
   App.vent.on "credentials:cleared", ->
     API.clear()
