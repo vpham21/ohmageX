@@ -93,9 +93,10 @@
           # rulesMap is not used in this rule, there's
           # no custom property XML.
           {value} = options
+
           try
-            myDateObj = new Date Date.parse(value)
-            response = myDateObj.toISOString()
+            m = moment(value)
+            if !m.isValid() then @errors = ["Invalid timestamp."]
           catch
             @errors = ['Invalid timestamp.']
       httpHost:

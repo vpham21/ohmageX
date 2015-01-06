@@ -21,6 +21,7 @@ module.exports = (grunt) ->
       "<%= web_root_folder %>/js/vendor/placeholder_polyfill.jquery.js"
       "<%= web_root_folder %>/js/vendor/ConditionalParser.js"
       "<%= web_root_folder %>/js/vendor/jstz.js"
+      "<%= web_root_folder %>/js/vendor/moment.js"
       "<%= web_root_folder %>/js/build/templates.js"
       "<%= web_root_folder %>/js/build/mycoffee.js"
     ]
