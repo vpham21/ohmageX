@@ -7,6 +7,7 @@
     App.device = App.request "device:init"
     App.credentials = false
     App.navs = App.request "nav:entities"
+    App.loading = App.request "loading:entities"
     App.package_info = options.package_info
 
   App.addRegions
