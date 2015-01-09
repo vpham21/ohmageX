@@ -7,9 +7,11 @@
     App.device = App.request "device:init"
     App.credentials = false
     App.navs = App.request "nav:entities"
+    App.loading = App.request "loading:entities"
     App.package_info = options.package_info
 
   App.addRegions
+    loadingRegion: "body > #loading-spinner"
     headerRegion: "body > header"
     mainRegion:    "body > main"
     footerRegion: "body > footer"
@@ -17,6 +19,7 @@
   App.rootRoute = Routes.default_route()
 
   App.addInitializer ->
+    App.module("LoadingspinnerApp").start(App.loading)
     App.module("HeaderApp").start(App.navs)
     App.module("FooterApp").start()
 
@@ -25,6 +28,10 @@
     App.mainRegion
 
   App.vent.on "nav:choose", (nav) -> App.navs.chooseByName nav
+
+  App.vent.on "loading:show", (message) -> App.loading.loadShow message
+  App.vent.on "loading:hide", (message) -> App.loading.loadHide()
+  App.vent.on "loading:update", (message) -> App.loading.loadUpdate(message)
 
   App.on "start", ->
     @startHistory()

@@ -13,6 +13,7 @@
   <script src="<%= js_modernizr_path %>"></script>
 </head>
 <body>
+  <div id="loading-spinner"></div>
   <header role="banner"></header>
   <main role="main"></main>
   <footer role="contentinfo"></footer>
