@@ -19,6 +19,7 @@
   App.rootRoute = Routes.default_route()
 
   App.addInitializer ->
+    App.module("LoadingspinnerApp").start(App.loading)
     App.module("HeaderApp").start(App.navs)
     App.module("FooterApp").start()
 
