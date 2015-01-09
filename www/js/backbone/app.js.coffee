@@ -10,6 +10,7 @@
     App.package_info = options.package_info
 
   App.addRegions
+    loadingRegion: "body > #loading-spinner"
     headerRegion: "body > header"
     mainRegion:    "body > main"
     footerRegion: "body > footer"
