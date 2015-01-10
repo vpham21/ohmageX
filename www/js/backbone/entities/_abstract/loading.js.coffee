@@ -6,7 +6,9 @@
     timer: false
     loadShow: (message = false) ->
       if message isnt false then @set('message', message)
-      @trigger 'loading:show'
+      @timer = window.setTimeout (=>
+        @trigger 'loading:show'
+      ), 500
     loadHide: ->
       @set 'message', 'Now Loading...'
       @trigger 'loading:hide'
