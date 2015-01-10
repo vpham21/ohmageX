@@ -12,6 +12,7 @@
     loadHide: ->
       @set 'message', 'Now Loading...'
       @trigger 'loading:hide'
+      window.clearTimeout @timer
     loadUpdate: (message) ->
       @set 'message', message
       @trigger 'loading:update', message
