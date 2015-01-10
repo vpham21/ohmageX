@@ -7,6 +7,9 @@
     loadShow: (message = false) ->
       if message isnt false then @set('message', message)
       if @timer then window.clearTimeout(@timer)
+      # loading spinner uses a delay timer.
+      # if a task finishes quickly, it won't
+      # disruptively flash the loading spinner.
       @timer = window.setTimeout (=>
         @trigger 'loading:show'
       ), 500
