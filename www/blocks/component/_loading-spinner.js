@@ -15,20 +15,24 @@ var LoadingSpinnerComponent = function(ele){
         $('body').attr('loading-spinner-state', active);
 
         if (active === false) {
-            // remove any sibling element attributes like aria-hidden.
+            // disable hiding sibling elements from screen readers.
         } else {
-            // add sibling element attributes like aria-hidden.
+            // hide sibling elements from screen readers.
         }
     };
 
     __self__.hide = function(){
         $ele.attr('data-state', 'false');
         $('body').attr('loading-spinner-state', 'false');
+        // hide sibling elements from screen readers.
+        $ele.siblings().attr('aria-hidden', 'true')
     };
 
     __self__.show = function(){
         $ele.attr('data-state', 'active');
         $('body').attr('loading-spinner-state', 'active');
+        // disable hiding sibling elements from screen readers.
+        $ele.siblings().attr('aria-hidden', 'false')
     };
 
 };
