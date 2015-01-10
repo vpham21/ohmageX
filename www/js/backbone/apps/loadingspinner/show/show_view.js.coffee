@@ -7,7 +7,7 @@
         @loading.show()
       @listenTo @model, "loading:hide", ->
         @loading.hide()
-      @listenTo @model, "loading:update", @render
+      @listenTo @model, "change:message", @render
 
     template: "loadingspinner/show/layout"
     attributes: ->
