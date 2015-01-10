@@ -136,6 +136,7 @@
       currentCampaignsUser.reset sync
       @saveLocalCampaigns currentCampaignsUser
     syncCampaigns: ->
+      App.vent.trigger 'loading:show', 'Syncing Campaigns...'
       credentials = App.request "credentials:current"
       currentCampaignsUser.fetch
         reset: true
@@ -149,8 +150,10 @@
         success: (collection, response, options) =>
           console.log 'campaign fetch success', response, collection
           @saveLocalCampaigns collection
+          App.vent.trigger "loading:hide"
         error: (collection, response, options) =>
           console.log 'campaign fetch error'
+          App.vent.trigger "loading:hide"
       currentCampaignsUser
     saveLocalCampaigns: (collection) ->
       # update localStorage index campaigns_user with the current version of campaignsUser entity
