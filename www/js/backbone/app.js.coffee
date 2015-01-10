@@ -29,8 +29,8 @@
 
   App.vent.on "nav:choose", (nav) -> App.navs.chooseByName nav
 
-  App.vent.on "loading:show", (message) -> App.loading.loadShow message
-  App.vent.on "loading:hide", (message) -> App.loading.loadHide()
+  App.vent.on "loading:show", (message) -> App.loading.loadShow(message)
+  App.vent.on "loading:hide", -> App.loading.loadHide()
   App.vent.on "loading:update", (message) -> App.loading.loadUpdate(message)
 
   App.on "start", ->

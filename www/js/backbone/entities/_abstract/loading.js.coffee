@@ -4,7 +4,7 @@
     defaults:
       message: 'Now Loading...'
     loadShow: (message = false) ->
-      if message then @set('message', message)
+      if message isnt false then @set('message', message)
       @trigger 'loading:show'
     loadHide: ->
       @set 'message', 'Now Loading...'

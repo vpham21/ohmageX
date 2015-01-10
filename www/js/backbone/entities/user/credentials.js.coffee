@@ -25,7 +25,7 @@
 
 
     validateCredentials: (path, username, password) ->
-
+      App.vent.trigger "loading:show", "logging in as #{username}..."
       $.ajax
         type: "POST"
         url: "#{path}/app/user/auth"
@@ -36,6 +36,11 @@
         dataType: 'json'
         success: (response) =>
           if @isParsedAuthValid response
+            # we don't hide the loading spinner on success, because when a user
+            # logs in, their campaigns are fetched immediately and asynchronously.
+            # Hiding it here would hide the loading spinner before the campaigns are
+            # finished fetching.
+
             App.credentials = new Entities.Credentials
               username: username
               password: response.hashed_password
@@ -43,7 +48,12 @@
               console.log "credentials entity API.validateCredentials success"
               App.vent.trigger "credentials:validated", username
           else
+            App.vent.trigger "loading:hide"
             App.vent.trigger "credentials:invalidated", response.errors
+        error: ->
+          App.vent.trigger "loading:hide"
+
+
     getParams: ->
       # currently using hashed password auth.
       # this will change when using other auth methods.
