@@ -3,6 +3,7 @@
   class Entities.Loading extends Entities.Model
     defaults:
       message: 'Now Loading...'
+    timer: false
     loadShow: (message = false) ->
       if message isnt false then @set('message', message)
       @trigger 'loading:show'
