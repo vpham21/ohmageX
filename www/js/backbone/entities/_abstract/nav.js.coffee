@@ -32,6 +32,7 @@
           "Campaigns"
           "Surveys"
           "Upload Queue"
+          "Reminders"
           "Profile"
           "Logout"
         ]
@@ -46,11 +47,13 @@
       App.navs.trigger "reveal"
 
     getNavs: ->
+      # TODO: only show reminders in the nav menu on mobile devices.
       App.navs = new Entities.NavsCollection [
         { name: "Login", url: "#login", icon: "", visible: false }
         { name: "Campaigns", url: "#campaigns", icon: "", visible: false }
         { name: "Surveys", url: "#surveys", icon: "", visible: false }
         { name: "Upload Queue", url: "#uploadqueue", icon: "", visible: false }
+        { name: "Reminders", url: "#reminders", icon: "", visible: false }
         { name: "Profile", url: "#profile", icon: "", visible: false }
         { name: "Logout", url: "#logout", icon: "", visible: false }
       ]
