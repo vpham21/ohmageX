@@ -21,15 +21,24 @@
   <script src="<%= js_path %>"></script>
   <script type="text/javascript">
   $(function() {
-    Ohmage.start({
-      environment: "<%= js_env %>",
-      root_path: "<%= root_path %>",
-      url: "<%= js_url %>",
-      package_info: {
-        app_name: "<%= app_name %>",
-        bundle_id: "<%= bundle_id %>"
-      }
-    });
+    var myConfig = {
+        environment: "<%= js_env %>",
+        root_path: "<%= root_path %>",
+        url: "<%= js_url %>",
+        package_info: {
+          app_name: "<%= app_name %>",
+          bundle_id: "<%= bundle_id %>"
+        }
+      };
+    if (typeof window.cordova !== "undefined") {
+      document.addEventListener('deviceready', function() {
+        // The app uses key device event listeners on mobile.
+        // Only start it up on 'deviceready'.
+        Ohmage.start(_.extend(myConfig, {cordova: true} ));
+      });
+    } else {
+      Ohmage.start(_.extend(myConfig, {cordova: false} ));
+    }
   });
   </script>
 </body>
