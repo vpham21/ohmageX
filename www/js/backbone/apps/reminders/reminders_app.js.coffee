@@ -2,7 +2,7 @@
 
   class RemindersApp.Router extends Marionette.AppRouter
     before: ->
-      if !App.request("credentials:isloggedin")
+      if !App.request("credentials:isloggedin") or !App.cordova
         App.navigate Routes.default_route(), trigger: true
         return false
     appRoutes:
