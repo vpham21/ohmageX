@@ -28,14 +28,23 @@
     reveal: (isLoggedIn) ->
       console.log 'reveal isLoggedIn', isLoggedIn
       if isLoggedIn
-        visibleItems = [
-          "Campaigns"
-          "Surveys"
-          "Upload Queue"
-          "Reminders"
-          "Profile"
-          "Logout"
-        ]
+        if App.cordova
+          visibleItems = [
+            "Campaigns"
+            "Surveys"
+            "Upload Queue"
+            "Reminders"
+            "Profile"
+            "Logout"
+          ]
+        else
+          visibleItems = [
+            "Campaigns"
+            "Surveys"
+            "Upload Queue"            
+            "Profile"
+            "Logout"
+          ]
       else
         visibleItems = [
           "Login"
@@ -48,15 +57,25 @@
 
     getNavs: ->
       # TODO: only show reminders in the nav menu on mobile devices.
-      App.navs = new Entities.NavsCollection [
-        { name: "Login", url: "#login", icon: "", visible: false }
-        { name: "Campaigns", url: "#campaigns", icon: "", visible: false }
-        { name: "Surveys", url: "#surveys", icon: "", visible: false }
-        { name: "Upload Queue", url: "#uploadqueue", icon: "", visible: false }
-        { name: "Reminders", url: "#reminders", icon: "", visible: false }
-        { name: "Profile", url: "#profile", icon: "", visible: false }
-        { name: "Logout", url: "#logout", icon: "", visible: false }
-      ]
+      if App.cordova
+        App.navs = new Entities.NavsCollection [
+          { name: "Login", url: "#login", icon: "", visible: false }
+          { name: "Campaigns", url: "#campaigns", icon: "", visible: false }
+          { name: "Surveys", url: "#surveys", icon: "", visible: false }
+          { name: "Upload Queue", url: "#uploadqueue", icon: "", visible: false }
+          { name: "Reminders", url: "#reminders", icon: "", visible: false }
+          { name: "Profile", url: "#profile", icon: "", visible: false }
+          { name: "Logout", url: "#logout", icon: "", visible: false }
+        ]
+      else
+        App.navs = new Entities.NavsCollection [
+          { name: "Login", url: "#login", icon: "", visible: false }
+          { name: "Campaigns", url: "#campaigns", icon: "", visible: false }
+          { name: "Surveys", url: "#surveys", icon: "", visible: false }
+          { name: "Upload Queue", url: "#uploadqueue", icon: "", visible: false }
+          { name: "Profile", url: "#profile", icon: "", visible: false }
+          { name: "Logout", url: "#logout", icon: "", visible: false }
+        ]
 
   App.vent.on "credentials:storage:load:success credentials:storage:load:failure", ->
     API.reveal App.request("credentials:isloggedin")
