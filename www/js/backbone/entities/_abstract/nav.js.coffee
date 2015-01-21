@@ -28,7 +28,7 @@
     reveal: (isLoggedIn) ->
       console.log 'reveal isLoggedIn', isLoggedIn
       if isLoggedIn
-        if App.cordova
+        if App.device.isNative
           visibleItems = [
             "Campaigns"
             "Surveys"
@@ -57,7 +57,7 @@
 
     getNavs: ->
       # TODO: only show reminders in the nav menu on mobile devices.
-      if App.cordova
+      if App.device.isNative
         App.navs = new Entities.NavsCollection [
           { name: "Login", url: "#login", icon: "", visible: false }
           { name: "Campaigns", url: "#campaigns", icon: "", visible: false }
