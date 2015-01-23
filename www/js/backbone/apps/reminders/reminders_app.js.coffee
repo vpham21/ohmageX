@@ -9,10 +9,10 @@
       "reminders": "list"
 
   API =
-    list: ->
+    list: (options) ->
       App.vent.trigger "nav:choose", "Reminders"
       console.log 'RemindersApp list'
-      new RemindersApp.List.Controller
+      new RemindersApp.List.Controller options
 
   App.addInitializer ->
     new RemindersApp.Router
