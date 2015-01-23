@@ -289,6 +289,12 @@ module.exports = (grunt) ->
     "cordovacli:add_plugins"
   ]
 
+  grunt.registerTask "cordova_ios_init", [
+    "cordovacli:add_ios_platforms"
+    "cordovacli:add_plugins"
+  ]
+
+
   grunt.registerTask "cordova_build_ios", [
     "cordovacli:build_ios"
   ]
