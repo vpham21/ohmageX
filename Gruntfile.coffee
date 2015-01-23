@@ -171,7 +171,18 @@ module.exports = (grunt) ->
         options:
           command: "plugin"
           action: "add"
-          plugins: [ "battery-status", "camera", "console", "contacts", "device", "device-motion", "device-orientation", "dialogs", "file", "globalization", "inappbrowser", "media", "media-capture", "network-information", "splashscreen", "vibration" ]
+          plugins: [ 
+            "camera", 
+            "console", 
+            "device",
+            "device-orientation",
+            "dialogs",
+            "file",
+            "media",
+            "media-capture",
+            "splashscreen",
+            "https://github.com/katzer/cordova-plugin-local-notifications.git"
+          ]
 
       build_ios:
         options:
