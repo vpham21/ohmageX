@@ -42,6 +42,7 @@
         # user saved surveys retrieved from raw JSON.
         console.log 'user saved surveys retrieved from storage'
         currentSurveysSaved = new Entities.SurveysSaved result
+        App.vent.trigger('surveys:saved:load:complete')
       ), =>
         console.log 'user saved surveys not retrieved from storage'
         currentSurveysSaved = new Entities.SurveysSaved
