@@ -19,7 +19,16 @@
     emptyView: List.RemindersEmpty
 
   class List.Layout extends App.Views.Layout
-    template: "reminders/list/layout"
-    regions:
-      noticeRegion: "#notice-region"
-      listRegion: "#list-region"
+    getTemplate: ->
+      if @model.get('localNotification') is true then "reminders/list/layout_enabled" else "reminders/list/layout_disabled"
+    regions: (options) ->
+      if options.model.get('localNotification') is true
+        return {
+          noticeRegion: "#notice-region-nopop"
+          addRegion: "#add-region"
+          listRegion: "#list-region"
+        }
+      else
+        return {
+          noticeRegion: "#notice-region-nopop"
+        }
