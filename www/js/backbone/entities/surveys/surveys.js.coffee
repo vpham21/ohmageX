@@ -45,6 +45,7 @@
       ), =>
         console.log 'user saved surveys not retrieved from storage'
         currentSurveysSaved = new Entities.SurveysSaved
+        App.vent.trigger('surveys:saved:load:complete')
 
     getSurveys: (campaign_urn) ->
       console.log campaign_urn
