@@ -25,5 +25,7 @@
       new List.Reminders
         collection: reminders
 
-    getLayoutView: ->
+    getLayoutView: (permissions) ->
+      console.log 'permissions', permissions
       new List.Layout
+        model: permissions
