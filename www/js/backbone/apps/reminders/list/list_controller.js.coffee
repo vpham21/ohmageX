@@ -7,6 +7,7 @@
       @layout = @getLayoutView()
 
       permissions = App.request 'permissions:current'
+      # permissions = new Backbone.Model(localNotification: true)
       reminders = App.request 'reminders:current'
 
       @listenTo @layout, "show", =>
