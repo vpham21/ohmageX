@@ -34,10 +34,19 @@
 
       @show @layout
 
+    noticeRegion: (message) ->
+      notice = new Backbone.Model message: message
+      noticeView = @getNoticeView notice
+
+      @show noticeView, region: @layout.noticeRegion
     listRegion: (reminders) ->
       listView = @getListView reminders
 
       @show listView, region: @layout.listRegion
+
+    getNoticeView: (notice) ->
+      new List.Notice
+        model: notice
 
     getListView: (reminders) ->
       new List.Reminders
