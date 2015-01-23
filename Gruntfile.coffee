@@ -165,13 +165,30 @@ module.exports = (grunt) ->
         options:
           command: "platform"
           action: "add"
+          platforms: [ "ios", "android" ]
+
+      add_ios_platforms:
+        options:
+          command: "platform"
+          action: "add"
           platforms: [ "ios" ]
 
       add_plugins:
         options:
           command: "plugin"
           action: "add"
-          plugins: [ "battery-status", "camera", "console", "contacts", "device", "device-motion", "device-orientation", "dialogs", "file", "globalization", "inappbrowser", "media", "media-capture", "network-information", "splashscreen", "vibration" ]
+          plugins: [ 
+            "camera", 
+            "console", 
+            "device",
+            "device-orientation",
+            "dialogs",
+            "file",
+            "media",
+            "media-capture",
+            "splashscreen",
+            "https://github.com/katzer/cordova-plugin-local-notifications.git"
+          ]
 
       build_ios:
         options:
@@ -213,6 +230,9 @@ module.exports = (grunt) ->
         cwd: "<%= web_root_folder %>"
       mobile_init:
         cmd: "grunt cordova_init"
+        cwd: "<%= cordova_project_folder %>"
+      ios_init:
+        cmd: "grunt cordova_ios_init"
         cwd: "<%= cordova_project_folder %>"
       mobile_build:
         cmd: "grunt cordova_build_ios"
@@ -272,6 +292,12 @@ module.exports = (grunt) ->
     "cordovacli:add_plugins"
   ]
 
+  grunt.registerTask "cordova_ios_init", [
+    "cordovacli:add_ios_platforms"
+    "cordovacli:add_plugins"
+  ]
+
+
   grunt.registerTask "cordova_build_ios", [
     "cordovacli:build_ios"
   ]
@@ -288,6 +314,22 @@ module.exports = (grunt) ->
     "clean:cordova_www"
     "copy:cordova_www"
     "exec:mobile_init" # must pass it through a custom exec to change cwd
+    "clean:cordova_ios_splash"
+    "copy:cordova_ios_splash"
+  ]
+
+  grunt.registerTask "ios_firstrun", [
+    "clean:cordova_project"
+    "clean:hybrid_build"
+    "cordovacli:create"
+    "template:cordova_config"
+    "clean:cordova_config"
+    "copy:cordova_config"
+    "dev"
+    "copy:hybrid_build"
+    "clean:cordova_www"
+    "copy:cordova_www"
+    "exec:ios_init" # must pass it through a custom exec to change cwd
     "clean:cordova_ios_splash"
     "copy:cordova_ios_splash"
   ]
