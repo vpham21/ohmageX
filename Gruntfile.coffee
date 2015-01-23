@@ -231,6 +231,9 @@ module.exports = (grunt) ->
       mobile_init:
         cmd: "grunt cordova_init"
         cwd: "<%= cordova_project_folder %>"
+      ios_init:
+        cmd: "grunt cordova_ios_init"
+        cwd: "<%= cordova_project_folder %>"
       mobile_build:
         cmd: "grunt cordova_build_ios"
         cwd: "<%= cordova_project_folder %>"
