@@ -6,6 +6,7 @@
     initialize: ->
       @layout = @getLayoutView()
 
+      permissions = App.request 'permissions:current'
       reminders = App.request 'reminders:current'
 
       @listenTo @layout, "show", =>
