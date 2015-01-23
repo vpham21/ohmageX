@@ -166,6 +166,11 @@ module.exports = (grunt) ->
           command: "platform"
           action: "add"
           platforms: [ "ios", "android" ]
+
+      add_ios_platforms:
+        options:
+          command: "platform"
+          action: "add"
           platforms: [ "ios" ]
 
       add_plugins:
