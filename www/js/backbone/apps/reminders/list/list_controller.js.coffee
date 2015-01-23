@@ -5,6 +5,9 @@
   class List.Controller extends App.Controllers.Application
     initialize: (options) ->
 
+      _.defaults options,
+        forceRefresh: false
+
       permissions = App.request 'permissions:current'
       # permissions = new Backbone.Model(localNotification: true)
       reminders = App.request 'reminders:current'
