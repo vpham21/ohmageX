@@ -13,6 +13,13 @@
       reminders = App.request 'reminders:current'
       @layout = @getLayoutView permissions
 
+      @listenTo permissions, "localnotification:checked", =>
+        App.execute "reminders:force:refresh"
+
+      if !options.forceRefresh
+        @listenTo permissions, "localnotification:registered", =>
+          App.execute "reminders:force:refresh"
+
       @listenTo @layout, "show", =>
         console.log "showing layout"
         @listRegion reminders
