@@ -3,12 +3,12 @@
   # RemindersApp renders the Reminders page.
 
   class List.Controller extends App.Controllers.Application
-    initialize: ->
-      @layout = @getLayoutView()
+    initialize: (options) ->
 
       permissions = App.request 'permissions:current'
       # permissions = new Backbone.Model(localNotification: true)
       reminders = App.request 'reminders:current'
+      @layout = @getLayoutView permissions
 
       @listenTo @layout, "show", =>
         console.log "showing layout"
