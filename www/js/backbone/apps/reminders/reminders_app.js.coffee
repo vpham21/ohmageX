@@ -17,3 +17,8 @@
   App.addInitializer ->
     new RemindersApp.Router
       controller: API
+
+  App.commands.setHandler "reminders:force:refresh", ->
+    console.log 'force refresh'
+    API.list
+      forceRefresh: true
