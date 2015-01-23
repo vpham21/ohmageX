@@ -1,7 +1,8 @@
 @Ohmage.module "Entities", (Entities, App, Backbone, Marionette, $, _) ->
 
   # Reminders entity.
-  # Note: Local notification permissions are a concern for iOS 8+.
+  # Note: Local notification permissions are a concern for iOS 8+ and Android (if disabled)
+  # this requires interaction with the Permissions entity.
 
   class Entities.Reminder extends Entities.Model
 
