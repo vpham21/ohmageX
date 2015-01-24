@@ -71,6 +71,27 @@
       console.log 'addReminder'
       currentReminders.add({}, { validate: false })
 
+    addNotification: (reminder) ->
+
+      if reminder.get('active') is true
+        console.log 'addNotification reminder', reminder
+        window.plugin.notification.cancelAll()
+
+        window.plugin.notification.local.add
+          id: reminder.get('surveyId')
+          title: "#{reminder.get('surveyTitle')}"
+          message: "Take survey #{reminder.get('surveyTitle')}"
+          repeat: "weekly"
+          date: new Date(reminder.get('activationDate'))
+        , (->
+          console.log "reminder set callback"
+          # add listener here for the reminder action.
+          # use the same ID as this generated ID.
+          # Save the generated ID.
+          # App.execute "dialog:alert", "reminder set"
+        ), @
+
+
     getReminders: ->
       currentReminders
 
