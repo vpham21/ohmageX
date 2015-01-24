@@ -17,6 +17,10 @@
         futureTimestamp: 'activationDate'
       super attrs, options, myRulesMap
 
+    visibleFalse: ->
+      @set('renderVisible', false)
+    visibleTrue: ->
+      @set('renderVisible', true)
   class Entities.Reminders extends Entities.Collection
     model: Entities.Reminder
 
