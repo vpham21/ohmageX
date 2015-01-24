@@ -81,6 +81,12 @@
       myDate = @$el.find('input[type=date]').val()
       myTime = @$el.find('input[type=time]').val()
       offset = new Date().toString().match(/([-\+][0-9]+)\s/)[1]
+    serializeData: ->
+      data = @model.toJSON()
+      currentDate = moment(data.activationDate)
+      data.currentDateValue = currentDate.format('YYYY-MM-DD')
+      data.currentTimeValue = currentDate.format('HH:mm:ss')
+      data
     regions:
       surveysRegion: '.surveys-region'
       labelRegion: '.label-region'
