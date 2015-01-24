@@ -99,6 +99,18 @@
             if !m.isValid() then @errors = ["Invalid timestamp."]
           catch
             @errors = ['Invalid timestamp.']
+      futureTimestamp:
+        validate: (options) ->
+          # we're testing that the value is a Date object in the future.
+
+          # rulesMap is not used in this rule, there's
+          # no custom property XML.
+          {value} = options
+          try
+            now = moment()
+            if now.diff(value) > 0 then @errors = ["Timestamp needs to be in the future."]
+          catch
+            @errors = ['Timestamp needs to be in the future.']
       httpHost:
         validate: (options) ->
           # rulesMap is not used here, no custom property XML.
