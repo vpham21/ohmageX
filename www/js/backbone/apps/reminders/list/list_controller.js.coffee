@@ -1,3 +1,4 @@
+
 @Ohmage.module "RemindersApp.List", (List, App, Backbone, Marionette, $, _) ->
 
   # RemindersApp renders the Reminders page.
@@ -80,7 +81,33 @@
           surveysView = @getReminderSurveysView childView.model.reminderSurveys
           childView.model.reminderSurveys.chooseById childView.model.get('surveyId')
           childView.surveysRegion.show surveysView
+
+          labelView = @getReminderLabelView childView.model
+          childView.labelRegion.show labelView
+
+      @listenTo listView, "childview:reminder:submit", (view, response) =>
+        console.log 'childview:reminder:submit model', view.model
+        # close any notices
+        @noticeRegion ''
+        App.vent.trigger "reminders:reminder:submit", view.model, response
+
+      @listenTo reminders, "invalid", (reminderModel) =>
+        # reminder submit validation failed
+        console.log "reminder invalid, errors are", reminderModel.validationError
+        App.vent.trigger "reminder:validate:fail", reminderModel.validationError
+        @noticeRegion reminderModel.validationError
+
+      @listenTo reminders, "change:activationDate change:repeat change:active change:surveyId", (model) =>
+        # reminder validation succeeded
+        App.vent.trigger "reminder:set:success", model
+
+
       @show listView, region: @layout.listRegion
+
+
+    getReminderLabelView: (reminder) ->
+      new List.ReminderLabel
+        model: reminder
 
     getReminderSurveysView: (surveys) ->
       new List.ReminderSurveys

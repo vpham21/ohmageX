@@ -44,6 +44,7 @@
     initialize: ->
       @listenTo @model, 'visible:false', @toggleOff
       @listenTo @model, 'visible:true', @toggleOn
+      @listenTo @, 'save:reminder', @gatherResponses
     tagName: 'li'
     template: "reminders/list/_item"
     toggleOff: ->
@@ -59,11 +60,56 @@
       @toggler = new VisibilityToggleComponent("#reminder-form-#{@model.get('id')}", @$el)
       @repeater = new VisibilityToggleComponent('.repeat-days', @$el)
       @repeater.toggleOn('click', 'input[name="repeat"]', @$el)
+
+      # prepopulate all fields
+      active = @model.get('active')
+      if active then @$el.find("input[name='active-switch']").prop('checked', true)
+
+      repeatDays = @model.get('repeatDays')
+      if repeatDays.length > 0
+        # pre-populate the fields.
+        _.each(repeatDays, (repeatDay) ->
+          @$el.find("input[name='repeatDays'][value='#{repeatDay}']").prop('checked', true)
+        )
+      repeat = @model.get('repeat')
+      if repeat
+        @$el.find("input[name='repeat']").prop('checked', true)
+        @repeater.show()
+
+    gatherResponses: ->
+      console.log 'gatherResponses'
+      myDate = @$el.find('input[type=date]').val()
+      myTime = @$el.find('input[type=time]').val()
+      offset = new Date().toString().match(/([-\+][0-9]+)\s/)[1]
+
+      # get repeat days into an array
+      $repeatDaysEl = @$el.find('input[name="repeatDays[]"]:checked')
+      repeatDays = []
+      if $repeatDaysEl.length > 0
+        repeatDays = _.map($repeatDaysEl, (repeatDayEl) ->
+          $(repeatDayEl).val()
+        )
+
+      response =
+        activationDate: moment("#{myDate} #{myTime}#{offset}")
+        active: @$el.find("input[name='active-switch']").prop('checked') is true
+        repeat: @$el.find("input[name='repeat']").prop('checked') is true
+        repeatDays: repeatDays
+
+      @trigger "reminder:submit", response
+
+    serializeData: ->
+      data = @model.toJSON()
+      currentDate = moment(data.activationDate)
+      data.currentDateValue = currentDate.format('YYYY-MM-DD')
+      data.currentTimeValue = currentDate.format('HH:mm:ss')
+      data
     regions:
       surveysRegion: '.surveys-region'
       labelRegion: '.label-region'
     triggers:
       "click .toggler-button": "toggle:activate"
+      "click .save-button": "save:reminder"
 
   class List.RemindersEmpty extends App.Views.ItemView
     className: "text-container"

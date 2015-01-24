@@ -1,1 +1,26 @@
-Reminder item
+<button class="toggler-button" type="button"><span class="my-icon">&#9654;</span> <span class="label-region"></span></button>
+<form class='reminder-form' id="reminder-form-<%= @id %>" data-visible="false">
+  <div class="surveys-region"></div>
+  <h3 class="hide-accessible">Update This Reminder</h3>
+  <input type="checkbox" name="active-switch"> Enabled
+  <fieldset>
+    <legend class="inset-block">Add New Reminder</legend>
+    <div class="datetime-control">
+      <label for="date<%= @id %>">Select Date</label>
+      <input name="date<%= @id %>" value="<%= @currentDateValue %>" type="date">
+      <label for="time<%= @id %>">Select Time</label>
+      <input name="time<%= @id %>" value="<%= @currentTimeValue %>" type="time">
+    </div>
+  <h3><input type="checkbox" name="repeat"> Repeat</h3>
+  <ul class="repeat-days" data-visible="false">
+    <li><input type="checkbox" value="0" name="repeatDays[]"> monday</li>
+    <li><input type="checkbox" value="1" name="repeatDays[]"> tuesday</li>
+    <li><input type="checkbox" value="2" name="repeatDays[]"> wednesday</li>
+    <li><input type="checkbox" value="3" name="repeatDays[]"> thursday</li>
+    <li><input type="checkbox" value="4" name="repeatDays[]"> friday</li>
+    <li><input type="checkbox" value="5" name="repeatDays[]"> saturday</li>
+    <li><input type="checkbox" value="6" name="repeatDays[]"> sunday</li>
+  </ul>
+  </fieldset>
+  <button type="button" class="save-button">Save Reminder</button>
+</form>

@@ -2,7 +2,7 @@
 
   class RemindersApp.Router extends Marionette.AppRouter
     before: ->
-      if !App.request("credentials:isloggedin") or !App.device.isNative
+      if !App.request("credentials:isloggedin") # or !App.device.isNative
         App.navigate Routes.default_route(), trigger: true
         return false
     appRoutes:
@@ -22,3 +22,6 @@
     console.log 'force refresh'
     API.list
       forceRefresh: true
+
+  App.vent.on "reminders:reminder:submit", (model, response) ->
+    App.execute "reminder:validate", model, response
