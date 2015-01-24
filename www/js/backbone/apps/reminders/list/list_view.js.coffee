@@ -1,8 +1,8 @@
 @Ohmage.module "RemindersApp.List", (List, App, Backbone, Marionette, $, _) ->
 
-  class List.Reminder extends App.Views.ItemView
     initialize: ->
       @listenTo @model, 'change', @render
+  class List.Reminder extends App.Views.Layout
     tagName: 'li'
     template: "reminders/list/_item"
 
