@@ -1,5 +1,17 @@
 @Ohmage.module "RemindersApp.List", (List, App, Backbone, Marionette, $, _) ->
 
+  class List.ReminderSurveys extends App.Views.CollectionView
+    initialize: ->
+      @listenTo @, "item:selected", @chooseItem
+    childView: List.ReminderSurvey
+    tagName: 'select'
+    chooseItem: (options) ->
+      console.log 'chooseItem options', options
+      @collection.chooseById @$el.val()
+      console.log 'chosen id', @collection.chosenId()
+    triggers: ->
+      "change": "item:selected"
+
   class List.ReminderLabel extends App.Views.ItemView
     initialize: ->
       @listenTo @model, 'change', @render
