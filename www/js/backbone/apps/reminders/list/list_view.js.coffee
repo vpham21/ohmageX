@@ -37,6 +37,14 @@
   class List.Reminder extends App.Views.Layout
     tagName: 'li'
     template: "reminders/list/_item"
+    toggleOff: ->
+      @toggler.hide()
+      console.log 'toggleOff'
+      @$el.find('.toggler-button .my-icon').html('&#9654;')
+    toggleOn: ->
+      @toggler.show()
+      console.log 'toggleOn'
+      @$el.find('.toggler-button .my-icon').html('&#9660;')
     onRender: ->
       # set up
       @toggler = new VisibilityToggleComponent("#reminder-form-#{@model.get('id')}", @$el)
