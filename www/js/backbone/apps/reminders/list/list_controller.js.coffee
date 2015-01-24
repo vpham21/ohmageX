@@ -41,6 +41,15 @@
       noticeView = @getNoticeView notice
 
       @show noticeView, region: @layout.noticeRegion
+
+    addRegion: (reminders) ->
+      addView = @getAddView()
+
+      @listenTo addView, "add:clicked", ->
+        App.execute "reminders:add:new"
+
+      @show addView, region: @layout.addRegion
+
     listRegion: (reminders) ->
       listView = @getListView reminders
 
@@ -80,6 +89,9 @@
     getNoticeView: (notice) ->
       new List.Notice
         model: notice
+
+    getAddView: ->
+      new List.Add
 
     getListView: (reminders) ->
       new List.Reminders
