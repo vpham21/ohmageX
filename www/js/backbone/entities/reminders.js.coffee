@@ -23,6 +23,8 @@
       @set('renderVisible', false)
     visibleTrue: ->
       @set('renderVisible', true)
+    defaults:
+      renderVisible: false
   class Entities.Reminders extends Entities.Collection
     model: Entities.Reminder
 
