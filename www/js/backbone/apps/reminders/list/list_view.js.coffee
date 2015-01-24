@@ -61,6 +61,17 @@
       @repeater.toggleOn('click', 'input[name="repeat"]', @$el)
       active = @model.get('active')
       if active then @$el.find("input[name='active-switch']").prop('checked', true)
+
+      repeatDays = @model.get('repeatDays')
+      if repeatDays.length > 0
+        # pre-populate the fields.
+        _.each(repeatDays, (repeatDay) ->
+          @$el.find("input[name='repeatDays'][value='#{repeatDay}']").prop('checked', true)
+        )
+      repeat = @model.get('repeat')
+      if repeat
+        @$el.find("input[name='repeat']").prop('checked', true)
+        @repeater.show()
     regions:
       surveysRegion: '.surveys-region'
       labelRegion: '.label-region'
