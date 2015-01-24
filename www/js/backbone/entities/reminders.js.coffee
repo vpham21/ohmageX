@@ -64,3 +64,6 @@
 
   App.reqres.setHandler "reminders:current", ->
     API.getReminders()
+
+  App.commands.setHandler "reminders:add:new", ->
+    API.addNewReminder()
