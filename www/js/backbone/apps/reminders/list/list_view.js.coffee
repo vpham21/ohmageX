@@ -45,6 +45,8 @@
     regions:
       surveysRegion: '.surveys-region'
       labelRegion: '.label-region'
+    triggers:
+      "click .toggler-button": "toggle:activate"
 
   class List.RemindersEmpty extends App.Views.ItemView
     className: "text-container"
