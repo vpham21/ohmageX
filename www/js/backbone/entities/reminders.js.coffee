@@ -4,6 +4,14 @@
   # Note: Local notification permissions are a concern for iOS 8+ and Android (if disabled)
   # this requires interaction with the Permissions entity.
 
+  # id - String - Unique ID for the reminder. Generated per reminder.
+  # activationDate - Moment() object - When the reminder is activated.
+  # active - Boolean - If the reminder is actually activated or just stored.
+  # notificationIds - Array (Strings) - System notification IDs assigned to this reminder.
+  # repeat - Boolean - If true then this reminder repeats
+  # repeatDays - Array (Integers) - List of repeating days 0 thru 6. 0 is Monday.
+  # surveyId - String - ID of the survey to use.
+  # surveyTitle - String - Title of the survey. Used in views
   class Entities.Reminder extends Entities.ValidatedModel
     initialize: (options) ->
       @listenTo @, 'visible:false', @visibleFalse
