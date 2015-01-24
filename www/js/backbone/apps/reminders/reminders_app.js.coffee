@@ -22,3 +22,6 @@
     console.log 'force refresh'
     API.list
       forceRefresh: true
+
+  App.vent.on "reminders:reminder:submit", (model, response) ->
+    App.execute "reminder:validate", model, response
