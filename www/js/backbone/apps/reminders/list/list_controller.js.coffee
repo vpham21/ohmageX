@@ -84,6 +84,13 @@
 
           labelView = @getReminderLabelView childView.model
           childView.labelRegion.show labelView
+
+      @listenTo listView, "childview:reminder:submit", (view, response) =>
+        console.log 'childview:reminder:submit model', view.model
+        # close any notices
+        @noticeRegion ''
+        App.vent.trigger "reminders:reminder:submit", view.model, response
+
       @show listView, region: @layout.listRegion
 
 
