@@ -59,6 +59,8 @@
       @toggler = new VisibilityToggleComponent("#reminder-form-#{@model.get('id')}", @$el)
       @repeater = new VisibilityToggleComponent('.repeat-days', @$el)
       @repeater.toggleOn('click', 'input[name="repeat"]', @$el)
+      active = @model.get('active')
+      if active then @$el.find("input[name='active-switch']").prop('checked', true)
     regions:
       surveysRegion: '.surveys-region'
       labelRegion: '.label-region'
