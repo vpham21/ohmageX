@@ -97,6 +97,11 @@
         App.vent.trigger "reminder:validate:fail", reminderModel.validationError
         @noticeRegion reminderModel.validationError
 
+      @listenTo reminders, "change:activationDate change:repeat change:active change:surveyId", (model) =>
+        # reminder validation succeeded
+        App.vent.trigger "reminder:set:success", model
+
+
       @show listView, region: @layout.listRegion
 
 
