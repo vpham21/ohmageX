@@ -73,6 +73,10 @@
           childView.surveysRegion.show surveysView
       @show listView, region: @layout.listRegion
 
+    getReminderSurveysView: (surveys) ->
+      new List.ReminderSurveys
+        collection: surveys
+
     getNoticeView: (notice) ->
       new List.Notice
         model: notice
