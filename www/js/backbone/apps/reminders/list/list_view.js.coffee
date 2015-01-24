@@ -1,10 +1,42 @@
 @Ohmage.module "RemindersApp.List", (List, App, Backbone, Marionette, $, _) ->
 
-  class List.Reminder extends App.Views.ItemView
+  class List.ReminderSurvey extends App.Views.ItemView
+    initialize: ->
+      @listenTo @model, "change:chosen", =>
+        if @model.isChosen()
+          @trigger "chosen:changed", @model
+    template: "reminders/list/_survey"
+    tagName: 'option'
+    attributes: ->
+      options = {}
+      options['value'] = @model.get 'id'
+      if @model.isChosen() then options['selected'] = 'selected'
+      options
+
+  class List.ReminderSurveys extends App.Views.CollectionView
+    initialize: ->
+      @listenTo @, "item:selected", @chooseItem
+    childView: List.ReminderSurvey
+    tagName: 'select'
+    chooseItem: (options) ->
+      console.log 'chooseItem options', options
+      @collection.chooseById @$el.val()
+      console.log 'chosen id', @collection.chosenId()
+    triggers: ->
+      "change": "item:selected"
+
+  class List.ReminderLabel extends App.Views.ItemView
     initialize: ->
       @listenTo @model, 'change', @render
+    template: "reminders/list/_label"
+    tagName: 'span'
+
+  class List.Reminder extends App.Views.Layout
     tagName: 'li'
     template: "reminders/list/_item"
+    regions:
+      surveysRegion: '.surveys-region'
+      labelRegion: '.label-region'
 
   class List.RemindersEmpty extends App.Views.ItemView
     className: "text-container"

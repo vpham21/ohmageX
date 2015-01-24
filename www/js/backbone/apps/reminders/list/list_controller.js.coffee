@@ -11,6 +11,8 @@
       permissions = App.request 'permissions:current'
       # permissions = new Backbone.Model(localNotification: true)
       reminders = App.request 'reminders:current'
+      surveys = App.request 'surveys:saved'
+
       @layout = @getLayoutView permissions
 
       @listenTo permissions, "localnotification:checked", =>
@@ -42,7 +44,38 @@
     listRegion: (reminders) ->
       listView = @getListView reminders
 
+      @listenTo listView, "childview:before:render", (childView) =>
+        # set the surveyId and surveyTitle if they're not set yet.
+        # (they default to `false`)
+        console.log 'childView model surveyId', childView.model.get('surveyId')
+        if childView.model.get('surveyId') is false
+          # this should only execute once per Reminder view.
+          # this always happens before rendering.
+          # declare a new reminderSurveys object.
+          childView.model.reminderSurveys = App.request("reminders:surveys")
+          childView.model.set('surveyId', childView.model.reminderSurveys.at(0).get('id'))
+          childView.model.set('surveyTitle', childView.model.reminderSurveys.at(0).get('title'))
+          @listenTo childView.model.reminderSurveys, "change:chosen", (model) =>
+            if model.isChosen()
+              # this binds reminderSurveys with the Reminders collection.
+              childView.model.set('surveyId', model.get('id'))
+              childView.model.set('surveyTitle', model.get('title'))
+
+      @listenTo listView, "childview:render", (childView) =>
+        console.log 'childview:render'
+        console.log 'reminders', reminders
+        if reminders.length > 0
+          # This event always fires after childview:before:render,
+          # these events are assumed to be synchronous.
+          # Hence the childView.model.reminderSurveys here is assumed to exist.
+          surveysView = @getReminderSurveysView childView.model.reminderSurveys
+          childView.model.reminderSurveys.chooseById childView.model.get('surveyId')
+          childView.surveysRegion.show surveysView
       @show listView, region: @layout.listRegion
+
+    getReminderSurveysView: (surveys) ->
+      new List.ReminderSurveys
+        collection: surveys
 
     getNoticeView: (notice) ->
       new List.Notice
