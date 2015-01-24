@@ -5,6 +5,9 @@
   class List.Reminder extends App.Views.Layout
     tagName: 'li'
     template: "reminders/list/_item"
+    regions:
+      surveysRegion: '.surveys-region'
+      labelRegion: '.label-region'
 
   class List.RemindersEmpty extends App.Views.ItemView
     className: "text-container"
