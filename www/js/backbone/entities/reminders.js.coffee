@@ -112,3 +112,6 @@
 
   App.commands.setHandler "reminder:validate", (model, response) ->
     API.validateReminder model, response
+
+  App.vent.on "reminder:set:success", (reminderModel) ->
+    API.addNotification reminderModel
