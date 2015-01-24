@@ -1,5 +1,8 @@
 @Ohmage.module "RemindersApp.List", (List, App, Backbone, Marionette, $, _) ->
 
+  class List.Notice extends App.Views.ItemView
+    template: "reminders/list/notice"
+
   class List.ReminderSurvey extends App.Views.ItemView
     initialize: ->
       @listenTo @model, "change:chosen", =>
