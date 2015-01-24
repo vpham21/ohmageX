@@ -4,7 +4,18 @@
   # Note: Local notification permissions are a concern for iOS 8+ and Android (if disabled)
   # this requires interaction with the Permissions entity.
 
-  class Entities.Reminder extends Entities.Model
+  class Entities.Reminder extends Entities.ValidatedModel
+    initialize: (options) ->
+    validate: (attrs, options) ->
+      # defining a placeholder value here,
+      # so a property can be passed into the rulesMap.
+      attrs.properties =
+        activationDate: true
+      attrs.response = attrs.activationDate
+      myRulesMap =
+        timestampISO: 'activationDate'
+        futureTimestamp: 'activationDate'
+      super attrs, options, myRulesMap
 
   class Entities.Reminders extends Entities.Collection
     model: Entities.Reminder
