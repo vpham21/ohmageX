@@ -52,7 +52,6 @@
 
   class Entities.Reminders extends Entities.Collection
     model: Entities.Reminder
-
   currentReminders = false
 
   API =
@@ -74,6 +73,19 @@
 
     getReminders: ->
       currentReminders
+
+    validateReminder: (model, response) ->
+      console.log 'validateReminder'
+      if response.repeat and response.repeatDays.length is 0
+        App.vent.trigger "reminder:validate:fail", 'Please select days to repeat this reminder.'
+        return false
+
+      console.log 'validateReminder model', model
+      console.log 'response', response
+      reminder = currentReminders.get(model)
+      reminder.set response, { validate: true }
+      # App.execute "storage:save", 'reminders', currentReminders.toJSON(), =>
+      #   console.log "reminders entity API.validateReminder storage success"
 
     clear: ->
       currentReminders = new Entities.Reminders
