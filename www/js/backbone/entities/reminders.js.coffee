@@ -42,6 +42,10 @@
         currentReminders = new Entities.Reminders
         App.vent.trigger "reminders:saved:init:failure"
 
+    addNewReminder: ->
+      console.log 'addReminder'
+      currentReminders.add({}, { validate: false })
+
     getReminders: ->
       currentReminders
 
