@@ -35,6 +35,9 @@
     tagName: 'span'
 
   class List.Reminder extends App.Views.Layout
+    initialize: ->
+      @listenTo @model, 'visible:false', @toggleOff
+      @listenTo @model, 'visible:true', @toggleOn
     tagName: 'li'
     template: "reminders/list/_item"
     toggleOff: ->
