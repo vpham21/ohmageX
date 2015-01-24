@@ -6,6 +6,8 @@
 
   class Entities.Reminder extends Entities.ValidatedModel
     initialize: (options) ->
+      @listenTo @, 'visible:false', @visibleFalse
+      @listenTo @, 'visible:true', @visibleTrue
     validate: (attrs, options) ->
       # defining a placeholder value here,
       # so a property can be passed into the rulesMap.
