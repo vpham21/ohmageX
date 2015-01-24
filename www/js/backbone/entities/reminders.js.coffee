@@ -6,6 +6,8 @@
 
   class Entities.Reminder extends Entities.ValidatedModel
     initialize: (options) ->
+      @listenTo @, 'visible:false', @visibleFalse
+      @listenTo @, 'visible:true', @visibleTrue
     validate: (attrs, options) ->
       # defining a placeholder value here,
       # so a property can be passed into the rulesMap.
@@ -17,6 +19,12 @@
         futureTimestamp: 'activationDate'
       super attrs, options, myRulesMap
 
+    visibleFalse: ->
+      @set('renderVisible', false)
+    visibleTrue: ->
+      @set('renderVisible', true)
+    defaults:
+      renderVisible: false
   class Entities.Reminders extends Entities.Collection
     model: Entities.Reminder
 
