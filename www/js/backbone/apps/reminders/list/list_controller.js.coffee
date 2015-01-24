@@ -1,3 +1,4 @@
+
 @Ohmage.module "RemindersApp.List", (List, App, Backbone, Marionette, $, _) ->
 
   # RemindersApp renders the Reminders page.
@@ -80,6 +81,9 @@
           surveysView = @getReminderSurveysView childView.model.reminderSurveys
           childView.model.reminderSurveys.chooseById childView.model.get('surveyId')
           childView.surveysRegion.show surveysView
+
+          labelView = @getReminderLabelView childView.model
+          childView.labelRegion.show labelView
       @show listView, region: @layout.listRegion
 
 
