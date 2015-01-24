@@ -37,6 +37,11 @@
   class List.Reminder extends App.Views.Layout
     tagName: 'li'
     template: "reminders/list/_item"
+    onRender: ->
+      # set up
+      @toggler = new VisibilityToggleComponent("#reminder-form-#{@model.get('id')}", @$el)
+      @repeater = new VisibilityToggleComponent('.repeat-days', @$el)
+      @repeater.toggleOn('click', 'input[name="repeat"]', @$el)
     regions:
       surveysRegion: '.surveys-region'
       labelRegion: '.label-region'
