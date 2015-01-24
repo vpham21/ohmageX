@@ -82,6 +82,11 @@
           childView.surveysRegion.show surveysView
       @show listView, region: @layout.listRegion
 
+
+    getReminderLabelView: (reminder) ->
+      new List.ReminderLabel
+        model: reminder
+
     getReminderSurveysView: (surveys) ->
       new List.ReminderSurveys
         collection: surveys
