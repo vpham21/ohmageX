@@ -44,6 +44,7 @@
     initialize: ->
       @listenTo @model, 'visible:false', @toggleOff
       @listenTo @model, 'visible:true', @toggleOn
+      @listenTo @, 'save:reminder', @gatherResponses
     tagName: 'li'
     template: "reminders/list/_item"
     toggleOff: ->
@@ -74,6 +75,12 @@
       if repeat
         @$el.find("input[name='repeat']").prop('checked', true)
         @repeater.show()
+
+    gatherResponses: ->
+      console.log 'gatherResponses'
+      myDate = @$el.find('input[type=date]').val()
+      myTime = @$el.find('input[type=time]').val()
+      offset = new Date().toString().match(/([-\+][0-9]+)\s/)[1]
     regions:
       surveysRegion: '.surveys-region'
       labelRegion: '.label-region'
