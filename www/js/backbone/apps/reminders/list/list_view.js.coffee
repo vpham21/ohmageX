@@ -89,6 +89,15 @@
         repeatDays = _.map($repeatDaysEl, (repeatDayEl) ->
           $(repeatDayEl).val()
         )
+
+      response =
+        activationDate: moment("#{myDate} #{myTime}#{offset}")
+        active: @$el.find("input[name='active-switch']").prop('checked') is true
+        repeat: @$el.find("input[name='repeat']").prop('checked') is true
+        repeatDays: repeatDays
+
+      @trigger "reminder:submit", response
+
     serializeData: ->
       data = @model.toJSON()
       currentDate = moment(data.activationDate)
