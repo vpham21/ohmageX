@@ -109,3 +109,6 @@
 
   App.commands.setHandler "reminders:add:new", ->
     API.addNewReminder()
+
+  App.commands.setHandler "reminder:validate", (model, response) ->
+    API.validateReminder model, response
