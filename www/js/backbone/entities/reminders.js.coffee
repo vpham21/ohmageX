@@ -40,7 +40,16 @@
     visibleTrue: ->
       @set('renderVisible', true)
     defaults:
+      id: _.guid()
+      activationDate: moment.unix( moment() + 120 * 1000)
+      active: false
+      notificationIds: []
+      repeat: false
+      repeatDays: []
       renderVisible: false
+      surveyId: false
+      surveyTitle: false
+
   class Entities.Reminders extends Entities.Collection
     model: Entities.Reminder
 
