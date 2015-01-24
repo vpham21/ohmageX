@@ -90,6 +90,9 @@
       new List.Notice
         model: notice
 
+    getAddView: ->
+      new List.Add
+
     getListView: (reminders) ->
       new List.Reminders
         collection: reminders
