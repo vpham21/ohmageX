@@ -81,6 +81,14 @@
       myDate = @$el.find('input[type=date]').val()
       myTime = @$el.find('input[type=time]').val()
       offset = new Date().toString().match(/([-\+][0-9]+)\s/)[1]
+
+      # get repeat days into an array
+      $repeatDaysEl = @$el.find('input[name="repeatDays[]"]:checked')
+      repeatDays = []
+      if $repeatDaysEl.length > 0
+        repeatDays = _.map($repeatDaysEl, (repeatDayEl) ->
+          $(repeatDayEl).val()
+        )
     serializeData: ->
       data = @model.toJSON()
       currentDate = moment(data.activationDate)
