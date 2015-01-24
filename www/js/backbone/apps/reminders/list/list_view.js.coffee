@@ -64,6 +64,13 @@
     template: "reminders/list/_reminders_empty"
 
   class List.Reminders extends App.Views.CompositeView
+    initialize: ->
+      @listenTo @, "childview:toggle:activate", @toggleSelectedOnly
+
+    toggleSelectedOnly: (options) ->
+      visibleModel = @collection.findWhere(renderVisible: true)
+      if typeof visibleModel isnt "undefined" then visibleModel.trigger('visible:false')
+      options.model.trigger('visible:true')
     tagName: 'nav'
     className: 'list'
     template: "reminders/list/reminders"
