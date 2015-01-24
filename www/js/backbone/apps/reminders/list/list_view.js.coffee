@@ -1,5 +1,11 @@
 @Ohmage.module "RemindersApp.List", (List, App, Backbone, Marionette, $, _) ->
 
+  class List.Add extends App.Views.ItemView
+    template:
+      "reminders/list/add"
+    triggers:
+      "click .add-button": "add:clicked"
+
   class List.Notice extends App.Views.ItemView
     template: "reminders/list/notice"
 
