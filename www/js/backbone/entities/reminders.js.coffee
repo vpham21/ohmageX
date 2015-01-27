@@ -67,6 +67,17 @@
         currentReminders = new Entities.Reminders
         App.vent.trigger "reminders:saved:init:failure"
 
+      @initNotificationEvents()
+
+    initNotificationEvents: ->
+      window.plugin.notification.local.onclick = (id, state, json) ->
+        console.log 'onclick event!'
+        console.log 'id', id
+        result = JSON.parse json
+        console.log "survey/#{result.surveyId}"
+        App.navigate "survey/#{result.surveyId}", trigger: true
+
+
     addNewReminder: ->
       console.log 'addReminder'
       currentReminders.add({}, { validate: false })
