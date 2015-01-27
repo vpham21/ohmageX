@@ -39,16 +39,26 @@
       @set('renderVisible', false)
     visibleTrue: ->
       @set('renderVisible', true)
-    defaults:
-      id: _.guid()
-      activationDate: moment.unix( moment() + 120 * 1000)
-      active: false
-      notificationIds: []
-      repeat: false
-      repeatDays: []
-      renderVisible: false
-      surveyId: false
-      surveyTitle: false
+    defaults: ->
+      # generate a numeric id (not a guid).
+      # The plugin fails if the id is not numeric (Android requirement)
+
+      myId = "9xxxxxxxxxx".replace /[xy]/g, (c) ->
+        r = Math.random() * 9 | 0
+        v = (if c is "x" then r else (r & 0x3 | 0x8))
+        v.toString 10
+
+      return {
+        id: myId
+        activationDate: moment( moment() + 60 * 1000)
+        active: false
+        notificationIds: []
+        repeat: false
+        repeatDays: []
+        renderVisible: false
+        surveyId: false
+        surveyTitle: false
+      }
 
   class Entities.Reminders extends Entities.Collection
     model: Entities.Reminder
@@ -67,6 +77,17 @@
         currentReminders = new Entities.Reminders
         App.vent.trigger "reminders:saved:init:failure"
 
+      @initNotificationEvents()
+
+    initNotificationEvents: ->
+      window.plugin.notification.local.onclick = (id, state, json) ->
+        console.log 'onclick event!'
+        console.log 'id', id
+        result = JSON.parse json
+        console.log "survey/#{result.surveyId}"
+        App.navigate "survey/#{result.surveyId}", trigger: true
+
+
     addNewReminder: ->
       console.log 'addReminder'
       currentReminders.add({}, { validate: false })
@@ -75,16 +96,24 @@
 
       if reminder.get('active') is true
         console.log 'addNotification reminder', reminder
-        window.plugin.notification.cancelAll()
+        window.plugin.notification.local.cancelAll()
+        console.log "reminder.get('surveyId')", reminder.get('surveyId')
+
+        console.log 'reminder notification_id', reminder.get('id')
+
+        metadata = JSON.stringify reminder.toJSON()
 
         window.plugin.notification.local.add
-          id: reminder.get('surveyId')
+          id: reminder.get('id')
           title: "#{reminder.get('surveyTitle')}"
           message: "Take survey #{reminder.get('surveyTitle')}"
           repeat: "weekly"
-          date: new Date(reminder.get('activationDate'))
-        , (->
+          date: reminder.get('activationDate').toDate()
+          autoCancel: false
+          json: metadata
+        , (=>
           console.log "reminder set callback"
+
           # add listener here for the reminder action.
           # use the same ID as this generated ID.
           # Save the generated ID.
