@@ -99,6 +99,7 @@
           message: "Take survey #{reminder.get('surveyTitle')}"
           repeat: "weekly"
           date: reminder.get('activationDate').toDate()
+          autoCancel: false
           console.log "reminder set callback"
           # add listener here for the reminder action.
           # use the same ID as this generated ID.
