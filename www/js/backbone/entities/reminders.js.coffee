@@ -86,7 +86,7 @@
 
       if reminder.get('active') is true
         console.log 'addNotification reminder', reminder
-        window.plugin.notification.cancelAll()
+        window.plugin.notification.local.cancelAll()
 
         window.plugin.notification.local.add
           id: reminder.get('surveyId')
