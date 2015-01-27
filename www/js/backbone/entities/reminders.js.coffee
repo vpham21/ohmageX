@@ -98,8 +98,7 @@
           title: "#{reminder.get('surveyTitle')}"
           message: "Take survey #{reminder.get('surveyTitle')}"
           repeat: "weekly"
-          date: new Date(reminder.get('activationDate'))
-        , (->
+          date: reminder.get('activationDate').toDate()
           console.log "reminder set callback"
           # add listener here for the reminder action.
           # use the same ID as this generated ID.
