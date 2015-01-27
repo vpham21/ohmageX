@@ -48,6 +48,18 @@
         v = (if c is "x" then r else (r & 0x3 | 0x8))
         v.toString 10
 
+      return {
+        id: myId
+        activationDate: moment( moment() + 60 * 1000)
+        active: false
+        notificationIds: []
+        repeat: false
+        repeatDays: []
+        renderVisible: false
+        surveyId: false
+        surveyTitle: false
+      }
+
   class Entities.Reminders extends Entities.Collection
     model: Entities.Reminder
   currentReminders = false
