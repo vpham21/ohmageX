@@ -87,6 +87,11 @@
       if reminder.get('active') is true
         console.log 'addNotification reminder', reminder
         window.plugin.notification.local.cancelAll()
+        console.log "reminder.get('surveyId')", reminder.get('surveyId')
+
+        console.log 'reminder notification_id', reminder.get('id')
+
+        metadata = JSON.stringify reminder.toJSON()
 
         window.plugin.notification.local.add
           id: reminder.get('surveyId')
