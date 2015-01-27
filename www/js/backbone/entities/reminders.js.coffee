@@ -39,16 +39,14 @@
       @set('renderVisible', false)
     visibleTrue: ->
       @set('renderVisible', true)
-    defaults:
-      id: _.guid()
-      activationDate: moment.unix( moment() + 120 * 1000)
-      active: false
-      notificationIds: []
-      repeat: false
-      repeatDays: []
-      renderVisible: false
-      surveyId: false
-      surveyTitle: false
+    defaults: ->
+      # generate a numeric id (not a guid).
+      # The plugin fails if the id is not numeric (Android requirement)
+
+      myId = "9xxxxxxxxxx".replace /[xy]/g, (c) ->
+        r = Math.random() * 9 | 0
+        v = (if c is "x" then r else (r & 0x3 | 0x8))
+        v.toString 10
 
   class Entities.Reminders extends Entities.Collection
     model: Entities.Reminder
