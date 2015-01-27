@@ -100,7 +100,10 @@
           repeat: "weekly"
           date: reminder.get('activationDate').toDate()
           autoCancel: false
+          json: metadata
+        , (=>
           console.log "reminder set callback"
+
           # add listener here for the reminder action.
           # use the same ID as this generated ID.
           # Save the generated ID.
