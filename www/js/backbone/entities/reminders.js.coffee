@@ -104,7 +104,7 @@
         metadata = JSON.stringify reminder.toJSON()
 
         window.plugin.notification.local.add
-          id: reminder.get('surveyId')
+          id: reminder.get('id')
           title: "#{reminder.get('surveyTitle')}"
           message: "Take survey #{reminder.get('surveyTitle')}"
           repeat: "weekly"
