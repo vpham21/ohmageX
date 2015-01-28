@@ -65,13 +65,12 @@
         console.log 'childview:render'
         console.log 'reminders', reminders
         if reminders.length > 0
-          # This event always fires after childview:before:render,
-          # these events are assumed to be synchronous.
-          # Hence the childView.model.reminderSurveys here is assumed to exist.
-          surveysView = @getReminderSurveysView childView.model.reminderSurveys
-          childView.model.reminderSurveys.chooseById childView.model.get('surveyId')
+          surveysView = @getReminderSurveysView App.request("reminders:surveys")
           childView.surveysRegion.show surveysView
 
+          @listenTo surveysView, "survey:selected", (model) ->
+            console.log 'survey:selected model', model
+            childView.model.trigger "survey:selected", model
           labelView = @getReminderLabelView childView.model
           childView.labelRegion.show labelView
 
