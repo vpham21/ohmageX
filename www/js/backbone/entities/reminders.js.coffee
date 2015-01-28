@@ -18,6 +18,12 @@
     initialize: (options) ->
       @listenTo @, 'visible:false', @visibleFalse
       @listenTo @, 'visible:true', @visibleTrue
+      @listenTo @, 'survey:selected', @selectSurvey
+
+    selectSurvey: (surveyModel) ->
+      @set('surveyId', surveyModel.get('id'))
+      @set('surveyTitle', surveyModel.get('title'))
+
     validate: (attrs, options) ->
       # defining a placeholder value here,
       # so a property can be passed into the rulesMap.
