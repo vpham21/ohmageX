@@ -23,9 +23,9 @@
     childView: List.ReminderSurvey
     tagName: 'select'
     chooseItem: (options) ->
-      console.log 'chooseItem options', options
-      @collection.chooseById @$el.val()
-      console.log 'chosen id', @collection.chosenId()
+      selected =  @$el.val()
+      myModel = options.collection.findWhere(id: selected)
+      @trigger "survey:selected", myModel
     triggers: ->
       "change": "item:selected"
 
