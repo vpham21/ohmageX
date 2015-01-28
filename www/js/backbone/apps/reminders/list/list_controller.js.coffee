@@ -71,6 +71,9 @@
           @listenTo surveysView, "survey:selected", (model) ->
             console.log 'survey:selected model', model
             childView.model.trigger "survey:selected", model
+
+          surveysView.trigger "option:select", childView.model.get('surveyId')
+
           labelView = @getReminderLabelView childView.model
           childView.labelRegion.show labelView
 
