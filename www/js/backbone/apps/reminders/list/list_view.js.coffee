@@ -10,27 +10,25 @@
     template: "reminders/list/notice"
 
   class List.ReminderSurvey extends App.Views.ItemView
-    initialize: ->
-      @listenTo @model, "change:chosen", =>
-        if @model.isChosen()
-          @trigger "chosen:changed", @model
     template: "reminders/list/_survey"
     tagName: 'option'
     attributes: ->
       options = {}
       options['value'] = @model.get 'id'
-      if @model.isChosen() then options['selected'] = 'selected'
       options
 
   class List.ReminderSurveys extends App.Views.CollectionView
     initialize: ->
       @listenTo @, "item:selected", @chooseItem
+      @listenTo @, "option:select", @optionSelect
     childView: List.ReminderSurvey
     tagName: 'select'
     chooseItem: (options) ->
-      console.log 'chooseItem options', options
-      @collection.chooseById @$el.val()
-      console.log 'chosen id', @collection.chosenId()
+      selected =  @$el.val()
+      myModel = options.collection.findWhere(id: selected)
+      @trigger "survey:selected", myModel
+    optionSelect: (id) ->
+      @$el.val(id)
     triggers: ->
       "change": "item:selected"
 

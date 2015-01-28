@@ -13,17 +13,17 @@
   # surveyId - String - ID of the survey to use.
   # surveyTitle - String - Title of the survey. Used in views
 
-  class Entities.ReminderSurveys extends Entities.NavsCollection
-    chosenId: ->
-      (@findWhere(chosen: true) or @first()).get('id')
-    chooseById: (nav) ->
-      @choose (@findWhere(id: nav) or @first())
-
 
   class Entities.Reminder extends Entities.ValidatedModel
     initialize: (options) ->
       @listenTo @, 'visible:false', @visibleFalse
       @listenTo @, 'visible:true', @visibleTrue
+      @listenTo @, 'survey:selected', @selectSurvey
+
+    selectSurvey: (surveyModel) ->
+      @set('surveyId', surveyModel.get('id'))
+      @set('surveyTitle', surveyModel.get('title'))
+
     validate: (attrs, options) ->
       # defining a placeholder value here,
       # so a property can be passed into the rulesMap.
