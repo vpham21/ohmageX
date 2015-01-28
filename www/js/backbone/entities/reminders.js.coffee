@@ -13,12 +13,6 @@
   # surveyId - String - ID of the survey to use.
   # surveyTitle - String - Title of the survey. Used in views
 
-  class Entities.ReminderSurveys extends Entities.NavsCollection
-    chosenId: ->
-      (@findWhere(chosen: true) or @first()).get('id')
-    chooseById: (nav) ->
-      @choose (@findWhere(id: nav) or @first())
-
 
   class Entities.Reminder extends Entities.ValidatedModel
     initialize: (options) ->

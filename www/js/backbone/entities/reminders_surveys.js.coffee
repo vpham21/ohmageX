@@ -3,6 +3,10 @@
   # Reminders Surveys entity.
   # Uses surveys to generate a list for the Reminders Survey Selector.
 
+  class Entities.ReminderSurvey extends Entities.Model
+
+  class Entities.ReminderSurveys extends Entities.Collection
+    model: Entities.ReminderSurvey
 
   API =
 
