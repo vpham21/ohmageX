@@ -20,12 +20,15 @@
   class List.ReminderSurveys extends App.Views.CollectionView
     initialize: ->
       @listenTo @, "item:selected", @chooseItem
+      @listenTo @, "option:select", @optionSelect
     childView: List.ReminderSurvey
     tagName: 'select'
     chooseItem: (options) ->
       selected =  @$el.val()
       myModel = options.collection.findWhere(id: selected)
       @trigger "survey:selected", myModel
+    optionSelect: (id) ->
+      @$el.val(id)
     triggers: ->
       "change": "item:selected"
 
