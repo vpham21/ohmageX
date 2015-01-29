@@ -22,7 +22,7 @@
     serializeData: ->
       data = @model.toJSON()
       console.log 'Steps.BeforeSubmission data', data
-      data.completeTitle = 'Survey Submit'
+      data.completeTitle = 'Uploading Survey...'
       data
 
   class Steps.AfterSubmission extends App.Views.ItemView

@@ -25,7 +25,7 @@
         label: currentStep.get 'skipLabel'
 
     prevEntity: (stepType, stepId) ->
-      disabled = stepType is "intro" or stepType is "afterSurveySubmit"
+      disabled = stepType in ["intro", "beforeSurveySubmit", "afterSurveySubmit"]
 
       new Entities.StepButtonPrev
         disabled: disabled

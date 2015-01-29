@@ -96,6 +96,17 @@
           else
             App.vent.trigger "survey:response:get", @surveyId, @stepId
 
+      @listenTo nextView, "render", =>
+        myType = App.request "flow:type", @stepId
+
+        if myType is "beforeSurveySubmit"
+          # since the beforeSurveySubmit is an interstitial loading page,
+          # immediately perform the next action when this is rendered.
+          # Since it's the step button render event, this only happens once,
+          # preventing any infinite loops if the upload results in an error.
+          App.vent.trigger "survey:beforesubmit:next:clicked", @surveyId, @stepId
+
+
       @show nextView, region: @layout.nextButtonRegion
 
     getProgressView: (progress) ->
