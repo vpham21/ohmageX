@@ -23,6 +23,11 @@
     API.list
       forceRefresh: true
 
+  App.vent.on "reminders:survey:new", (surveyId) ->
+    App.navigate "reminders"
+    API.list
+      surveyId: surveyId
+
   App.vent.on "reminders:reminder:submit", (model, response) ->
     App.execute "reminder:validate", model, response
 

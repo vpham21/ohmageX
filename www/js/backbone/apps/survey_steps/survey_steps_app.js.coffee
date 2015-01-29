@@ -79,6 +79,9 @@
   App.vent.on "survey:aftersubmit:next:clicked", (surveyId, stepId) ->
     App.vent.trigger "survey:exit", surveyId
 
+  App.vent.on "reminders:survey:new", (surveyId) ->
+    App.vent.trigger "survey:reset", surveyId
+
   App.vent.on "response:set:success", (response, surveyId, stepId) ->
     API.goNext surveyId, stepId
 

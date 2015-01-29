@@ -8,6 +8,7 @@
 
       _.defaults options,
         forceRefresh: false
+        surveyId: false
 
       permissions = App.request 'permissions:current'
       # permissions = new Backbone.Model(localNotification: true)
@@ -23,14 +24,22 @@
         @listenTo permissions, "localnotification:registered", =>
           App.execute "reminders:force:refresh"
 
+      # @surveyId is used to populate the reminders list with a new reminder,
+      # with a specific survey selected. Currently used from the survey
+      # completion page to encourage users to create a new reminder.
+      @surveyId = options.surveyId
+
       @listenTo @layout, "show", =>
         console.log "showing layout"
         if permissions.get('localNotification') is true
+
           if surveys.length is 0
             @noticeRegion 'No saved surveys! You must have saved surveys in order to create reminders.'
           else
             @addRegion reminders
             @listRegion reminders
+            if @surveyId then App.execute("reminders:add:new")
+
         else
           # attempt to register permissions here if it's false.
           App.execute "permissions:register:localnotifications"
@@ -59,7 +68,8 @@
           # set the surveyId and surveyTitle if they're not set yet.
           # (they default to `false`)
           reminderSurveys = App.request("reminders:surveys")
-          childView.model.trigger "survey:selected", reminderSurveys.at(0)
+          selectedSurvey = if @surveyId then reminderSurveys.findWhere(id: @surveyId) else reminderSurveys.at(0)
+          childView.model.trigger "survey:selected", selectedSurvey
 
       @listenTo listView, "childview:render", (childView) =>
         console.log 'childview:render'
@@ -76,6 +86,12 @@
 
           labelView = @getReminderLabelView childView.model
           childView.labelRegion.show labelView
+
+          if @surveyId and childView.model.get('surveyId') is @surveyId
+            childView.model.trigger('visible:true')
+            # ensure the survey is populated with an ID only once.
+            @surveyId = false
+
 
       @listenTo listView, "childview:reminder:submit", (view, response) =>
         console.log 'childview:reminder:submit model', view.model
