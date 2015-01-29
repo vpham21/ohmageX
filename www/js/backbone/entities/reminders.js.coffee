@@ -153,6 +153,22 @@
         console.log "reminders entity API.deleteReminder storage success"
       )
 
+    removeCampaignReminders: (campaign_urn) ->
+      console.log 'removedCampaignReminders urn', campaign_urn
+
+      console.log 'currentReminders', currentReminders.toJSON()
+
+      removed = currentReminders.where
+        campaign: campaign_urn
+
+      console.log 'removed campaign reminders', removed
+      currentReminders.remove removed
+
+      @updateLocal( =>
+        console.log "campaign reminders removed from localStorage"
+        App.vent.trigger "reminders:campaign:remove:success", campaign_urn
+      )
+
     updateLocal: (callback) ->
       # update localStorage index reminders with the current version of campaignsSaved entity
       App.execute "storage:save", 'reminders', currentReminders.toJSON(), callback
