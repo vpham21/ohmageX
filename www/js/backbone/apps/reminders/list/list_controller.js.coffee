@@ -24,6 +24,11 @@
         @listenTo permissions, "localnotification:registered", =>
           App.execute "reminders:force:refresh"
 
+      # @surveyId is used to populate the reminders list with a new reminder,
+      # with a specific survey selected. Currently used from the survey
+      # completion page to encourage users to create a new reminder.
+      @surveyId = options.surveyId
+
       @listenTo @layout, "show", =>
         console.log "showing layout"
         if permissions.get('localNotification') is true
