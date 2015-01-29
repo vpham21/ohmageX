@@ -23,6 +23,7 @@
     selectSurvey: (surveyModel) ->
       @set('surveyId', surveyModel.get('id'))
       @set('surveyTitle', surveyModel.get('title'))
+      @set('campaign', surveyModel.get('campaign_urn'))
 
     validate: (attrs, options) ->
       # defining a placeholder value here,
