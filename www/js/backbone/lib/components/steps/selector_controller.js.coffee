@@ -14,6 +14,11 @@
       @stepId = stepId
 
       myView = @selectView entity, type
+
+      if type is "afterSurveySubmit"
+        @listenTo myView, 'new:reminder', =>
+          App.vent.trigger "reminders:survey:new", @surveyId
+
       @showSelectedView myView
 
     selectView: (entity, type) ->
