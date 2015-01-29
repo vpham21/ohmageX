@@ -144,6 +144,10 @@
       if App.device.isNative
         window.plugin.notification.local.cancel model.get('id')
 
+    updateLocal: (callback) ->
+      # update localStorage index reminders with the current version of campaignsSaved entity
+      App.execute "storage:save", 'reminders', currentReminders.toJSON(), callback
+
     clear: ->
       currentReminders = new Entities.Reminders
 
