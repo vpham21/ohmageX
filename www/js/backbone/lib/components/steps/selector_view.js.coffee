@@ -25,6 +25,16 @@
       data.completeTitle = 'Uploading Survey...'
       data
 
+  class Steps.AfterReminder extends App.Views.ItemView
+    className: "text-container"
+    template: "steps/afterreminder"
+    serializeData: ->
+      data = @model.toJSON()
+      console.log 'Steps.AfterReminder data', data
+      data
+    triggers:
+      "click .reminder-create": "new:reminder"
+
   class Steps.AfterSubmission extends App.Views.ItemView
     className: "text-container"
     template: "steps/aftersubmission"
