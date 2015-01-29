@@ -68,7 +68,8 @@
           # set the surveyId and surveyTitle if they're not set yet.
           # (they default to `false`)
           reminderSurveys = App.request("reminders:surveys")
-          childView.model.trigger "survey:selected", reminderSurveys.at(0)
+          selectedSurvey = if @surveyId then reminderSurveys.findWhere(id: @surveyId) else reminderSurveys.at(0)
+          childView.model.trigger "survey:selected", selectedSurvey
 
       @listenTo listView, "childview:render", (childView) =>
         console.log 'childview:render'
