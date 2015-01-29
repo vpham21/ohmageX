@@ -8,6 +8,7 @@
 
       _.defaults options,
         forceRefresh: false
+        surveyId: false
 
       permissions = App.request 'permissions:current'
       # permissions = new Backbone.Model(localNotification: true)
