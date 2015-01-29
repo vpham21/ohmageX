@@ -136,6 +136,14 @@
       reminder.set response, { validate: true }
       # App.execute "storage:save", 'reminders', currentReminders.toJSON(), =>
       #   console.log "reminders entity API.validateReminder storage success"
+    deleteReminder: (model) ->
+
+      console.log 'deleteReminder'
+      myReminder = currentReminders.get model
+      currentReminders.remove myReminder
+
+      if App.device.isNative
+        window.plugin.notification.local.cancel model.get('id')
 
     clear: ->
       currentReminders = new Entities.Reminders
@@ -159,6 +167,9 @@
 
   App.commands.setHandler "reminders:add:new", ->
     API.addNewReminder()
+
+  App.commands.setHandler "reminder:delete", (model) ->
+    API.deleteReminder model
 
   App.commands.setHandler "reminder:validate", (model, response) ->
     API.validateReminder model, response
