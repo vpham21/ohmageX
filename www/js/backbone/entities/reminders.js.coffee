@@ -202,5 +202,8 @@
   App.commands.setHandler "reminder:validate", (model, response) ->
     API.validateReminder model, response
 
+  App.vent.on "campaign:saved:remove", (campaign_urn) ->
+    if currentReminders.length > 0 then API.removeCampaignReminders(campaign_urn)
+
   App.vent.on "reminder:set:success", (reminderModel) ->
     API.addNotification reminderModel
