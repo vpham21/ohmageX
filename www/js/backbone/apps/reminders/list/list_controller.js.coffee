@@ -32,11 +32,14 @@
       @listenTo @layout, "show", =>
         console.log "showing layout"
         if permissions.get('localNotification') is true
+
           if surveys.length is 0
             @noticeRegion 'No saved surveys! You must have saved surveys in order to create reminders.'
           else
             @addRegion reminders
             @listRegion reminders
+            if @surveyId then App.execute("reminders:add:new")
+
         else
           # attempt to register permissions here if it's false.
           App.execute "permissions:register:localnotifications"
