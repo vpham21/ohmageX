@@ -69,8 +69,7 @@
       App.request "storage:get", 'reminders', ((result) =>
         # saved reminders retrieved from raw JSON.
         console.log 'saved reminders retrieved from storage'
-        # currentReminders = new Entities.Reminders result
-        currentReminders = new Entities.Reminders
+        currentReminders = new Entities.Reminders result
         App.vent.trigger "reminders:saved:init:success"
       ), =>
         console.log 'saved reminders not retrieved from storage'
