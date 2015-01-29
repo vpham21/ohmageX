@@ -133,8 +133,11 @@
       console.log 'response', response
       reminder = currentReminders.get(model)
       reminder.set response, { validate: true }
-      # App.execute "storage:save", 'reminders', currentReminders.toJSON(), =>
-      #   console.log "reminders entity API.validateReminder storage success"
+
+      @updateLocal( =>
+        console.log "reminders entity API.validateReminder storage success"
+      )
+
     deleteReminder: (model) ->
 
       console.log 'deleteReminder'
