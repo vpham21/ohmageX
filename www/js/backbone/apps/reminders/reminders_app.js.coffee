@@ -25,3 +25,6 @@
 
   App.vent.on "reminders:reminder:submit", (model, response) ->
     App.execute "reminder:validate", model, response
+
+  App.vent.on "reminders:reminder:delete", (model) ->
+    App.execute "reminder:delete", model

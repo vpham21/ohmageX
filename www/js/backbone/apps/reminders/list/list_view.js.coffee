@@ -107,6 +107,7 @@
       labelRegion: '.label-region'
     triggers:
       "click .toggler-button": "toggle:activate"
+      "click .delete-button": "delete:reminder"
       "click .save-button": "save:reminder"
 
   class List.RemindersEmpty extends App.Views.ItemView

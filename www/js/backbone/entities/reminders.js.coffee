@@ -69,8 +69,7 @@
       App.request "storage:get", 'reminders', ((result) =>
         # saved reminders retrieved from raw JSON.
         console.log 'saved reminders retrieved from storage'
-        # currentReminders = new Entities.Reminders result
-        currentReminders = new Entities.Reminders
+        currentReminders = new Entities.Reminders result
         App.vent.trigger "reminders:saved:init:success"
       ), =>
         console.log 'saved reminders not retrieved from storage'
@@ -96,7 +95,7 @@
 
       if reminder.get('active') is true
         console.log 'addNotification reminder', reminder
-        window.plugin.notification.local.cancelAll()
+
         console.log "reminder.get('surveyId')", reminder.get('surveyId')
 
         console.log 'reminder notification_id', reminder.get('id')
@@ -134,8 +133,27 @@
       console.log 'response', response
       reminder = currentReminders.get(model)
       reminder.set response, { validate: true }
-      # App.execute "storage:save", 'reminders', currentReminders.toJSON(), =>
-      #   console.log "reminders entity API.validateReminder storage success"
+
+      @updateLocal( =>
+        console.log "reminders entity API.validateReminder storage success"
+      )
+
+    deleteReminder: (model) ->
+
+      console.log 'deleteReminder'
+      myReminder = currentReminders.get model
+      currentReminders.remove myReminder
+
+      if App.device.isNative
+        window.plugin.notification.local.cancel model.get('id')
+
+      @updateLocal( =>
+        console.log "reminders entity API.deleteReminder storage success"
+      )
+
+    updateLocal: (callback) ->
+      # update localStorage index reminders with the current version of campaignsSaved entity
+      App.execute "storage:save", 'reminders', currentReminders.toJSON(), callback
 
     clear: ->
       currentReminders = new Entities.Reminders
@@ -159,6 +177,9 @@
 
   App.commands.setHandler "reminders:add:new", ->
     API.addNewReminder()
+
+  App.commands.setHandler "reminder:delete", (model) ->
+    API.deleteReminder model
 
   App.commands.setHandler "reminder:validate", (model, response) ->
     API.validateReminder model, response

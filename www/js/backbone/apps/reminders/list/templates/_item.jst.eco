@@ -22,5 +22,6 @@
     <li><input type="checkbox" value="6" name="repeatDays[]"> sunday</li>
   </ul>
   </fieldset>
+  <button type="button" class="delete-button">Delete This Reminder</button>
   <button type="button" class="save-button">Save Reminder</button>
 </form>
