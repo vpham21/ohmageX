@@ -58,6 +58,7 @@
         renderVisible: false
         surveyId: false
         surveyTitle: false
+        campaign: false
       }
 
   class Entities.Reminders extends Entities.Collection
