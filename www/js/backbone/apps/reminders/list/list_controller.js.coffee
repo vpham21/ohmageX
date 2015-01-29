@@ -83,6 +83,12 @@
         @noticeRegion ''
         App.vent.trigger "reminders:reminder:submit", view.model, response
 
+      @listenTo listView, "childview:delete:reminder", (view, response) =>
+        console.log 'childview:reminder:delete model', view.model
+        # close any notices
+        @noticeRegion ''
+        App.vent.trigger "reminders:reminder:delete", view.model
+
       @listenTo reminders, "invalid", (reminderModel) =>
         # reminder submit validation failed
         console.log "reminder invalid, errors are", reminderModel.validationError
