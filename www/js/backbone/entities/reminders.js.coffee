@@ -3,6 +3,7 @@
   # Reminders entity.
   # Note: Local notification permissions are a concern for iOS 8+ and Android (if disabled)
   # this requires interaction with the Permissions entity.
+  # This interacts with the system notifications entity.
 
   # id - String - Unique ID for the reminder. Generated per reminder.
   # activationDate - Moment() object - When the reminder is activated.
