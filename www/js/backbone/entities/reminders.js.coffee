@@ -44,13 +44,8 @@
       # generate a numeric id (not a guid).
       # The plugin fails if the id is not numeric (Android requirement)
 
-      myId = "9xxxxxxxxxx".replace /[xy]/g, (c) ->
-        r = Math.random() * 9 | 0
-        v = (if c is "x" then r else (r & 0x3 | 0x8))
-        v.toString 10
-
       return {
-        id: myId
+        id: _.guid()
         activationDate: moment( moment() + 60 * 1000)
         active: false
         notificationIds: []
