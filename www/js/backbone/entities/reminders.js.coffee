@@ -134,7 +134,7 @@
       console.log 'validateReminder model', model
       console.log 'response', response
       reminder = currentReminders.get(model)
-      reminder.set response, { validate: true }
+      reminder.set response, { validate: response.active }
 
       @updateLocal( =>
         console.log "reminders entity API.validateReminder storage success"

@@ -53,6 +53,13 @@
       @toggler.show()
       console.log 'toggleOn'
       @$el.find('.toggler-button .my-icon').html('&#9660;')
+    selectLabel: (e) ->
+      console.log 'selecteLabels'
+      $label = $(e.currentTarget)
+      $input = $label.prev()
+      checked = $input.prop('checked')
+      $input.prop('checked', !checked)
+
     onRender: ->
       # set up
       @toggler = new VisibilityToggleComponent("#reminder-form-#{@model.get('id')}", @$el)
@@ -73,6 +80,8 @@
       if repeat
         @$el.find("input[name='repeat']").prop('checked', true)
         @repeater.show()
+    events: ->
+      "click .repeat-days label": "selectLabel"
 
     gatherResponses: ->
       console.log 'gatherResponses'
