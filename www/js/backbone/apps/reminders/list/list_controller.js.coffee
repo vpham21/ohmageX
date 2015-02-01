@@ -11,7 +11,7 @@
         surveyId: false
 
       permissions = App.request 'permissions:current'
-      # permissions = new Backbone.Model(localNotification: true)
+
       reminders = App.request 'reminders:current'
       surveys = App.request 'surveys:saved'
 

@@ -3,6 +3,7 @@
   # Reminders entity.
   # Note: Local notification permissions are a concern for iOS 8+ and Android (if disabled)
   # this requires interaction with the Permissions entity.
+  # This interacts with the system notifications entity.
 
   # id - String - Unique ID for the reminder. Generated per reminder.
   # activationDate - Moment() object - When the reminder is activated.
@@ -44,13 +45,8 @@
       # generate a numeric id (not a guid).
       # The plugin fails if the id is not numeric (Android requirement)
 
-      myId = "9xxxxxxxxxx".replace /[xy]/g, (c) ->
-        r = Math.random() * 9 | 0
-        v = (if c is "x" then r else (r & 0x3 | 0x8))
-        v.toString 10
-
       return {
-        id: myId
+        id: _.guid()
         activationDate: moment( moment() + 60 * 1000)
         active: false
         notificationIds: []
@@ -78,16 +74,6 @@
         currentReminders = new Entities.Reminders
         App.vent.trigger "reminders:saved:init:failure"
 
-      @initNotificationEvents()
-
-    initNotificationEvents: ->
-      window.plugin.notification.local.onclick = (id, state, json) ->
-        console.log 'onclick event!'
-        console.log 'id', id
-        result = JSON.parse json
-        console.log "survey/#{result.surveyId}"
-        App.navigate "survey/#{result.surveyId}", trigger: true
-
 
     addNewReminder: ->
       console.log 'addReminder'
@@ -96,30 +82,10 @@
     addNotification: (reminder) ->
 
       if reminder.get('active') is true
-        console.log 'addNotification reminder', reminder
-
-        console.log "reminder.get('surveyId')", reminder.get('surveyId')
-
-        console.log 'reminder notification_id', reminder.get('id')
-
-        metadata = JSON.stringify reminder.toJSON()
-
-        window.plugin.notification.local.add
-          id: reminder.get('id')
-          title: "#{reminder.get('surveyTitle')}"
-          message: "Take survey #{reminder.get('surveyTitle')}"
-          repeat: "weekly"
-          date: reminder.get('activationDate').toDate()
-          autoCancel: false
-          json: metadata
-        , (=>
-          console.log "reminder set callback"
-
-          # add listener here for the reminder action.
-          # use the same ID as this generated ID.
-          # Save the generated ID.
-          # App.execute "dialog:alert", "reminder set"
-        ), @
+        App.execute "system:notifications:add", reminder
+      else
+        # This reminder has been disabled. Be sure to deactivate its notifications.
+        App.execute "system:notifications:delete", reminder.get('notificationIds')
 
 
     getReminders: ->
@@ -146,8 +112,7 @@
       myReminder = currentReminders.get model
       currentReminders.remove myReminder
 
-      if App.device.isNative
-        window.plugin.notification.local.cancel model.get('id')
+      App.execute "system:notifications:delete", model.get('notificationIds')
 
       @updateLocal( =>
         console.log "reminders entity API.deleteReminder storage success"
@@ -181,7 +146,6 @@
         App.vent.trigger "reminders:saved:cleared"
 
   App.vent.on "surveys:saved:load:complete", ->
-    # if App.device.isNative
     API.init()
 
   App.commands.setHandler "reminders:saved:clear", ->
@@ -197,6 +161,10 @@
     API.addNewReminder()
 
   App.commands.setHandler "reminder:delete", (model) ->
+    API.deleteReminder model
+
+  App.commands.setHandler "reminder:delete:json", (json) ->
+    model = new Entities.Reminder json
     API.deleteReminder model
 
   App.commands.setHandler "reminder:validate", (model, response) ->
