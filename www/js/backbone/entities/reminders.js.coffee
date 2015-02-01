@@ -166,7 +166,6 @@
         App.vent.trigger "reminders:saved:cleared"
 
   App.vent.on "surveys:saved:load:complete", ->
-    # if App.device.isNative
     API.init()
 
   App.commands.setHandler "reminders:saved:clear", ->
