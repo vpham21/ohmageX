@@ -112,8 +112,7 @@
       myReminder = currentReminders.get model
       currentReminders.remove myReminder
 
-      if App.device.isNative
-        window.plugin.notification.local.cancel model.get('id')
+      App.execute "system:notifications:delete", model.get('notificationIds')
 
       @updateLocal( =>
         console.log "reminders entity API.deleteReminder storage success"
