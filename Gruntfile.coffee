@@ -187,8 +187,7 @@ module.exports = (grunt) ->
             "media",
             "media-capture",
             "splashscreen",
-            "de.appplant.cordova.plugin.local-notification"
-            # "https://github.com/katzer/cordova-plugin-local-notifications.git"
+            "https://github.com/katzer/cordova-plugin-local-notifications.git"
           ]
 
       build_ios:
