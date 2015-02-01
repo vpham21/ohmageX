@@ -83,6 +83,9 @@
 
       if reminder.get('active') is true
         App.execute "system:notifications:add", reminder
+      else
+        # This reminder has been disabled. Be sure to deactivate its notifications.
+        App.execute "system:notifications:delete", reminder.get('notificationIds')
 
 
     getReminders: ->
