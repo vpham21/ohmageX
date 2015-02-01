@@ -70,16 +70,17 @@
       active = @model.get('active')
       if active then @$el.find("input[name='active-switch']").prop('checked', true)
 
-      repeatDays = @model.get('repeatDays')
-      if repeatDays.length > 0
-        # pre-populate the fields.
-        _.each(repeatDays, (repeatDay) ->
-          @$el.find("input[name='repeatDays'][value='#{repeatDay}']").prop('checked', true)
-        )
       repeat = @model.get('repeat')
+
       if repeat
+        # pre-populate repeating fields.
         @$el.find("input[name='repeat']").prop('checked', true)
         @repeater.show()
+        repeatDays = @model.get('repeatDays')
+        if repeatDays.length > 0
+          _.each(repeatDays, (repeatDay) =>
+            @$el.find("input[name='repeatDays[]'][value='#{repeatDay}']").prop('checked', true)
+          )
     events: ->
       "click .repeat-days label": "selectLabel"
 
@@ -89,10 +90,12 @@
       myTime = @$el.find('input[type=time]').val()
       offset = new Date().toString().match(/([-\+][0-9]+)\s/)[1]
 
+      myRepeat = @$el.find("input[name='repeat']").prop('checked') is true
+
       # get repeat days into an array
       $repeatDaysEl = @$el.find('input[name="repeatDays[]"]:checked')
       repeatDays = []
-      if $repeatDaysEl.length > 0
+      if myRepeat and $repeatDaysEl.length > 0
         repeatDays = _.map($repeatDaysEl, (repeatDayEl) ->
           $(repeatDayEl).val()
         )
@@ -100,7 +103,7 @@
       response =
         activationDate: moment("#{myDate} #{myTime}#{offset}")
         active: @$el.find("input[name='active-switch']").prop('checked') is true
-        repeat: @$el.find("input[name='repeat']").prop('checked') is true
+        repeat: myRepeat
         repeatDays: repeatDays
 
       @trigger "reminder:submit", response
