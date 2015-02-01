@@ -82,30 +82,7 @@
     addNotification: (reminder) ->
 
       if reminder.get('active') is true
-        console.log 'addNotification reminder', reminder
-
-        console.log "reminder.get('surveyId')", reminder.get('surveyId')
-
-        console.log 'reminder notification_id', reminder.get('id')
-
-        metadata = JSON.stringify reminder.toJSON()
-
-        window.plugin.notification.local.add
-          id: reminder.get('id')
-          title: "#{reminder.get('surveyTitle')}"
-          message: "Take survey #{reminder.get('surveyTitle')}"
-          repeat: "weekly"
-          date: reminder.get('activationDate').toDate()
-          autoCancel: false
-          json: metadata
-        , (=>
-          console.log "reminder set callback"
-
-          # add listener here for the reminder action.
-          # use the same ID as this generated ID.
-          # Save the generated ID.
-          # App.execute "dialog:alert", "reminder set"
-        ), @
+        App.execute "system:notifications:add", reminder
 
 
     getReminders: ->
