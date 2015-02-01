@@ -74,6 +74,10 @@
   App.reqres.setHandler "permissions:current", ->
     if App.device.isNative
       API.getPermissions()
+    else
+      permissions = new Entities.Permission
+        localNotification: true
+
 
   App.commands.setHandler "permissions:register:localnotifications", ->
     if App.device.isNative
