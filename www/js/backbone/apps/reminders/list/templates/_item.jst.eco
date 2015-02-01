@@ -2,7 +2,7 @@
 <form class='reminder-form' id="reminder-form-<%= @id %>" data-visible="false">
   <div class="surveys-region"></div>
   <h3 class="hide-accessible">Update This Reminder</h3>
-  <input type="checkbox" name="active-switch"> Enabled
+  <input type="checkbox" name="active-switch" id="active-switch<%= @id %>"> <label for="active-switch<%= @id %>">Enabled</label>
   <fieldset>
     <legend class="inset-block">Add New Reminder</legend>
     <div class="datetime-control">
@@ -11,7 +11,7 @@
       <label for="time<%= @id %>">Select Time</label>
       <input name="time<%= @id %>" value="<%= @currentTimeValue %>" type="time">
     </div>
-  <h3><input type="checkbox" name="repeat"> Repeat</h3>
+  <h3><input type="checkbox" name="repeat" id="repeat<%= @id %>"> <label for="repeat<%= @id %>">Repeat</label></h3>
   <ul class="repeat-days" data-visible="false">
     <li><input type="checkbox" value="0" name="repeatDays[]"> monday</li>
     <li><input type="checkbox" value="1" name="repeatDays[]"> tuesday</li>
