@@ -44,6 +44,8 @@
           # attempt to register permissions here if it's false.
           App.execute "permissions:register:localnotifications"
 
+        @listenTo App.vent, "reminder:validate:fail", (message) =>
+          @noticeRegion message
       @show @layout
 
     noticeRegion: (message) ->
@@ -109,7 +111,6 @@
         # reminder submit validation failed
         console.log "reminder invalid, errors are", reminderModel.validationError
         App.vent.trigger "reminder:validate:fail", reminderModel.validationError
-        @noticeRegion reminderModel.validationError
 
       @listenTo reminders, "change:activationDate change:repeat change:active change:surveyId", (model) =>
         # reminder validation succeeded
