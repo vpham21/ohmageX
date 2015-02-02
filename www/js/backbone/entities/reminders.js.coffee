@@ -22,8 +22,8 @@
       @listenTo @, 'survey:selected', @selectSurvey
 
     selectSurvey: (surveyModel) ->
-      @set('surveyId', surveyModel.get('id'))
       @set('surveyTitle', surveyModel.get('title'))
+      @set('surveyId', surveyModel.get('id'))
       @set('campaign', surveyModel.get('campaign_urn'))
 
     validate: (attrs, options) ->
