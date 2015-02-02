@@ -81,6 +81,7 @@
       if repeat
         # pre-populate repeating fields.
         @$el.find("input[name='repeat']").prop('checked', true)
+        @repeatToggle()
         @repeater.show()
         repeatDays = @model.get('repeatDays')
         if repeatDays.length > 0
@@ -89,7 +90,6 @@
           )
     events: ->
       "click .repeat-days label": "selectLabel"
-
     gatherResponses: ->
       console.log 'gatherResponses'
       myDate = @$el.find('input[type=date]').val()
