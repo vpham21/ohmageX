@@ -44,6 +44,16 @@
           # attempt to register permissions here if it's false.
           App.execute "permissions:register:localnotifications"
 
+        @listenTo App.vent, "reminder:validate:fail", (message) =>
+          @noticeRegion message
+
+        @listenTo App.vent, "reminder:set:success", (reminder) =>
+          if reminder.get('surveyTitle') isnt false
+            @noticeRegion "Reminder for #{reminder.get('surveyTitle')} saved."
+            setTimeout (=>
+              @noticeRegion ''
+            ), 1000
+
       @show @layout
 
     noticeRegion: (message) ->
@@ -109,9 +119,8 @@
         # reminder submit validation failed
         console.log "reminder invalid, errors are", reminderModel.validationError
         App.vent.trigger "reminder:validate:fail", reminderModel.validationError
-        @noticeRegion reminderModel.validationError
 
-      @listenTo reminders, "change:activationDate change:repeat change:active change:surveyId", (model) =>
+      @listenTo reminders, "change:activationDate change:repeat change:repeatDays change:active change:surveyId", (model) =>
         # reminder validation succeeded
         App.vent.trigger "reminder:set:success", model
 

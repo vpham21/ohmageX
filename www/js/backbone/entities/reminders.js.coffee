@@ -22,8 +22,8 @@
       @listenTo @, 'survey:selected', @selectSurvey
 
     selectSurvey: (surveyModel) ->
-      @set('surveyId', surveyModel.get('id'))
       @set('surveyTitle', surveyModel.get('title'))
+      @set('surveyId', surveyModel.get('id'))
       @set('campaign', surveyModel.get('campaign_urn'))
 
     validate: (attrs, options) ->
@@ -60,6 +60,11 @@
 
   class Entities.Reminders extends Entities.Collection
     model: Entities.Reminder
+    initialize: ->
+      @listenTo @, "survey:selected", =>
+        App.execute "storage:save", 'reminders', @toJSON(), =>
+          console.log "reminders entity Reminders Collection survey:selected storage success"
+
   currentReminders = false
 
   API =
@@ -100,7 +105,7 @@
       console.log 'validateReminder model', model
       console.log 'response', response
       reminder = currentReminders.get(model)
-      reminder.set response, { validate: response.active }
+      reminder.set response, { validate: response.active and !response.repeat }
 
       @updateLocal( =>
         console.log "reminders entity API.validateReminder storage success"

@@ -43,6 +43,7 @@
       @listenTo @model, 'visible:false', @toggleOff
       @listenTo @model, 'visible:true', @toggleOn
       @listenTo @, 'save:reminder', @gatherResponses
+      @listenTo @, 'repeat:toggle', @repeatToggle
     tagName: 'li'
     template: "reminders/list/_item"
     toggleOff: ->
@@ -59,7 +60,12 @@
       $input = $label.prev()
       checked = $input.prop('checked')
       $input.prop('checked', !checked)
-
+    repeatToggle: ->
+      enabled = @$el.find("input[name='repeat']").prop('checked')
+      if enabled
+        @$el.find('.date-control').hide()
+      else
+        @$el.find('.date-control').show()
     onRender: ->
       # set up
       @toggler = new VisibilityToggleComponent("#reminder-form-#{@model.get('id')}", @$el)
@@ -75,6 +81,7 @@
       if repeat
         # pre-populate repeating fields.
         @$el.find("input[name='repeat']").prop('checked', true)
+        @repeatToggle()
         @repeater.show()
         repeatDays = @model.get('repeatDays')
         if repeatDays.length > 0
@@ -83,7 +90,6 @@
           )
     events: ->
       "click .repeat-days label": "selectLabel"
-
     gatherResponses: ->
       console.log 'gatherResponses'
       myDate = @$el.find('input[type=date]').val()
@@ -121,6 +127,10 @@
       "click .toggler-button": "toggle:activate"
       "click .delete-button": "delete:reminder"
       "click .save-button": "save:reminder"
+      "click input[name='repeat']":
+        event: "repeat:toggle"
+        preventDefault: false
+        stopPropagation: false
 
   class List.RemindersEmpty extends App.Views.ItemView
     className: "text-container"

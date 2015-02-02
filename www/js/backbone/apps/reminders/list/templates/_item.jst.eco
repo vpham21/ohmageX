@@ -5,9 +5,11 @@
   <input type="checkbox" name="active-switch" id="active-switch<%= @id %>"> <label for="active-switch<%= @id %>">Enabled</label>
   <fieldset>
     <legend class="inset-block">Add New Reminder</legend>
-    <div class="datetime-control">
+    <div class="date-control">
       <label for="date<%= @id %>">Select Date</label>
       <input name="date<%= @id %>" value="<%= @currentDateValue %>" type="date">
+    </div>
+    <div class="time-control">
       <label for="time<%= @id %>">Select Time</label>
       <input name="time<%= @id %>" value="<%= @currentTimeValue %>" type="time">
     </div>
