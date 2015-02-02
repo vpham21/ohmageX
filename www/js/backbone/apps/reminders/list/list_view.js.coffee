@@ -121,6 +121,10 @@
       "click .toggler-button": "toggle:activate"
       "click .delete-button": "delete:reminder"
       "click .save-button": "save:reminder"
+      "click input[name='repeat']":
+        event: "repeat:toggle"
+        preventDefault: false
+        stopPropagation: false
 
   class List.RemindersEmpty extends App.Views.ItemView
     className: "text-container"
