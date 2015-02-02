@@ -43,6 +43,7 @@
       @listenTo @model, 'visible:false', @toggleOff
       @listenTo @model, 'visible:true', @toggleOn
       @listenTo @, 'save:reminder', @gatherResponses
+      @listenTo @, 'repeat:toggle', @repeatToggle
     tagName: 'li'
     template: "reminders/list/_item"
     toggleOff: ->
@@ -59,7 +60,12 @@
       $input = $label.prev()
       checked = $input.prop('checked')
       $input.prop('checked', !checked)
-
+    repeatToggle: ->
+      enabled = @$el.find("input[name='repeat']").prop('checked')
+      if enabled
+        @$el.find('.date-control').hide()
+      else
+        @$el.find('.date-control').show()
     onRender: ->
       # set up
       @toggler = new VisibilityToggleComponent("#reminder-form-#{@model.get('id')}", @$el)
