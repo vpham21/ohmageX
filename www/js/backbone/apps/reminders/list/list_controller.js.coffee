@@ -46,6 +46,14 @@
 
         @listenTo App.vent, "reminder:validate:fail", (message) =>
           @noticeRegion message
+
+        @listenTo App.vent, "reminder:set:success", (reminder) =>
+          if reminder.get('surveyTitle') isnt false
+            @noticeRegion "Reminder for #{reminder.get('surveyTitle')} saved."
+            setTimeout (=>
+              @noticeRegion ''
+            ), 1000
+
       @show @layout
 
     noticeRegion: (message) ->
