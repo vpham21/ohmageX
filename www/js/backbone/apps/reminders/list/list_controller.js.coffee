@@ -112,7 +112,7 @@
         console.log "reminder invalid, errors are", reminderModel.validationError
         App.vent.trigger "reminder:validate:fail", reminderModel.validationError
 
-      @listenTo reminders, "change:activationDate change:repeat change:active change:surveyId", (model) =>
+      @listenTo reminders, "change:activationDate change:repeat change:repeatDays change:active change:surveyId", (model) =>
         # reminder validation succeeded
         App.vent.trigger "reminder:set:success", model
 
