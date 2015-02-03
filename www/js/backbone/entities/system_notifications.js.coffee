@@ -69,12 +69,16 @@
         myIds.push myId
       else
         if reminder.get('repeatDays').length is 7
+          # create one daily notification since it's repeating every day.
           myId = @generateId()
+
+          activationDate = @nextHourMinuteSecond reminder.get('activationDate')
+
           @createReminderNotification
             notificationId: myId
             reminder: reminder
             frequency: 'daily'
-            activationDate: reminder.get('activationDate').toDate()
+            activationDate: activationDate.toDate()
 
           myIds.push myId
         else
