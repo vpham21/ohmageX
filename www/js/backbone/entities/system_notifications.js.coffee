@@ -27,6 +27,14 @@
       myId
 
     addNotifications: (reminder) ->
+
+      if App.device.isNative and reminder.get('notificationIds').length > 0
+        # Delete any of the reminder's system notifications, if they exist
+        API.deleteNotifications reminder.get('notificationIds')
+
+        # clear out the reminder's notification IDs, they now reference nothing
+        reminder.set('notificationIds', [])
+
       myIds = []
       if !reminder.get('repeat')
         # reminder is non-repeating.
