@@ -26,6 +26,14 @@
         v.toString 10
       myId
 
+    nextDayofWeek: (myMoment, weekday) ->
+      # myMoment is a JS moment
+      # weekday is the zero indexed day of week (0 - 6)
+      myInput = moment(myMoment)
+      myOutput = myInput.clone().startOf('week').day(weekday).hour(myInput.hour()).minute(myInput.minute()).second(myInput.second())
+
+      if myOutput > myInput then myOutput else myOutput.add(1, 'weeks')
+
     nextHourMinuteSecond: (myMoment) ->
       # gets the next occurrence of a moment's hours, minutes, and seconds.
       # Ignores the month, day and year.
