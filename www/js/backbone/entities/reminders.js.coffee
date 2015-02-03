@@ -10,7 +10,7 @@
   # active - Boolean - If the reminder is actually activated or just stored.
   # notificationIds - Array (Strings) - System notification IDs assigned to this reminder.
   # repeat - Boolean - If true then this reminder repeats
-  # repeatDays - Array (Integers) - List of repeating days 0 thru 6. 0 is Monday.
+  # repeatDays - Array (Integers) - List of repeating days 0 thru 6. 0 is Sunday.
   # surveyId - String - ID of the survey to use.
   # surveyTitle - String - Title of the survey. Used in views
 
