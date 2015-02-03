@@ -97,6 +97,9 @@
           if id in scheduledIds then window.plugin.notification.local.cancel(id)
       )
 
+    clear: ->
+      window.plugin.notification.local.cancelAll ->
+        console.log 'All system notifications canceled'
 
   App.vent.on "surveys:saved:load:complete", ->
     if App.device.isNative
@@ -109,5 +112,7 @@
 
   App.commands.setHandler "system:notifications:add", (reminder) ->
     console.log "system:notifications:add", reminder
+    API.addNotifications reminder
+  App.vent.on "credentials:cleared", ->
     if App.device.isNative
-      API.addNotifications reminder
+      API.clear()
