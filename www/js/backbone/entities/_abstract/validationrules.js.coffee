@@ -26,6 +26,12 @@
         rulesMap: myProperties
       if RulesChecker.errors.length > 0
         return RulesChecker.errors
+
+      # pass along attributes to an internal success
+      # event that the child model can listen for and
+      # use to propagate updates up the event chain.
+      @trigger "internal:success", attrs
+
       # this does not return if there are no errors,
       # because the BB Model validate method
       # only succeeds when nothing is returned
@@ -125,5 +131,4 @@
       _.each(@rulesList, (ruleName) =>
         @rules[ruleName].validate.call(@, options)
       )
-      if @errors.length is 0 then @trigger "validated:success", @
       @errors

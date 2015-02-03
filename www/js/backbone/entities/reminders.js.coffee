@@ -20,7 +20,14 @@
       @listenTo @, 'visible:false', @visibleFalse
       @listenTo @, 'visible:true', @visibleTrue
       @listenTo @, 'survey:selected', @selectSurvey
-
+      @listenTo @, 'internal:success', @propagateResponses
+    propagateResponses: (attrs) ->
+      # delete the 'response' and 'properties' properties
+      # because they're validation placeholders.
+      delete attrs.properties
+      delete attrs.response
+      result = new Entities.Reminder attrs
+      @trigger 'validated:success', result
     selectSurvey: (surveyModel) ->
       @set('surveyTitle', surveyModel.get('title'))
       @set('surveyId', surveyModel.get('id'))
