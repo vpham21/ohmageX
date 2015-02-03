@@ -69,22 +69,23 @@
 
       metadata = JSON.stringify reminder.toJSON()
 
-      window.plugin.notification.local.add
-        id: notificationId
-        title: "#{reminder.get('surveyTitle')}"
-        message: "Take survey #{reminder.get('surveyTitle')}"
-        repeat: frequency
-        date: activationDate
-        autoCancel: !reminder.get('repeat') # autoCancel NON-repeating reminders
-        json: metadata
-      , (=>
-        console.log "reminder set callback"
+      if App.device.isNative
+        window.plugin.notification.local.add
+          id: notificationId
+          title: "#{reminder.get('surveyTitle')}"
+          message: "Take survey #{reminder.get('surveyTitle')}"
+          repeat: frequency
+          date: activationDate
+          autoCancel: !reminder.get('repeat') # autoCancel NON-repeating reminders
+          json: metadata
+        , (=>
+          console.log "reminder set callback"
 
-        # add listener here for the reminder action.
-        # use the same ID as this generated ID.
-        # Save the generated ID.
-        # App.execute "dialog:alert", "reminder set"
-      ), @
+          # add listener here for the reminder action.
+          # use the same ID as this generated ID.
+          # Save the generated ID.
+          # App.execute "dialog:alert", "reminder set"
+        ), @
 
 
     deleteNotifications: (ids) ->
