@@ -111,6 +111,20 @@
         activationDate = @nextHourMinuteSecond reminder.get('activationDate')
       else
         activationDate = @nextDayofWeek(reminder.get('activationDate'), repeatDay)
+
+      if repeatDays.length is 1
+        # base condition
+        callback = (=>
+          console.log 'final of many notification created, activationDate', activationDate.format("dddd, MMMM Do YYYY, h:mm:ss a")
+        )
+      @createReminderNotification
+        notificationId: myId
+        reminder: reminder
+        frequency: 'weekly'
+        activationDate: activationDate.toDate()
+        callback: callback
+
+
     createReminderNotification: (options) ->
       _.defaults options,
         callback: (=>
