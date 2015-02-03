@@ -26,7 +26,37 @@
         v.toString 10
       myId
 
+    nextDayofWeek: (myMoment, weekday) ->
+      # myMoment is a JS moment
+      # weekday is the zero indexed day of week (0 - 6)
+      myInput = moment(myMoment)
+      myOutput = myInput.clone().startOf('week').day(weekday).hour(myInput.hour()).minute(myInput.minute()).second(myInput.second())
+
+      if myOutput > myInput then myOutput else myOutput.add(1, 'weeks')
+
+    nextHourMinuteSecond: (myMoment) ->
+      # gets the next occurrence of a moment's hours, minutes, and seconds.
+      # Ignores the month, day and year.
+
+      input = moment(myMoment)
+
+      hour = input.hour()
+      minute = input.minute()
+      second = input.second()
+
+      output = moment().startOf('day').hour(hour).minute(minute).second(second)
+
+      if output > moment() then output else output.add(1, 'days')
+
     addNotifications: (reminder) ->
+
+      if App.device.isNative and reminder.get('notificationIds').length > 0
+        # Delete any of the reminder's system notifications, if they exist
+        API.deleteNotifications reminder.get('notificationIds')
+
+        # clear out the reminder's notification IDs, they now reference nothing
+        reminder.set('notificationIds', [])
+
       myIds = []
       if !reminder.get('repeat')
         # reminder is non-repeating.
@@ -39,19 +69,43 @@
         myIds.push myId
       else
         if reminder.get('repeatDays').length is 7
+          # create one daily notification since it's repeating every day.
           myId = @generateId()
+
+          activationDate = @nextHourMinuteSecond reminder.get('activationDate')
+
           @createReminderNotification
             notificationId: myId
             reminder: reminder
             frequency: 'daily'
-            activationDate: reminder.get('activationDate').toDate()
+            activationDate: activationDate.toDate()
 
           myIds.push myId
         else
-          _.each reminder.get('repeatDays'), (day) =>
-            # create a new notification for all of the IDS in the reminder.
+          activationDayofWeek = moment().day()
+
+          _.each reminder.get('repeatDays'), (repeatDay) =>
+            # create notifications for each repeatDay in the reminder.
             myId = @generateId()
             myIds.push myId
+
+            console.log 'repeatDay', repeatDay
+            if activationDayofWeek is repeatDay
+              # if the day of week is the same as the current day,
+              # we get the NEXT occurrence of that hour:minute:second
+              activationDate = @nextHourMinuteSecond reminder.get('activationDate')
+            else
+              activationDate = @nextDayofWeek(reminder.get('activationDate'), repeatDay)
+
+            console.log 'myId before createReminderNotification', myId
+
+            @createReminderNotification
+              notificationId: myId
+              reminder: reminder
+              frequency: 'weekly'
+              activationDate: activationDate.toDate()
+
+            console.log 'activationDate', activationDate.format("dddd, MMMM Do YYYY, h:mm:ss a")
 
       reminder.set 'notificationIds', myIds
 
@@ -61,22 +115,23 @@
 
       metadata = JSON.stringify reminder.toJSON()
 
-      window.plugin.notification.local.add
-        id: notificationId
-        title: "#{reminder.get('surveyTitle')}"
-        message: "Take survey #{reminder.get('surveyTitle')}"
-        repeat: frequency
-        date: activationDate
-        autoCancel: !reminder.get('repeat') # autoCancel NON-repeating reminders
-        json: metadata
-      , (=>
-        console.log "reminder set callback"
+      if App.device.isNative
+        window.plugin.notification.local.add
+          id: notificationId
+          title: "#{reminder.get('surveyTitle')}"
+          message: "Take survey #{reminder.get('surveyTitle')}"
+          repeat: frequency
+          date: activationDate
+          autoCancel: !reminder.get('repeat') # autoCancel NON-repeating reminders
+          json: metadata
+        , (=>
+          console.log "reminder set callback"
 
-        # add listener here for the reminder action.
-        # use the same ID as this generated ID.
-        # Save the generated ID.
-        # App.execute "dialog:alert", "reminder set"
-      ), @
+          # add listener here for the reminder action.
+          # use the same ID as this generated ID.
+          # Save the generated ID.
+          # App.execute "dialog:alert", "reminder set"
+        ), @
 
 
     deleteNotifications: (ids) ->
@@ -88,6 +143,9 @@
           if id in scheduledIds then window.plugin.notification.local.cancel(id)
       )
 
+    clear: ->
+      window.plugin.notification.local.cancelAll ->
+        console.log 'All system notifications canceled'
 
   App.vent.on "surveys:saved:load:complete", ->
     if App.device.isNative
@@ -100,5 +158,7 @@
 
   App.commands.setHandler "system:notifications:add", (reminder) ->
     console.log "system:notifications:add", reminder
+    API.addNotifications reminder
+  App.vent.on "credentials:cleared", ->
     if App.device.isNative
-      API.addNotifications reminder
+      API.clear()
