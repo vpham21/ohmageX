@@ -117,6 +117,15 @@
         callback = (=>
           console.log 'final of many notification created, activationDate', activationDate.format("dddd, MMMM Do YYYY, h:mm:ss a")
         )
+      else
+        callback = (=>
+          console.log 'one of many notifications created, activationDate', activationDate.format("dddd, MMMM Do YYYY, h:mm:ss a")
+          # shrink repeatDays from the front, ensuring that repeatDays[0]
+          # will always be a valid value for repeatDay in the recursive loop
+          repeatDays.shift()
+          @generateMultipleNotifications repeatDays, reminder, myIds
+        )
+
       @createReminderNotification
         notificationId: myId
         reminder: reminder
