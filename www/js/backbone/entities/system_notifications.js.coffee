@@ -85,30 +85,6 @@
 
           myIds.push myId
         else
-          activationDayofWeek = moment().day()
-
-          _.each reminder.get('repeatDays'), (repeatDay) =>
-            # create notifications for each repeatDay in the reminder.
-            myId = @generateId()
-            myIds.push myId
-
-            console.log 'repeatDay', repeatDay
-            if activationDayofWeek is repeatDay
-              # if the day of week is the same as the current day,
-              # we get the NEXT occurrence of that hour:minute:second
-              activationDate = @nextHourMinuteSecond reminder.get('activationDate')
-            else
-              activationDate = @nextDayofWeek(reminder.get('activationDate'), repeatDay)
-
-            console.log 'myId before createReminderNotification', myId
-
-            @createReminderNotification
-              notificationId: myId
-              reminder: reminder
-              frequency: 'weekly'
-              activationDate: activationDate.toDate()
-
-            console.log 'activationDate', activationDate.format("dddd, MMMM Do YYYY, h:mm:ss a")
 
       reminder.set 'notificationIds', myIds
 
