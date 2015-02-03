@@ -125,4 +125,5 @@
       _.each(@rulesList, (ruleName) =>
         @rules[ruleName].validate.call(@, options)
       )
+      if @errors.length is 0 then @trigger "validated:success", @
       @errors
