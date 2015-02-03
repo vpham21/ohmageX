@@ -94,6 +94,8 @@
               # if the day of week is the same as the current day,
               # we get the NEXT occurrence of that hour:minute:second
               activationDate = @nextHourMinuteSecond reminder.get('activationDate')
+            else
+              activationDate = @nextDayofWeek(reminder.get('activationDate'), repeatDay)
       reminder.set 'notificationIds', myIds
 
 
