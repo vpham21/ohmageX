@@ -20,6 +20,9 @@
         App.navigate "survey/#{result.surveyId}", trigger: true
 
     generateId: ->
+      # generate a numeric id (not a guid). Local notifications plugin
+      # fails if the id is not numeric (Android requirement)
+
       myId = "9xxxxxxxxxx".replace /[xy]/g, (c) ->
         r = Math.random() * 9 | 0
         v = (if c is "x" then r else (r & 0x3 | 0x8))
@@ -82,36 +85,62 @@
 
           myIds.push myId
         else
-          activationDayofWeek = moment().day()
+          # send a copy of repeatDays to recursive @generateMultipleNotifications
+          # so the original isn't sliced to nothing.
+          repeatDays = reminder.get('repeatDays').slice(0)
 
-          _.each reminder.get('repeatDays'), (repeatDay) =>
-            # create notifications for each repeatDay in the reminder.
-            myId = @generateId()
-            myIds.push myId
-
-            console.log 'repeatDay', repeatDay
-            if activationDayofWeek is repeatDay
-              # if the day of week is the same as the current day,
-              # we get the NEXT occurrence of that hour:minute:second
-              activationDate = @nextHourMinuteSecond reminder.get('activationDate')
-            else
-              activationDate = @nextDayofWeek(reminder.get('activationDate'), repeatDay)
-
-            console.log 'myId before createReminderNotification', myId
-
-            @createReminderNotification
-              notificationId: myId
-              reminder: reminder
-              frequency: 'weekly'
-              activationDate: activationDate.toDate()
-
-            console.log 'activationDate', activationDate.format("dddd, MMMM Do YYYY, h:mm:ss a")
+          @generateMultipleNotifications repeatDays, reminder, myIds
 
       reminder.set 'notificationIds', myIds
 
+    generateMultipleNotifications: (repeatDays, reminder, myIds) ->
+      # Generates multiple notifications recursively, each iteration
+      # completes when the plugin notification creation callback fires.
+      # Required because creating multiple system notifications in rapid
+      # succession may fail.
+
+      myId = @generateId()
+      myIds.push myId
+
+      activationDayofWeek = moment().day()
+      repeatDay = repeatDays[0]
+
+      if activationDayofWeek is repeatDay
+        # if the day of week is the same as the current day,
+        # we get the NEXT occurrence of that hour:minute:second
+        activationDate = @nextHourMinuteSecond reminder.get('activationDate')
+      else
+        activationDate = @nextDayofWeek(reminder.get('activationDate'), repeatDay)
+
+      if repeatDays.length is 1
+        # base condition
+        callback = (=>
+          console.log 'final of many notification created, activationDate', activationDate.format("dddd, MMMM Do YYYY, h:mm:ss a")
+        )
+      else
+        callback = (=>
+          console.log 'one of many notifications created, activationDate', activationDate.format("dddd, MMMM Do YYYY, h:mm:ss a")
+          # shrink repeatDays from the front, ensuring that repeatDays[0]
+          # will always be a valid value for repeatDay in the recursive loop
+          repeatDays.shift()
+          @generateMultipleNotifications repeatDays, reminder, myIds
+        )
+
+      @createReminderNotification
+        notificationId: myId
+        reminder: reminder
+        frequency: 'weekly'
+        activationDate: activationDate.toDate()
+        callback: callback
+
 
     createReminderNotification: (options) ->
-      { notificationId, reminder, frequency, activationDate } = options
+      _.defaults options,
+        callback: (=>
+          console.log 'notification creation default callback'
+        )
+
+      { notificationId, reminder, frequency, activationDate, callback } = options
 
       metadata = JSON.stringify reminder.toJSON()
 
@@ -124,14 +153,7 @@
           date: activationDate
           autoCancel: !reminder.get('repeat') # autoCancel NON-repeating reminders
           json: metadata
-        , (=>
-          console.log "reminder set callback"
-
-          # add listener here for the reminder action.
-          # use the same ID as this generated ID.
-          # Save the generated ID.
-          # App.execute "dialog:alert", "reminder set"
-        ), @
+        , callback, @
 
 
     deleteNotifications: (ids) ->
