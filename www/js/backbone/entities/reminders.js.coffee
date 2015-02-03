@@ -49,8 +49,6 @@
     visibleTrue: ->
       @set('renderVisible', true)
     defaults: ->
-      # generate a numeric id (not a guid).
-      # The plugin fails if the id is not numeric (Android requirement)
 
       return {
         id: _.guid()

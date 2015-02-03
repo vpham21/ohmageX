@@ -20,6 +20,9 @@
         App.navigate "survey/#{result.surveyId}", trigger: true
 
     generateId: ->
+      # generate a numeric id (not a guid). Local notifications plugin
+      # fails if the id is not numeric (Android requirement)
+
       myId = "9xxxxxxxxxx".replace /[xy]/g, (c) ->
         r = Math.random() * 9 | 0
         v = (if c is "x" then r else (r & 0x3 | 0x8))
