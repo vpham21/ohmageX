@@ -96,6 +96,17 @@
               activationDate = @nextHourMinuteSecond reminder.get('activationDate')
             else
               activationDate = @nextDayofWeek(reminder.get('activationDate'), repeatDay)
+
+            console.log 'myId before createReminderNotification', myId
+
+            @createReminderNotification
+              notificationId: myId
+              reminder: reminder
+              frequency: 'weekly'
+              activationDate: activationDate.toDate()
+
+            console.log 'activationDate', activationDate.format("dddd, MMMM Do YYYY, h:mm:ss a")
+
       reminder.set 'notificationIds', myIds
 
 
