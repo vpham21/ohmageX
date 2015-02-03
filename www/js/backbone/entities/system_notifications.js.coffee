@@ -26,6 +26,20 @@
         v.toString 10
       myId
 
+    nextHourMinuteSecond: (myMoment) ->
+      # gets the next occurrence of a moment's hours, minutes, and seconds.
+      # Ignores the month, day and year.
+
+      input = moment(myMoment)
+
+      hour = input.hour()
+      minute = input.minute()
+      second = input.second()
+
+      output = moment().startOf('day').hour(hour).minute(minute).second(second)
+
+      if output > moment() then output else output.add(1, 'days')
+
     addNotifications: (reminder) ->
 
       if App.device.isNative and reminder.get('notificationIds').length > 0
