@@ -102,6 +102,8 @@
       myId = @generateId()
       myIds.push myId
 
+      activationDayofWeek = moment().day()
+      repeatDay = repeatDays[0]
     createReminderNotification: (options) ->
       _.defaults options,
         callback: (=>
