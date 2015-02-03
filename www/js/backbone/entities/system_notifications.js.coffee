@@ -88,6 +88,14 @@
 
       reminder.set 'notificationIds', myIds
 
+    generateMultipleNotifications: (repeatDays, reminder, myIds) ->
+      # Generates multiple notifications recursively, each iteration
+      # completes when the plugin notification creation callback fires.
+      # Required because creating multiple system notifications in rapid
+      # succession may fail.
+
+      myId = @generateId()
+      myIds.push myId
 
     createReminderNotification: (options) ->
       _.defaults options,
