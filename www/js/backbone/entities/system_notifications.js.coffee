@@ -82,7 +82,9 @@
 
           myIds.push myId
         else
-          _.each reminder.get('repeatDays'), (day) =>
+          activationDayofWeek = moment().day()
+
+          _.each reminder.get('repeatDays'), (repeatDay) =>
             # create notifications for each repeatDay in the reminder.
             myId = @generateId()
             myIds.push myId
