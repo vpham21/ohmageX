@@ -111,7 +111,12 @@
 
 
     createReminderNotification: (options) ->
-      { notificationId, reminder, frequency, activationDate } = options
+      _.defaults options,
+        callback: (=>
+          console.log 'notification creation default callback'
+        )
+
+      { notificationId, reminder, frequency, activationDate, callback } = options
 
       metadata = JSON.stringify reminder.toJSON()
 
@@ -124,14 +129,7 @@
           date: activationDate
           autoCancel: !reminder.get('repeat') # autoCancel NON-repeating reminders
           json: metadata
-        , (=>
-          console.log "reminder set callback"
-
-          # add listener here for the reminder action.
-          # use the same ID as this generated ID.
-          # Save the generated ID.
-          # App.execute "dialog:alert", "reminder set"
-        ), @
+        , callback, @
 
 
     deleteNotifications: (ids) ->
