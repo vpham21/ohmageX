@@ -33,3 +33,11 @@
         # is later than now.
         # daily reminders will pass the filter if this is true.
         if now > todayHourMinute then return false
+
+        if !reminder.get('repeat')
+          # reminder is non-repeating
+          # check the activationDate of this specific reminder
+          # occurring later today.
+          # only passes if:
+          # now < activationDate < dayEnd
+          if !(now < reminder.get('activationDate') and reminder.get('activationDate') < dayEnd) then return false
