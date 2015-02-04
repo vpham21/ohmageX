@@ -148,6 +148,14 @@
         App.vent.trigger "reminders:campaign:remove:success", campaign_urn
       )
 
+    setAttribute: (reminder, attribute, value) ->
+      reminder = currentReminders.get reminder
+      reminder.set attribute, value
+
+      @updateLocal( =>
+        console.log "reminder notification #{attribute} set", value
+      )
+
     updateLocal: (callback) ->
       # update localStorage index reminders with the current version of campaignsSaved entity
       App.execute "storage:save", 'reminders', currentReminders.toJSON(), callback
