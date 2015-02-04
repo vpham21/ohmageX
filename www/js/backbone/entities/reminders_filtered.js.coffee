@@ -24,3 +24,6 @@
 
         # active reminders only.
         if !reminder.get('active') then return false
+
+        # ensure the reminder matches the survey ID.
+        if reminder.get('surveyId') isnt surveyId then return false
