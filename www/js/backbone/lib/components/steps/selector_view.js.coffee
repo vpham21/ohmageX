@@ -34,6 +34,11 @@
       data = @model.toJSON()
       console.log 'Steps.AfterReminder data', data
       data
+  class Steps.AfterHasReminders extends App.Views.CompositeView
+    className: "text-container"
+    template: "steps/after_hasreminders"
+    childView: Steps.ReminderTime
+    childViewContainer: ".reminder-times"
     triggers:
       "click .reminder-create": "new:reminder"
 
