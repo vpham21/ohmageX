@@ -69,9 +69,6 @@
       @listenTo @, "survey:selected", =>
         App.execute "storage:save", 'reminders', @toJSON(), =>
           console.log "reminders entity Reminders Collection survey:selected storage success"
-      @listenTo @, "change:notificationIds", =>
-        App.execute "storage:save", 'reminders', @toJSON(), =>
-          console.log "reminders entity Reminders Collection change:notificationIds storage success"
 
   currentReminders = false
 
