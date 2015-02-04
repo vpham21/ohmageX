@@ -21,6 +21,9 @@
       @listenTo @, 'visible:true', @visibleTrue
       @listenTo @, 'survey:selected', @selectSurvey
       @listenTo @, 'internal:success', @propagateResponses
+      # Be sure to initialize activationDate as a moment if it's provided on init.
+      # If retrieving from localStorage, the activationDate is stored as a string.
+      if options.activationDate? then @set('activationDate', moment(options.activationDate))
     propagateResponses: (attrs) ->
       # delete the 'response' and 'properties' properties
       # because they're validation placeholders.
