@@ -30,6 +30,10 @@
     template: "steps/after_noreminders"
     triggers:
       "click .reminder-create": "new:reminder"
+
+  class Steps.ReminderTime extends App.Views.ItemView
+    tagName: "li"
+    template: "steps/_remindertime"
     serializeData: ->
       data = @model.toJSON()
       console.log 'Steps.AfterReminder data', data
