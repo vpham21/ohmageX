@@ -40,6 +40,12 @@
             # reminders for this survey already exist
 
             reminders = App.request "reminders:survey:scheduled:latertoday", @surveyId
+
+            if reminders.length is 0
+              # Reminders exist but they're not later today.
+              # just show the exit page.
+              return new Steps.AfterSubmission
+                model: entity
           else
             # reminders don't exist for this survey at all.
             return new Steps.AfterNoReminders
