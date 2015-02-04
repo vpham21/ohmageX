@@ -27,3 +27,9 @@
 
         # ensure the reminder matches the survey ID.
         if reminder.get('surveyId') isnt surveyId then return false
+
+        # for all cases:
+        # verify the hour and minute of this activationDate
+        # is later than now.
+        # daily reminders will pass the filter if this is true.
+        if now > todayHourMinute then return false
