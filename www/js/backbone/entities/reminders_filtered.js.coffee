@@ -48,3 +48,7 @@
           if !("#{now.day()}" in reminder.get('repeatDays')) then return false
 
         return true
+
+  App.reqres.setHandler "reminders:survey:scheduled:latertoday", (surveyId) ->
+    reminders = App.request "reminders:current"
+    API.surveyScheduledLaterToday reminders, surveyId
