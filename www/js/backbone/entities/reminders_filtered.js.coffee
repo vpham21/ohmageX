@@ -47,3 +47,4 @@
           # note type conversion of now.day() to string for comparison.
           if !("#{now.day()}" in reminder.get('repeatDays')) then return false
 
+        return true
