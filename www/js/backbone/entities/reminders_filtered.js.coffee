@@ -51,4 +51,4 @@
 
   App.reqres.setHandler "reminders:survey:scheduled:latertoday", (surveyId) ->
     reminders = App.request "reminders:current"
-    API.surveyScheduledLaterToday reminders, surveyId
+    new Entities.Reminders API.surveyScheduledLaterToday(reminders, surveyId)
