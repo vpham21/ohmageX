@@ -1,0 +1,4 @@
+<h2>Survey Complete - Reminders Later Today</h2>
+<p>You have reminders scheduled for later today at the following times. Select a reminder to prevent it from displaying later today.</p>
+<ul class="reminder-times"></ul>
+<button class="reminder-submit" type="button">Don't show selected reminders later today</button>
