@@ -35,14 +35,7 @@
           return new Steps.BeforeSubmission
             model: entity
         when "afterSurveySubmit"
-          reminders = App.request('reminders:current')
-          if App.device.isNative and typeof reminders.findWhere(surveyId: @surveyId) is "undefined"
-            # the second part covers whether they already have reminders set for this survey.
-            return new Steps.AfterReminder
-              model: reminders
           else
-            return new Steps.AfterSubmission
-              model: entity
         else
           # handle all other view types in the Prompts component.
           return App.request "prompts:view", @surveyId, @stepId, entity, type
