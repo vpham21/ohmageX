@@ -38,6 +38,8 @@
 
           if App.request('reminders:current').findWhere(surveyId: @surveyId) # and App.device.isNative
             # reminders for this survey already exist
+
+            reminders = App.request "reminders:survey:scheduled:latertoday", @surveyId
           else
             # reminders don't exist for this survey at all.
             return new Steps.AfterNoReminders
