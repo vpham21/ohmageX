@@ -39,6 +39,9 @@
           if App.request('reminders:current').findWhere(surveyId: @surveyId) # and App.device.isNative
             # reminders for this survey already exist
           else
+            # reminders don't exist for this survey at all.
+            return new Steps.AfterNoReminders
+
         else
           # handle all other view types in the Prompts component.
           return App.request "prompts:view", @surveyId, @stepId, entity, type
