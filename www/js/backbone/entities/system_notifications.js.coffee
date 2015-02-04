@@ -52,13 +52,9 @@
       if output > moment() then output else output.add(1, 'days')
 
     addNotifications: (reminder) ->
-
       if App.device.isNative and reminder.get('notificationIds').length > 0
         # Delete any of the reminder's system notifications, if they exist
-        API.deleteNotifications reminder.get('notificationIds')
-
-        # clear out the reminder's notification IDs, they now reference nothing
-        reminder.set('notificationIds', [])
+        API.deleteNotifications reminder
 
       myIds = []
       if !reminder.get('repeat')
@@ -91,7 +87,8 @@
 
           @generateMultipleNotifications repeatDays, reminder, myIds
 
-      reminder.set 'notificationIds', myIds
+      App.execute "reminder:notifications:set", reminder, myIds
+
 
     generateMultipleNotifications: (repeatDays, reminder, myIds) ->
       # Generates multiple notifications recursively, each iteration
@@ -156,7 +153,8 @@
         , callback, @
 
 
-    deleteNotifications: (ids) ->
+    deleteNotifications: (reminder) ->
+      ids = reminder.get('notificationIds')
       window.plugin.notification.local.getScheduledIds((scheduledIds) ->
         console.log 'Ids to delete', JSON.stringify ids
         console.log 'scheduled Ids', JSON.stringify scheduledIds
@@ -164,13 +162,15 @@
           # ensures we only attempt to remove a scheduled notification.
           if id in scheduledIds then window.plugin.notification.local.cancel(id)
       )
+      # clear out the reminder's notification IDs immediately, they now reference nothing
+      App.execute "reminder:notifications:set", reminder, []
 
     suppressNotifications: (reminder) ->
       if reminder.get('repeat')
         newDate = moment(reminder.get('activationDate'))
 
         # shift the activation date for the reminder's notifications 24 hours in the future.
-        reminder.set 'activationDate', newDate.add(1, 'days')
+        App.execute "reminder:date:set", reminder, newDate.add(1, 'days')
 
         # Generate new notifications (and IDs) for the repeating reminder.
         # Whether the reminders repeat daily or weekly, `addNotifications` will set
@@ -188,9 +188,9 @@
     if App.device.isNative
       API.init()
 
-  App.commands.setHandler "system:notifications:delete", (ids) ->
+  App.commands.setHandler "system:notifications:delete", (reminder) ->
     if App.device.isNative
-      API.deleteNotifications ids
+      API.deleteNotifications reminder
 
   App.commands.setHandler "system:notifications:add", (reminder) ->
     console.log "system:notifications:add", reminder

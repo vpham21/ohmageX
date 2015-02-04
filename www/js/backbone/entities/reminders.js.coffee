@@ -69,9 +69,6 @@
       @listenTo @, "survey:selected", =>
         App.execute "storage:save", 'reminders', @toJSON(), =>
           console.log "reminders entity Reminders Collection survey:selected storage success"
-      @listenTo @, "change:notificationIds", =>
-        App.execute "storage:save", 'reminders', @toJSON(), =>
-          console.log "reminders entity Reminders Collection change:notificationIds storage success"
 
   currentReminders = false
 
@@ -98,7 +95,8 @@
         App.execute "system:notifications:add", reminder
       else
         # This reminder has been disabled. Be sure to deactivate its notifications.
-        App.execute "system:notifications:delete", reminder.get('notificationIds')
+        console.log 'addNotification disabled notification ids', reminder.get('notificationIds')
+        App.execute "system:notifications:delete", reminder
 
 
     getReminders: ->
@@ -129,7 +127,7 @@
       myReminder = currentReminders.get model
       currentReminders.remove myReminder
 
-      App.execute "system:notifications:delete", model.get('notificationIds')
+      App.execute "system:notifications:delete", model
 
       @updateLocal( =>
         console.log "reminders entity API.deleteReminder storage success"
@@ -149,6 +147,14 @@
       @updateLocal( =>
         console.log "campaign reminders removed from localStorage"
         App.vent.trigger "reminders:campaign:remove:success", campaign_urn
+      )
+
+    setAttribute: (reminder, attribute, value) ->
+      reminder = currentReminders.get reminder
+      reminder.set attribute, value
+
+      @updateLocal( =>
+        console.log "reminder notification #{attribute} set", value
       )
 
     updateLocal: (callback) ->
@@ -186,6 +192,14 @@
 
   App.commands.setHandler "reminder:validate", (model, response) ->
     API.validateReminder model, response
+
+  App.commands.setHandler "reminder:notifications:set", (reminder, ids) ->
+    # ids - array of IDs to set for the notification
+    API.setAttribute reminder, 'notificationIds', ids
+
+  App.commands.setHandler "reminder:date:set", (reminder, date) ->
+    # ids - array of IDs to set for the notification
+    API.setAttribute reminder, 'activationDate', date
 
   App.vent.on "campaign:saved:remove", (campaign_urn) ->
     if currentReminders.length > 0 then API.removeCampaignReminders(campaign_urn)
