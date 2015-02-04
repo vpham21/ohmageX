@@ -176,6 +176,10 @@
         # Whether the reminders repeat daily or weekly, `addNotifications` will set
         # the activation dates appropriately.
         API.addNotifications reminder
+      else
+        # non-repeating reminder, just delete it
+        App.execute "reminder:delete", reminder
+
     clear: ->
       window.plugin.notification.local.cancelAll ->
         console.log 'All system notifications canceled'
