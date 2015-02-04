@@ -18,6 +18,8 @@
       if type is "afterSurveySubmit"
         @listenTo myView, 'new:reminder', =>
           App.vent.trigger "reminders:survey:new", @surveyId
+        @listenTo myView, 'update:reminders', (ids) =>
+          App.vent.trigger "reminders:survey:suppress", @surveyId, ids
 
       @showSelectedView myView
 
