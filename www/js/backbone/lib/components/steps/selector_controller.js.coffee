@@ -46,6 +46,10 @@
               # just show the exit page.
               return new Steps.AfterSubmission
                 model: entity
+            else
+              # reminders are scheduled later today for this survey.
+              return new Steps.AfterHasReminders
+                collection: reminders
           else
             # reminders don't exist for this survey at all.
             return new Steps.AfterNoReminders
