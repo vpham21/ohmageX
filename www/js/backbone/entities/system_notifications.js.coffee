@@ -165,6 +165,21 @@
           if id in scheduledIds then window.plugin.notification.local.cancel(id)
       )
 
+    suppressNotifications: (reminder) ->
+      if reminder.get('repeat')
+        newDate = moment(reminder.get('activationDate'))
+
+        # shift the activation date for the reminder's notifications 24 hours in the future.
+        reminder.set 'activationDate', newDate.add(1, 'days')
+
+        # Generate new notifications (and IDs) for the repeating reminder.
+        # Whether the reminders repeat daily or weekly, `addNotifications` will set
+        # the activation dates appropriately.
+        API.addNotifications reminder
+      else
+        # non-repeating reminder, just delete it
+        App.execute "reminder:delete", reminder
+
     clear: ->
       window.plugin.notification.local.cancelAll ->
         console.log 'All system notifications canceled'
@@ -174,13 +189,16 @@
       API.init()
 
   App.commands.setHandler "system:notifications:delete", (ids) ->
-    console.log "system:notifications:delete", ids
     if App.device.isNative
       API.deleteNotifications ids
 
   App.commands.setHandler "system:notifications:add", (reminder) ->
     console.log "system:notifications:add", reminder
     API.addNotifications reminder
+
+  App.commands.setHandler "system:notifications:suppress", (reminder) ->
+    API.suppressNotifications reminder
+
   App.vent.on "credentials:cleared", ->
     if App.device.isNative
       API.clear()
