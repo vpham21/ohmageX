@@ -39,6 +39,10 @@
       console.log 'Steps.ReminderTime data', data
       data.timestamp = @model.get('activationDate').format("h:mm a")
       data
+    onRender: ->
+      deleteByDefault = true
+      if deleteByDefault then @$el.find("input").prop('checked', true)
+
   class Steps.AfterHasReminders extends App.Views.CompositeView
     className: "text-container"
     template: "steps/after_hasreminders"
