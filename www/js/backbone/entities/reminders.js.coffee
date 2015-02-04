@@ -95,7 +95,8 @@
         App.execute "system:notifications:add", reminder
       else
         # This reminder has been disabled. Be sure to deactivate its notifications.
-        App.execute "system:notifications:delete", reminder.get('notificationIds')
+        console.log 'addNotification disabled notification ids', reminder.get('notificationIds')
+        App.execute "system:notifications:delete", reminder
 
 
     getReminders: ->
@@ -126,7 +127,7 @@
       myReminder = currentReminders.get model
       currentReminders.remove myReminder
 
-      App.execute "system:notifications:delete", model.get('notificationIds')
+      App.execute "system:notifications:delete", model
 
       @updateLocal( =>
         console.log "reminders entity API.deleteReminder storage success"
