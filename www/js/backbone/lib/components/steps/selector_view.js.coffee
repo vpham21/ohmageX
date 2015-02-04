@@ -36,7 +36,8 @@
     template: "steps/_remindertime"
     serializeData: ->
       data = @model.toJSON()
-      console.log 'Steps.AfterReminder data', data
+      console.log 'Steps.ReminderTime data', data
+      data.timestamp = @model.get('activationDate').format("h:mm a")
       data
   class Steps.AfterHasReminders extends App.Views.CompositeView
     className: "text-container"
