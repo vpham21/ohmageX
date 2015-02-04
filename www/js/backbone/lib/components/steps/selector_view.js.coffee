@@ -44,6 +44,14 @@
       if deleteByDefault then @$el.find("input").prop('checked', true)
 
   class Steps.AfterHasReminders extends App.Views.CompositeView
+    initialize: ->
+      @listenTo @, "submit:reminders", @gatherResponses
+    gatherResponses: ->
+      # loop through all reminder input boxes. create an array of
+      # all the selected values and return that.
+      responses = _.map @$el.find('input:checked'), (myInput) ->
+        return $(myInput).val()
+      @trigger 'update:reminders', responses
     className: "text-container"
     template: "steps/after_hasreminders"
     childView: Steps.ReminderTime
