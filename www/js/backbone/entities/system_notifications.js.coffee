@@ -189,13 +189,16 @@
       API.init()
 
   App.commands.setHandler "system:notifications:delete", (ids) ->
-    console.log "system:notifications:delete", ids
     if App.device.isNative
       API.deleteNotifications ids
 
   App.commands.setHandler "system:notifications:add", (reminder) ->
     console.log "system:notifications:add", reminder
     API.addNotifications reminder
+
+  App.commands.setHandler "system:notifications:suppress", (reminder) ->
+    API.suppressNotifications reminder
+
   App.vent.on "credentials:cleared", ->
     if App.device.isNative
       API.clear()
