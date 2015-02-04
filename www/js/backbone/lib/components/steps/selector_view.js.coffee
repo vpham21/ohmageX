@@ -25,15 +25,40 @@
       data.completeTitle = 'Uploading Survey...'
       data
 
-  class Steps.AfterReminder extends App.Views.ItemView
+  class Steps.AfterNoReminders extends App.Views.ItemView
     className: "text-container"
-    template: "steps/afterreminder"
-    serializeData: ->
-      data = @model.toJSON()
-      console.log 'Steps.AfterReminder data', data
-      data
+    template: "steps/after_noreminders"
     triggers:
       "click .reminder-create": "new:reminder"
+
+  class Steps.ReminderTime extends App.Views.ItemView
+    tagName: "li"
+    template: "steps/_remindertime"
+    serializeData: ->
+      data = @model.toJSON()
+      console.log 'Steps.ReminderTime data', data
+      data.timestamp = @model.get('activationDate').format("h:mm a")
+      data
+    onRender: ->
+      deleteByDefault = true
+      if deleteByDefault then @$el.find("input").prop('checked', true)
+
+  class Steps.AfterHasReminders extends App.Views.CompositeView
+    initialize: ->
+      @listenTo @, "submit:reminders", @gatherResponses
+    gatherResponses: ->
+      # loop through all reminder input boxes. create an array of
+      # all the selected values and return that.
+      responses = _.map @$el.find('input:checked'), (myInput) ->
+        return $(myInput).val()
+      @trigger 'update:reminders', responses
+    className: "text-container"
+    template: "steps/after_hasreminders"
+    childView: Steps.ReminderTime
+    childViewContainer: ".reminder-times"
+    triggers:
+      "click .reminder-submit": "submit:reminders"
+
 
   class Steps.AfterSubmission extends App.Views.ItemView
     className: "text-container"

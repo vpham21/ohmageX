@@ -1,0 +1,1 @@
+<input type="checkbox" id="time<%= @id %>" value="<%= @id %>" /> <label for="time<%= @id %>"><%= @timestamp %></label>

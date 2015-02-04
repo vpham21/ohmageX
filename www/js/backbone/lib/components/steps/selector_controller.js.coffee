@@ -18,6 +18,8 @@
       if type is "afterSurveySubmit"
         @listenTo myView, 'new:reminder', =>
           App.vent.trigger "reminders:survey:new", @surveyId
+        @listenTo myView, 'update:reminders', (ids) =>
+          App.vent.trigger "reminders:survey:suppress", @surveyId, ids
 
       @showSelectedView myView
 
@@ -33,14 +35,25 @@
           return new Steps.BeforeSubmission
             model: entity
         when "afterSurveySubmit"
-          reminders = App.request('reminders:current')
-          if App.device.isNative and typeof reminders.findWhere(surveyId: @surveyId) is "undefined"
-            # the second part covers whether they already have reminders set for this survey.
-            return new Steps.AfterReminder
-              model: reminders
+
+          if App.request('reminders:current').findWhere(surveyId: @surveyId) # and App.device.isNative
+            # reminders for this survey already exist
+
+            reminders = App.request "reminders:survey:scheduled:latertoday", @surveyId
+
+            if reminders.length is 0
+              # Reminders exist but they're not later today.
+              # just show the exit page.
+              return new Steps.AfterSubmission
+                model: entity
+            else
+              # reminders are scheduled later today for this survey.
+              return new Steps.AfterHasReminders
+                collection: reminders
           else
-            return new Steps.AfterSubmission
-              model: entity
+            # reminders don't exist for this survey at all.
+            return new Steps.AfterNoReminders
+
         else
           # handle all other view types in the Prompts component.
           return App.request "prompts:view", @surveyId, @stepId, entity, type
