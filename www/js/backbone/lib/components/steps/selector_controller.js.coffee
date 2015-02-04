@@ -35,6 +35,9 @@
           return new Steps.BeforeSubmission
             model: entity
         when "afterSurveySubmit"
+
+          if App.request('reminders:current').findWhere(surveyId: @surveyId) # and App.device.isNative
+            # reminders for this survey already exist
           else
         else
           # handle all other view types in the Prompts component.
