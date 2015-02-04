@@ -52,11 +52,9 @@
       if output > moment() then output else output.add(1, 'days')
 
     addNotifications: (reminder) ->
-
       if App.device.isNative and reminder.get('notificationIds').length > 0
         # Delete any of the reminder's system notifications, if they exist
-        API.deleteNotifications reminder.get('notificationIds')
-
+        API.deleteNotifications reminder
 
       myIds = []
       if !reminder.get('repeat')
