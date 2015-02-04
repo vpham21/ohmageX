@@ -57,8 +57,6 @@
         # Delete any of the reminder's system notifications, if they exist
         API.deleteNotifications reminder.get('notificationIds')
 
-        # clear out the reminder's notification IDs, they now reference nothing
-        reminder.set('notificationIds', [])
 
       myIds = []
       if !reminder.get('repeat')
@@ -91,7 +89,8 @@
 
           @generateMultipleNotifications repeatDays, reminder, myIds
 
-      reminder.set 'notificationIds', myIds
+      App.execute "reminder:notifications:set", reminder, myIds
+
 
     generateMultipleNotifications: (repeatDays, reminder, myIds) ->
       # Generates multiple notifications recursively, each iteration
@@ -164,6 +163,8 @@
           # ensures we only attempt to remove a scheduled notification.
           if id in scheduledIds then window.plugin.notification.local.cancel(id)
       )
+      # clear out the reminder's notification IDs immediately, they now reference nothing
+      App.execute "reminder:notifications:set", reminder, []
 
     suppressNotifications: (reminder) ->
       if reminder.get('repeat')
