@@ -192,6 +192,10 @@
   App.commands.setHandler "reminder:validate", (model, response) ->
     API.validateReminder model, response
 
+  App.commands.setHandler "reminder:notifications:set", (reminder, ids) ->
+    # ids - array of IDs to set for the notification
+    API.setAttribute reminder, 'notificationIds', ids
+
   App.vent.on "campaign:saved:remove", (campaign_urn) ->
     if currentReminders.length > 0 then API.removeCampaignReminders(campaign_urn)
 
