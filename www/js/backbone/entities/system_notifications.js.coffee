@@ -171,7 +171,7 @@
         newDate = moment(reminder.get('activationDate'))
 
         # shift the activation date for the reminder's notifications 24 hours in the future.
-        reminder.set 'activationDate', newDate.add(1, 'days')
+        App.execute "reminder:date:set", reminder, newDate.add(1, 'days')
 
         # Generate new notifications (and IDs) for the repeating reminder.
         # Whether the reminders repeat daily or weekly, `addNotifications` will set
