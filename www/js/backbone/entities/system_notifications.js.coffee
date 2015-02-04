@@ -155,7 +155,8 @@
         , callback, @
 
 
-    deleteNotifications: (ids) ->
+    deleteNotifications: (reminder) ->
+      ids = reminder.get('notificationIds')
       window.plugin.notification.local.getScheduledIds((scheduledIds) ->
         console.log 'Ids to delete', JSON.stringify ids
         console.log 'scheduled Ids', JSON.stringify scheduledIds
