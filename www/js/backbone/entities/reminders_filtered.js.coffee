@@ -41,3 +41,9 @@
           # only passes if:
           # now < activationDate < dayEnd
           if !(now < reminder.get('activationDate') and reminder.get('activationDate') < dayEnd) then return false
+        else if reminder.get('repeatDays').length isnt 7
+          # reminder is a collection of "weekly" notifications
+          # must make sure that today is in the collection of repeatDays.
+          # note type conversion of now.day() to string for comparison.
+          if !("#{now.day()}" in reminder.get('repeatDays')) then return false
+
