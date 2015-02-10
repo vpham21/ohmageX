@@ -30,24 +30,24 @@
       if isLoggedIn
         if App.device.isNative
           visibleItems = [
-            "Campaigns"
-            "Surveys"
-            "Upload Queue"
-            "Reminders"
-            "Profile"
-            "Logout"
+            "campaign"
+            "survey"
+            "queue"
+            "reminder"
+            "profile"
+            "logout"
           ]
         else
           visibleItems = [
-            "Campaigns"
-            "Surveys"
-            "Upload Queue"            
-            "Profile"
-            "Logout"
+            "campaign"
+            "survey"
+            "queue"            
+            "profile"
+            "logout"
           ]
       else
         visibleItems = [
-          "Login"
+          "login"
         ]
       App.navs.each((nav) ->
         visible = nav.get('name') in visibleItems
@@ -59,22 +59,22 @@
       # TODO: only show reminders in the nav menu on mobile devices.
       if App.device.isNative
         App.navs = new Entities.NavsCollection [
-          { name: "Login", url: "#login", icon: "", visible: false }
-          { name: "Campaigns", url: "#campaigns", icon: "", visible: false }
-          { name: "Surveys", url: "#surveys", icon: "", visible: false }
-          { name: "Upload Queue", url: "#uploadqueue", icon: "", visible: false }
-          { name: "Reminders", url: "#reminders", icon: "", visible: false }
-          { name: "Profile", url: "#profile", icon: "", visible: false }
-          { name: "Logout", url: "#logout", icon: "", visible: false }
+          { name: "login", url: "#login", icon: "", visible: false }
+          { name: "campaign", url: "#campaigns", icon: "", visible: false }
+          { name: "survey", url: "#surveys", icon: "", visible: false }
+          { name: "queue", url: "#uploadqueue", icon: "", visible: false }
+          { name: "reminder", url: "#reminders", icon: "", visible: false }
+          { name: "profile", url: "#profile", icon: "", visible: false }
+          { name: "logout", url: "#logout", icon: "", visible: false }
         ]
       else
         App.navs = new Entities.NavsCollection [
-          { name: "Login", url: "#login", icon: "", visible: false }
-          { name: "Campaigns", url: "#campaigns", icon: "", visible: false }
-          { name: "Surveys", url: "#surveys", icon: "", visible: false }
-          { name: "Upload Queue", url: "#uploadqueue", icon: "", visible: false }
-          { name: "Profile", url: "#profile", icon: "", visible: false }
-          { name: "Logout", url: "#logout", icon: "", visible: false }
+          { name: "login", url: "#login", icon: "", visible: false }
+          { name: "campaign", url: "#campaigns", icon: "", visible: false }
+          { name: "survey", url: "#surveys", icon: "", visible: false }
+          { name: "queue", url: "#uploadqueue", icon: "", visible: false }
+          { name: "profile", url: "#profile", icon: "", visible: false }
+          { name: "logout", url: "#logout", icon: "", visible: false }
         ]
 
   App.vent.on "credentials:storage:load:success credentials:storage:load:failure", ->
