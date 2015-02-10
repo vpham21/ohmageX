@@ -15,7 +15,10 @@
 
       # false if the response is empty
       if !!!response
-        App.vent.trigger "response:set:error", "Please enter a response."
+        message = switch type
+          when "single_choice", "single_choice_custom", "multi_choice", "multi_choice_custom" then "Please select an option."
+          else "Please enter a response."
+        App.vent.trigger "response:set:error", message
         return false
 
       if response is App.request('response:get', stepId).get('response')
