@@ -40,7 +40,7 @@
         App.navigate "survey/#{surveyId}/step/#{prevId}", { trigger: true }
       else
         # There is no previous ID.
-        App.execute "dialog:confirm", 'Do you want to exit the survey?', =>
+        App.execute "dialog:confirm", "Do you want to exit the #{App.dictionary('page','survey')}?", =>
           App.vent.trigger "survey:exit", surveyId
 
     goNext: (surveyId, stepId) ->
