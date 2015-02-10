@@ -24,7 +24,11 @@
         # someone navigates backwards via hitting the Back Button.
         # this cleans up and exits the survey properly.
         console.log Error
-        App.vent.trigger "survey:exit", id
+        App.execute "dialog:confirm", "Do you want to exit the #{App.dictionary('page','survey')}?", (=>
+          App.vent.trigger "survey:exit", id
+        ),(=>
+          App.historyPrevious()
+        )
         return false
 
       App.vent.trigger "survey:start", id
