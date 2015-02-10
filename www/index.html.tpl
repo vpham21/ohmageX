@@ -25,10 +25,8 @@
         environment: "<%= js_env %>",
         root_path: "<%= root_path %>",
         url: "<%= js_url %>",
-        package_info: {
-          app_name: "<%= app_name %>",
-          bundle_id: "<%= bundle_id %>"
-        }
+        package_info: <%= package_info %>,
+        app_config: <%= app_config %>
       };
     if (typeof window.cordova !== "undefined") {
       document.addEventListener('deviceready', function() {

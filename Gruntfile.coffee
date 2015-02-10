@@ -125,9 +125,9 @@ module.exports = (grunt) ->
             js_path: "js/<%= pkg.name %>.js"
             js_env: "development"
             js_url: "http://0.0.0.0:8088/"
+            app_config: "<%= JSON.stringify(appConfig) %>"
+            package_info: "<%= JSON.stringify(appConfig.build) %>"
             root_path: "/"
-            app_name: "<%= pkg.config.app_name %>"
-            bundle_id: "<%= pkg.config.bundle_id %>"
         files:
           "<%= web_root_folder %>/index.html": ["<%= web_root_folder %>/index.html.tpl"]
       cordova_config:
@@ -343,3 +343,4 @@ module.exports = (grunt) ->
     "copy:cordova_www"
     "exec:mobile_build" # must pass it through a custom exec to change cwd
   ]
+
