@@ -1,6 +1,7 @@
 module.exports = (grunt) ->
   grunt.initConfig
     pkg: grunt.file.readJSON("package.json")
+    appConfig: grunt.file.readJSON('appconfig/default.json')
     cordova_project_folder: "cordova-build"
     web_root_folder: "www"
     hybrid_build_folder: "www-mobile"
