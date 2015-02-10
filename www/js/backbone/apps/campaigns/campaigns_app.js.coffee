@@ -24,7 +24,7 @@
     App.execute "campaign:save", model
 
   App.vent.on "campaign:list:unsave:clicked", (model, view, filterType) ->
-    App.execute "dialog:confirm", "Are you sure you want to unsave this campaign?", (=>
+    App.execute "dialog:confirm", "Are you sure you want to unsave this #{App.dictionary('page','campaign')}?", (=>
       App.execute "campaign:unsave", model.get 'id'
       if filterType is 'saved' then view.destroy()
     )
