@@ -17,7 +17,7 @@
 
   API =
     show: (id) ->
-      App.vent.trigger "nav:choose", "Surveys"
+      App.vent.trigger "nav:choose", "survey"
       console.log 'surveyApp show'
 
       $mySurveyXML = App.request "survey:saved:xml", id # gets the jQuery Survey XML by ID

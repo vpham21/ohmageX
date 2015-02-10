@@ -11,11 +11,11 @@
 
   API =
     all: ->
-      App.vent.trigger "nav:choose", "Surveys"
+      App.vent.trigger "nav:choose", "survey"
       new SurveysApp.List.Controller
         campaign_id: false
     single: (campaign_id) ->
-      App.vent.trigger "nav:choose", "Surveys"
+      App.vent.trigger "nav:choose", "survey"
       new SurveysApp.List.Controller
         campaign_id: campaign_id
 

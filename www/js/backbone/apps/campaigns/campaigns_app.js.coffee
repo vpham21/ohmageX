@@ -10,7 +10,7 @@
 
   API =
     list: ->
-      App.vent.trigger "nav:choose", "Campaigns"
+      App.vent.trigger "nav:choose", "campaign"
       new CampaignsApp.List.Controller
 
   App.addInitializer ->

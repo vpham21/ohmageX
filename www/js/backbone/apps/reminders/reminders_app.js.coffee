@@ -10,7 +10,7 @@
 
   API =
     list: (options) ->
-      App.vent.trigger "nav:choose", "Reminders"
+      App.vent.trigger "nav:choose", "reminder"
       console.log 'RemindersApp list'
       new RemindersApp.List.Controller options
 

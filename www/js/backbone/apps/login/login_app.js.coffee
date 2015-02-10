@@ -20,7 +20,7 @@
 
   API =
     show: (id) ->
-      App.vent.trigger "nav:choose", "Login"
+      App.vent.trigger "nav:choose", "login"
       console.log 'loginApp show'
       new LoginApp.Show.Controller
 
