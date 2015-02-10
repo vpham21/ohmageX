@@ -139,6 +139,7 @@ module.exports = (grunt) ->
             bundle_id: "<%= appConfig.build.bundle_id %>"
             description: "<%= pkg.description %>"
             author: "<%= pkg.author %>"
+            image_folder: "<%= appConfig.build.image_folder %>"
         files:
           "config.xml": ["config.xml.tpl"]
 
@@ -222,7 +223,7 @@ module.exports = (grunt) ->
         ]
       cordova_ios_splash:
         files: [
-          { expand: true, cwd: "res/ios/splash/", src: ['**'], dest: "<%= cordova_project_folder %>/platforms/ios/<%= appConfig.build.app_name %>/Resources/splash/" }
+          { expand: true, cwd: "res/<%= appConfig.build.image_folder %>/ios/splash/", src: ['**'], dest: "<%= cordova_project_folder %>/platforms/ios/<%= appConfig.build.app_name %>/Resources/splash/" }
         ]
 
     exec:
