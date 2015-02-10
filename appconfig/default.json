@@ -1,0 +1,45 @@
+{
+  "api": {
+    "client_base_string": "ohmage-mwf-"    
+  },
+  "build": {
+    "app_name": "ohmage MWF",
+    "bundle_id": "org.ohmage.mwf"
+  },
+  "dictionary": {
+    "page": {
+      "login": "login",
+      "campaign": "campaign",
+      "survey": "survey",
+      "queue": "upload queue",
+      "reminder": "reminder",
+      "profile": "profile",
+      "logout": "logout"
+    },
+    "pages": {
+      "login": "login",
+      "campaign": "campaigns",
+      "survey": "surveys",
+      "queue": "upload queue",
+      "reminder": "reminders",
+      "profile": "profile",
+      "logout": "logout"
+    },
+    "menu": {
+      "login": "Login",
+      "campaign": "Campaigns",
+      "survey": "Surveys",
+      "queue": "Upload Queue",
+      "reminder": "Reminders",
+      "profile": "Profile",
+      "logout": "Logout"
+    }
+  },
+  "menu_items_disabled": [],
+  "server_list": {
+    "custom": true,
+    "servers": [
+      "https://test.mobilizingcs.org"
+    ]
+  }
+}
