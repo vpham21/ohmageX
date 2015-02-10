@@ -10,7 +10,7 @@
 
   API =
     show: (id) ->
-      App.vent.trigger "nav:choose", "Profile"
+      App.vent.trigger "nav:choose", "profile"
       console.log 'ProfileApp show'
       new ProfileApp.Show.Controller
 
