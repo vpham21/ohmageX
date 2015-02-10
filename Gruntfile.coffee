@@ -135,8 +135,8 @@ module.exports = (grunt) ->
           data:
             # TODO: add formal version number to config.xml later,
             # may cause certificate issues.
-            app_name: "<%= pkg.config.app_name %>"
-            bundle_id: "<%= pkg.config.bundle_id %>"
+            app_name: "<%= appConfig.build.app_name %>"
+            bundle_id: "<%= appConfig.build.bundle_id %>"
             description: "<%= pkg.description %>"
             author: "<%= pkg.author %>"
         files:
@@ -153,13 +153,13 @@ module.exports = (grunt) ->
           platforms: [ "ios", "android" ]
           plugins: [ "device", "dialogs" ]
           path: "<%= cordova_project_folder %>"
-          id: "<%= pkg.config.bundle_id %>"
+          id: "<%= appConfig.build.bundle_id %>"
           name: "<%= pkg.name %>"
 
       create:
         options:
           command: "create"
-          id: "<%= pkg.config.bundle_id %>"
+          id: "<%= appConfig.build.bundle_id %>"
           name: "<%= pkg.name %>"
 
       add_platforms:
@@ -201,7 +201,7 @@ module.exports = (grunt) ->
       hybrid_build: ["<%= hybrid_build_folder %>"]
       cordova_www: ["<%= cordova_project_folder %>/www/*"]
       cordova_config: ["<%= cordova_project_folder %>/config.xml"]
-      cordova_ios_splash: ["<%= cordova_project_folder %>/platforms/ios/<%= pkg.config.app_name %>/Resources/splash/*"]
+      cordova_ios_splash: ["<%= cordova_project_folder %>/platforms/ios/<%= appConfig.build.app_name %>/Resources/splash/*"]
 
     copy:
       hybrid_build:
@@ -222,7 +222,7 @@ module.exports = (grunt) ->
         ]
       cordova_ios_splash:
         files: [
-          { expand: true, cwd: "res/ios/splash/", src: ['**'], dest: "<%= cordova_project_folder %>/platforms/ios/<%= pkg.config.app_name %>/Resources/splash/" }
+          { expand: true, cwd: "res/ios/splash/", src: ['**'], dest: "<%= cordova_project_folder %>/platforms/ios/<%= appConfig.build.app_name %>/Resources/splash/" }
         ]
 
     exec:
