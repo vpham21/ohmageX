@@ -23,6 +23,10 @@
 
     triggers:
       "click": "chosen:check"
+    serializeData: ->
+      data = @model.toJSON()
+      data.navLabel = App.dictionary "menu", @model.get('name')
+      data
 
   class List.Title extends App.Views.ItemView
     tagName: "span"
