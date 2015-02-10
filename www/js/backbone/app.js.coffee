@@ -6,6 +6,7 @@
   App.on "before:start", (options) ->
     App.environment = options.environment
     App.cordova = options.cordova
+    App.custom = options.app_config
     App.device = App.request "device:init"
     App.credentials = false
     App.navs = App.request "nav:entities"
