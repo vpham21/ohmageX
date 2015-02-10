@@ -20,7 +20,7 @@
 
       App.execute "notice:show",
         data:
-          title: "Response Upload Error"
+          title: "Upload Failure"
           description: "Problem with Response: #{errorPrefix} #{errorText}"
 
   App.addInitializer ->
