@@ -30,7 +30,11 @@
     serializeData: ->
       chosenModel = @collection.findWhere(chosen: true)
       data = {}
-      data.pageTitle = if chosenModel isnt undefined then chosenModel.get("name") else "Ohmage"
+      if chosenModel is undefined 
+        data.pageTitle = App.package_info.app_name
+      else
+        name = chosenModel.get("name")
+        data.pageTitle = App.dictionary "menu", name
       data
 
   class List.Header extends App.Views.CollectionView
