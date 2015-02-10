@@ -11,21 +11,21 @@
     <platform name="ios">
         <!-- iOS 7.0+ -->
         <!-- iPhone / iPod Touch  -->
-        <icon src="../res/ios/icons/60x60.png" width="60" height="60" />
-        <icon src="../res/ios/icons/60x60@2x.png" width="120" height="120" />
+        <icon src="../res/<%= image_folder %>/ios/icons/60x60.png" width="60" height="60" />
+        <icon src="../res/<%= image_folder %>/ios/icons/60x60@2x.png" width="120" height="120" />
         <!-- iPad -->
-        <icon src="../res/ios/icons/76x76.png" width="76" height="76" />
-        <icon src="../res/ios/icons/76x76@2x.png" width="152" height="152" />
+        <icon src="../res/<%= image_folder %>/ios/icons/76x76.png" width="76" height="76" />
+        <icon src="../res/<%= image_folder %>/ios/icons/76x76@2x.png" width="152" height="152" />
         <!-- iOS 6.1 -->
         <!-- Spotlight Icon -->
-        <icon src="../res/ios/icons/40x40.png" width="40" height="40" />
-        <icon src="../res/ios/icons/40x40@2x.png" width="80" height="80" />
+        <icon src="../res/<%= image_folder %>/ios/icons/40x40.png" width="40" height="40" />
+        <icon src="../res/<%= image_folder %>/ios/icons/40x40@2x.png" width="80" height="80" />
         <!-- iPhone / iPod Touch -->
-        <icon src="../res/ios/icons/57x57.png" width="57" height="57" />
-        <icon src="../res/ios/icons/57x57@2x.png" width="114" height="114" />
+        <icon src="../res/<%= image_folder %>/ios/icons/57x57.png" width="57" height="57" />
+        <icon src="../res/<%= image_folder %>/ios/icons/57x57@2x.png" width="114" height="114" />
         <!-- iPad -->
-        <icon src="../res/ios/icons/72x72.png" width="72" height="72" />
-        <icon src="../res/ios/icons/72x72@2x.png" width="144" height="144" />
+        <icon src="../res/<%= image_folder %>/ios/icons/72x72.png" width="72" height="72" />
+        <icon src="../res/<%= image_folder %>/ios/icons/72x72@2x.png" width="144" height="144" />
     </platform>
     <access origin="*" />
 </widget>
