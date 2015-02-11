@@ -23,10 +23,10 @@
 
     selectView: (navs, selected) ->
       switch selected
-        when "Campaigns"
+        when "campaign"
           return new Navbutton.Sync
             collection: navs
-        when "Upload Queue"
+        when "queue"
           return new Navbutton.Upload
             collection: navs
         else
