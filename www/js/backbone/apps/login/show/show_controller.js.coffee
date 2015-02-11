@@ -27,10 +27,6 @@
 
       formView = @getFormView myPath
 
-      @listenTo formView, "serverpath:submit", (value) =>
-        console.log 'serverpath:submit', value
-        App.execute "serverpath:update", value
-
       @listenTo formView, "form:submit", (formValues) ->
         console.log 'form:submit', formValues
         App.vent.trigger "login:form:submit:clicked", formValues
