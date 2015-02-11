@@ -31,6 +31,10 @@
         console.log 'form:submit', formValues
         App.vent.trigger "login:form:submit:clicked", formValues
 
+      if App.request('serverlist:selectable')
+        @listenTo formView, "show", =>
+          @serversRegion formView, App.request('serverlist:entity')
+
       @show formView, region: @layout.formRegion
 
     serversRegion: (formView, serverList) ->
