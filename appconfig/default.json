@@ -43,7 +43,8 @@
   "server_list": {
     "custom": true,
     "servers": [
-      "https://test.mobilizingcs.org"
+      "https://test.mobilizingcs.org",
+      "https://pilots.mobilizelabs.org"
     ]
   }
 }
