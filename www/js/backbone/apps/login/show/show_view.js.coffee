@@ -10,6 +10,8 @@
       options
 
   class Show.ServerList extends App.Views.CompositeView
+    initialize: ->
+      @listenTo @, "server:selected", (-> @collection.chooseByName @$el.find('select').val())
     template: "login/show/serverlist"
     childView: Show.Server
     childViewContainer: "select"
@@ -18,6 +20,7 @@
         # this means custom is the only option. Hide the select and show the custom form.
         @$el.find('.custom-server').attr('data-visible', true)
         @$el.find('select').attr('data-visible', false)
+      "change select": "server:selected"
   class Show.Form extends App.Views.Layout
     initialize: ->
       @listenTo @, "errors:reset", @resetErrors
