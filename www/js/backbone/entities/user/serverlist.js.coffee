@@ -15,6 +15,7 @@
       if App.custom.server_list.custom then serverList.add
         label: "Custom..."
         name: 'custom'
+      serverList.chooseByName storedServer
       serverList
 
     defaultServer: ->
