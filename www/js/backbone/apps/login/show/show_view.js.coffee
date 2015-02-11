@@ -13,6 +13,11 @@
     template: "login/show/serverlist"
     childView: Show.Server
     childViewContainer: "select"
+    onRender: ->
+      if @$el.find('select').val() is 'custom' and @collection.length is 1
+        # this means custom is the only option. Hide the select and show the custom form.
+        @$el.find('.custom-server').attr('data-visible', true)
+        @$el.find('select').attr('data-visible', false)
   class Show.Form extends App.Views.Layout
     initialize: ->
       @listenTo @, "errors:reset", @resetErrors
