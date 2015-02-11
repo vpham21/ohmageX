@@ -6,6 +6,14 @@
   class Entities.ServerList extends Entities.NavsCollection
 
   API =
+    serverList: (storedServer) ->
+      serversObj = _.map(App.custom.server_list.servers, (server) ->
+        label: server
+        name: server
+      )
+      serverList = new Entities.ServerList serversObj
+      serverList
+
     defaultServer: ->
       myServerList = @serverList()
       if myServerList.length is 0 then return 'custom'
@@ -13,3 +21,5 @@
   App.reqres.setHandler "serverlist:default", ->
     API.defaultServer()
 
+  App.reqres.setHandler "serverlist:entity", ->
+    API.serverList App.request('serverpath:current')
