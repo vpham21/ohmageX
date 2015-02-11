@@ -33,6 +33,8 @@
         # this means custom is the only option. Hide the select and show the custom form.
         @$el.find('.custom-server').attr('data-visible', true)
         @$el.find('select').attr('data-visible', false)
+    triggers:
+      "blur .custom-server": "custom:submit"
       "change select": "server:selected"
   class Show.Form extends App.Views.Layout
     initialize: ->
