@@ -1,7 +1,6 @@
 @Ohmage.module "LoginApp.Show", (Show, App, Backbone, Marionette, $, _) ->
 
-  # LoginApp renders a Login form with minimal functionality,
-  # enough to allow testing.
+  # LoginApp renders a Login form.
 
   class Show.Controller extends App.Controllers.Application
     initialize: ->
