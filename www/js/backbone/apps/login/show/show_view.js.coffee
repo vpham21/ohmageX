@@ -1,6 +1,7 @@
 @Ohmage.module "LoginApp.Show", (Show, App, Backbone, Marionette, $, _) ->
 
   class Show.Form extends App.Views.ItemView
+  class Show.Form extends App.Views.Layout
     initialize: ->
       @listenTo @, "errors:reset", @resetErrors
 
@@ -43,6 +44,8 @@
       username: @$el.find('input.username').val()
       password: @$el.find('input.pass').val()
     template: "login/show/form"
+    regions:
+      serversRegion: ".server-selector"
     triggers:
       "click button[type=submit]": "submit:clicked"
       "blur input[name=username]": "errors:reset"
