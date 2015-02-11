@@ -26,8 +26,14 @@
       myServerList = @serverList()
       if myServerList.length is 0 then return 'custom'
       myServerList.at(0).get('name')
+    isSelectable: ->
+      App.custom.server_list.custom or API.serverList().length > 1
+
   App.reqres.setHandler "serverlist:default", ->
     API.defaultServer()
 
   App.reqres.setHandler "serverlist:entity", ->
     API.serverList App.request('serverpath:current')
+
+  App.reqres.setHandler "serverlist:selectable", ->
+    API.isSelectable()
