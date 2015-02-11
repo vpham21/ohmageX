@@ -11,7 +11,10 @@
 
   class Show.ServerList extends App.Views.CompositeView
     initialize: ->
+      @listenTo @collection, 'change:chosen', @setSubmitValue
       @listenTo @, "server:selected", (-> @collection.chooseByName @$el.find('select').val())
+    setSubmitValue: (model) ->
+      if model.isChosen()
     template: "login/show/serverlist"
     childView: Show.Server
     childViewContainer: "select"
