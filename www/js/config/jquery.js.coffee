@@ -20,3 +20,7 @@ do ($) ->
         # but IE compatibility is not required anyway
         $.trim(elem.textContent.toLowerCase()) is text.toLowerCase()
     )
+
+  $.ajaxSetup({
+    timeout: 6000
+  });
