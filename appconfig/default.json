@@ -36,7 +36,10 @@
       "logout": "Logout"
     }
   },
-  "menu_items_disabled": [],
+  "menu_items_disabled": {
+    "native": [],
+    "browser": ["reminder"]
+  },
   "server_list": {
     "custom": true,
     "servers": [
