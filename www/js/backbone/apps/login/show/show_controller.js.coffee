@@ -33,6 +33,10 @@
 
       @show formView, region: @layout.formRegion
 
+    getServersView: (serverList) ->
+      new Show.ServerList
+        collection: serverList
+
     getFormView: (myPath) ->
 
       new Show.Form
