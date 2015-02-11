@@ -12,6 +12,9 @@
         name: server
       )
       serverList = new Entities.ServerList serversObj
+      if App.custom.server_list.custom then serverList.add
+        label: "Custom..."
+        name: 'custom'
       serverList
 
     defaultServer: ->
