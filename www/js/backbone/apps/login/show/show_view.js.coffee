@@ -1,5 +1,13 @@
 @Ohmage.module "LoginApp.Show", (Show, App, Backbone, Marionette, $, _) ->
 
+  class Show.Server extends App.Views.ItemView
+    tagName: "option"
+    template: "login/show/_serveritem"
+    attributes: ->
+      options = {}
+      options['value'] = @model.get 'name'
+      if @model.isChosen() then options['selected'] = 'selected'
+      options
   class Show.Form extends App.Views.Layout
     initialize: ->
       @listenTo @, "errors:reset", @resetErrors
