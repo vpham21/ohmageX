@@ -8,6 +8,11 @@
       options['value'] = @model.get 'name'
       if @model.isChosen() then options['selected'] = 'selected'
       options
+
+  class Show.ServerList extends App.Views.CompositeView
+    template: "login/show/serverlist"
+    childView: Show.Server
+    childViewContainer: "select"
   class Show.Form extends App.Views.Layout
     initialize: ->
       @listenTo @, "errors:reset", @resetErrors
