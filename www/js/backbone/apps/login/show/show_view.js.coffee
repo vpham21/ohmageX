@@ -36,6 +36,8 @@
     triggers:
       "blur .custom-server": "custom:submit"
       "change select": "server:selected"
+      "focus .custom-server": "custom:focus"
+
   class Show.Form extends App.Views.Layout
     initialize: ->
       @listenTo @, "errors:reset", @resetErrors

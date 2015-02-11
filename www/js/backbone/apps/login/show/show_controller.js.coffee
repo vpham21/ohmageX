@@ -40,6 +40,10 @@
     serversRegion: (formView, serverList) ->
 
       serversView = @getServersView serverList
+
+      @listenTo serversView, "custom:focus", =>
+        formView.trigger "errors:reset"
+
       @listenTo serversView, "serverpath:submit", (value) =>
         console.log 'serverpath:submit', value
         App.execute "serverpath:update", value
