@@ -4,6 +4,8 @@
   # Used on the login page.
 
   class Entities.ServerList extends Entities.NavsCollection
+
+  API =
     defaultServer: ->
       myServerList = @serverList()
       if myServerList.length is 0 then return 'custom'
