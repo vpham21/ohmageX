@@ -15,6 +15,9 @@
       @listenTo @, "server:selected", (-> @collection.chooseByName @$el.find('select').val())
     setSubmitValue: (model) ->
       if model.isChosen()
+        if model.get('name') is 'custom'
+          # chose the custom field, update the server name.
+          @$el.find('.custom-server').attr('data-visible', true)
     template: "login/show/serverlist"
     childView: Show.Server
     childViewContainer: "select"
