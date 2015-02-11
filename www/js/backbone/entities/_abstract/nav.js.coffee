@@ -53,26 +53,15 @@
       App.navs.trigger "reveal"
 
     getNavs: ->
-      # TODO: only show reminders in the nav menu on mobile devices.
-      if App.device.isNative
-        App.navs = new Entities.NavsCollection [
-          { name: "login", url: "#login", icon: "", visible: false }
-          { name: "campaign", url: "#campaigns", icon: "", visible: false }
-          { name: "survey", url: "#surveys", icon: "", visible: false }
-          { name: "queue", url: "#uploadqueue", icon: "", visible: false }
-          { name: "reminder", url: "#reminders", icon: "", visible: false }
-          { name: "profile", url: "#profile", icon: "", visible: false }
-          { name: "logout", url: "#logout", icon: "", visible: false }
-        ]
-      else
-        App.navs = new Entities.NavsCollection [
-          { name: "login", url: "#login", icon: "", visible: false }
-          { name: "campaign", url: "#campaigns", icon: "", visible: false }
-          { name: "survey", url: "#surveys", icon: "", visible: false }
-          { name: "queue", url: "#uploadqueue", icon: "", visible: false }
-          { name: "profile", url: "#profile", icon: "", visible: false }
-          { name: "logout", url: "#logout", icon: "", visible: false }
-        ]
+      App.navs = new Entities.NavsCollection [
+        { name: "login", url: "#login", icon: "", visible: false }
+        { name: "campaign", url: "#campaigns", icon: "", visible: false }
+        { name: "survey", url: "#surveys", icon: "", visible: false }
+        { name: "queue", url: "#uploadqueue", icon: "", visible: false }
+        { name: "reminder", url: "#reminders", icon: "", visible: false }
+        { name: "profile", url: "#profile", icon: "", visible: false }
+        { name: "logout", url: "#logout", icon: "", visible: false }
+      ]
 
   App.vent.on "credentials:storage:load:success credentials:storage:load:failure", ->
     API.reveal App.request("credentials:isloggedin")
