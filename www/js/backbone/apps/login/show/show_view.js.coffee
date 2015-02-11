@@ -12,7 +12,11 @@
   class Show.ServerList extends App.Views.CompositeView
     initialize: ->
       @listenTo @collection, 'change:chosen', @setSubmitValue
+      @listenTo @, 'custom:submit', @customSubmit
       @listenTo @, "server:selected", (-> @collection.chooseByName @$el.find('select').val())
+    customSubmit: ->
+      if @$el.find('select').val() is 'custom'
+        @trigger "serverpath:submit", @$el.find('.custom-server').val()
     setSubmitValue: (model) ->
       if model.isChosen()
         if model.get('name') is 'custom'
