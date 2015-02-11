@@ -32,7 +32,7 @@
         data:
           user: username
           password: password
-          client: 'ohmage-mwf-dw-browser'
+          client: App.client_string
         dataType: 'json'
         success: (response) =>
           if @isParsedAuthValid response

@@ -45,7 +45,7 @@
       myCampaign = App.request "campaign:entity", campaign_urn
 
       completeSubmit = 
-        client: 'ohmage-mwf-dw-browser'
+        client: App.client_string
         images: App.request "survey:images:string"
         surveys: JSON.stringify([submitSurveys])
         campaign_creation_timestamp: myCampaign.get('creation_timestamp')

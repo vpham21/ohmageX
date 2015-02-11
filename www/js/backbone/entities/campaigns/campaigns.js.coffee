@@ -144,7 +144,7 @@
         data:
           user: credentials.get 'username'
           password: credentials.get 'password'
-          client: 'ohmage-mwf-dw-browser'
+          client: App.client_string
           output_format: 'short'
         saved_campaigns: App.request 'campaigns:saved:current'
         success: (collection, response, options) =>

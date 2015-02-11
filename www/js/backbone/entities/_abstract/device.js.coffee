@@ -9,7 +9,17 @@
       if myDevice.isNative and device.platform is "iOS"
         myDevice.isiOS7 = @isDeviceiOS7Plus()
 
+      @setClientString myDevice
+
       myDevice
+
+    setClientString: (myDevice) ->
+      App.client_string = App.custom.api.client_base_string
+
+      if myDevice.isNative
+        App.client_string += device.platform
+      else
+        App.client_string += 'browser'
 
     isDeviceiOS7Plus: ->
       version = @getDeviceiOSVersion()

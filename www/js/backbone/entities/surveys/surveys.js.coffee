@@ -59,7 +59,7 @@
         data:
           user: credentials.get 'username'
           password: credentials.get 'password'
-          client: 'ohmage-mwf-dw-browser'
+          client: App.client_string
           output_format: 'long'
           campaign_urn_list: campaign_urn
         success: (collection, response, options) =>
