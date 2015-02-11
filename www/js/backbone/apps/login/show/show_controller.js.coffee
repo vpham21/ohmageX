@@ -1,7 +1,6 @@
 @Ohmage.module "LoginApp.Show", (Show, App, Backbone, Marionette, $, _) ->
 
-  # LoginApp renders a Login form with minimal functionality,
-  # enough to allow testing.
+  # LoginApp renders a Login form.
 
   class Show.Controller extends App.Controllers.Application
     initialize: ->
@@ -28,15 +27,32 @@
 
       formView = @getFormView myPath
 
-      @listenTo formView, "serverpath:submit", (value) =>
-        console.log 'serverpath:submit', value
-        App.execute "serverpath:update", value
-
       @listenTo formView, "form:submit", (formValues) ->
         console.log 'form:submit', formValues
         App.vent.trigger "login:form:submit:clicked", formValues
 
+      if App.request('serverlist:selectable')
+        @listenTo formView, "show", =>
+          @serversRegion formView, App.request('serverlist:entity')
+
       @show formView, region: @layout.formRegion
+
+    serversRegion: (formView, serverList) ->
+
+      serversView = @getServersView serverList
+
+      @listenTo serversView, "custom:focus", =>
+        formView.trigger "errors:reset"
+
+      @listenTo serversView, "serverpath:submit", (value) =>
+        console.log 'serverpath:submit', value
+        App.execute "serverpath:update", value
+
+      @show serversView, region: formView.serversRegion
+
+    getServersView: (serverList) ->
+      new Show.ServerList
+        collection: serverList
 
     getFormView: (myPath) ->
 

@@ -24,7 +24,7 @@
       ), =>
         console.log 'serverpath not retrieved from storage'
         currentServer = new Entities.ServerPath
-          path: 'https://test.mobilizingcs.org'
+          path: App.request('serverlist:default')
 
     updateServer: (newPath) ->
       # remove trailing slash if it exists
