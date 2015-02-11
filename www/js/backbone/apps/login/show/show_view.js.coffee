@@ -46,7 +46,7 @@
     triggers:
       "click button[type=submit]": "submit:clicked"
       "blur input[name=username]": "errors:reset"
-      "blur input[name=username]": "errors:reset"
+      "blur input[name=pass]": "errors:reset"
 
 
   class Show.Layout extends App.Views.Layout
