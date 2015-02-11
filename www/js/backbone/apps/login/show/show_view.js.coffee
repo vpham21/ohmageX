@@ -18,6 +18,9 @@
         if model.get('name') is 'custom'
           # chose the custom field, update the server name.
           @$el.find('.custom-server').attr('data-visible', true)
+        else
+          @$el.find('.custom-server').attr('data-visible', false)
+          @trigger "serverpath:submit", @$el.find('select').val()
     template: "login/show/serverlist"
     childView: Show.Server
     childViewContainer: "select"
