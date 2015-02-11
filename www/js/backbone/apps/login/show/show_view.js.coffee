@@ -9,9 +9,6 @@
         @trigger "errors:reset"
         @trigger "form:submit", @formValues()
 
-      @listenTo @, "serverpath:clicked", =>
-        @trigger "serverpath:submit", @$el.find('input.server').val()
-
       @listenTo App.vent, "credentials:invalidated", (responseErrors) =>
         @showInvalidErrors responseErrors
 
@@ -50,7 +47,6 @@
       "click button[type=submit]": "submit:clicked"
       "blur input[name=username]": "errors:reset"
       "blur input[name=username]": "errors:reset"
-      "click .server-btn": "serverpath:clicked"
 
 
   class Show.Layout extends App.Views.Layout
