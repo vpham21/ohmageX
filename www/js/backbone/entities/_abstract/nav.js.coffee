@@ -28,23 +28,20 @@
     reveal: (isLoggedIn) ->
       console.log 'reveal isLoggedIn', isLoggedIn
       if isLoggedIn
+        loginItems = [
+          "campaign"
+          "survey"
+          "queue"
+          "reminder"
+          "profile"
+          "logout"
+        ]
         if App.device.isNative
-          visibleItems = [
-            "campaign"
-            "survey"
-            "queue"
-            "reminder"
-            "profile"
-            "logout"
-          ]
+          filterItems = App.custom.menu_items_disabled.native
         else
-          visibleItems = [
-            "campaign"
-            "survey"
-            "queue"            
-            "profile"
-            "logout"
-          ]
+          filterItems = App.custom.menu_items_disabled.browser
+
+        visibleItems = _.difference(loginItems, filterItems)
       else
         visibleItems = [
           "login"
