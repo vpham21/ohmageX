@@ -15,6 +15,10 @@
       if App.custom.server_list.custom then serverList.add
         label: "Custom..."
         name: 'custom'
+
+      if !App.custom.server_list.custom and serverList.length is 0
+        throw new Error "App server_list config invalid. `custom` disabled and `servers` is empty"
+
       serverList.chooseByName storedServer
       serverList
 
