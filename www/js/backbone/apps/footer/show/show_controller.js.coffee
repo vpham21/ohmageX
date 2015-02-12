@@ -3,8 +3,10 @@
   class Show.Controller extends App.Controllers.Application
 
     initialize: (options) ->
-      showView = getShowView()
-      @show showView
+      { navs } = options
 
+      @layout = @getShowView()
+
+      @show @layout
     getShowView: ->
       new Show.Footer
