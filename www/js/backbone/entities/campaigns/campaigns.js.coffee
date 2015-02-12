@@ -146,8 +146,18 @@
         data: _.extend(myData, App.request("credentials:upload:params"))
         saved_campaigns: App.request 'campaigns:saved:current'
         success: (collection, response, options) =>
-          console.log 'campaign fetch success', response, collection
-          @saveLocalCampaigns collection
+          console.log 'campaign fetch attempt complete', response, collection
+          if response.result isnt "failure"
+            @saveLocalCampaigns collection
+          else
+            message = "The following errors prevented the #{App.dictionary('pages','campaign')} from syncing: "
+            _.every response.errors, (error) =>
+              console.log 'error array item', error
+              message += error.text
+              if error.code in ["0200","0201","0202"]
+                App.vent.trigger "campaigns:sync:failure:auth", error.text
+                return false
+            App.execute "dialog:alert", message
           App.vent.trigger "loading:hide"
         error: (collection, response, options) =>
           console.log 'campaign fetch error'

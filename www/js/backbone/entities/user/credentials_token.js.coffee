@@ -76,3 +76,7 @@
   App.vent.on "survey:upload:failure:auth uploadqueue:upload:failure:auth", (responseData, errorText, surveyId) ->
     if !App.request("credentials:ispassword")
       API.tokenLoginRedirect()
+
+  App.vent.on "campaigns:sync:failure:auth", (errorText) ->
+    if !App.request("credentials:ispassword")
+      API.tokenLoginRedirect()
