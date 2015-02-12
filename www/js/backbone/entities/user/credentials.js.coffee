@@ -23,6 +23,8 @@
     getCredentials: ->
       if App.credentials isnt false and App.credentials.has('username') then App.credentials else false
 
+    isPasswordAuth: ->
+      App.custom.build.debug or App.device.isNative
 
     validateCredentials: (path, username, password) ->
       App.vent.trigger "loading:show", "logging in as #{username}..."
