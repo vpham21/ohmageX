@@ -9,7 +9,7 @@
       App.execute "register:instance", @, @_instance_id
 
     destroy: ->
-      # console.log "closing", @
+      # console.log "closing controller", @_instance_id, @
       App.execute "unregister:instance", @, @_instance_id
       super
 
