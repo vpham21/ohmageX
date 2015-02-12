@@ -14,11 +14,12 @@
     url: ->
       "#{App.request("serverpath:current")}/app/campaign/read"
     parse: (response, options) ->
-      console.log 'options in parse', options
-      urn = options.data.campaign_urn_list
-      campaignXML = response.data[urn].xml
-      $surveys = @getSurveyXML campaignXML
-      @parseSurveysXML $surveys, urn, campaignXML
+      if response.result isnt "failure"
+        console.log 'options in parse', options
+        urn = options.data.campaign_urn_list
+        campaignXML = response.data[urn].xml
+        $surveys = @getSurveyXML campaignXML
+        @parseSurveysXML $surveys, urn, campaignXML
     getSurveyXML: (rawXML) ->
       $XML = $( $.parseXML(rawXML) )
       $XML.find 'survey'
@@ -61,17 +62,28 @@
         type: 'POST' # not RESTful but the 2.0 API requires it
         data: _.extend(myData, App.request("credentials:upload:params"))
         success: (collection, response, options) =>
-          console.log 'surveys fetch success', response, collection
-          @updateLocal( =>
-            App.vent.trigger 'surveys:saved:campaign:fetch:success', options.data.campaign_urn_list
-          )
+          console.log 'surveys fetch attempt complete', response, collection, options
+
+          if response.result isnt "failure"
+            @updateLocal( =>
+              App.vent.trigger 'surveys:saved:campaign:fetch:success', options.data.campaign_urn_list
+            )
+          else
+            message = "The following errors prevented the #{App.dictionary('page','campaign')} from downloading: "
+            _.every response.errors, (error) =>
+              message += error.text
+              if error.code in ["0200","0201","0202"]
+                App.vent.trigger "surveys:saved:campaign:fetch:failure:auth", error.text
+                return false
+            App.vent.trigger 'surveys:saved:campaign:fetch:error', options.data.campaign_urn_list
+            App.execute "dialog:alert", message
           App.vent.trigger "loading:hide"
         error: (collection, response, options) =>
           console.log 'surveys fetch error'
           App.vent.trigger 'surveys:saved:campaign:fetch:error', options.data.campaign_urn_list
           App.vent.trigger "loading:hide"
     getCampaignSurveys: (urn) ->
-      surveys = currentSurveysSaved.where 
+      surveys = currentSurveysSaved.where
         campaign_urn: urn
       new Entities.SurveysSaved surveys
     removeSurveys: (urn) ->

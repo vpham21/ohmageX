@@ -77,6 +77,6 @@
     if !App.request("credentials:ispassword")
       API.tokenLoginRedirect()
 
-  App.vent.on "campaigns:sync:failure:auth", (errorText) ->
+  App.vent.on "surveys:saved:campaign:fetch:failure:auth campaigns:sync:failure:auth", (errorText) ->
     if !App.request("credentials:ispassword")
       API.tokenLoginRedirect()
