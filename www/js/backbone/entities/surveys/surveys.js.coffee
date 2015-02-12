@@ -62,10 +62,12 @@
         type: 'POST' # not RESTful but the 2.0 API requires it
         data: _.extend(myData, App.request("credentials:upload:params"))
         success: (collection, response, options) =>
-          console.log 'surveys fetch success', response, collection
-          @updateLocal( =>
-            App.vent.trigger 'surveys:saved:campaign:fetch:success', options.data.campaign_urn_list
-          )
+          console.log 'surveys fetch attempt complete', response, collection, options
+
+          if response.result isnt "failure"
+            @updateLocal( =>
+              App.vent.trigger 'surveys:saved:campaign:fetch:success', options.data.campaign_urn_list
+            )
           App.vent.trigger "loading:hide"
         error: (collection, response, options) =>
           console.log 'surveys fetch error'
