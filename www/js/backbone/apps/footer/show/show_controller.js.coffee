@@ -7,6 +7,10 @@
 
       @layout = @getShowView()
 
+      @listenTo navs, "change:chosen", (model) =>
+        # this event fires every time all instances of the
+        # `chosen` attribute within the model are changed.
+
       @show @layout
 
     getContentsView: ->
