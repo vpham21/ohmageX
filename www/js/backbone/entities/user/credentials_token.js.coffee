@@ -16,3 +16,5 @@
       # redirect to server login page.
       window.location.replace '/web/#login'
 
+  App.commands.setHandler "credentials:token:verify", ->
+    API.tokenVerify()
