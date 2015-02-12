@@ -68,6 +68,15 @@
             @updateLocal( =>
               App.vent.trigger 'surveys:saved:campaign:fetch:success', options.data.campaign_urn_list
             )
+          else
+            message = "The following errors prevented the #{App.dictionary('page','campaign')} from downloading: "
+            _.every response.errors, (error) =>
+              message += error.text
+              if error.code in ["0200","0201","0202"]
+                App.vent.trigger "surveys:saved:campaign:fetch:failure:auth", error.text
+                return false
+            App.vent.trigger 'surveys:saved:campaign:fetch:error', options.data.campaign_urn_list
+            App.execute "dialog:alert", message
           App.vent.trigger "loading:hide"
         error: (collection, response, options) =>
           console.log 'surveys fetch error'
