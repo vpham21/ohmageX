@@ -58,11 +58,18 @@
       App.execute "storage:save", 'credentials', App.credentials.toJSON(), =>
         console.log "credentials token new credentials saved"
 
+    getTokenParam: ->
+      auth_token: currentAuthToken
+
     isParsedAuthValid: (response) ->
       response.result isnt "failure"
 
   App.commands.setHandler "credentials:token:verify", ->
     API.tokenVerify()
+
+  App.reqres.setHandler "credentials:token:param", ->
+    API.getTokenParam()
+
   App.commands.setHandler "credentials:token:redirect", ->
     API.tokenLoginRedirect()
 
