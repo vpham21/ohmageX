@@ -92,3 +92,7 @@
     console.log "response:set:error", error
     App.execute "dialog:alert", "#{error.toString()}"
 
+  App.vent.on "survey:upload:failure:auth", (responseData, errorText, surveyId) ->
+    if !App.request("credentials:ispassword")
+      # exit survey immediately if using token-based auth, data can't be saved before redirect
+      App.execute 'survey:exit'
