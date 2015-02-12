@@ -110,3 +110,8 @@
 
   App.commands.setHandler "credentials:logout", ->
     API.logout()
+
+  App.vent.on "survey:upload:failure:auth", (responseData, errorText, surveyId) ->
+    # On native:
+    # in the future, could show a temporary login modal to update password
+    # if it's an "invalid password" type of error
