@@ -146,8 +146,9 @@
         data: _.extend(myData, App.request("credentials:upload:params"))
         saved_campaigns: App.request 'campaigns:saved:current'
         success: (collection, response, options) =>
-          console.log 'campaign fetch success', response, collection
-          @saveLocalCampaigns collection
+          console.log 'campaign fetch attempt complete', response, collection
+          if response.result isnt "failure"
+            @saveLocalCampaigns collection
           App.vent.trigger "loading:hide"
         error: (collection, response, options) =>
           console.log 'campaign fetch error'
