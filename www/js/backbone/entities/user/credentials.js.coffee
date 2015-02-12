@@ -7,15 +7,19 @@
 
   API =
     init: ->
-      App.request "storage:get", 'credentials', ((result) =>
-        # credentials is retrieved from raw JSON.
-        console.log 'credentials retrieved from storage'
-        App.credentials = new Entities.Credentials result
-        App.vent.trigger "credentials:storage:load:success"
-      ), =>
-        console.log 'credentials not retrieved from storage'
-        App.credentials = false
-        App.vent.trigger "credentials:storage:load:failure"
+      # using hashed password auth
+      if @isPasswordAuth()
+        App.request "storage:get", 'credentials', ((result) =>
+          # credentials is retrieved from raw JSON.
+          console.log 'credentials retrieved from storage'
+          App.credentials = new Entities.Credentials result
+          App.vent.trigger "credentials:storage:load:success"
+        ), =>
+          console.log 'credentials not retrieved from storage'
+          App.credentials = false
+          App.vent.trigger "credentials:storage:load:failure"
+      else
+        App.execute "credentials:token:verify"
 
     isParsedAuthValid: (response) ->
       response.result isnt "failure"
