@@ -18,3 +18,6 @@
 
   App.commands.setHandler "credentials:token:verify", ->
     API.tokenVerify()
+  App.commands.setHandler "credentials:token:redirect", ->
+    API.tokenLoginRedirect()
+
