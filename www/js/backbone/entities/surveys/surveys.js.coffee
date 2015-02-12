@@ -14,11 +14,12 @@
     url: ->
       "#{App.request("serverpath:current")}/app/campaign/read"
     parse: (response, options) ->
-      console.log 'options in parse', options
-      urn = options.data.campaign_urn_list
-      campaignXML = response.data[urn].xml
-      $surveys = @getSurveyXML campaignXML
-      @parseSurveysXML $surveys, urn, campaignXML
+      if response.result isnt "failure"
+        console.log 'options in parse', options
+        urn = options.data.campaign_urn_list
+        campaignXML = response.data[urn].xml
+        $surveys = @getSurveyXML campaignXML
+        @parseSurveysXML $surveys, urn, campaignXML
     getSurveyXML: (rawXML) ->
       $XML = $( $.parseXML(rawXML) )
       $XML.find 'survey'
