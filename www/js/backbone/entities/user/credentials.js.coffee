@@ -21,7 +21,12 @@
       response.result isnt "failure"
 
     getCredentials: ->
-      if App.credentials isnt false and App.credentials.has('username') then App.credentials else false
+      if @isPasswordAuth()
+        # for hashed passwored
+        if App.credentials isnt false and App.credentials.has('username') then App.credentials else false
+      else
+        # just return the stored credentials if using token auth.
+        App.credentials
 
     isPasswordAuth: ->
       App.custom.build.debug or App.device.isNative
