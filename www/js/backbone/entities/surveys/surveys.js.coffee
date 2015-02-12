@@ -83,7 +83,7 @@
           App.vent.trigger 'surveys:saved:campaign:fetch:error', options.data.campaign_urn_list
           App.vent.trigger "loading:hide"
     getCampaignSurveys: (urn) ->
-      surveys = currentSurveysSaved.where 
+      surveys = currentSurveysSaved.where
         campaign_urn: urn
       new Entities.SurveysSaved surveys
     removeSurveys: (urn) ->
