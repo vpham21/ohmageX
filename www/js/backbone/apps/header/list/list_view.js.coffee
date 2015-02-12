@@ -55,7 +55,7 @@
       showDialog = surveyActive or logoutChosen
       if showDialog
         if surveyActive and logoutChosen
-          message = "Do you want to logout and exit the #{App.dictionary('page','survey')}?"
+          message = "Data from your current #{App.dictionary('page','survey')} response will be lost. Do you want to logout and exit the #{App.dictionary('page','survey')}?"
         else if surveyActive
           message = "Data from your current #{App.dictionary('page','survey')} response will be lost. Do you want to exit the #{App.dictionary('page','survey')}?"
         else if logoutChosen
