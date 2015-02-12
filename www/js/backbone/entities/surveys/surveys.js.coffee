@@ -50,18 +50,16 @@
 
     getSurveys: (campaign_urn) ->
       console.log campaign_urn
-      credentials = App.request "credentials:current"
       App.vent.trigger "loading:show", "Saving campaign..."
+      myData =
+        client: App.client_string
+        output_format: 'long'
+        campaign_urn_list: campaign_urn
       currentSurveysSaved.fetch
         reset: false
         remove: false # merge any newly fetched surveys with existing ones based on ID
         type: 'POST' # not RESTful but the 2.0 API requires it
-        data:
-          user: credentials.get 'username'
-          password: credentials.get 'password'
-          client: App.client_string
-          output_format: 'long'
-          campaign_urn_list: campaign_urn
+        data: _.extend(myData, App.request("credentials:upload:params"))
         success: (collection, response, options) =>
           console.log 'surveys fetch success', response, collection
           @updateLocal( =>
