@@ -24,7 +24,7 @@
   App.addInitializer ->
     App.module("LoadingspinnerApp").start(App.loading)
     App.module("HeaderApp").start(App.navs)
-    App.module("FooterApp").start()
+    App.module("FooterApp").start(App.navs)
 
   App.reqres.setHandler "default:region", ->
     console.log "default:region"
