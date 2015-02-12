@@ -2,9 +2,10 @@
   @startWithParent = false
 
   API =
-    show: ->
+    show: (navs) ->
       new FooterApp.Show.Controller
         region: App.footerRegion
+        navs: navs
 
-  FooterApp.on "start", ->
-    API.show()
+  FooterApp.on "start", (navs) ->
+    API.show navs
