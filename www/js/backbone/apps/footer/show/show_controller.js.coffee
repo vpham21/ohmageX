@@ -15,6 +15,9 @@
           if model.get('name') in App.custom.menu_items_disabled.footer
             # clear the region if the current menu item is disabled.
             @layout.contentRegion.reset()
+          else
+            @show @getContentsView(), region: @layout.contentRegion
+
       @show @layout
 
     getContentsView: ->
