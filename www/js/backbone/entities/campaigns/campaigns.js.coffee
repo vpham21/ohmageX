@@ -137,15 +137,13 @@
       @saveLocalCampaigns currentCampaignsUser
     syncCampaigns: ->
       App.vent.trigger 'loading:show', 'Syncing Campaigns...'
-      credentials = App.request "credentials:current"
+      myData = 
+        client: App.client_string
+        output_format: 'short'
       currentCampaignsUser.fetch
         reset: true
         type: 'POST' # not RESTful but the 2.0 API requires it
-        data:
-          user: credentials.get 'username'
-          password: credentials.get 'password'
-          client: App.client_string
-          output_format: 'short'
+        data: _.extend(myData, App.request("credentials:upload:params"))
         saved_campaigns: App.request 'campaigns:saved:current'
         success: (collection, response, options) =>
           console.log 'campaign fetch success', response, collection
