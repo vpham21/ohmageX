@@ -7,22 +7,33 @@
 
   API =
     init: ->
-      App.request "storage:get", 'credentials', ((result) =>
-        # credentials is retrieved from raw JSON.
-        console.log 'credentials retrieved from storage'
-        App.credentials = new Entities.Credentials result
-        App.vent.trigger "credentials:storage:load:success"
-      ), =>
-        console.log 'credentials not retrieved from storage'
-        App.credentials = false
-        App.vent.trigger "credentials:storage:load:failure"
+      # using hashed password auth
+      if @isPasswordAuth()
+        App.request "storage:get", 'credentials', ((result) =>
+          # credentials is retrieved from raw JSON.
+          console.log 'credentials retrieved from storage'
+          App.credentials = new Entities.Credentials result
+          App.vent.trigger "credentials:storage:load:success"
+        ), =>
+          console.log 'credentials not retrieved from storage'
+          App.credentials = false
+          App.vent.trigger "credentials:storage:load:failure"
+      else
+        App.execute "credentials:token:verify"
 
     isParsedAuthValid: (response) ->
       response.result isnt "failure"
 
     getCredentials: ->
-      if App.credentials isnt false and App.credentials.has('username') then App.credentials else false
+      if @isPasswordAuth()
+        # for hashed passwored
+        if App.credentials isnt false and App.credentials.has('username') then App.credentials else false
+      else
+        # just return the stored credentials if using token auth.
+        App.credentials
 
+    isPasswordAuth: ->
+      App.custom.build.debug or App.device.isNative
 
     validateCredentials: (path, username, password) ->
       App.vent.trigger "loading:show", "logging in as #{username}..."
@@ -55,14 +66,18 @@
 
 
     getParams: ->
-      # currently using hashed password auth.
-      # this will change when using other auth methods.
-      if @getCredentials()
-        return {
-          user: App.credentials.get('username')
-          password: App.credentials.get('password')
-        }
-      else return false
+      if @isPasswordAuth()
+        # using hashed password auth.
+        if @getCredentials()
+          return {
+            user: App.credentials.get('username')
+            password: App.credentials.get('password')
+          }
+        else return false
+      else
+        # using token based auth.
+        App.request "credentials:token:param"
+
     logout: ->
       App.credentials = false
 
@@ -72,6 +87,9 @@
 
   App.on "before:start", ->
     API.init()
+
+  App.reqres.setHandler "credentials:ispassword", ->
+    API.isPasswordAuth()
 
   App.reqres.setHandler "credentials:isloggedin", ->
     !!API.getCredentials()

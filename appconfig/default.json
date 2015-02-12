@@ -5,7 +5,8 @@
   "build": {
     "app_name": "ohmage MWF",
     "bundle_id": "org.ohmage.mwf",
-    "image_folder": "default"
+    "image_folder": "default",
+    "debug": false
   },
   "dictionary": {
     "page": {
