@@ -12,6 +12,22 @@
       if currentAuthToken is null
         @tokenLoginRedirect()
         return false
+
+      $.ajax
+        type: "POST"
+        url: "/app/user/whoami"
+        data:
+          client: App.client_string
+          auth_token: currentAuthToken
+        dataType: 'json'
+        success: (response) =>
+          if @isParsedAuthValid()
+            @compareSavedUsername response.username
+          else
+            @tokenLoginRedirect()
+        error: =>
+          @tokenLoginRedirect()
+
     tokenLoginRedirect: ->
       # redirect to server login page.
       window.location.replace '/web/#login'
