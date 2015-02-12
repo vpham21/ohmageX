@@ -57,14 +57,18 @@
 
 
     getParams: ->
-      # currently using hashed password auth.
-      # this will change when using other auth methods.
-      if @getCredentials()
-        return {
-          user: App.credentials.get('username')
-          password: App.credentials.get('password')
-        }
-      else return false
+      if @isPasswordAuth()
+        # using hashed password auth.
+        if @getCredentials()
+          return {
+            user: App.credentials.get('username')
+            password: App.credentials.get('password')
+          }
+        else return false
+      else
+        # using token based auth.
+        App.request "credentials:token:param"
+
     logout: ->
       App.credentials = false
 
