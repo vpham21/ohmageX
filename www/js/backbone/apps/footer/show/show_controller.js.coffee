@@ -11,6 +11,10 @@
         # this event fires every time all instances of the
         # `chosen` attribute within the model are changed.
 
+        if model.isChosen()
+          if model.get('name') in App.custom.menu_items_disabled.footer
+            # clear the region if the current menu item is disabled.
+            @layout.contentRegion.reset()
       @show @layout
 
     getContentsView: ->
