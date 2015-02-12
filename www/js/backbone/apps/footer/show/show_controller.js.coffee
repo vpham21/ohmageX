@@ -2,8 +2,8 @@
 
   class Show.Controller extends App.Controllers.Application
 
-    initialize: ->
-      showView = @getShowView()
+    initialize: (options) ->
+      showView = getShowView()
       @show showView
 
     getShowView: ->
