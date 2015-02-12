@@ -16,6 +16,14 @@
       # redirect to server login page.
       window.location.replace '/web/#login'
 
+    saveTokenCredentials: (username) ->
+      App.credentials = new Entities.Credentials
+        username: username
+        auth_token: currentAuthToken
+      App.vent.trigger "credentials:storage:load:success"
+      App.execute "storage:save", 'credentials', App.credentials.toJSON(), =>
+        console.log "credentials token new credentials saved"
+
   App.commands.setHandler "credentials:token:verify", ->
     API.tokenVerify()
   App.commands.setHandler "credentials:token:redirect", ->
