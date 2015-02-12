@@ -16,6 +16,24 @@
       # redirect to server login page.
       window.location.replace '/web/#login'
 
+    compareSavedUsername: (username) ->
+      App.request "storage:get", 'credentials', ((result) =>
+        # credentials is retrieved from raw JSON.
+        console.log 'credentials retrieved from storage for comparison'
+        if result.username is username
+          # save credentials to app and storage
+          @saveTokenCredentials username
+        else
+          # username and saved username don't match
+          # log the current user out
+          App.execute "credentials:logout"
+          # let them log in again
+          @tokenLoginRedirect()
+      ), =>
+        console.log 'credentials not retrieved from storage for comparison'
+        # save credentials to app and storage
+        @saveTokenCredentials username
+
     saveTokenCredentials: (username) ->
       App.credentials = new Entities.Credentials
         username: username
