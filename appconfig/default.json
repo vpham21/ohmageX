@@ -39,7 +39,15 @@
   },
   "menu_items_disabled": {
     "native": [],
-    "browser": ["reminder"]
+    "browser": ["reminder"],
+    "footer": [
+      "login",
+      "campaign",
+      "survey",
+      "queue",
+      "reminder",
+      "logout"
+    ]
   },
   "server_list": {
     "custom": true,
