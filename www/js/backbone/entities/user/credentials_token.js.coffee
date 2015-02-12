@@ -21,7 +21,7 @@
           auth_token: currentAuthToken
         dataType: 'json'
         success: (response) =>
-          if @isParsedAuthValid()
+          if @isParsedAuthValid response
             @compareSavedUsername response.username
           else
             @tokenLoginRedirect()
