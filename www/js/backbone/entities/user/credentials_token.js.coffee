@@ -54,6 +54,10 @@
       App.credentials = new Entities.Credentials
         username: username
         auth_token: currentAuthToken
+      # must navigate directly to the dashboard route here, because
+      # when credentials are loaded from storage for comparison,
+      # the App `credentials` property is set later here, and this takes place AFTER
+      # the default page renders and its Router `before:` handler fires.
       App.navigate Routes.dashboard_route(), trigger: true
       App.vent.trigger "credentials:storage:load:success"
       App.execute "storage:save", 'credentials', App.credentials.toJSON(), =>
