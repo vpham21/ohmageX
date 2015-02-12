@@ -8,5 +8,9 @@
       @layout = @getShowView()
 
       @show @layout
+
+    getContentsView: ->
+      new Show.Contents
+
     getShowView: ->
       new Show.Footer
