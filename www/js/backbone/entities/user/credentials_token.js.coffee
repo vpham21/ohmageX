@@ -54,6 +54,7 @@
       App.credentials = new Entities.Credentials
         username: username
         auth_token: currentAuthToken
+      App.navigate Routes.dashboard_route(), trigger: true
       App.vent.trigger "credentials:storage:load:success"
       App.execute "storage:save", 'credentials', App.credentials.toJSON(), =>
         console.log "credentials token new credentials saved"
