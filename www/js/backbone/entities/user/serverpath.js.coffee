@@ -17,14 +17,20 @@
 
   API =
     init: ->
-      App.request "storage:get", 'serverpath', ((result) =>
-        # serverpath is retrieved from raw JSON.
-        console.log 'serverpath retrieved from storage'
-        currentServer = new Entities.ServerPath result
-      ), =>
-        console.log 'serverpath not retrieved from storage'
+      if App.request "credentials:ispassword"
+        # hashed password auth, use server path for login page
+        App.request "storage:get", 'serverpath', ((result) =>
+          # serverpath is retrieved from raw JSON.
+          console.log 'serverpath retrieved from storage'
+          currentServer = new Entities.ServerPath result
+        ), =>
+          console.log 'serverpath not retrieved from storage'
+          currentServer = new Entities.ServerPath
+            path: App.request('serverlist:default')
+      else
+        # with token auth, server path is the root
         currentServer = new Entities.ServerPath
-          path: App.request('serverlist:default')
+          path: ''
 
     updateServer: (newPath) ->
       # remove trailing slash if it exists
