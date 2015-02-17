@@ -10,7 +10,7 @@
       "uploadqueue/:id": "item"
 
   API =
-    list: (campaign_id) ->
+    list: ->
       App.vent.trigger "nav:choose", "queue"
       new Uploadqueue.List.Controller
     queueFailureGeneral: (responseData, errorPrefix, errorText, itemId) ->
