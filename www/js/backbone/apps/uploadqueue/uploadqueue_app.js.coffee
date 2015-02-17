@@ -7,6 +7,7 @@
         return false
     appRoutes:
       "uploadqueue": "list"
+      "uploadqueue/:id": "item"
 
   API =
     list: (campaign_id) ->
