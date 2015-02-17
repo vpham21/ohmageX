@@ -40,7 +40,9 @@
         App.execute "uploadqueue:item:remove", model.get('id')
 
   App.vent.on "uploadqueue:list:running:clicked", (model) ->
-    # do something when a running queue item's title is clicked
+    myId = model.get 'id'
+    API.item myId
+    App.navigate "uploadqueue/#{myId}"
 
   App.vent.on "uploadqueue:list:delete:clicked", (model) ->
     App.execute "notice:show",
