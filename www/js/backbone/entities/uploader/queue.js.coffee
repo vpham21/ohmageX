@@ -77,6 +77,10 @@
   App.reqres.setHandler "uploadqueue:entity", ->
     currentQueue
 
+  App.reqres.setHandler "uploadqueue:item", (id) ->
+    if !!!currentQueue.get(id) then throw new Error "item id #{id} does not exist in upload queue"
+    currentQueue.get(id)
+
   App.reqres.setHandler "uploadqueue:length", ->
     currentQueue.length
 
