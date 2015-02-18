@@ -77,7 +77,7 @@
 
       # prepopulate all fields
       active = @model.get('active')
-      if active then @$el.find("input[name='active-switch']").prop('checked', true)
+      if active then @checkEnabled()
 
       repeat = @model.get('repeat')
 
