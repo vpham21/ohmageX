@@ -99,6 +99,7 @@
 
           if @surveyId and childView.model.get('surveyId') is @surveyId
             childView.model.trigger('visible:true')
+            childView.trigger "check:enabled"
             # ensure the survey is populated with an ID only once.
             @surveyId = false
 
