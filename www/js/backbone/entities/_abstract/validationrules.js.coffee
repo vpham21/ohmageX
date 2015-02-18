@@ -77,6 +77,16 @@
           maxValue = parseInt(rulesMap.maxValue)
           if valueNum > maxValue
             @errors.push "Value too high, must be less than #{maxValue}."
+      range:
+        validate: (options) ->
+          {value, rulesMap} = options
+          valueNum = parseInt(value)
+          minValue = parseInt(rulesMap.range.minValue)
+          maxValue = parseInt(rulesMap.range.maxValue)
+          if valueNum < minValue
+            @errors.push "Value too low, must be between #{minValue} and #{maxValue}."
+          if valueNum > maxValue
+            @errors.push "Value too high, must be between #{minValue} and #{maxValue}."
       wholeNumber:
         validate: (options) ->
           {value, rulesMap} = options
