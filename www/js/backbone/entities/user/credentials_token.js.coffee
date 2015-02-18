@@ -30,7 +30,7 @@
 
     tokenLoginRedirect: ->
       # redirect to server login page.
-      window.location.replace '/web/#login'
+      window.location.replace App.custom.api.token_redirect
 
     compareSavedUsername: (username) ->
       App.request "storage:get", 'credentials', ((result) =>

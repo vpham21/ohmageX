@@ -1,6 +1,7 @@
 {
   "api": {
-    "client_base_string": "ohmage-mwf-dw-"
+    "client_base_string": "ohmage-mwf-dw-",
+    "token_redirect": "../web/#login"
   },
   "build": {
     "app_name": "ohmage MWF",
