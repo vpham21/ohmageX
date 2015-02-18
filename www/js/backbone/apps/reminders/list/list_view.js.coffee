@@ -44,6 +44,7 @@
       @listenTo @model, 'visible:true', @toggleOn
       @listenTo @, 'save:reminder', @gatherResponses
       @listenTo @, 'repeat:toggle', @repeatToggle
+      @listenTo @, 'check:enabled', @checkEnabled
     tagName: 'li'
     template: "reminders/list/_item"
     toggleOff: ->
