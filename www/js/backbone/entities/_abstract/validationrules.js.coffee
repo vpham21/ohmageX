@@ -48,6 +48,8 @@
       @rulesList = _.map(options.rulesMap, (compareValue, ruleName) -> 
         ruleName
       )
+      if 'minValue' in @rulesList and 'maxValue' in @rulesList
+        @replaceWithRangeRule options
       @validate options
 
     replaceWithRangeRule: (options) ->
