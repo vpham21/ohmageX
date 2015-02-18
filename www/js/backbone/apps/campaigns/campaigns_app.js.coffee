@@ -24,10 +24,14 @@
     App.execute "campaign:save", model
 
   App.vent.on "campaign:list:unsave:clicked", (model, view, filterType) ->
-    App.execute "dialog:confirm", "Are you sure you want to unsave this #{App.dictionary('page','campaign')}?", (=>
+    if App.request("user:metadata:has:campaign", model.get('id'))
+      App.execute "dialog:confirm", "Are you sure you want to unsave this #{App.dictionary('page','campaign')}? You have saved data for it.", (=>
+        App.execute "campaign:unsave", model.get 'id'
+        if filterType is 'saved' then view.destroy()
+      )
+    else
       App.execute "campaign:unsave", model.get 'id'
       if filterType is 'saved' then view.destroy()
-    )
 
   App.vent.on "campaign:list:ghost:remove:clicked", (model) ->
     console.log 'model', model

@@ -31,6 +31,7 @@
 
       result = 
         data: responseData
+        campaign_urn: responseData.campaign_urn
         name: 'test'
         id: _.guid()
         errorText: errorText
