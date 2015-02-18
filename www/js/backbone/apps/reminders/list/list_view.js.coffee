@@ -60,6 +60,8 @@
       $input = $label.prev()
       checked = $input.prop('checked')
       $input.prop('checked', !checked)
+    checkEnabled: ->
+      @$el.find("input[name='active-switch']").prop('checked', true)
     repeatToggle: ->
       enabled = @$el.find("input[name='repeat']").prop('checked')
       if enabled
