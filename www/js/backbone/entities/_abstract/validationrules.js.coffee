@@ -48,8 +48,16 @@
       @rulesList = _.map(options.rulesMap, (compareValue, ruleName) -> 
         ruleName
       )
+      if 'minValue' in @rulesList and 'maxValue' in @rulesList
+        @replaceWithRangeRule options
       @validate options
 
+    replaceWithRangeRule: (options) ->
+      options.rulesMap.range =
+        minValue: options.rulesMap.minValue
+        maxValue: options.rulesMap.maxValue
+      @rulesList = _.filter(@rulesList, (name) -> name isnt 'minValue' and name isnt 'maxValue')
+      @rulesList.push('range')
     rules:
       # Rules expect that the comparison value they're using
       # has the same name as the rule.
@@ -77,6 +85,16 @@
           maxValue = parseInt(rulesMap.maxValue)
           if valueNum > maxValue
             @errors.push "Value too high, must be less than #{maxValue}."
+      range:
+        validate: (options) ->
+          {value, rulesMap} = options
+          valueNum = parseInt(value)
+          minValue = parseInt(rulesMap.range.minValue)
+          maxValue = parseInt(rulesMap.range.maxValue)
+          if valueNum < minValue
+            @errors.push "Value too low, must be between #{minValue} and #{maxValue}."
+          if valueNum > maxValue
+            @errors.push "Value too high, must be between #{minValue} and #{maxValue}."
       wholeNumber:
         validate: (options) ->
           {value, rulesMap} = options
