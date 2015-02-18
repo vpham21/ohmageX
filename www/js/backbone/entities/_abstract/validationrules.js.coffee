@@ -50,6 +50,12 @@
       )
       @validate options
 
+    replaceWithRangeRule: (options) ->
+      options.rulesMap.range =
+        minValue: options.rulesMap.minValue
+        maxValue: options.rulesMap.maxValue
+      @rulesList = _.filter(@rulesList, (name) -> name isnt 'minValue' and name isnt 'maxValue')
+      @rulesList.push('range')
     rules:
       # Rules expect that the comparison value they're using
       # has the same name as the rule.
