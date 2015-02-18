@@ -59,6 +59,11 @@
       )
 
 
+    getCampaignChoices: (campaign_urn) ->
+      choices = currentChoices.where
+        campaign_urn: campaign_urn
+      if choices.length is 0 then false else choices
+
     getMergedChoices: (surveyId, stepId, original) ->
       
       # map currentChoices to an array that matches the format of ChoiceCollection Models.
@@ -102,6 +107,9 @@
 
   App.commands.setHandler "prompt:customchoice:remove", (surveyId, stepId, value) ->
     API.removeChoice surveyId, stepId, value
+
+  App.reqres.setHandler "prompt:customchoice:campaign", (campaign_urn) ->
+    if !!currentChoices then API.getCampaignChoices(campaign_urn) else false
 
   App.vent.on "campaign:saved:remove", (campaign_urn) ->
     if currentChoices then API.removeCampaignChoices(campaign_urn)
