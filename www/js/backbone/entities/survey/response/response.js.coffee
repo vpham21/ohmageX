@@ -94,6 +94,7 @@
           return {
             id: $child.tagText('id')
             type: myType
+            question: $child.tagText('promptText')
             properties: @getValidationProperties($child, myType)
           }
         else
