@@ -17,3 +17,4 @@
     regions:
       noticeRegion: "#notice-region"
       detailsRegion: "#details-region"
+      responsesRegion: "#responses-list"
