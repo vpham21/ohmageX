@@ -19,7 +19,7 @@
     serializeData: ->
       data = @model.toJSON()
       console.log(data)
-      data.prettyTimestamp = new Date(data.timestamp).toString()
+      data.prettyTimestamp = moment(data.timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a")
       data
 
   class List.Queue extends App.Views.CollectionView
