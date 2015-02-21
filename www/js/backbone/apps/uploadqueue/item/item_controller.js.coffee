@@ -17,6 +17,8 @@
       @listenTo @layout, "show", =>
         console.log "show item layout"
         @detailsRegion item
+        responses = new Backbone.Collection item.get('responses')
+        @responsesRegion responses
         @noticeRegion()
 
       @show @layout, loading: false
@@ -36,6 +38,11 @@
         App.vent.trigger "uploadqueue:list:upload:clicked", item
 
       @show detailsView, region: @layout.detailsRegion
+
+    responsesRegion: (responses) ->
+      responsesView = @getResponsesView responses
+
+      @show responsesView, region: @layout.responsesRegion
 
     getResponsesView: (responses) ->
       new Item.Responses
