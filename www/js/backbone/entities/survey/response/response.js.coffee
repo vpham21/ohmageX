@@ -102,6 +102,11 @@
     getResponses: ->
       throw new Error "responses not initialized, use 'responses:init' to create new Responses" unless currentResponses isnt false
       currentResponses
+    getValidResponses: ->
+      responses = @getResponses()
+      responses.filter (response) ->
+        # valid responses only.
+        if !response.get('response') then false else true
     destroyResponses: ->
       currentResponses = false
 
@@ -111,6 +116,9 @@
 
   App.reqres.setHandler "responses:current", ->
     API.getResponses()
+
+  App.reqres.setHandler "responses:current:valid", ->
+    API.getValidResponses()
 
   App.reqres.setHandler "response:get", (id) ->
     currentResponses = API.getResponses()
