@@ -3,7 +3,9 @@
   <button type="button" class="delete icon">Discard</button>
   <div role="link">
     <h3><%= @name %></h3>
-    <p class="text-error"><%= @errorText %></p>
-    <footer><small>Last submitted on <%= @prettyTimestamp %><small></footer>
+    <p><%= @description %></p>
+    <p>From campaign: <%= @campaign_urn %> at <%= @campaign_creation_timestamp %></p>
+    <footer><small>Last submitted on <%= @prettyTimestamp %><small><br />
+    <small class="text-error">Last Upload Error: <%= @errorText %></small></footer>
   </div>
 </div>

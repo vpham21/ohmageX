@@ -26,15 +26,21 @@
         console.log 'user upload queue not retrieved from storage'
         currentQueue = new Entities.UploadQueue
 
-    addItem: (responseData, errorText) ->
+    addItem: (responseData, errorText, responses, surveyId) ->
       console.log 'addItem responseData', responseData
 
-      result = 
+      surveyObj = JSON.parse responseData.surveys
+      console.log 'surveyObj', surveyObj
+      result =
         data: responseData
+        timestamp: responseData.timestamp
         campaign_urn: responseData.campaign_urn
-        name: 'test'
+        campaign_creation_timestamp: responseData.campaign_creation_timestamp
+        name: App.request('survey:saved:title', surveyId)
+        description: App.request('survey:saved:description', surveyId)
         id: _.guid()
         errorText: errorText
+        responses: responses
 
       currentQueue.add result
       @updateLocal( =>
@@ -66,8 +72,9 @@
   App.on "before:start", ->
     API.init()
 
-  App.commands.setHandler "uploadqueue:item:add", (responseData, errorText) ->
-    API.addItem responseData, errorText
+  App.commands.setHandler "uploadqueue:item:add", (responseData, errorText, surveyId) ->
+    responses = App.request 'responses:current:valid'
+    API.addItem responseData, errorText, responses, surveyId
 
   App.commands.setHandler "uploadqueue:item:remove", (id) ->
     API.removeItem id

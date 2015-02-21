@@ -120,6 +120,14 @@
     # note the survey's id is formatted `campaign_urn:server_id`
     API.getSurveyAttr id, 'server_id'
 
+  App.reqres.setHandler "survey:saved:title", (id) ->
+    # note the survey's id is formatted `campaign_urn:server_id`
+    API.getSurveyAttr id, 'title'
+
+  App.reqres.setHandler "survey:saved:description", (id) ->
+    # note the survey's id is formatted `campaign_urn:server_id`
+    API.getSurveyAttr id, 'description'
+
   App.on "before:start", ->
     API.init()
 
