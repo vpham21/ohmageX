@@ -1,5 +1,9 @@
 @Ohmage.module "Uploadqueue.Item", (Item, App, Backbone, Marionette, $, _) ->
 
+  class Item.Responses extends App.Views.CollectionView
+    childView: Item.Response
+    emptyView: Item.ResponsesEmpty
+
   class Item.Details extends App.Views.ItemView
     template: "uploadqueue/item/details"
     triggers:
