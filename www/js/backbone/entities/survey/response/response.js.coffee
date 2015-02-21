@@ -78,6 +78,16 @@
         propObj[$(child).tagText("key")] = $(child).tagText('label')
       )
       propObj
+    getOptions: ($xml, type) ->
+      if !(type in ['single_choice', 'multi_choice'])
+        return false
+      $options = $xml.find("property")
+      propObj = {}
+      _.each($options, (child) ->
+        $child = $(child)
+        propObj[$(child).tagText("key")] = $(child).tagText('label')
+      )
+      propObj
     createResponses: ($contentXML) ->
       # Loop through all responses.
       # Only want to create a Response for a contentItem that actually
@@ -96,6 +106,7 @@
             type: myType
             question: $child.tagText('promptText')
             properties: @getValidationProperties($child, myType)
+            options: @getOptions($child, myType)
           }
         else
           return false
