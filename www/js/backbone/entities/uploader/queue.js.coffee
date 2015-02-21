@@ -29,12 +29,18 @@
     addItem: (responseData, errorText, responses, surveyId) ->
       console.log 'addItem responseData', responseData
 
-      result = 
+      surveyObj = JSON.parse responseData.surveys
+      console.log 'surveyObj', surveyObj
+      result =
         data: responseData
+        timestamp: responseData.timestamp
         campaign_urn: responseData.campaign_urn
-        name: 'test'
+        campaign_creation_timestamp: responseData.campaign_creation_timestamp
+        name: App.request('survey:saved:title', surveyId)
+        description: App.request('survey:saved:description', surveyId)
         id: _.guid()
         errorText: errorText
+        responses: responses
 
       currentQueue.add result
       @updateLocal( =>
