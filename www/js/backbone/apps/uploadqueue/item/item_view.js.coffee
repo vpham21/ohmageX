@@ -58,6 +58,7 @@
         when 'multi_choice_custom'
           Item.ResponseMultiChoiceCustom
         when 'photo'
+          Item.ResponsePhoto
         when 'text','number','timestamp','single_choice_custom'
           Item.ResponseString
         else
