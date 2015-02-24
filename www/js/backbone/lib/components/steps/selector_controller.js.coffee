@@ -36,7 +36,7 @@
             model: entity
         when "afterSurveySubmit"
 
-          if App.request('reminders:current').findWhere(surveyId: @surveyId) # and App.device.isNative
+          if App.custom.build.debug or (App.request('reminders:current').findWhere(surveyId: @surveyId) and App.device.isNative)
             # reminders for this survey already exist
 
             reminders = App.request "reminders:survey:scheduled:latertoday", @surveyId
