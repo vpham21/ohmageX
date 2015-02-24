@@ -1,0 +1,9 @@
+<div class="item">
+  <h5><%= @question %></h5>
+  <ul>
+  <% for response in @responses: %>
+    <li><%= response %></li>
+  <% end %>
+  </ul>
+  <footer><small><%= @type %></small></footer>
+</div>
