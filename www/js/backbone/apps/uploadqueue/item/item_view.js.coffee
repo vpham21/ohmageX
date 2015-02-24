@@ -22,6 +22,7 @@
         when 'text','number','timestamp','single_choice_custom'
           Item.ResponseString
         else
+          Item.ResponseUnsupported
       myView
     emptyView: Item.ResponsesEmpty
 
