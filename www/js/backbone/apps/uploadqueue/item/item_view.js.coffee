@@ -36,6 +36,7 @@
         when 'single_choice'
           Item.ResponseSingleChoice
         when 'multi_choice'
+          Item.ResponseMultiChoice
         when 'multi_choice_custom'
         when 'photo'
         when 'text','number','timestamp','single_choice_custom'
