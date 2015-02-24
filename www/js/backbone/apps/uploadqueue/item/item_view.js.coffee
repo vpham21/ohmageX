@@ -33,6 +33,18 @@
       # responses is an array that will be iterated over inside the view.
       data.responses = selectionsArr
       data
+
+  class Item.ResponsePhoto extends App.Views.ItemView
+    template: "uploadqueue/item/response_photo"
+    onRender: ->
+      savedImage = @model.get('response')
+      if savedImage then @renderImageThumb(savedImage)
+    renderImageThumb: (img64) ->
+      # display the image in the preview
+      $img = @$el.find '.preview-image'
+      $img.prop 'src', img64
+      $img.css 'display', 'block'
+
   class Item.ResponseUnsupported extends App.Views.ItemView
     template: "uploadqueue/item/response_unsupported"
 
