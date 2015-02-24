@@ -44,6 +44,7 @@
         when 'multi_choice'
           Item.ResponseMultiChoice
         when 'multi_choice_custom'
+          Item.ResponseMultiChoiceCustom
         when 'photo'
         when 'text','number','timestamp','single_choice_custom'
           Item.ResponseString
