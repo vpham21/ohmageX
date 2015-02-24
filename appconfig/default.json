@@ -40,7 +40,10 @@
   },
   "menu_items_disabled": {
     "native": [],
-    "browser": ["reminder"],
+    "browser": [
+      "reminder",
+      "logout"
+    ],
     "footer": [
       "login",
       "campaign",
