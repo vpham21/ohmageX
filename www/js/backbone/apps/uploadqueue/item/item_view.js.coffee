@@ -9,14 +9,17 @@
     template: "uploadqueue/item/response_string"
     serializeData: ->
       data = @model.toJSON()
+  class Item.Responses extends App.Views.CollectionView
+    getChildView: (model) ->
+      myView = switch model.get('type')
         when 'single_choice'
         when 'multi_choice'
         when 'multi_choice_custom'
         when 'photo'
+        when 'text','number','timestamp','single_choice_custom'
+          Item.ResponseString
         else
-
-  class Item.Responses extends App.Views.CollectionView
-    childView: Item.Response
+      myView
     emptyView: Item.ResponsesEmpty
 
   class Item.Details extends App.Views.ItemView
