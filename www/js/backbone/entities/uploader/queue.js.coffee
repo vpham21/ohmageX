@@ -14,7 +14,7 @@
   class Entities.UploadQueue extends Entities.Collection
     model: Entities.UploadQueueItem
     comparator: (item) ->
-      item.get 'timestamp'
+      -(item.get 'timestamp')
 
   API =
     init: ->
