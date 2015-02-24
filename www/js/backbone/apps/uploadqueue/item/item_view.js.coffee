@@ -7,6 +7,12 @@
 
   class Item.ResponseString extends App.Views.ItemView
     template: "uploadqueue/item/response_string"
+
+  class Item.ResponseSingleChoice extends Item.ResponseString
+    serializeData: ->
+      data = @model.toJSON()
+      data.response = data.options[data.response]
+      data
     serializeData: ->
       data = @model.toJSON()
   class Item.ResponseUnsupported extends App.Views.ItemView
