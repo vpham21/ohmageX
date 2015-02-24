@@ -9,6 +9,9 @@
     template: "uploadqueue/item/response_string"
     serializeData: ->
       data = @model.toJSON()
+  class Item.ResponseUnsupported extends App.Views.ItemView
+    template: "uploadqueue/item/response_unsupported"
+
   class Item.Responses extends App.Views.CollectionView
     getChildView: (model) ->
       myView = switch model.get('type')
