@@ -13,6 +13,18 @@
       data = @model.toJSON()
       data.response = data.options[data.response]
       data
+
+  class Item.ResponseMultiChoice extends App.Views.ItemView
+    template: "uploadqueue/item/response_multi_choice"
+    serializeData: ->
+      data = @model.toJSON()
+      # the response is a stringified array referencing options.
+      selectionsArr = JSON.parse data.response
+      # responses is an array that will be iterated over inside the view.
+      data.responses = _.map selectionsArr, (selection) ->
+        data.options[selection]
+      data
+
     serializeData: ->
       data = @model.toJSON()
   class Item.ResponseUnsupported extends App.Views.ItemView
