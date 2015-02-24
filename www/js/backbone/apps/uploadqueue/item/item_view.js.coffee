@@ -4,37 +4,66 @@
     className: "text-container"
     template: "uploadqueue/item/_responses_empty"
 
-  class Item.Response extends App.Views.ItemView
-    template: "uploadqueue/item/response"
+
+  class Item.ResponseString extends App.Views.ItemView
+    template: "uploadqueue/item/response_string"
+
+  class Item.ResponseSingleChoice extends Item.ResponseString
     serializeData: ->
       data = @model.toJSON()
-      data.response = switch data.type
-        when 'single_choice'
-          # the response is a reference to a single choice item referencing an option.
-          data.options[data.response]
-        when 'multi_choice'
-          # the response is a stringified array referencing options.
-          selectionsArr = JSON.parse data.response
-          output = ''
-          _.each selectionsArr, (selection) ->
-            output += "#{data.options[selection]} "
-          output
-        when 'multi_choice_custom'
-          # the response is a stringified array referencing responses.
-          selectionsArr = JSON.parse data.response
-          output = ''
-          _.each selectionsArr, (selection) ->
-            output += "#{selection} "
-          output
-        when 'photo'
-          # change to render the image base64 into a canvas.
-          'image thumbnail goes here'
-        else
-          data.response
+      data.response = data.options[data.response]
       data
 
+  class Item.ResponseMultiChoice extends App.Views.ItemView
+    template: "uploadqueue/item/response_multi_choice"
+    serializeData: ->
+      data = @model.toJSON()
+      # the response is a stringified array referencing options.
+      selectionsArr = JSON.parse data.response
+      # responses is an array that will be iterated over inside the view.
+      data.responses = _.map selectionsArr, (selection) ->
+        data.options[selection]
+      data
+
+  class Item.ResponseMultiChoiceCustom extends Item.ResponseMultiChoice
+    serializeData: ->
+      data = @model.toJSON()
+      # the response is a stringified array referencing custom choice strings.
+      selectionsArr = JSON.parse data.response
+      # responses is an array that will be iterated over inside the view.
+      data.responses = selectionsArr
+      data
+
+  class Item.ResponsePhoto extends App.Views.ItemView
+    template: "uploadqueue/item/response_photo"
+    onRender: ->
+      savedImage = @model.get('response')
+      if savedImage then @renderImageThumb(savedImage)
+    renderImageThumb: (img64) ->
+      # display the image in the preview
+      $img = @$el.find '.preview-image'
+      $img.prop 'src', img64
+      $img.css 'display', 'block'
+
+  class Item.ResponseUnsupported extends App.Views.ItemView
+    template: "uploadqueue/item/response_unsupported"
+
   class Item.Responses extends App.Views.CollectionView
-    childView: Item.Response
+    getChildView: (model) ->
+      myView = switch model.get('type')
+        when 'single_choice'
+          Item.ResponseSingleChoice
+        when 'multi_choice'
+          Item.ResponseMultiChoice
+        when 'multi_choice_custom'
+          Item.ResponseMultiChoiceCustom
+        when 'photo'
+          Item.ResponsePhoto
+        when 'text','number','timestamp','single_choice_custom'
+          Item.ResponseString
+        else
+          Item.ResponseUnsupported
+      myView
     emptyView: Item.ResponsesEmpty
 
   class Item.Details extends App.Views.ItemView
