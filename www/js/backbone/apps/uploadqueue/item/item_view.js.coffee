@@ -22,6 +22,7 @@
     getChildView: (model) ->
       myView = switch model.get('type')
         when 'single_choice'
+          Item.ResponseSingleChoice
         when 'multi_choice'
         when 'multi_choice_custom'
         when 'photo'
