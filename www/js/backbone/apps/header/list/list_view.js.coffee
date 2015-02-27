@@ -50,7 +50,7 @@
       myUrl = args.model.get('url')
 
       surveyActive = App.request "surveytracker:active"
-      logoutChosen = myName is "Logout"
+      logoutChosen = myName is "logout"
 
       showDialog = surveyActive or logoutChosen
       if showDialog
