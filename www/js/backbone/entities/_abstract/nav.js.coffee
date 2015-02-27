@@ -36,7 +36,9 @@
           "profile"
           "logout"
         ]
-        if App.device.isNative
+        if App.custom.build.debug
+          filterItems = []
+        else if App.device.isNative
           filterItems = App.custom.menu_items_disabled.native
         else
           filterItems = App.custom.menu_items_disabled.browser
