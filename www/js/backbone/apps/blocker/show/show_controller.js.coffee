@@ -28,6 +28,17 @@
       contentView = switch options.contentViewLabel
         when "password:invalid"
           invalidView = @getPasswordInvalidView()
+          @listenTo @layout, 'cancel:clicked', =>
+            saveLocation = if App.device.isNative then "on this device" else "on this web browser"
+            App.execute "dialog:confirm", "Are you sure you want to logout? Any data saved #{saveLocation} will be lost.", (=>
+              App.navigate "logout", { trigger: true }
+              blocker.blockerHide()
+              @destroy
+            ), (=>
+              blocker.blockerHide()
+              @destroy
+            )
+
           invalidView
         when "password:change"
           changeView = @getPasswordChangeView()
