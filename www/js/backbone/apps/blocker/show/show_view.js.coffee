@@ -10,3 +10,5 @@
         @blocker.show()
       @listenTo @model, "blocker:hide", ->
         @blocker.hide()
+    onRender: ->
+      @blocker = new LoadingSpinnerComponent('#ui-blocker')
