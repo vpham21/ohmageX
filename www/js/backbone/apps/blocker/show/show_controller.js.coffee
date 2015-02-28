@@ -54,6 +54,9 @@
           @listenTo @layout, 'ok:clicked', =>
             @noticeRegion ''
             changeView.trigger "get:values"
+
+          @listenTo changeView, "submit:password", (passwords) =>
+            App.vent.trigger "credentials:password:change", passwords
           @listenTo @layout, 'cancel:clicked', =>
             blocker.blockerHide()
             @destroy
