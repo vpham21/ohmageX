@@ -16,6 +16,12 @@
       @listenTo @layout, "show", =>
         blocker.blockerShow()
       @show @layout
+
+    noticeRegion: (message) ->
+      notice = new Backbone.Model message: message
+      noticeView = @getNoticeView notice
+
+      @show noticeView, region: @layout.noticeRegion
     getLayoutView: (blocker) ->
       new Show.Layout
         model: blocker
