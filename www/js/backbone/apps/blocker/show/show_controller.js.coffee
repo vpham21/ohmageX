@@ -38,6 +38,10 @@
             App.vent.trigger "credentials:password:update", password
 
           @listenTo App.vent, "credentials:password:update:validated", options.successListener
+
+          @listenTo App.vent, "credentials:password:update:invalidated", (responseErrors) =>
+            @noticeRegion responseErrors
+
           @listenTo @layout, 'cancel:clicked', =>
             saveLocation = if App.device.isNative then "on this device" else "on this web browser"
             App.execute "dialog:confirm", "Are you sure you want to logout? Any data saved #{saveLocation} will be lost.", (=>
@@ -61,6 +65,11 @@
             App.vent.trigger "credentials:password:change", passwords
 
           @listenTo App.vent, "credentials:password:change:validated", options.successListener
+
+          @listenTo App.vent, "credentials:password:change:invalidated", (responseErrors) =>
+            @noticeRegion responseErrors
+
+
           @listenTo @layout, 'cancel:clicked', =>
             blocker.blockerHide()
             @destroy
