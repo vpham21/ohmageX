@@ -64,6 +64,31 @@
         error: ->
           App.vent.trigger "loading:hide"
 
+    updatePassword: (path, password) ->
+      App.vent.trigger "loading:show", "Updating password for #{App.credentials.get 'username'}..."
+      $.ajax
+        type: "POST"
+        url: "#{path}/app/user_info/read"
+        data:
+          user: App.credentials.get 'username'
+          password: password
+          client: App.client_string
+        dataType: 'json'
+        success: (response) =>
+          if @isParsedAuthValid response
+
+            App.credentials = new Entities.Credentials
+              username: username
+              password: response.hashed_password
+            App.execute "storage:save", 'credentials', App.credentials.toJSON(), =>
+              console.log "credentials entity API.validateCredentials success"
+              App.vent.trigger "credentials:password:update:validated"
+          else
+            App.vent.trigger "credentials:password:update:invalidated", 'Authentication failed.'
+          App.vent.trigger "loading:hide"
+        error: ->
+          App.vent.trigger "credentials:password:update:invalidated", 'Error, unable to update password'
+          App.vent.trigger "loading:hide"
 
     getParams: ->
       if @isPasswordAuth()
