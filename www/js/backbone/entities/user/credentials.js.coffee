@@ -158,6 +158,9 @@
   App.vent.on "credentials:password:update", (newPassword) ->
     API.updatePassword App.request("serverpath:current"), newPassword
 
+  App.vent.on "credentials:password:change", (passwords) ->
+    API.changePassword App.request("serverpath:current"), passwords.oldPassword, passwords.newPassword
+
   App.reqres.setHandler "credentials:upload:params", ->
     API.getParams()
 
