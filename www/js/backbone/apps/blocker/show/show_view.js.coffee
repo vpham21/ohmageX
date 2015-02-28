@@ -7,6 +7,12 @@
     template: "blocker/show/password_invalid"
     serializeData: ->
       username: App.request "credentials:username"
+
+  class Show.PasswordChange extends App.Views.ItemView
+    template: "blocker/show/password_change"
+    serializeData: ->
+      username: App.request "credentials:username"
+
   class Show.Layout extends App.Views.Layout
     tagName: "figure"
     initialize: ->
