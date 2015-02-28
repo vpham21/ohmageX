@@ -31,6 +31,9 @@
           invalidView
         when "password:change"
           changeView = @getPasswordChangeView()
+          @listenTo @layout, 'cancel:clicked', =>
+            blocker.blockerHide()
+            @destroy
           changeView
       @show contentView, region: @layout.contentRegion
 
