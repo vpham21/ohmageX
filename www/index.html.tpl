@@ -14,6 +14,7 @@
 </head>
 <body>
   <div id="loading-spinner"></div>
+  <div id="ui-blocker"></div>
   <header role="banner"></header>
   <main role="main"></main>
   <footer role="contentinfo"></footer>

@@ -64,6 +64,59 @@
         error: ->
           App.vent.trigger "loading:hide"
 
+    updatePassword: (path, password) ->
+      App.vent.trigger "loading:show", "Updating password for #{App.credentials.get 'username'}..."
+      $.ajax
+        type: "POST"
+        url: "#{path}/app/user_info/read"
+        data:
+          user: App.credentials.get 'username'
+          password: password
+          client: App.client_string
+        dataType: 'json'
+        success: (response) =>
+          if @isParsedAuthValid response
+
+            App.credentials = new Entities.Credentials
+              username: username
+              password: response.hashed_password
+            App.execute "storage:save", 'credentials', App.credentials.toJSON(), =>
+              console.log "credentials entity API.validateCredentials success"
+              App.vent.trigger "credentials:password:update:validated"
+          else
+            App.vent.trigger "credentials:password:update:invalidated", 'Authentication failed.'
+          App.vent.trigger "loading:hide"
+        error: ->
+          App.vent.trigger "credentials:password:update:invalidated", 'Error, unable to update password'
+          App.vent.trigger "loading:hide"
+
+    changePassword: (path, oldPassword, newPassword) ->
+      App.vent.trigger "loading:show", "Changing password for #{App.credentials.get 'username'}..."
+      $.ajax
+        type: "POST"
+        url: "#{path}/user/change_password"
+        data:
+          user: App.credentials.get 'username'
+          password: oldPassword
+          new_password: newPassword
+          client: App.client_string
+        dataType: 'json'
+        success: (response) =>
+          if @isParsedAuthValid response
+
+            App.credentials = new Entities.Credentials
+              username: username
+              password: response.hashed_password
+            App.execute "storage:save", 'credentials', App.credentials.toJSON(), =>
+              console.log "credentials entity API.validateCredentials success"
+              App.vent.trigger "credentials:password:change:validated"
+          else
+            App.vent.trigger "credentials:password:change:invalidated", response.errors[0].text
+          App.vent.trigger "loading:hide"
+        error: ->
+          App.vent.trigger "credentials:password:change:invalidated", 'Error, unable to update password'
+          App.vent.trigger "loading:hide"
+
 
     getParams: ->
       if @isPasswordAuth()
@@ -101,6 +154,12 @@
     credentials = API.getCredentials()
     if !credentials then return false
     credentials.get 'username'
+
+  App.vent.on "credentials:password:update", (newPassword) ->
+    API.updatePassword App.request("serverpath:current"), newPassword
+
+  App.vent.on "credentials:password:change", (passwords) ->
+    API.changePassword App.request("serverpath:current"), passwords.oldPassword, passwords.newPassword
 
   App.reqres.setHandler "credentials:upload:params", ->
     API.getParams()
