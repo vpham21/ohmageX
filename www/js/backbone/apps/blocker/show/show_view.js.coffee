@@ -5,3 +5,8 @@
 
   class Show.Layout extends App.Views.Layout
     tagName: "figure"
+    initialize: ->
+      @listenTo @model, "blocker:show", ->
+        @blocker.show()
+      @listenTo @model, "blocker:hide", ->
+        @blocker.hide()
