@@ -28,3 +28,7 @@
       @trigger 'blocker:show'
     blockerHide: ->
       @trigger 'blocker:hide'
+
+  App.reqres.setHandler "blocker:entity", (contentViewLabel) ->
+    new Entities.Blocker
+      contentViewLabel: contentViewLabel
