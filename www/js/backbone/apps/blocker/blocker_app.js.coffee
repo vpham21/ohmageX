@@ -16,3 +16,12 @@
     # successListener - listener after the action has succeeded
 
     API.show options
+
+  App.vent.on "blocker:password:change", (options) ->
+    _.defaults options,
+      contentViewLabel: 'password:change'
+
+    # option parameter required:
+    # successListener - listener after the action has succeeded
+
+    API.show options
