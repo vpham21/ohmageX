@@ -21,6 +21,8 @@
       username: App.request "credentials:username"
 
   class Show.PasswordChange extends App.Views.ItemView
+    initialize: ->
+      @listenTo @, "get:values", @formValues
     validatePassword: (label, val) ->
       if val.length is 0
         @trigger "error:show", "Please provide the #{label} password."
@@ -29,6 +31,18 @@
         @trigger "error:show", "The #{label} password must be at least 6 characters long."
         return false
       return true
+    formValues: ->
+      oldVal = @$el.find('#old-password').val()
+      newVal = @$el.find('#new-password').val()
+      confirmVal = @$el.find('#confirm-password').val()
+      if @validatePassword("old", oldVal) and @validatePassword("new", newVal) and @validatePassword("confirmation", confirmVal)
+        if newVal isnt confirmVal
+          @trigger "error:show", "New password must match password confirmation."
+        else
+          @trigger "submit:password",
+            oldPassword: oldVal
+            newPassword: newVal
+
     template: "blocker/show/password_change"
     serializeData: ->
       username: App.request "credentials:username"
