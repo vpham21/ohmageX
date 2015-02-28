@@ -7,3 +7,9 @@
   options expected:
     contentViewLabel
   ###
+
+  class Entities.Blocker extends Entities.Model
+    blockerShow: ->
+      @trigger 'blocker:show'
+    blockerHide: ->
+      @trigger 'blocker:hide'
