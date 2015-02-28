@@ -15,6 +15,7 @@
 
   App.addRegions
     loadingRegion: "body > #loading-spinner"
+    blockerRegion: "body > #ui-blocker"
     headerRegion: "body > header"
     mainRegion:    "body > main"
     footerRegion: "body > footer"
