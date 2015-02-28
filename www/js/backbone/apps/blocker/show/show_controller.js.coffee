@@ -22,6 +22,17 @@
       noticeView = @getNoticeView notice
 
       @show noticeView, region: @layout.noticeRegion
+
+    getNoticeView: (notice) ->
+      new Show.Notice
+        model: notice
+
+    getPasswordInvalidView: ->
+      new Show.PasswordInvalid()
+
+    getPasswordChangeView: ->
+      new Show.PasswordChange()
+
     getNoticeView: (notice) ->
       new Show.Notice
         model: notice
