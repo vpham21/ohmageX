@@ -4,6 +4,18 @@
     template: "blocker/show/_notice"
 
   class Show.PasswordInvalid extends App.Views.ItemView
+    initialize: ->
+      @listenTo @, "get:values", @formValues
+    formValues: ->
+      val = @$el.find('#updated-password').val()
+      if val.length is 0
+        @trigger "error:show", "Please provide a password."
+        return false
+      if val.length < 6
+        @trigger "error:show", "Password must be at least 6 characters long."
+        return false
+      @trigger "submit:password", val
+
     template: "blocker/show/password_invalid"
     serializeData: ->
       username: App.request "credentials:username"
