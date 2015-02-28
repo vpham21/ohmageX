@@ -22,6 +22,10 @@
       noticeView = @getNoticeView notice
 
       @show noticeView, region: @layout.noticeRegion
+    getNoticeView: (notice) ->
+      new Show.Notice
+        model: notice
+
     getLayoutView: (blocker) ->
       new Show.Layout
         model: blocker
