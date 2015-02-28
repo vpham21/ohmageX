@@ -21,6 +21,14 @@
       username: App.request "credentials:username"
 
   class Show.PasswordChange extends App.Views.ItemView
+    validatePassword: (label, val) ->
+      if val.length is 0
+        @trigger "error:show", "Please provide the #{label} password."
+        return false
+      if val.length < 6
+        @trigger "error:show", "The #{label} password must be at least 6 characters long."
+        return false
+      return true
     template: "blocker/show/password_change"
     serializeData: ->
       username: App.request "credentials:username"
