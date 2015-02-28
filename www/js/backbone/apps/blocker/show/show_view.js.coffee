@@ -18,3 +18,6 @@
       contentRegion: "#content-region"
     onRender: ->
       @blocker = new LoadingSpinnerComponent('#ui-blocker')
+    triggers:
+      "click .cancel-button": "cancel:clicked"
+      "click .ok-button": "ok:clicked"
