@@ -24,6 +24,12 @@
       @show noticeView, region: @layout.noticeRegion
 
     contentRegion: (blocker, options) ->
+
+      contentView = switch options.contentViewLabel
+        when "password:invalid"
+          invalidView = @getPasswordInvalidView()
+        when "password:change"
+          changeView = @getPasswordChangeView()
       @show contentView, region: @layout.contentRegion
 
     getNoticeView: (notice) ->
