@@ -3,6 +3,10 @@
   class Show.Notice extends App.Views.ItemView
     template: "blocker/show/_notice"
 
+  class Show.PasswordInvalid extends App.Views.ItemView
+    template: "blocker/show/password_invalid"
+    serializeData: ->
+      username: App.request "credentials:username"
   class Show.Layout extends App.Views.Layout
     tagName: "figure"
     initialize: ->
