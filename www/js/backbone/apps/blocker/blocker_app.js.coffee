@@ -7,3 +7,12 @@
         region: App.blockerRegion
 
       new BlockerApp.Show.Controller options
+
+  App.vent.on "blocker:password:invalid", (options) ->
+    _.defaults options,
+      contentViewLabel: 'password:invalid'
+
+    # option parameter required:
+    # successListener - listener after the action has succeeded
+
+    API.show options
