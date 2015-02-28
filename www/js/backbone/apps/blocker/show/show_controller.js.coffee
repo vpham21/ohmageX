@@ -6,6 +6,12 @@
       { contentViewLabel } = options
       blocker = App.request "blocker:entity", contentViewLabel
       @layout = @getLayoutView blocker
+
+      @listenTo App.loading, 'loading:show', =>
+        blocker.blockerHide()
+
+      @listenTo App.loading, 'loading:hide', =>
+        blocker.blockerShow()
       @show @layout
     getLayoutView: (blocker) ->
       new Show.Layout
