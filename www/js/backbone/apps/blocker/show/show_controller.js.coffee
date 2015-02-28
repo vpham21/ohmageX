@@ -32,6 +32,10 @@
           @listenTo @layout, 'ok:clicked', =>
             @noticeRegion ''
             invalidView.trigger "get:values"
+
+          @listenTo invalidView, "submit:password", (password) =>
+            console.log 'submit:passsword', password
+            App.vent.trigger "credentials:password:update", password
           @listenTo @layout, 'cancel:clicked', =>
             saveLocation = if App.device.isNative then "on this device" else "on this web browser"
             App.execute "dialog:confirm", "Are you sure you want to logout? Any data saved #{saveLocation} will be lost.", (=>
