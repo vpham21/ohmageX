@@ -1,0 +1,4 @@
+<h3><%= @title %></h3>
+<div id="notice"></div>
+<figcaption id="content-region"></figcaption>
+<button type="button" class="cancel-button"><%= @cancelLabel %></button><button type="button" class="ok-button"><%= @okLabel %></button>
