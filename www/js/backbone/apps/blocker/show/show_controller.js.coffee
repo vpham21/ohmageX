@@ -53,6 +53,11 @@
             blocker.blockerHide()
             @destroy
           changeView
+
+      @listenTo contentView, "error:show", (message) ->
+        @noticeRegion message
+
+
       @show contentView, region: @layout.contentRegion
 
     getNoticeView: (notice) ->
