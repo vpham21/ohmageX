@@ -155,6 +155,9 @@
     if !credentials then return false
     credentials.get 'username'
 
+  App.vent.on "credentials:password:update", (newPassword) ->
+    API.updatePassword App.request("serverpath:current"), newPassword
+
   App.reqres.setHandler "credentials:upload:params", ->
     API.getParams()
 
