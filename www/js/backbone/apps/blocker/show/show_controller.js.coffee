@@ -28,8 +28,10 @@
       contentView = switch options.contentViewLabel
         when "password:invalid"
           invalidView = @getPasswordInvalidView()
+          invalidView
         when "password:change"
           changeView = @getPasswordChangeView()
+          changeView
       @show contentView, region: @layout.contentRegion
 
     getNoticeView: (notice) ->
