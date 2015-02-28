@@ -12,6 +12,9 @@
 
       @listenTo App.loading, 'loading:hide', =>
         blocker.blockerShow()
+
+      @listenTo @layout, "show", =>
+        blocker.blockerShow()
       @show @layout
     getLayoutView: (blocker) ->
       new Show.Layout
