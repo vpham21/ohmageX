@@ -36,6 +36,8 @@
           @listenTo invalidView, "submit:password", (password) =>
             console.log 'submit:passsword', password
             App.vent.trigger "credentials:password:update", password
+
+          @listenTo App.vent, "credentials:password:update:validated", options.successListener
           @listenTo @layout, 'cancel:clicked', =>
             saveLocation = if App.device.isNative then "on this device" else "on this web browser"
             App.execute "dialog:confirm", "Are you sure you want to logout? Any data saved #{saveLocation} will be lost.", (=>
@@ -57,6 +59,8 @@
 
           @listenTo changeView, "submit:password", (passwords) =>
             App.vent.trigger "credentials:password:change", passwords
+
+          @listenTo App.vent, "credentials:password:change:validated", options.successListener
           @listenTo @layout, 'cancel:clicked', =>
             blocker.blockerHide()
             @destroy
