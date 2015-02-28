@@ -14,6 +14,7 @@
         blocker.blockerShow()
 
       @listenTo @layout, "show", =>
+        @contentRegion blocker, options
         blocker.blockerShow()
       @show @layout
 
