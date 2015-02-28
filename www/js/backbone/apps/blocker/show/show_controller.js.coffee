@@ -23,6 +23,9 @@
 
       @show noticeView, region: @layout.noticeRegion
 
+    contentRegion: (blocker, options) ->
+      @show contentView, region: @layout.contentRegion
+
     getNoticeView: (notice) ->
       new Show.Notice
         model: notice
