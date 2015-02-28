@@ -48,6 +48,7 @@
           changeView = @getPasswordChangeView()
 
           @listenTo @layout, 'ok:clicked', =>
+            @noticeRegion ''
             changeView.trigger "get:values"
           @listenTo @layout, 'cancel:clicked', =>
             blocker.blockerHide()
