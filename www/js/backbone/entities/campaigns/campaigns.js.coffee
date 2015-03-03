@@ -151,13 +151,15 @@
             @saveLocalCampaigns collection
           else
             message = "The following errors prevented the #{App.dictionary('pages','campaign')} from syncing: "
+            showAlert = true
             _.every response.errors, (error) =>
               console.log 'error array item', error
               message += error.text
               if error.code in ["0200","0201","0202"]
                 App.vent.trigger "campaigns:sync:failure:auth", error.text
+                showAlert = false
                 return false
-            App.execute "dialog:alert", message
+            if showAlert then App.execute "dialog:alert", message
           App.vent.trigger "loading:hide"
         error: (collection, response, options) =>
           console.log 'campaign fetch error'

@@ -60,6 +60,13 @@
               App.vent.trigger "credentials:validated", username
           else
             App.vent.trigger "loading:hide"
+            if response.errors[0].code is "0202"
+              # new user who must change their password.
+              App.vent.trigger "blocker:password:change",
+                successListener: (=>
+                  App.navigate Routes.dashboard_route(), trigger: true
+                )
+
             App.vent.trigger "credentials:invalidated", response.errors
         error: ->
           App.vent.trigger "loading:hide"
@@ -68,7 +75,7 @@
       App.vent.trigger "loading:show", "Updating password for #{App.credentials.get 'username'}..."
       $.ajax
         type: "POST"
-        url: "#{path}/app/user_info/read"
+        url: "#{path}/app/user/auth"
         data:
           user: App.credentials.get 'username'
           password: password
@@ -78,10 +85,10 @@
           if @isParsedAuthValid response
 
             App.credentials = new Entities.Credentials
-              username: username
+              username: App.credentials.get 'username'
               password: response.hashed_password
             App.execute "storage:save", 'credentials', App.credentials.toJSON(), =>
-              console.log "credentials entity API.validateCredentials success"
+              console.log "credentials entity API.updatePassword success"
               App.vent.trigger "credentials:password:update:validated"
           else
             App.vent.trigger "credentials:password:update:invalidated", 'Authentication failed.'

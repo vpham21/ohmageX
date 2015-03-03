@@ -39,6 +39,11 @@
             App.vent.trigger "credentials:password:update", password
 
           @listenTo App.vent, "credentials:password:update:validated", options.successListener
+          @listenTo App.vent, "credentials:password:update:validated", (=>
+            console.log 'test'
+            blocker.blockerHide()
+            @destroy()
+          )
 
           @listenTo App.vent, "credentials:password:update:invalidated", (responseErrors) =>
             @noticeRegion responseErrors
@@ -48,10 +53,9 @@
             App.execute "dialog:confirm", "Are you sure you want to logout? Any data saved #{saveLocation} will be lost.", (=>
               App.navigate "logout", { trigger: true }
               blocker.blockerHide()
-              @destroy
+              @destroy()
             ), (=>
-              blocker.blockerHide()
-              @destroy
+              console.log 'dialog canceled'
             )
 
           invalidView
@@ -66,6 +70,10 @@
             App.vent.trigger "credentials:password:change", passwords
 
           @listenTo App.vent, "credentials:password:change:validated", options.successListener
+          @listenTo App.vent, "credentials:password:change:validated", (=>
+            blocker.blockerHide()
+            @destroy()
+          )
 
           @listenTo App.vent, "credentials:password:change:invalidated", (responseErrors) =>
             @noticeRegion responseErrors
@@ -73,7 +81,7 @@
 
           @listenTo @layout, 'cancel:clicked', =>
             blocker.blockerHide()
-            @destroy
+            @destroy()
           changeView
 
       @listenTo contentView, "error:show", (message) ->

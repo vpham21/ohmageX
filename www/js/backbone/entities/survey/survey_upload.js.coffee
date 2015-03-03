@@ -67,7 +67,9 @@
 
   App.commands.setHandler "survey:upload", (surveyId) ->
     responses = App.request "responses:current"
-    API.getLocation responses, surveyId
+
+    App.execute 'credentials:preflight:check', =>
+      API.getLocation responses, surveyId
 
   App.vent.on "survey:geolocation:fetch:failure", (surveyId) ->
     console.log 'geolocation fetch failure', surveyId
