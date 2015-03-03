@@ -60,6 +60,13 @@
               App.vent.trigger "credentials:validated", username
           else
             App.vent.trigger "loading:hide"
+            if response.errors[0].code is "0202"
+              # new user who must change their password.
+              App.vent.trigger "blocker:password:change",
+                successListener: (=>
+                  App.navigate Routes.dashboard_route(), trigger: true
+                )
+
             App.vent.trigger "credentials:invalidated", response.errors
         error: ->
           App.vent.trigger "loading:hide"
