@@ -22,7 +22,8 @@
           # Exit the survey.
           App.vent.trigger "survey:exit", surveyId
         okListener: =>
-          App.execute "survey:upload", surveyId
+          App.execute 'credentials:preflight:check', =>
+            App.execute "survey:upload", surveyId
 
   App.vent.on "survey:upload:failure:campaign", (responseData, errorText, surveyId) ->
     console.log responseData
