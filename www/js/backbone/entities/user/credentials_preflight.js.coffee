@@ -7,3 +7,6 @@
     isParsedAuthValid: (response) ->
       response.result isnt "failure"
 
+    showBlocker: (callback) ->
+      App.vent.trigger 'blocker:password:invalid',
+        successListener: callback
