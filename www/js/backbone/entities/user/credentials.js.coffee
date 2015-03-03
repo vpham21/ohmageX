@@ -68,7 +68,7 @@
       App.vent.trigger "loading:show", "Updating password for #{App.credentials.get 'username'}..."
       $.ajax
         type: "POST"
-        url: "#{path}/app/user_info/read"
+        url: "#{path}/app/user/auth"
         data:
           user: App.credentials.get 'username'
           password: password
