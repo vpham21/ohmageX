@@ -50,8 +50,7 @@
               blocker.blockerHide()
               @destroy
             ), (=>
-              blocker.blockerHide()
-              @destroy
+              console.log 'dialog canceled'
             )
 
           invalidView
