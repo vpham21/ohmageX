@@ -81,9 +81,19 @@
   App.commands.setHandler "credentials:token:redirect", ->
     API.tokenLoginRedirect()
 
-  App.vent.on "survey:upload:failure:auth uploadqueue:upload:failure:auth", (responseData, errorText, surveyId) ->
+  App.vent.on "uploadqueue:upload:failure:auth", (responseData, errorText, surveyId) ->
     if !App.request("credentials:ispassword")
       API.tokenLoginRedirect()
+
+  App.vent.on "survey:upload:failure:auth", (responseData, errorText, surveyId) ->
+    if !App.request("credentials:ispassword")
+      # OK to set a global handler here, a redirect will happen and reset the app.
+      App.vent.on 'uploadqueue:add:success', =>
+        # after the queue item has been saved, redirect to the actual upload queue,
+        # so if they come back it will be on this page.
+        App.execute 'survey:reset'
+        App.navigate "uploadqueue", {trigger: true}
+        API.tokenLoginRedirect()
 
   App.vent.on "surveys:saved:campaign:fetch:failure:auth campaigns:sync:failure:auth", (errorText) ->
     if !App.request("credentials:ispassword")
