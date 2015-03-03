@@ -53,13 +53,15 @@
       logoutChosen = myName is "logout"
 
       showDialog = surveyActive or logoutChosen
+      saveLocation = if App.device.isNative then "on this device" else "on this web browser"
+
       if showDialog
         if surveyActive and logoutChosen
-          message = "Data from your current #{App.dictionary('page','survey')} response will be lost. Do you want to logout and exit the #{App.dictionary('page','survey')}?"
+          message = "Data from your current #{App.dictionary('page','survey')} response will be lost, and any data saved #{saveLocation} will be lost. Do you want to logout and exit the #{App.dictionary('page','survey')}?"
         else if surveyActive
           message = "Data from your current #{App.dictionary('page','survey')} response will be lost. Do you want to exit the #{App.dictionary('page','survey')}?"
         else if logoutChosen
-          message = 'Do you want to logout?'
+          message = "Do you want to logout? Any data saved #{saveLocation} will be lost."
 
         App.execute "dialog:confirm", message, (=>
           # reset active survey's entities.
