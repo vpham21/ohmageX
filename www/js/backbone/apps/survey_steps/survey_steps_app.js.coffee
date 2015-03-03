@@ -94,5 +94,5 @@
 
   App.vent.on "survey:upload:failure:auth", (responseData, errorText, surveyId) ->
     if !App.request("credentials:ispassword")
-      # exit survey immediately if using token-based auth, data can't be saved before redirect
-      App.execute 'survey:exit'
+      # dump to queue and save survey
+      App.execute "uploadqueue:item:add", responseData, "#{errorPrefix} #{errorText}", surveyId
