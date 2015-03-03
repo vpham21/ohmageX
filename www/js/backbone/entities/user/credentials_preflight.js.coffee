@@ -34,6 +34,15 @@
     showBlocker: (callback) ->
       App.vent.trigger 'blocker:password:invalid',
         successListener: callback
+
+  App.commands.setHandler 'credentials:preflight:check', (callback) ->
+    if App.request "credentials:ispassword"
+      API.preflightCheck App.request("serverpath:current"), callback
+    else
+      # just execute the callback if using tokens. An auth failure will trigger
+      # a token redirect instead.
+      callback()
+
   App.vent.on "surveys:saved:campaign:fetch:failure:auth campaigns:sync:failure:auth", (errorText) ->
     API.showBlocker (->
       App.execute "dialog:alert", "Password validated."
