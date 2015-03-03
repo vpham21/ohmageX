@@ -30,7 +30,10 @@
 
     tokenLoginRedirect: ->
       # redirect to server login page.
-      window.location.replace App.custom.api.token_redirect
+      App.vent.trigger "loading:show", "Authentication failed, redirecting to login page..."
+      setTimeout (=>
+        window.location.replace App.custom.api.token_redirect
+      ), 1500
 
     compareSavedUsername: (username) ->
       App.request "storage:get", 'credentials', ((result) =>
