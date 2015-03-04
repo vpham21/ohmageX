@@ -112,7 +112,7 @@
           if @isParsedAuthValid response
 
             App.credentials = new Entities.Credentials
-              username: username
+              username: App.credentials.get 'username'
               password: response.hashed_password
             App.execute "storage:save", 'credentials', App.credentials.toJSON(), =>
               console.log "credentials entity API.validateCredentials success"
