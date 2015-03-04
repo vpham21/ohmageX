@@ -1,1 +1,3 @@
 Logged in as <strong><%= @username %></strong>
+<br />
+<% if @showPassword: %><button class="change-password" type="button">Change Password</button><% end %>

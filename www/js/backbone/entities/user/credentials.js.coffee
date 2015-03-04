@@ -101,7 +101,7 @@
       App.vent.trigger "loading:show", "Changing password for #{App.credentials.get 'username'}..."
       $.ajax
         type: "POST"
-        url: "#{path}/user/change_password"
+        url: "#{path}/app/user/change_password"
         data:
           user: App.credentials.get 'username'
           password: oldPassword
@@ -112,7 +112,7 @@
           if @isParsedAuthValid response
 
             App.credentials = new Entities.Credentials
-              username: username
+              username: App.credentials.get 'username'
               password: response.hashed_password
             App.execute "storage:save", 'credentials', App.credentials.toJSON(), =>
               console.log "credentials entity API.validateCredentials success"
@@ -120,8 +120,9 @@
           else
             App.vent.trigger "credentials:password:change:invalidated", response.errors[0].text
           App.vent.trigger "loading:hide"
-        error: ->
-          App.vent.trigger "credentials:password:change:invalidated", 'Error, unable to update password'
+        error: (xhr, textStatus, errorText) ->
+          console.log "Error", xhr.responseText, textStatus, xhr.statusText
+          App.vent.trigger "credentials:password:change:invalidated", 'Error, unable to change password'
           App.vent.trigger "loading:hide"
 
 
