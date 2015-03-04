@@ -48,10 +48,12 @@
     tagName: 'li'
     template: "reminders/list/_item"
     toggleOff: ->
+      @$el.removeClass('active')
       @toggler.hide()
       console.log 'toggleOff'
       @$el.find('.toggler-button .my-icon').html('&#9654;')
     toggleOn: ->
+      @$el.addClass('active')
       @toggler.show()
       console.log 'toggleOn'
       @$el.find('.toggler-button .my-icon').html('&#9660;')
