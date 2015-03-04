@@ -12,10 +12,13 @@
 
       myData =
         client: App.client_string
+        start_date: moment().format("YYYY-MM-DD")
+        end_date: moment().format("YYYY-MM-DD")
+        output_format: "short"
 
       $.ajax
         type: "POST"
-        url: "#{path}/app/user_info/read"
+        url: "#{path}/app/campaign/read"
         data: _.extend(myData, App.request("credentials:upload:params"))
         dataType: 'json'
         success: (response) =>
