@@ -69,7 +69,7 @@
                 password: false
               App.vent.trigger "blocker:password:change",
                 successListener: (=>
-                  App.navigate Routes.dashboard_route(), trigger: true
+                  App.vent.trigger "credentials:validated", username
                 )
 
         error: (xhr, textStatus, errorText) ->
