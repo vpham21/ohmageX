@@ -68,7 +68,9 @@
                   App.navigate Routes.dashboard_route(), trigger: true
                 )
 
-        error: ->
+        error: (xhr, textStatus, errorText) ->
+          console.log "Error", xhr.responseText, textStatus, xhr.statusText
+          App.vent.trigger "credentials:invalidated", [{text: "Network error, please try again later.", code: "9999"}]
           App.vent.trigger "loading:hide"
 
     updatePassword: (path, password) ->
