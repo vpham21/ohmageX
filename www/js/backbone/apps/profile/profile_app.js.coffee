@@ -17,3 +17,8 @@
   App.addInitializer ->
     new ProfileApp.Router
       controller: API
+
+  App.vent.on "profile:password:clicked", ->
+    App.vent.trigger "blocker:password:change",
+      successListener: ->
+        App.execute "dialog:show", "Password successfully changed."
