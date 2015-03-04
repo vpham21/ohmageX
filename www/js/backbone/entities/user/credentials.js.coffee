@@ -120,8 +120,9 @@
           else
             App.vent.trigger "credentials:password:change:invalidated", response.errors[0].text
           App.vent.trigger "loading:hide"
-        error: ->
-          App.vent.trigger "credentials:password:change:invalidated", 'Error, unable to update password'
+        error: (xhr, textStatus, errorText) ->
+          console.log "Error", xhr.responseText, textStatus, xhr.statusText
+          App.vent.trigger "credentials:password:change:invalidated", 'Error, unable to change password'
           App.vent.trigger "loading:hide"
 
 
