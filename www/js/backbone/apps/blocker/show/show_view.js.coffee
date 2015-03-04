@@ -11,8 +11,8 @@
       if val.length is 0
         @trigger "error:show", "Please provide a password."
         return false
-      if val.length < 6
-        @trigger "error:show", "Password must be at least 6 characters long."
+      if val.length < 8
+        @trigger "error:show", "Password must be at least 8 characters long."
         return false
       @trigger "submit:password", val
 
@@ -27,8 +27,8 @@
       if val.length is 0
         @trigger "error:show", "Please provide the #{label} password."
         return false
-      if val.length < 6
-        @trigger "error:show", "The #{label} password must be at least 6 characters long."
+      if val.length < 8
+        @trigger "error:show", "The #{label} password must be at least 8 characters long."
         return false
       return true
     formValues: ->
