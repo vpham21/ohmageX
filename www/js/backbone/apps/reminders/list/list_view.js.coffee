@@ -137,6 +137,7 @@
     gatherResponses: ->
       console.log 'gatherResponses'
       @fixDate()
+      @updateTime()
 
       myRepeat = @$el.find("input[name='repeat']").prop('checked') is true
 
