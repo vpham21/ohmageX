@@ -10,14 +10,29 @@
       @initNotificationEvents()
 
     initNotificationEvents: ->
-      window.plugin.notification.local.onclick = (id, state, json) ->
-        console.log 'onclick event!'
-        console.log 'id', id
-        result = JSON.parse json
-        # delete our local Reminder, if it's non-repeating.
-        if !result.repeat then App.execute('reminder:delete:json', result)
+      window.plugin.notification.local.on "click", (notification) =>
+        console.log "notification onclick event"
+        result = JSON.parse notification.data
         console.log "survey/#{result.surveyId}"
         App.navigate "survey/#{result.surveyId}", trigger: true
+
+        # Suppress this reminder now that it's been activated.
+        App.execute "reminders:suppress", [result.id]
+
+      window.plugin.notification.local.on "trigger", (notification) =>
+        # this seems to only activate when the app is in the foreground.
+        console.log 'trigger event'
+        console.log 'JSON', notification.data
+        result = JSON.parse notification.data
+        App.execute "dialog:confirm", "Reminder to take the survey #{result.surveyTitle}. Go to the survey?", (=>
+          App.navigate "survey/#{result.surveyId}", trigger: true
+
+          # Suppress this reminder now that it's been activated.
+          App.execute "reminders:suppress", [result.id]
+        ), (=>
+          console.log 'dialog canceled'
+        )
+
 
     generateId: ->
       # generate a numeric id (not a guid). Local notifications plugin
@@ -37,23 +52,24 @@
 
       if myOutput > myInput then myOutput else myOutput.add(1, 'weeks')
 
-    nextHourMinuteSecond: (myMoment) ->
+    nextHourMinuteSecond: (myMoment, interval) ->
       # gets the next occurrence of a moment's hours, minutes, and seconds.
       # Ignores the month, day and year.
+      # it jumps ahead by the given 'interval' for the next occurrence.
+      # expected - Moment.js intervals like 'days' or 'weeks'
 
       input = moment(myMoment)
 
       hour = input.hour()
       minute = input.minute()
       second = input.second()
-
       output = moment().startOf('day').hour(hour).minute(minute).second(second)
 
-      if output > moment() then output else output.add(1, 'days')
+      if output > moment() then output else output.add(1, interval)
 
     addNotifications: (reminder) ->
-      if App.device.isNative and reminder.get('notificationIds').length > 0
-        # Delete any of the reminder's system notifications, if they exist
+      if App.device.isNative
+        # Delete any of the reminder's system notifications
         API.deleteNotifications reminder
 
       myIds = []
@@ -71,7 +87,7 @@
           # create one daily notification since it's repeating every day.
           myId = @generateId()
 
-          activationDate = @nextHourMinuteSecond reminder.get('activationDate')
+          activationDate = @nextHourMinuteSecond reminder.get('activationDate'), 'days'
 
           @createReminderNotification
             notificationId: myId
@@ -102,10 +118,11 @@
       activationDayofWeek = moment().day()
       repeatDay = repeatDays[0]
 
-      if activationDayofWeek is repeatDay
+      if "#{activationDayofWeek}" is repeatDay
+
         # if the day of week is the same as the current day,
         # we get the NEXT occurrence of that hour:minute:second
-        activationDate = @nextHourMinuteSecond reminder.get('activationDate')
+        activationDate = @nextHourMinuteSecond reminder.get('activationDate'), 'weeks'
       else
         activationDate = @nextDayofWeek(reminder.get('activationDate'), repeatDay)
 
@@ -142,7 +159,7 @@
       metadata = JSON.stringify reminder.toJSON()
 
       if App.device.isNative
-        window.plugin.notification.local.add
+        window.plugin.notification.local.schedule
           id: notificationId
           title: "#{reminder.get('surveyTitle')}"
           message: "Take survey #{reminder.get('surveyTitle')}"
@@ -151,19 +168,22 @@
           autoCancel: !reminder.get('repeat') # autoCancel NON-repeating reminders
           json: metadata
         , callback, @
-
+      else
+        callback.call(@)
 
     deleteNotifications: (reminder) ->
       ids = reminder.get('notificationIds')
-      window.plugin.notification.local.getScheduledIds((scheduledIds) ->
-        console.log 'Ids to delete', JSON.stringify ids
-        console.log 'scheduled Ids', JSON.stringify scheduledIds
-        _.each ids, (id) =>
-          # ensures we only attempt to remove a scheduled notification.
-          if id in scheduledIds then window.plugin.notification.local.cancel(id)
-      )
-      # clear out the reminder's notification IDs immediately, they now reference nothing
-      App.execute "reminder:notifications:set", reminder, []
+      if ids.length > 0
+        # ensure this is only executed when ids are present.
+        window.plugin.notification.local.getScheduledIds((scheduledIds) ->
+          console.log 'Ids to delete', JSON.stringify ids
+          console.log 'scheduled Ids', JSON.stringify scheduledIds
+          _.each ids, (id) =>
+            # ensures we only attempt to remove a scheduled notification.
+            if id in scheduledIds then window.plugin.notification.local.cancel(id)
+        )
+        # clear out the reminder's notification IDs immediately, they now reference nothing
+        App.execute "reminder:notifications:set", reminder, []
 
     suppressNotifications: (reminder) ->
       if reminder.get('repeat')
@@ -188,9 +208,9 @@
     if App.device.isNative
       API.init()
 
-  App.commands.setHandler "system:notifications:delete", (reminder) ->
+  App.commands.setHandler "system:notifications:delete", (reminderId) ->
     if App.device.isNative
-      API.deleteNotifications reminder
+      API.deleteNotifications App.request('reminders:current').get(reminderId)
 
   App.commands.setHandler "system:notifications:add", (reminder) ->
     console.log "system:notifications:add", reminder

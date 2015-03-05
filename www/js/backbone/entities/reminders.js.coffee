@@ -124,13 +124,11 @@
         console.log "reminders entity API.validateReminder storage success"
       )
 
-    deleteReminder: (model) ->
+    deleteReminder: (reminderId) ->
 
-      console.log 'deleteReminder'
-      myReminder = currentReminders.get model
+      myReminder = currentReminders.get reminderId
       currentReminders.remove myReminder
 
-      App.execute "system:notifications:delete", model
 
       @updateLocal( =>
         console.log "reminders entity API.deleteReminder storage success"
@@ -152,8 +150,8 @@
         App.vent.trigger "reminders:campaign:remove:success", campaign_urn
       )
 
-    setAttribute: (reminder, attribute, value) ->
-      reminder = currentReminders.get reminder
+    setAttribute: (reminderId, attribute, value) ->
+      reminder = currentReminders.get reminderId
       reminder.set attribute, value
 
       @updateLocal( =>
@@ -187,22 +185,20 @@
     API.addNewReminder()
 
   App.commands.setHandler "reminder:delete", (model) ->
-    API.deleteReminder model
-
-  App.commands.setHandler "reminder:delete:json", (json) ->
-    model = new Entities.Reminder json
-    API.deleteReminder model
+    App.execute "system:notifications:delete", model.get 'id'
+    API.deleteReminder model.get 'id'
 
   App.commands.setHandler "reminder:validate", (model, response) ->
     API.validateReminder model, response
 
   App.commands.setHandler "reminder:notifications:set", (reminder, ids) ->
     # ids - array of IDs to set for the notification
-    API.setAttribute reminder, 'notificationIds', ids
+    console.log "reminder:notifications:set", JSON.stringify(reminder.toJSON())
+    API.setAttribute reminder.get('id'), 'notificationIds', ids
 
   App.commands.setHandler "reminder:date:set", (reminder, date) ->
     # ids - array of IDs to set for the notification
-    API.setAttribute reminder, 'activationDate', date
+    API.setAttribute reminder.get('id'), 'activationDate', date
 
   App.vent.on "campaign:saved:remove", (campaign_urn) ->
     if currentReminders.length > 0 then API.removeCampaignReminders(campaign_urn)

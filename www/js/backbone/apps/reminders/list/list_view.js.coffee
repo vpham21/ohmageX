@@ -58,13 +58,13 @@
       console.log 'toggleOn'
       @$el.find('.toggler-button .my-icon').html('&#9660;')
     selectLabel: (e) ->
-      console.log 'selecteLabels'
+      console.log 'selectedLabels'
       $label = $(e.currentTarget)
       $input = $label.prev()
       checked = $input.prop('checked')
       $input.prop('checked', !checked)
     checkEnabled: ->
-      @$el.find("input[name='active-switch']").prop('checked', true)
+      @$el.find(".enable-switch input").prop('checked', true)
     repeatToggle: ->
       enabled = @$el.find("input[name='repeat']").prop('checked')
       if enabled
@@ -113,7 +113,7 @@
 
       response =
         activationDate: moment("#{myDate} #{myTime}#{offset}")
-        active: @$el.find("input[name='active-switch']").prop('checked') is true
+        active: @$el.find(".enable-switch input").prop('checked') is true
         repeat: myRepeat
         repeatDays: repeatDays
 
