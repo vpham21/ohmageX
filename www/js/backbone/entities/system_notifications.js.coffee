@@ -16,6 +16,9 @@
         console.log "survey/#{result.surveyId}"
         App.navigate "survey/#{result.surveyId}", trigger: true
 
+        # Suppress this reminder now that it's been activated.
+        App.execute "reminders:suppress", [result.id]
+
     generateId: ->
       # generate a numeric id (not a guid). Local notifications plugin
       # fails if the id is not an Android-valid integer (Max for 32 bits is 2147483647)
