@@ -75,6 +75,14 @@
     getProvidedDate: ->
       offset = new Date().toString().match(/([-\+][0-9]+)\s/)[1]
       moment("#{@$el.find('input[type=date]').val()} #{@$el.find('input[type=time]').val()} #{offset}")
+    fixDate: ->
+      $dateInput = @$el.find('input[type=date]')
+      dateMoment = moment $dateInput.val()
+      if dateMoment.isValid
+        $dateInput.val @nextHourMinuteSecond(@getProvidedDate(), 'days').format('YYYY-MM-DD')
+      else
+        # set the invalid date to now.
+        $dateInput.val moment().format('YYYY-MM-DD')
     nextHourMinuteSecond: (myMoment, interval) ->
       # gets the next occurrence of a moment's hours, minutes, and seconds.
       # Ignores the month, day and year.
