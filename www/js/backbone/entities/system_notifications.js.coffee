@@ -87,7 +87,7 @@
           # create one daily notification since it's repeating every day.
           myId = @generateId()
 
-          activationDate = @nextHourMinuteSecond reminder.get('activationDate')
+          activationDate = @nextHourMinuteSecond reminder.get('activationDate'), 'days'
 
           @createReminderNotification
             notificationId: myId
