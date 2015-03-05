@@ -158,7 +158,7 @@
       metadata = JSON.stringify reminder.toJSON()
 
       if App.device.isNative
-        window.plugin.notification.local.add
+        window.plugin.notification.local.schedule
           id: notificationId
           title: "#{reminder.get('surveyTitle')}"
           message: "Take survey #{reminder.get('surveyTitle')}"
