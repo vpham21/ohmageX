@@ -129,7 +129,6 @@
       myReminder = currentReminders.get reminderId
       currentReminders.remove myReminder
 
-      App.execute "system:notifications:delete", model
 
       @updateLocal( =>
         console.log "reminders entity API.deleteReminder storage success"
