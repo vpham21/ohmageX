@@ -168,7 +168,8 @@
           autoCancel: !reminder.get('repeat') # autoCancel NON-repeating reminders
           json: metadata
         , callback, @
-
+      else
+        callback.call(@)
 
     deleteNotifications: (reminder) ->
       ids = reminder.get('notificationIds')
