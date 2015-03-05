@@ -133,7 +133,7 @@
         )
 
       response =
-        activationDate: moment("#{myDate} #{myTime}#{offset}")
+        activationDate: @getProvidedDate()
         active: @$el.find(".enable-switch input").prop('checked') is true
         repeat: myRepeat
         repeatDays: repeatDays
