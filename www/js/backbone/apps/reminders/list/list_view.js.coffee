@@ -72,6 +72,9 @@
         @$el.find('.date-control').hide()
       else
         @$el.find('.date-control').show()
+    getProvidedDate: ->
+      offset = new Date().toString().match(/([-\+][0-9]+)\s/)[1]
+      moment("#{@$el.find('input[type=date]').val()} #{@$el.find('input[type=time]').val()} #{offset}")
     nextHourMinuteSecond: (myMoment, interval) ->
       # gets the next occurrence of a moment's hours, minutes, and seconds.
       # Ignores the month, day and year.
