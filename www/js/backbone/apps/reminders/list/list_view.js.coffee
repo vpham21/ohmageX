@@ -132,6 +132,10 @@
     triggers:
       "click .toggler-button": "toggle:activate"
       "click .delete-button": "delete:reminder"
+      "click .enable-switch input":
+        event: "active:toggle"
+        preventDefault: false
+        stopPropagation: false
       "click .save-button": "save:reminder"
       "click input[name='repeat']":
         event: "repeat:toggle"
