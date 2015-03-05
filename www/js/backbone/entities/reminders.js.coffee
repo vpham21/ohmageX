@@ -150,8 +150,8 @@
         App.vent.trigger "reminders:campaign:remove:success", campaign_urn
       )
 
-    setAttribute: (reminder, attribute, value) ->
-      reminder = currentReminders.get reminder
+    setAttribute: (reminderId, attribute, value) ->
+      reminder = currentReminders.get reminderId
       reminder.set attribute, value
 
       @updateLocal( =>
