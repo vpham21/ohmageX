@@ -19,6 +19,21 @@
         # Suppress this reminder now that it's been activated.
         App.execute "reminders:suppress", [result.id]
 
+      window.plugin.notification.local.on "trigger", (notification) =>
+        # this seems to only activate when the app is in the foreground.
+        console.log 'trigger event'
+        console.log 'JSON', notification.data
+        result = JSON.parse notification.data
+        App.execute "dialog:confirm", "Reminder to take the survey #{result.surveyTitle}. Go to the survey?", (=>
+          App.navigate "survey/#{result.surveyId}", trigger: true
+
+          # Suppress this reminder now that it's been activated.
+          App.execute "reminders:suppress", [result.id]
+        ), (=>
+          console.log 'dialog canceled'
+        )
+
+
     generateId: ->
       # generate a numeric id (not a guid). Local notifications plugin
       # fails if the id is not an Android-valid integer (Max for 32 bits is 2147483647)
