@@ -46,7 +46,9 @@
       @listenTo @, 'save:reminder', @toggleOff
       @listenTo @, 'repeat:toggle', @repeatToggle
       @listenTo @, 'check:enabled', @checkEnabled
+      @listenTo @, 'date:adjust time:adjust', @fixDate
       @listenTo @, 'active:toggle', @gatherResponses
+      @listenTo @, 'time:adjust', @updateTime
     tagName: 'li'
     template: "reminders/list/_item"
     toggleOff: ->
