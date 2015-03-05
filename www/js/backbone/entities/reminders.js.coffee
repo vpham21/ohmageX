@@ -188,10 +188,6 @@
     App.execute "system:notifications:delete", model.get 'id'
     API.deleteReminder model.get 'id'
 
-  App.commands.setHandler "reminder:delete:json", (json) ->
-    model = new Entities.Reminder json
-    API.deleteReminder model
-
   App.commands.setHandler "reminder:validate", (model, response) ->
     API.validateReminder model, response
 
