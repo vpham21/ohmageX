@@ -118,7 +118,8 @@
       activationDayofWeek = moment().day()
       repeatDay = repeatDays[0]
 
-      if activationDayofWeek is repeatDay
+      if "#{activationDayofWeek}" is repeatDay
+
         # if the day of week is the same as the current day,
         # we get the NEXT occurrence of that hour:minute:second
         activationDate = @nextHourMinuteSecond reminder.get('activationDate')
