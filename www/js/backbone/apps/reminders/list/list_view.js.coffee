@@ -95,7 +95,10 @@
             @$el.find("input[name='repeatDays[]'][value='#{repeatDay}']").prop('checked', true)
           )
     events: ->
-      "click .repeat-days label": "selectLabel"
+      if App.device.isNative
+        "touchstart .repeat-days label": "selectLabel"
+      else
+        "click .repeat-days label": "selectLabel"
     gatherResponses: ->
       console.log 'gatherResponses'
       myDate = @$el.find('input[type=date]').val()
