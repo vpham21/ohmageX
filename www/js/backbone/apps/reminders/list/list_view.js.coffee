@@ -97,6 +97,15 @@
       output = moment().startOf('day').hour(hour).minute(minute).second(second)
 
       if output > moment() then output else output.add(1, interval)
+    updateTime: ->
+      currentTime = @$el.find('.time-control input').val()
+      timeMoment = moment("#{moment().format('YYYY-MM-DD')} #{currentTime}")
+      if timeMoment.isValid
+        @$el.find('.display-time').html timeMoment.format("HH:mm:ss")
+      else
+        # set the invalid time to now.
+        @$el.find('.time-control input').val moment().format("HH:mm:ss")
+        @$el.find('.display-time').html moment().format("HH:mm:ss")
     onRender: ->
       # set up
       @toggler = new VisibilityToggleComponent("#reminder-form-#{@model.get('id')}", @$el)
