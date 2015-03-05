@@ -68,8 +68,8 @@
       if output > moment() then output else output.add(1, interval)
 
     addNotifications: (reminder) ->
-      if App.device.isNative and reminder.get('notificationIds').length > 0
-        # Delete any of the reminder's system notifications, if they exist
+      if App.device.isNative
+        # Delete any of the reminder's system notifications
         API.deleteNotifications reminder
 
       myIds = []
@@ -171,15 +171,17 @@
 
     deleteNotifications: (reminder) ->
       ids = reminder.get('notificationIds')
-      window.plugin.notification.local.getScheduledIds((scheduledIds) ->
-        console.log 'Ids to delete', JSON.stringify ids
-        console.log 'scheduled Ids', JSON.stringify scheduledIds
-        _.each ids, (id) =>
-          # ensures we only attempt to remove a scheduled notification.
-          if id in scheduledIds then window.plugin.notification.local.cancel(id)
-      )
-      # clear out the reminder's notification IDs immediately, they now reference nothing
-      App.execute "reminder:notifications:set", reminder, []
+      if ids.length > 0
+        # ensure this is only executed when ids are present.
+        window.plugin.notification.local.getScheduledIds((scheduledIds) ->
+          console.log 'Ids to delete', JSON.stringify ids
+          console.log 'scheduled Ids', JSON.stringify scheduledIds
+          _.each ids, (id) =>
+            # ensures we only attempt to remove a scheduled notification.
+            if id in scheduledIds then window.plugin.notification.local.cancel(id)
+        )
+        # clear out the reminder's notification IDs immediately, they now reference nothing
+        App.execute "reminder:notifications:set", reminder, []
 
     suppressNotifications: (reminder) ->
       if reminder.get('repeat')
