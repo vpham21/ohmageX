@@ -10,12 +10,9 @@
       @initNotificationEvents()
 
     initNotificationEvents: ->
-      window.plugin.notification.local.onclick = (id, state, json) ->
-        console.log 'onclick event!'
-        console.log 'id', id
-        result = JSON.parse json
-        # delete our local Reminder, if it's non-repeating.
-        if !result.repeat then App.execute('reminder:delete:json', result)
+      window.plugin.notification.local.on "click", (notification) =>
+        console.log "notification onclick event"
+        result = JSON.parse notification.data
         console.log "survey/#{result.surveyId}"
         App.navigate "survey/#{result.surveyId}", trigger: true
 
