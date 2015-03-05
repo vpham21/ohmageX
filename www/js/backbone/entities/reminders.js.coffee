@@ -124,10 +124,9 @@
         console.log "reminders entity API.validateReminder storage success"
       )
 
-    deleteReminder: (model) ->
+    deleteReminder: (reminderId) ->
 
-      console.log 'deleteReminder'
-      myReminder = currentReminders.get model
+      myReminder = currentReminders.get reminderId
       currentReminders.remove myReminder
 
       App.execute "system:notifications:delete", model
