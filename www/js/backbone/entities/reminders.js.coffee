@@ -193,11 +193,12 @@
 
   App.commands.setHandler "reminder:notifications:set", (reminder, ids) ->
     # ids - array of IDs to set for the notification
-    API.setAttribute reminder, 'notificationIds', ids
+    console.log "reminder:notifications:set", JSON.stringify(reminder.toJSON())
+    API.setAttribute reminder.get('id'), 'notificationIds', ids
 
   App.commands.setHandler "reminder:date:set", (reminder, date) ->
     # ids - array of IDs to set for the notification
-    API.setAttribute reminder, 'activationDate', date
+    API.setAttribute reminder.get('id'), 'activationDate', date
 
   App.vent.on "campaign:saved:remove", (campaign_urn) ->
     if currentReminders.length > 0 then API.removeCampaignReminders(campaign_urn)
