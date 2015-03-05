@@ -135,9 +135,7 @@
         "click .repeat-days label": "selectLabel"
     gatherResponses: ->
       console.log 'gatherResponses'
-      myDate = @$el.find('input[type=date]').val()
-      myTime = @$el.find('input[type=time]').val()
-      offset = new Date().toString().match(/([-\+][0-9]+)\s/)[1]
+      @fixDate()
 
       myRepeat = @$el.find("input[name='repeat']").prop('checked') is true
 
