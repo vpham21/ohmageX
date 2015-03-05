@@ -167,6 +167,8 @@
       surveysRegion: '.surveys-region'
       labelRegion: '.label-region'
     triggers:
+      "blur .date-control input": "date:adjust"
+      "blur .time-control input": "time:adjust"
       "click .toggler-button": "toggle:activate"
       "click .delete-button": "delete:reminder"
       "click .enable-switch input":
