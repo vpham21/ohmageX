@@ -52,19 +52,20 @@
 
       if myOutput > myInput then myOutput else myOutput.add(1, 'weeks')
 
-    nextHourMinuteSecond: (myMoment) ->
+    nextHourMinuteSecond: (myMoment, interval) ->
       # gets the next occurrence of a moment's hours, minutes, and seconds.
       # Ignores the month, day and year.
+      # it jumps ahead by the given 'interval' for the next occurrence.
+      # expected - Moment.js intervals like 'days' or 'weeks'
 
       input = moment(myMoment)
 
       hour = input.hour()
       minute = input.minute()
       second = input.second()
-
       output = moment().startOf('day').hour(hour).minute(minute).second(second)
 
-      if output > moment() then output else output.add(1, 'days')
+      if output > moment() then output else output.add(1, interval)
 
     addNotifications: (reminder) ->
       if App.device.isNative and reminder.get('notificationIds').length > 0
