@@ -43,8 +43,12 @@
       @listenTo @model, 'visible:false', @toggleOff
       @listenTo @model, 'visible:true', @toggleOn
       @listenTo @, 'save:reminder', @gatherResponses
+      @listenTo @, 'save:reminder', @toggleOff
       @listenTo @, 'repeat:toggle', @repeatToggle
       @listenTo @, 'check:enabled', @checkEnabled
+      @listenTo @, 'date:adjust time:adjust', @fixDate
+      @listenTo @, 'active:toggle', @gatherResponses
+      @listenTo @, 'time:adjust', @updateTime
     tagName: 'li'
     template: "reminders/list/_item"
     toggleOff: ->
@@ -71,6 +75,40 @@
         @$el.find('.date-control').hide()
       else
         @$el.find('.date-control').show()
+    getProvidedDate: ->
+      offset = new Date().toString().match(/([-\+][0-9]+)\s/)[1]
+      moment("#{@$el.find('input[type=date]').val()} #{@$el.find('input[type=time]').val()} #{offset}")
+    fixDate: ->
+      $dateInput = @$el.find('input[type=date]')
+      dateMoment = moment $dateInput.val()
+      if dateMoment.isValid
+        $dateInput.val @nextHourMinuteSecond(@getProvidedDate(), 'days').format('YYYY-MM-DD')
+      else
+        # set the invalid date to now.
+        $dateInput.val moment().format('YYYY-MM-DD')
+    nextHourMinuteSecond: (myMoment, interval) ->
+      # gets the next occurrence of a moment's hours, minutes, and seconds.
+      # Ignores the month, day and year.
+      # it jumps ahead by the given 'interval' for the next occurrence.
+      # expected - Moment.js intervals like 'days' or 'weeks'
+
+      input = moment(myMoment)
+
+      hour = input.hour()
+      minute = input.minute()
+      second = input.second()
+      output = moment().startOf('day').hour(hour).minute(minute).second(second)
+
+      if output > moment() then output else output.add(1, interval)
+    updateTime: ->
+      currentTime = @$el.find('.time-control input').val()
+      timeMoment = moment("#{moment().format('YYYY-MM-DD')} #{currentTime}")
+      if timeMoment.isValid
+        @$el.find('.display-time').html timeMoment.format("HH:mm:ss")
+      else
+        # set the invalid time to now.
+        @$el.find('.time-control input').val moment().format("HH:mm:ss")
+        @$el.find('.display-time').html moment().format("HH:mm:ss")
     onRender: ->
       # set up
       @toggler = new VisibilityToggleComponent("#reminder-form-#{@model.get('id')}", @$el)
@@ -94,12 +132,14 @@
             @$el.find("input[name='repeatDays[]'][value='#{repeatDay}']").prop('checked', true)
           )
     events: ->
-      "click .repeat-days label": "selectLabel"
+      if App.device.isNative
+        "touchstart .repeat-days label": "selectLabel"
+      else
+        "click .repeat-days label": "selectLabel"
     gatherResponses: ->
       console.log 'gatherResponses'
-      myDate = @$el.find('input[type=date]').val()
-      myTime = @$el.find('input[type=time]').val()
-      offset = new Date().toString().match(/([-\+][0-9]+)\s/)[1]
+      @fixDate()
+      @updateTime()
 
       myRepeat = @$el.find("input[name='repeat']").prop('checked') is true
 
@@ -112,7 +152,7 @@
         )
 
       response =
-        activationDate: moment("#{myDate} #{myTime}#{offset}")
+        activationDate: @getProvidedDate()
         active: @$el.find(".enable-switch input").prop('checked') is true
         repeat: myRepeat
         repeatDays: repeatDays
@@ -129,8 +169,14 @@
       surveysRegion: '.surveys-region'
       labelRegion: '.label-region'
     triggers:
+      "blur .date-control input": "date:adjust"
+      "blur .time-control input": "time:adjust"
       "click .toggler-button": "toggle:activate"
       "click .delete-button": "delete:reminder"
+      "click .enable-switch input":
+        event: "active:toggle"
+        preventDefault: false
+        stopPropagation: false
       "click .save-button": "save:reminder"
       "click input[name='repeat']":
         event: "repeat:toggle"
