@@ -43,6 +43,7 @@
       @listenTo @model, 'visible:false', @toggleOff
       @listenTo @model, 'visible:true', @toggleOn
       @listenTo @, 'save:reminder', @gatherResponses
+      @listenTo @, 'save:reminder', @toggleOff
       @listenTo @, 'repeat:toggle', @repeatToggle
       @listenTo @, 'check:enabled', @checkEnabled
     tagName: 'li'
