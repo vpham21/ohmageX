@@ -72,6 +72,20 @@
         @$el.find('.date-control').hide()
       else
         @$el.find('.date-control').show()
+    nextHourMinuteSecond: (myMoment, interval) ->
+      # gets the next occurrence of a moment's hours, minutes, and seconds.
+      # Ignores the month, day and year.
+      # it jumps ahead by the given 'interval' for the next occurrence.
+      # expected - Moment.js intervals like 'days' or 'weeks'
+
+      input = moment(myMoment)
+
+      hour = input.hour()
+      minute = input.minute()
+      second = input.second()
+      output = moment().startOf('day').hour(hour).minute(minute).second(second)
+
+      if output > moment() then output else output.add(1, interval)
     onRender: ->
       # set up
       @toggler = new VisibilityToggleComponent("#reminder-form-#{@model.get('id')}", @$el)
