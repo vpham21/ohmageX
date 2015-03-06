@@ -102,8 +102,11 @@
     updateTime: ->
       currentTime = @$el.find('.time-control input').val()
       timeMoment = moment("#{moment().format('YYYY-MM-DD')} #{currentTime}")
-        @$el.find('.display-time').html timeMoment.format("HH:mm:ss")
       if currentTime.length > 0 and timeMoment.isValid
+        # round the valid time seconds to 0.
+        timeMoment = timeMoment.second(0)
+        @$el.find('.display-time').html timeMoment.format("hh:mma")
+        @$el.find('.time-control input').val timeMoment.format("HH:mm:ss")
       else
         # set the invalid time to now plus 10 minutes.
         @$el.find('.time-control input').val moment().second(0).add(10,'minutes').format("HH:mm:ss")
