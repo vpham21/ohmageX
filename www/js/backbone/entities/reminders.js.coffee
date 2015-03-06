@@ -141,6 +141,10 @@
       removed = currentReminders.where
         campaign: campaign_urn
 
+      _.each removed, (reminder) =>
+        console.log 'reminder ID', reminder.get 'id'
+        App.execute "system:notifications:delete", reminder.get 'id'
+
       currentReminders.remove removed
 
       @updateLocal( =>
