@@ -77,6 +77,7 @@
         @$el.find('.date-control').show()
     getProvidedDate: ->
       dateString = "#{@$el.find('input[type=date]').val()}T#{@$el.find('input[type=time]').val()}#{moment().format('Z')}"
+      moment(dateString).second(0)
     fixDate: ->
       $dateInput = @$el.find('input[type=date]')
       dateMoment = moment $dateInput.val()
