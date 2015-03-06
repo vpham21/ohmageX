@@ -106,9 +106,9 @@
       if timeMoment.isValid
         @$el.find('.display-time').html timeMoment.format("HH:mm:ss")
       else
-        # set the invalid time to now.
-        @$el.find('.time-control input').val moment().format("HH:mm:ss")
-        @$el.find('.display-time').html moment().format("HH:mm:ss")
+        # set the invalid time to now plus 10 minutes.
+        @$el.find('.time-control input').val moment().second(0).add(10,'minutes').format("HH:mm:ss")
+        @$el.find('.display-time').html moment().second(0).add(10,'minutes').format("hh:mma")
     onRender: ->
       # set up
       @toggler = new VisibilityToggleComponent("#reminder-form-#{@model.get('id')}", @$el)
