@@ -76,8 +76,7 @@
       else
         @$el.find('.date-control').show()
     getProvidedDate: ->
-      offset = new Date().toString().match(/([-\+][0-9]+)\s/)[1]
-      moment("#{@$el.find('input[type=date]').val()} #{@$el.find('input[type=time]').val()} #{offset}")
+      dateString = "#{@$el.find('input[type=date]').val()}T#{@$el.find('input[type=time]').val()}#{moment().format('Z')}"
     fixDate: ->
       $dateInput = @$el.find('input[type=date]')
       dateMoment = moment $dateInput.val()
