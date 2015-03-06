@@ -46,7 +46,7 @@
       @listenTo @, 'save:reminder', @toggleOff
       @listenTo @, 'repeat:toggle', @repeatToggle
       @listenTo @, 'check:enabled', @checkEnabled
-      @listenTo @, 'date:adjust time:adjust', @fixDate
+      @listenTo @, 'date:adjust', @fixDate
       @listenTo @, 'active:toggle', @gatherResponses
       @listenTo @, 'time:adjust', @updateTime
     tagName: 'li'
@@ -108,6 +108,7 @@
         # set the invalid time to now plus 10 minutes.
         @$el.find('.time-control input').val moment().second(0).add(10,'minutes').format("HH:mm:ss")
         @$el.find('.display-time').html moment().second(0).add(10,'minutes').format("hh:mma")
+      @fixDate()
     onRender: ->
       # set up
       @toggler = new VisibilityToggleComponent("#reminder-form-#{@model.get('id')}", @$el)
