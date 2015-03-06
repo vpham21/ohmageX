@@ -80,8 +80,8 @@
       moment(dateString).second(0)
     fixDate: ->
       $dateInput = @$el.find('input[type=date]')
-      dateMoment = moment $dateInput.val()
-        $dateInput.val @nextHourMinuteSecond(@getProvidedDate(), 'days').format('YYYY-MM-DD')
+      currentDate = $dateInput.val()
+      dateMoment = moment currentDate
       if currentDate.length > 0 and dateMoment.isValid
       else
         # set the invalid date to now.
