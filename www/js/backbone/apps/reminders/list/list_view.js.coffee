@@ -96,8 +96,7 @@
 
       hour = input.hour()
       minute = input.minute()
-      second = input.second()
-      output = moment().startOf('day').hour(hour).minute(minute).second(second)
+      output = moment().startOf('day').hour(hour).minute(minute).second(0)
 
       if output > moment() then output else output.add(1, interval)
     updateTime: ->
