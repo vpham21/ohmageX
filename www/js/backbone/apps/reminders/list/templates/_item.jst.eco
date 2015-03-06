@@ -1,6 +1,6 @@
 <button class="toggler-button" type="button">
   <span class="my-icon">&#9654;</span>
-  <span class="display-time"><%= @currentTimeValue %></span>
+  <span class="display-time"><%= @currentDisplayTime %></span>
 </button>
 <div class="label-region"></div>
 <div class="enable-switch">

@@ -43,7 +43,6 @@
         activationDate: true
       attrs.response = attrs.activationDate
       myRulesMap =
-        timestampISO: 'activationDate'
         futureTimestamp: 'activationDate'
       super attrs, options, myRulesMap
 

@@ -46,7 +46,7 @@
       @listenTo @, 'save:reminder', @toggleOff
       @listenTo @, 'repeat:toggle', @repeatToggle
       @listenTo @, 'check:enabled', @checkEnabled
-      @listenTo @, 'date:adjust time:adjust', @fixDate
+      @listenTo @, 'date:adjust', @fixDate
       @listenTo @, 'active:toggle', @gatherResponses
       @listenTo @, 'time:adjust', @updateTime
     tagName: 'li'
@@ -76,13 +76,19 @@
       else
         @$el.find('.date-control').show()
     getProvidedDate: ->
-      offset = new Date().toString().match(/([-\+][0-9]+)\s/)[1]
-      moment("#{@$el.find('input[type=date]').val()} #{@$el.find('input[type=time]').val()} #{offset}")
+      dateString = "#{@$el.find('input[type=date]').val()}T#{@$el.find('input[type=time]').val()}#{moment().format('Z')}"
+      moment(dateString).second(0)
     fixDate: ->
       $dateInput = @$el.find('input[type=date]')
-      dateMoment = moment $dateInput.val()
-      if dateMoment.isValid
-        $dateInput.val @nextHourMinuteSecond(@getProvidedDate(), 'days').format('YYYY-MM-DD')
+      currentDate = $dateInput.val()
+      dateMoment = moment currentDate
+      if currentDate.length > 0 and dateMoment.isValid
+        currentDateTime = @getProvidedDate()
+        if moment().diff(currentDateTime) > 0
+          # the current date and time is in the past.
+          # get the next occurrence of this hour minute and second.
+          currentDateTime = @nextHourMinuteSecond(@getProvidedDate(), 'days')
+        $dateInput.val currentDateTime.format('YYYY-MM-DD')
       else
         # set the invalid date to now.
         $dateInput.val moment().format('YYYY-MM-DD')
@@ -96,19 +102,22 @@
 
       hour = input.hour()
       minute = input.minute()
-      second = input.second()
-      output = moment().startOf('day').hour(hour).minute(minute).second(second)
+      output = moment().startOf('day').hour(hour).minute(minute).second(0)
 
       if output > moment() then output else output.add(1, interval)
     updateTime: ->
       currentTime = @$el.find('.time-control input').val()
       timeMoment = moment("#{moment().format('YYYY-MM-DD')} #{currentTime}")
-      if timeMoment.isValid
-        @$el.find('.display-time').html timeMoment.format("HH:mm:ss")
+      if currentTime.length > 0 and timeMoment.isValid
+        # round the valid time seconds to 0.
+        timeMoment = timeMoment.second(0)
+        @$el.find('.display-time').html timeMoment.format("hh:mma")
+        @$el.find('.time-control input').val timeMoment.format("HH:mm:ss")
       else
-        # set the invalid time to now.
-        @$el.find('.time-control input').val moment().format("HH:mm:ss")
-        @$el.find('.display-time').html moment().format("HH:mm:ss")
+        # set the invalid time to now plus 10 minutes.
+        @$el.find('.time-control input').val moment().second(0).add(10,'minutes').format("HH:mm:ss")
+        @$el.find('.display-time').html moment().second(0).add(10,'minutes').format("hh:mma")
+      @fixDate()
     onRender: ->
       # set up
       @toggler = new VisibilityToggleComponent("#reminder-form-#{@model.get('id')}", @$el)
@@ -163,6 +172,7 @@
       data = @model.toJSON()
       currentDate = moment(data.activationDate)
       data.currentDateValue = currentDate.format('YYYY-MM-DD')
+      data.currentDisplayTime = currentDate.format('hh:mma')
       data.currentTimeValue = currentDate.format('HH:mm:ss')
       data
     regions:
