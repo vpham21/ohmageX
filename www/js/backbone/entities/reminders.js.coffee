@@ -141,7 +141,6 @@
       removed = currentReminders.where
         campaign: campaign_urn
 
-      console.log 'removed campaign reminders', removed
       currentReminders.remove removed
 
       @updateLocal( =>
