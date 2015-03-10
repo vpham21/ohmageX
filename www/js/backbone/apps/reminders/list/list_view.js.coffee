@@ -64,17 +64,11 @@
     saveDate: ->
       $dateInput = @$el.find('input[type=date]')
       currentDate = $dateInput.val()
-      dateMoment = moment currentDate
-      if currentDate.length > 0 and dateMoment.isValid
-        currentDateTime = @getProvidedDate()
-        if moment().diff(currentDateTime) > 0
-          # the current date and time is in the past.
-          # get the next occurrence of this hour minute and second.
-          currentDateTime = @nextHourMinuteSecond(@getProvidedDate(), 'days')
-        $dateInput.val currentDateTime.format('YYYY-MM-DD')
-      else
-        # set the invalid date to now.
+      if !(currentDate.length > 0 and moment(currentDate).isValid)
+        # convert invalid date to a valid date before saving
         $dateInput.val moment().format('YYYY-MM-DD')
+      # save the date to the model. The model will adjust any invalid dates.
+      @model.set 'activationDate', @getProvidedDate()
     saveTime: ->
       currentTime = @$el.find('.time-control input').val()
       timeMoment = moment("#{moment().format('YYYY-MM-DD')} #{currentTime}")
