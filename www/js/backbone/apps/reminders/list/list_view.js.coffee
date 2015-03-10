@@ -87,6 +87,11 @@
       @repeater = new VisibilityToggleComponent('.repeat-days', @$el)
       @repeater.toggleOn('click', 'input[name="repeat"]', @$el)
 
+      # save the old values as properties on this view so it can be reverted
+      # if the user cancels.
+      @oldDate = @model.get('activationDate')
+      @oldSurveyId = @model.get('surveyId')
+
       repeat = @model.get('repeat')
 
       if repeat
