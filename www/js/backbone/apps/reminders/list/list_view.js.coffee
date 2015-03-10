@@ -238,6 +238,7 @@
         event: "active:toggle"
         preventDefault: false
         stopPropagation: false
+      "click .edit-button,h3,p": "click:edit"
 
     toggleSelectedOnly: (options) ->
       visibleModel = @collection.findWhere(renderVisible: true)
