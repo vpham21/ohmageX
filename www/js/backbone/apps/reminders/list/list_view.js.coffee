@@ -194,7 +194,12 @@
           data.summaryText = "Repeats on #{dayText} at #{currentDisplayTime}"
       else
         # one time reminder.
-        data.summaryText = data.activationDate.calendar()
+        if moment(data.activationDate).startOf('day').diff(moment().startOf('day'), 'weeks') > 0
+          # moment calendar() method doesn't display time if it's been more than a week.
+          # show a custom formatted date instead.
+          data.summaryText = "#{data.activationDate.format('dddd, MMMM Do YYYY')} at #{data.activationDate.format('h:mma')}"
+        else
+          data.summaryText = data.activationDate.calendar()
       data
     onRender: ->
       # prepopulate all fields
