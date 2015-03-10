@@ -36,6 +36,7 @@
           if surveys.length is 0
             @noticeRegion 'No saved surveys! You must have saved surveys in order to create reminders.'
           else
+            @initBlockerView()
             @addRegion reminders
             @listRegion reminders
             if @surveyId then App.execute("reminders:add:new")
@@ -44,15 +45,10 @@
           # attempt to register permissions here if it's false.
           App.execute "permissions:register:localnotifications"
 
-        @listenTo App.vent, "reminder:validate:fail", (message) =>
-          @noticeRegion message
-
-        @listenTo App.vent, "reminder:set:success", (reminder) =>
-          if reminder.get('surveyTitle') isnt false
-            @noticeRegion "Reminder for #{reminder.get('surveyTitle')} saved."
-            setTimeout (=>
-              @noticeRegion ''
-            ), 1000
+      @listenTo App.vent, "blocker:reminder:update:reset", =>
+        # blocker view has been destroyed. You must
+        # re-initialize a new blockerView to show it again.
+        @initBlockerView()
 
       @show @layout
 
@@ -61,6 +57,26 @@
       noticeView = @getNoticeView notice
 
       @show noticeView, region: @layout.noticeRegion
+
+    initBlockerView: ->
+      @blockerView = @getBlockerView()
+
+      @listenTo @blockerView, "render", (blockerView) =>
+        console.log 'blockerView render'
+        surveysView = @getReminderSurveysView App.request("reminders:surveys", blockerView.model.get('surveyId'))
+        blockerView.surveysRegion.show surveysView
+
+        @listenTo surveysView, "survey:selected", (model) ->
+          console.log 'survey:selected model', model
+          blockerView.model.trigger "survey:selected", model
+
+      @listenTo @blockerView, "reminder:submit", (model, response) =>
+        console.log 'reminder:submit model', model
+        App.vent.trigger "reminders:reminder:submit", model, response
+
+      @listenTo @blockerView, "delete:reminder", (view) =>
+        console.log 'reminder:delete view', view
+        App.vent.trigger "reminders:reminder:delete", view.model
 
     addRegion: (reminders) ->
       addView = @getAddView()
@@ -73,6 +89,12 @@
     listRegion: (reminders) ->
       listView = @getListView reminders
 
+      @listenTo reminders, 'date:future:shift', =>
+        @blockerView.trigger "show:future:date"
+
+      @listenTo reminders, "add", (model) ->
+        @activateBlocker model
+
       @listenTo listView, "childview:before:render", (childView) =>
         if childView.model.get('surveyId') is false
           # set the surveyId and surveyTitle if they're not set yet.
@@ -81,40 +103,14 @@
           selectedSurvey = if @surveyId then reminderSurveys.findWhere(id: @surveyId) else reminderSurveys.at(0)
           childView.model.trigger "survey:selected", selectedSurvey
 
-      @listenTo listView, "childview:render", (childView) =>
-        console.log 'childview:render'
-        console.log 'reminders', reminders
-        if reminders.length > 0
-          surveysView = @getReminderSurveysView App.request("reminders:surveys")
-          childView.surveysRegion.show surveysView
+      @listenTo listView, "childview:active:complete", (options) ->
+        console.log 'active:complete model' , options.model
+        App.vent.trigger "reminder:toggle", options.model
 
-          @listenTo surveysView, "survey:selected", (model) ->
-            console.log 'survey:selected model', model
-            childView.model.trigger "survey:selected", model
-
-          surveysView.trigger "option:select", childView.model.get('surveyId')
-
-          labelView = @getReminderLabelView childView.model
-          childView.labelRegion.show labelView
-
-          if @surveyId and childView.model.get('surveyId') is @surveyId
-            childView.model.trigger('visible:true')
-            childView.trigger "check:enabled"
-            # ensure the survey is populated with an ID only once.
-            @surveyId = false
-
-
-      @listenTo listView, "childview:reminder:submit", (view, response) =>
-        console.log 'childview:reminder:submit model', view.model
-        # close any notices
-        @noticeRegion ''
-        App.vent.trigger "reminders:reminder:submit", view.model, response
-
-      @listenTo listView, "childview:delete:reminder", (view, response) =>
-        console.log 'childview:reminder:delete model', view.model
-        # close any notices
-        @noticeRegion ''
-        App.vent.trigger "reminders:reminder:delete", view.model
+      @listenTo listView, "childview:click:edit", (view) =>
+        # update the blockerView's model to the selected reminders
+        # list view Reminder model.
+        @activateBlocker view.model
 
       @listenTo reminders, "invalid", (reminderModel) =>
         # reminder submit validation failed
@@ -129,10 +125,9 @@
 
       @show listView, region: @layout.listRegion
 
-
-    getReminderLabelView: (reminder) ->
-      new List.ReminderLabel
-        model: reminder
+    activateBlocker: (reminder) ->
+      @blockerView.model = reminder
+      App.vent.trigger "blocker:reminder:update", reminderView: @blockerView
 
     getReminderSurveysView: (surveys) ->
       new List.ReminderSurveys
@@ -144,6 +139,9 @@
 
     getAddView: ->
       new List.Add
+
+    getBlockerView: ->
+      new List.UpdateBlocker
 
     getListView: (reminders) ->
       new List.Reminders

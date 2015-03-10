@@ -25,3 +25,12 @@
     # successListener - listener after the action has succeeded
 
     API.show options
+
+  App.vent.on "blocker:reminder:update", (options) ->
+    _.defaults options,
+      contentViewLabel: 'reminder:update'
+
+    # option parameter required:
+    # reminderView - reminder view to insert into the reminder layout
+
+    API.show options

@@ -17,10 +17,9 @@
 
   class Entities.Reminder extends Entities.ValidatedModel
     initialize: (options) ->
-      @listenTo @, 'visible:false', @visibleFalse
-      @listenTo @, 'visible:true', @visibleTrue
       @listenTo @, 'survey:selected', @selectSurvey
       @listenTo @, 'internal:success', @propagateResponses
+      @listenTo @, 'change:activationDate change:active', @adjustFutureDate
       # Be sure to initialize activationDate as a moment if it's provided on init.
       # If retrieving from localStorage, the activationDate is stored as a string.
       if options.activationDate? then @set('activationDate', moment(options.activationDate))
@@ -35,7 +34,26 @@
       @set('surveyTitle', surveyModel.get('title'))
       @set('surveyId', surveyModel.get('id'))
       @set('campaign', surveyModel.get('campaign_urn'))
+    adjustFutureDate: ->
+      currentDate = @get 'activationDate'
+      if moment().diff(currentDate) > 0
+        # the current date and time is in the past.
+        # get the next daily occurrence of this hour minute and second.
+        @set {activationDate: @nextHourMinuteSecond(currentDate, 'days')}, {silent: true}
+        @trigger "date:future:shift"
+    nextHourMinuteSecond: (myMoment, interval) ->
+      # gets the next occurrence of a moment's hours, minutes, and seconds.
+      # Ignores the month, day and year.
+      # it jumps ahead by the given 'interval' for the next occurrence.
+      # expected - Moment.js intervals like 'days' or 'weeks'
 
+      input = moment(myMoment)
+
+      hour = input.hour()
+      minute = input.minute()
+      output = moment().startOf('day').hour(hour).minute(minute).second(0)
+
+      if output > moment() then output else output.add(1, interval)
     validate: (attrs, options) ->
       # defining a placeholder value here,
       # so a property can be passed into the rulesMap.
@@ -46,10 +64,6 @@
         futureTimestamp: 'activationDate'
       super attrs, options, myRulesMap
 
-    visibleFalse: ->
-      @set('renderVisible', false)
-    visibleTrue: ->
-      @set('renderVisible', true)
     defaults: ->
 
       return {
@@ -68,7 +82,7 @@
   class Entities.Reminders extends Entities.Collection
     model: Entities.Reminder
     initialize: ->
-      @listenTo @, "survey:selected", =>
+      @listenTo @, "survey:selected date:future:shift", =>
         App.execute "storage:save", 'reminders', @toJSON(), =>
           console.log "reminders entity Reminders Collection survey:selected storage success"
 
@@ -91,15 +105,13 @@
       console.log 'addReminder'
       currentReminders.add({}, { validate: false })
 
-    addNotification: (reminder) ->
-
+    toggleSystemNotifications: (reminder) ->
       if reminder.get('active') is true
         App.execute "system:notifications:add", reminder
       else
         # This reminder has been disabled. Be sure to deactivate its notifications.
-        console.log 'addNotification disabled notification ids', reminder.get('notificationIds')
+        console.log 'toggleSystemNotifications disabled notification ids', reminder.get('notificationIds')
         App.execute "system:notifications:delete", reminder
-
 
     getReminders: ->
       currentReminders
@@ -109,7 +121,6 @@
       if response.repeat and response.repeatDays.length is 0
         App.vent.trigger "reminder:validate:fail", 'Please select days to repeat this reminder.'
         return false
-
       console.log 'validateReminder model', model
       console.log 'response', response
       reminder = currentReminders.get(model)
@@ -206,4 +217,9 @@
     if currentReminders.length > 0 then API.removeCampaignReminders(campaign_urn)
 
   App.vent.on "reminder:set:success", (reminderModel) ->
-    API.addNotification reminderModel
+    API.toggleSystemNotifications reminderModel
+
+  App.vent.on "reminder:toggle", (model) ->
+    API.updateLocal ->
+      console.log 'reminder toggle save complete'
+    API.toggleSystemNotifications model

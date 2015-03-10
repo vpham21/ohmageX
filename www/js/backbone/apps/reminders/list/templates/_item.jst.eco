@@ -1,18 +1,4 @@
-<button class="toggler-button" type="button">
-  <span class="my-icon">&#9654;</span>
-  <span class="display-time"><%= @currentDisplayTime %></span>
-</button>
-<div class="label-region"></div>
-<div class="enable-switch">
-  <input id="enable-switch-<%= @id %>" type="checkbox">
-  <label for="enable-switch-<%= @id %>"></label>
-</div>
-
-<form class='reminder-form' id="reminder-form-<%= @id %>" data-visible="false">
-
-  <h3 class="hide-accessible">Update This Reminder</h3>
-
-  <input type="checkbox" name="active-switch" id="active-switch<%= @id %>" style="display:none">
+<form class='reminder-form' id="reminder-form-<%= @id %>">
 
   <fieldset>
     <div class="repeat-enable-region">
@@ -44,6 +30,11 @@
     </div>
   </fieldset>
 
+  <div>
+    <button type="button" class="delete-button">Delete</button>
+  </div>
+
+  <!--
   <div class="button-pair">
     <div>
       <button type="button" class="save-button">Save</button>
@@ -52,5 +43,5 @@
       <button type="button" class="delete-button">Delete</button>
     </div>
   </div>
-
+  -->
 </form>

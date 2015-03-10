@@ -23,6 +23,12 @@
             cancelLabel: "Cancel and Logout"
             okLabel: "Submit Password"
           }
+        when "reminder:update"
+          {
+            title: "Update This Reminder"
+            cancelLabel: "Cancel"
+            okLabel: "Save"
+          }
       @set result
     blockerShow: ->
       @trigger 'blocker:show'

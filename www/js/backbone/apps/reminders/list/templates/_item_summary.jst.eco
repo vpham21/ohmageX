@@ -1,0 +1,9 @@
+<div class="enable-switch">
+  <input id="enable-switch-<%= @id %>" type="checkbox">
+  <label for="enable-switch-<%= @id %>"></label>
+</div>
+<button type="button" class="edit-button">Edit</button>
+
+<h3><%= @surveyTitle %></h3>
+
+<p><%= @summaryText %></p>

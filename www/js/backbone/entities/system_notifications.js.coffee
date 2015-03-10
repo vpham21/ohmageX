@@ -81,6 +81,8 @@
           reminder: reminder
           frequency: ''
           activationDate: reminder.get('activationDate').toDate()
+
+        App.vent.trigger "notifications:update:complete"
         myIds.push myId
       else
         if reminder.get('repeatDays').length is 7
@@ -95,6 +97,7 @@
             frequency: 'daily'
             activationDate: activationDate.toDate()
 
+          App.vent.trigger "notifications:update:complete"
           myIds.push myId
         else
           # send a copy of repeatDays to recursive @generateMultipleNotifications
@@ -130,6 +133,7 @@
         # base condition
         callback = (=>
           console.log 'final of many notification created, activationDate', activationDate.format("dddd, MMMM Do YYYY, h:mm:ss a")
+          App.vent.trigger "notifications:update:complete"
         )
       else
         callback = (=>
@@ -175,15 +179,17 @@
       ids = reminder.get('notificationIds')
       if ids.length > 0
         # ensure this is only executed when ids are present.
-        window.plugin.notification.local.getScheduledIds((scheduledIds) ->
-          console.log 'Ids to delete', JSON.stringify ids
-          console.log 'scheduled Ids', JSON.stringify scheduledIds
-          _.each ids, (id) =>
-            # ensures we only attempt to remove a scheduled notification.
-            if id in scheduledIds then window.plugin.notification.local.cancel(id)
-        )
+        if App.device.isNative
+          window.plugin.notification.local.getScheduledIds((scheduledIds) ->
+            console.log 'Ids to delete', JSON.stringify ids
+            console.log 'scheduled Ids', JSON.stringify scheduledIds
+            _.each ids, (id) =>
+              # ensures we only attempt to remove a scheduled notification.
+              if id in scheduledIds then window.plugin.notification.local.cancel(id)
+          )
         # clear out the reminder's notification IDs immediately, they now reference nothing
         App.execute "reminder:notifications:set", reminder, []
+        App.vent.trigger "notifications:update:complete"
 
     suppressNotifications: (reminder) ->
       if reminder.get('repeat')
@@ -209,8 +215,7 @@
       API.init()
 
   App.commands.setHandler "system:notifications:delete", (reminderId) ->
-    if App.device.isNative
-      API.deleteNotifications App.request('reminders:current').get(reminderId)
+    API.deleteNotifications App.request('reminders:current').get(reminderId)
 
   App.commands.setHandler "system:notifications:add", (reminder) ->
     console.log "system:notifications:add", reminder
