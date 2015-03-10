@@ -92,6 +92,9 @@
           selectedSurvey = if @surveyId then reminderSurveys.findWhere(id: @surveyId) else reminderSurveys.at(0)
           childView.model.trigger "survey:selected", selectedSurvey
 
+      @listenTo listView, "childview:active:complete", (options) ->
+        console.log 'active:complete model' , options.model
+        App.vent.trigger "reminder:toggle", options.model
 
           surveysView.trigger "option:select", childView.model.get('surveyId')
 
