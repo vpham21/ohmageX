@@ -164,7 +164,6 @@
       "blur .date-control input": "date:adjust"
       "blur .time-control input": "time:adjust"
       "click .delete-button": "delete:reminder"
-      "click .save-button": "save:reminder"
       "click input[name='repeat']":
         event: "repeat:toggle"
         preventDefault: false
