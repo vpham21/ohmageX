@@ -113,7 +113,6 @@
         console.log 'toggleSystemNotifications disabled notification ids', reminder.get('notificationIds')
         App.execute "system:notifications:delete", reminder
 
-
     getReminders: ->
       currentReminders
 
@@ -122,7 +121,6 @@
       if response.repeat and response.repeatDays.length is 0
         App.vent.trigger "reminder:validate:fail", 'Please select days to repeat this reminder.'
         return false
-
       console.log 'validateReminder model', model
       console.log 'response', response
       reminder = currentReminders.get(model)
