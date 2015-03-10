@@ -96,7 +96,6 @@
         console.log 'active:complete model' , options.model
         App.vent.trigger "reminder:toggle", options.model
 
-          surveysView.trigger "option:select", childView.model.get('surveyId')
 
           labelView = @getReminderLabelView childView.model
           childView.labelRegion.show labelView
