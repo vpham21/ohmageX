@@ -81,6 +81,8 @@
           reminder: reminder
           frequency: ''
           activationDate: reminder.get('activationDate').toDate()
+
+        App.vent.trigger "notifications:update:complete"
         myIds.push myId
       else
         if reminder.get('repeatDays').length is 7
@@ -95,6 +97,7 @@
             frequency: 'daily'
             activationDate: activationDate.toDate()
 
+          App.vent.trigger "notifications:update:complete"
           myIds.push myId
         else
           # send a copy of repeatDays to recursive @generateMultipleNotifications
@@ -130,6 +133,7 @@
         # base condition
         callback = (=>
           console.log 'final of many notification created, activationDate', activationDate.format("dddd, MMMM Do YYYY, h:mm:ss a")
+          App.vent.trigger "notifications:update:complete"
         )
       else
         callback = (=>
@@ -185,6 +189,7 @@
           )
         # clear out the reminder's notification IDs immediately, they now reference nothing
         App.execute "reminder:notifications:set", reminder, []
+        App.vent.trigger "notifications:update:complete"
 
     suppressNotifications: (reminder) ->
       if reminder.get('repeat')
