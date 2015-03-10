@@ -179,18 +179,21 @@
         else
           dayList = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
           console.log 'repeatDays', data.repeatDays
-          dayText = _.reduce(data.repeatDays, (dayText, repeatDay, index) ->
-            console.log 'repeatDay', repeatDay
-            console.log 'repeatDay parseint', parseInt(repeatDay)
-            console.log 'index', index
-            if index isnt data.repeatDays.length-1
-              prefix = ""
-              suffix = ", "
-            else
-              prefix = " and "
-              suffix = ""
-            dayText + "#{prefix}#{dayList[parseInt(repeatDay)]}#{suffix}"
-          , "")
+          if data.repeatDays.length is 1
+            dayText = dayList[parseInt(data.repeatDays[0])]
+          else
+            dayText = _.reduce(data.repeatDays, (dayText, repeatDay, index) ->
+              console.log 'repeatDay', repeatDay
+              console.log 'repeatDay parseint', parseInt(repeatDay)
+              console.log 'index', index
+              if index isnt data.repeatDays.length-1
+                prefix = ""
+                suffix = ", "
+              else
+                prefix = " and "
+                suffix = ""
+              dayText + "#{prefix}#{dayList[parseInt(repeatDay)]}#{suffix}"
+            , "")
           data.summaryText = "Repeats on #{dayText} at #{currentDisplayTime}"
       else
         # one time reminder.
