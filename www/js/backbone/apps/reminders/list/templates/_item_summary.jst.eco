@@ -1,0 +1,4 @@
+<div class="enable-switch">
+  <input id="enable-switch-<%= @id %>" type="checkbox">
+  <label for="enable-switch-<%= @id %>"></label>
+</div>
