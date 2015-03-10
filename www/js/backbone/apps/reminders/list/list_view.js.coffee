@@ -38,8 +38,6 @@
 
   class List.Reminder extends App.Views.Layout
     initialize: ->
-      @listenTo @model, 'visible:false', @toggleOff
-      @listenTo @model, 'visible:true', @toggleOn
       @listenTo @, 'save:reminder', @gatherResponses
       @listenTo @, 'save:reminder', @toggleOff
       @listenTo @, 'repeat:toggle', @repeatToggle
@@ -49,16 +47,6 @@
       @listenTo @, 'time:adjust', @updateTime
     tagName: 'li'
     template: "reminders/list/_item"
-    toggleOff: ->
-      @$el.removeClass('active')
-      @toggler.hide()
-      console.log 'toggleOff'
-      @$el.find('.toggler-button .my-icon').html('&#9654;')
-    toggleOn: ->
-      @$el.addClass('active')
-      @toggler.show()
-      console.log 'toggleOn'
-      @$el.find('.toggler-button .my-icon').html('&#9660;')
     selectLabel: (e) ->
       console.log 'selectedLabels'
       $label = $(e.currentTarget)
@@ -177,7 +165,6 @@
     triggers:
       "blur .date-control input": "date:adjust"
       "blur .time-control input": "time:adjust"
-      "click .toggler-button": "toggle:activate"
       "click .delete-button": "delete:reminder"
       "click .save-button": "save:reminder"
       "click input[name='repeat']":
@@ -240,10 +227,6 @@
         stopPropagation: false
       "click .edit-button,h3,p": "click:edit"
 
-    toggleSelectedOnly: (options) ->
-      visibleModel = @collection.findWhere(renderVisible: true)
-      if typeof visibleModel isnt "undefined" then visibleModel.trigger('visible:false')
-      options.model.trigger('visible:true')
   class List.Reminders extends App.Views.CompositeView
     tagName: 'nav'
     className: 'list'
