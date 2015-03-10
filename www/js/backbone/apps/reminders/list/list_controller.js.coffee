@@ -64,6 +64,10 @@
         @listenTo surveysView, "survey:selected", (model) ->
           console.log 'survey:selected model', model
           blockerView.model.trigger "survey:selected", model
+
+      @listenTo @blockerView, "reminder:submit", (model, response) =>
+        console.log 'reminder:submit model', model
+        App.vent.trigger "reminders:reminder:submit", model, response
     addRegion: (reminders) ->
       addView = @getAddView()
 
@@ -94,13 +98,6 @@
             childView.trigger "check:enabled"
             # ensure the survey is populated with an ID only once.
             @surveyId = false
-
-
-      @listenTo listView, "childview:reminder:submit", (view, response) =>
-        console.log 'childview:reminder:submit model', view.model
-        # close any notices
-        @noticeRegion ''
-        App.vent.trigger "reminders:reminder:submit", view.model, response
 
       @listenTo listView, "childview:delete:reminder", (view, response) =>
         console.log 'childview:reminder:delete model', view.model
