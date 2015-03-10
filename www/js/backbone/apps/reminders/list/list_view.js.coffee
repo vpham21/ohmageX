@@ -43,6 +43,7 @@
       @listenTo @, 'date:adjust', @saveDate
       @listenTo @, 'time:adjust', @saveTime
       @listenTo @, 'show:future:date', @showFutureDate
+      @listenTo @, 'revert:all', @revertAll
     template: "reminders/list/_item"
     attributes:
       class: "reminders-list"
@@ -63,6 +64,9 @@
       moment(dateString).second(0)
     showFutureDate: ->
       @$el.find('input[type=date]').val @model.get('activationDate').format('YYYY-MM-DD')
+    revertAll: (surveys) ->
+      @model.set('activationDate', @oldDate)
+      @model.trigger "survey:selected", surveys.findWhere(id: @oldSurveyId)
     saveDate: ->
       $dateInput = @$el.find('input[type=date]')
       currentDate = $dateInput.val()
@@ -86,6 +90,11 @@
       # set up
       @repeater = new VisibilityToggleComponent('.repeat-days', @$el)
       @repeater.toggleOn('click', 'input[name="repeat"]', @$el)
+
+      # save the old values as properties on this view so it can be reverted
+      # if the user cancels.
+      @oldDate = @model.get('activationDate')
+      @oldSurveyId = @model.get('surveyId')
 
       repeat = @model.get('repeat')
 

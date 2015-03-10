@@ -106,6 +106,7 @@
 
           @listenTo @layout, 'cancel:clicked', =>
             blocker.blockerHide()
+            App.vent.trigger 'blocker:reminder:update:cancel'
             @destroy()
             App.vent.trigger "blocker:reminder:update:reset"
 
