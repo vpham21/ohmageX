@@ -30,6 +30,11 @@
     </div>
   </fieldset>
 
+  <div>
+    <button type="button" class="delete-button">Delete</button>
+  </div>
+
+  <!--
   <div class="button-pair">
     <div>
       <button type="button" class="save-button">Save</button>
@@ -38,5 +43,5 @@
       <button type="button" class="delete-button">Delete</button>
     </div>
   </div>
-
+  -->
 </form>
