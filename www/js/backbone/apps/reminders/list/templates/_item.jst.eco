@@ -1,6 +1,4 @@
 
-  <h3 class="hide-accessible">Update This Reminder</h3>
-
   <input type="checkbox" name="active-switch" id="active-switch<%= @id %>" style="display:none">
 <form class='reminder-form' id="reminder-form-<%= @id %>">
 
