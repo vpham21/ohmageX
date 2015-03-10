@@ -197,18 +197,21 @@
     className: "text-container"
     template: "reminders/list/_reminders_empty"
 
-  class List.Reminders extends App.Views.CompositeView
+  class List.ReminderSummary extends App.Views.ItemView
     initialize: ->
       @listenTo @, "childview:toggle:activate", @toggleSelectedOnly
+    template: "reminders/list/_item_summary"
+    tagName: 'li'
 
     toggleSelectedOnly: (options) ->
       visibleModel = @collection.findWhere(renderVisible: true)
       if typeof visibleModel isnt "undefined" then visibleModel.trigger('visible:false')
       options.model.trigger('visible:true')
+  class List.Reminders extends App.Views.CompositeView
     tagName: 'nav'
     className: 'list'
     template: "reminders/list/reminders"
-    childView: List.Reminder
+    childView: List.ReminderSummary
     childViewContainer: "ul"
     emptyView: List.RemindersEmpty
 
