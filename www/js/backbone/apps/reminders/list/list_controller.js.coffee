@@ -45,6 +45,10 @@
           # attempt to register permissions here if it's false.
           App.execute "permissions:register:localnotifications"
 
+      @listenTo App.vent, "blocker:reminder:update:reset", =>
+        # blocker view has been destroyed. You must
+        # re-initialize a new blockerView to show it again.
+        @initBlockerView()
 
       @show @layout
 
