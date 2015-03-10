@@ -156,7 +156,6 @@
       data = @model.toJSON()
       currentDate = moment(data.activationDate)
       data.currentDateValue = currentDate.format('YYYY-MM-DD')
-      data.currentDisplayTime = currentDate.format('hh:mma')
       data.currentTimeValue = currentDate.format('HH:mm:ss')
       data
     regions:
