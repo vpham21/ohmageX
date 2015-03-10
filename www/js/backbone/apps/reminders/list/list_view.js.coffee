@@ -104,8 +104,7 @@
         "click .repeat-days label": "selectLabel"
     gatherResponses: ->
       console.log 'gatherResponses'
-      @fixDate()
-      @updateTime()
+      @saveTime()
 
       myRepeat = @$el.find("input[name='repeat']").prop('checked') is true
 
