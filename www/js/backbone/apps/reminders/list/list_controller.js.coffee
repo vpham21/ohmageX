@@ -104,6 +104,10 @@
         console.log 'active:complete model' , options.model
         App.vent.trigger "reminder:toggle", options.model
 
+      @listenTo listView, "childview:click:edit", (view) =>
+        # update the blockerView's model to the selected reminders
+        # list view Reminder model.
+        @activateBlocker view.model
 
       @listenTo reminders, "invalid", (reminderModel) =>
         # reminder submit validation failed
