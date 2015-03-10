@@ -104,6 +104,11 @@
             @noticeRegion ''
             reminderView.trigger "save:reminder"
 
+          @listenTo @layout, 'cancel:clicked', =>
+            blocker.blockerHide()
+            @destroy()
+            App.vent.trigger "blocker:reminder:update:reset"
+
           reminderView
 
       @listenTo contentView, "error:show", (message) ->
