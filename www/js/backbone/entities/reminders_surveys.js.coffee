@@ -10,13 +10,14 @@
 
   API =
 
-    getReminderSurveys: (surveys) ->
+    getReminderSurveys: (surveys, surveyId) ->
       new Entities.ReminderSurveys surveys.map((survey) ->
         id: survey.get('id')
         title: survey.get('title')
         description: survey.get('description')
         campaign_urn: survey.get('campaign_urn')
+        selected: survey.get('id') is surveyId
       )
 
-  App.reqres.setHandler "reminders:surveys", ->
-    API.getReminderSurveys App.request('surveys:saved')
+  App.reqres.setHandler "reminders:surveys", (surveyId) ->
+    API.getReminderSurveys App.request('surveys:saved'), surveyId
