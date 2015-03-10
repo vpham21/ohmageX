@@ -95,6 +95,9 @@
       @listenTo reminders, "add", (model) ->
         @activateBlocker model
 
+      @listenTo App.vent, "blocker:reminder:update:cancel", =>
+        @blockerView.trigger "revert:all", App.request("reminders:surveys")
+
       @listenTo listView, "childview:before:render", (childView) =>
         if childView.model.get('surveyId') is false
           # set the surveyId and surveyTitle if they're not set yet.
