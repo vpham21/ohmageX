@@ -179,22 +179,32 @@
         else
           dayList = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
           console.log 'repeatDays', data.repeatDays
-          dayText = _.reduce(data.repeatDays, (dayText, repeatDay, index) ->
-            console.log 'repeatDay', repeatDay
-            console.log 'repeatDay parseint', parseInt(repeatDay)
-            console.log 'index', index
-            if index isnt data.repeatDays.length-1
-              prefix = ""
-              suffix = ", "
-            else
-              prefix = " and "
-              suffix = ""
-            dayText + "#{prefix}#{dayList[parseInt(repeatDay)]}#{suffix}"
-          , "")
+          if data.repeatDays.length is 1
+            dayText = dayList[parseInt(data.repeatDays[0])]
+          else if data.repeatDays.length is 2
+            dayText = "#{dayList[parseInt(data.repeatDays[0])]} and #{dayList[parseInt(data.repeatDays[1])]}"
+          else
+            dayText = _.reduce(data.repeatDays, (dayText, repeatDay, index) ->
+              console.log 'repeatDay', repeatDay
+              console.log 'repeatDay parseint', parseInt(repeatDay)
+              console.log 'index', index
+              if index isnt data.repeatDays.length-1
+                prefix = ""
+                suffix = ", "
+              else
+                prefix = " and "
+                suffix = ""
+              dayText + "#{prefix}#{dayList[parseInt(repeatDay)]}#{suffix}"
+            , "")
           data.summaryText = "Repeats on #{dayText} at #{currentDisplayTime}"
       else
         # one time reminder.
-        data.summaryText = data.activationDate.calendar()
+        if moment(data.activationDate).startOf('day').diff(moment().startOf('day'), 'weeks') > 0
+          # moment calendar() method doesn't display time if it's been more than a week.
+          # show a custom formatted date instead.
+          data.summaryText = "#{data.activationDate.format('dddd, MMMM Do YYYY')} at #{data.activationDate.format('h:mma')}"
+        else
+          data.summaryText = data.activationDate.calendar()
       data
     onRender: ->
       # prepopulate all fields
