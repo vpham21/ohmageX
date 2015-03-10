@@ -100,6 +100,10 @@
           @listenTo App.vent, "reminder:validate:fail", (responseErrors) =>
             @noticeRegion responseErrors
 
+          @listenTo @layout, 'ok:clicked', =>
+            @noticeRegion ''
+            reminderView.trigger "save:reminder"
+
           reminderView
 
       @listenTo contentView, "error:show", (message) ->
