@@ -1,8 +1,3 @@
-<div class="label-region"></div>
-<div class="enable-switch">
-  <input id="enable-switch-<%= @id %>" type="checkbox">
-  <label for="enable-switch-<%= @id %>"></label>
-</div>
 
 <form class='reminder-form' id="reminder-form-<%= @id %>" data-visible="false">
 
