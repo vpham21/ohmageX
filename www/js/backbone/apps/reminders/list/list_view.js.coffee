@@ -181,6 +181,8 @@
           console.log 'repeatDays', data.repeatDays
           if data.repeatDays.length is 1
             dayText = dayList[parseInt(data.repeatDays[0])]
+          else if data.repeatDays.length is 2
+            dayText = "#{dayList[parseInt(data.repeatDays[0])]} and #{dayList[parseInt(data.repeatDays[1])]}"
           else
             dayText = _.reduce(data.repeatDays, (dayText, repeatDay, index) ->
               console.log 'repeatDay', repeatDay
