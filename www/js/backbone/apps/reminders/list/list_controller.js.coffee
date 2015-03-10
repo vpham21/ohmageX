@@ -55,6 +55,15 @@
 
     initBlockerView: ->
       @blockerView = @getBlockerView()
+
+      @listenTo @blockerView, "render", (blockerView) =>
+        console.log 'blockerView render'
+        surveysView = @getReminderSurveysView App.request("reminders:surveys", blockerView.model.get('surveyId'))
+        blockerView.surveysRegion.show surveysView
+
+        @listenTo surveysView, "survey:selected", (model) ->
+          console.log 'survey:selected model', model
+          blockerView.model.trigger "survey:selected", model
     addRegion: (reminders) ->
       addView = @getAddView()
 
@@ -74,16 +83,6 @@
           selectedSurvey = if @surveyId then reminderSurveys.findWhere(id: @surveyId) else reminderSurveys.at(0)
           childView.model.trigger "survey:selected", selectedSurvey
 
-      @listenTo listView, "childview:render", (childView) =>
-        console.log 'childview:render'
-        console.log 'reminders', reminders
-        if reminders.length > 0
-          surveysView = @getReminderSurveysView App.request("reminders:surveys")
-          childView.surveysRegion.show surveysView
-
-          @listenTo surveysView, "survey:selected", (model) ->
-            console.log 'survey:selected model', model
-            childView.model.trigger "survey:selected", model
 
           surveysView.trigger "option:select", childView.model.get('surveyId')
 
