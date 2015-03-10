@@ -19,6 +19,7 @@
     initialize: (options) ->
       @listenTo @, 'survey:selected', @selectSurvey
       @listenTo @, 'internal:success', @propagateResponses
+      @listenTo @, 'change:activationDate change:active', @adjustFutureDate
       # Be sure to initialize activationDate as a moment if it's provided on init.
       # If retrieving from localStorage, the activationDate is stored as a string.
       if options.activationDate? then @set('activationDate', moment(options.activationDate))
