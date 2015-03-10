@@ -191,15 +191,25 @@
 
   class List.ReminderSummary extends App.Views.ItemView
     initialize: ->
+      @listenTo @, "active:toggle", @setSwitch
       @listenTo @model, 'change', @render
       @listenTo @, 'check:enabled', @checkEnabled
     template: "reminders/list/_item_summary"
     tagName: 'li'
+    setSwitch: ->
+      console.log 'setSwitch'
+      @model.set 'active', @$el.find(".enable-switch input").prop('checked') is true
+      @trigger "active:complete"
     checkEnabled: ->
       @$el.find(".enable-switch input").prop('checked', true)
     serializeData: ->
       data = @model.toJSON()
       data
+    triggers:
+      "change .enable-switch input":
+        event: "active:toggle"
+        preventDefault: false
+        stopPropagation: false
 
     toggleSelectedOnly: (options) ->
       visibleModel = @collection.findWhere(renderVisible: true)
