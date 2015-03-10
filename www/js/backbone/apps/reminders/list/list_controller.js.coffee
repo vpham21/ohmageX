@@ -89,6 +89,9 @@
     listRegion: (reminders) ->
       listView = @getListView reminders
 
+      @listenTo reminders, 'date:future:shift', =>
+        @blockerView.trigger "show:future:date"
+
       @listenTo listView, "childview:before:render", (childView) =>
         if childView.model.get('surveyId') is false
           # set the surveyId and surveyTitle if they're not set yet.
