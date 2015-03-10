@@ -40,8 +40,8 @@
     initialize: ->
       @listenTo @, 'save:reminder', @gatherResponses
       @listenTo @, 'repeat:toggle', @repeatToggle
-      @listenTo @, 'date:adjust', @fixDate
       @listenTo @, 'time:adjust', @updateTime
+      @listenTo @, 'date:adjust', @saveDate
       @listenTo @, 'show:future:date', @showFutureDate
     template: "reminders/list/_item"
     selectLabel: (e) ->
@@ -59,9 +59,9 @@
     getProvidedDate: ->
       dateString = "#{@$el.find('input[type=date]').val()}T#{@$el.find('input[type=time]').val()}#{moment().format('Z')}"
       moment(dateString).second(0)
-    fixDate: ->
     showFutureDate: ->
       @$el.find('input[type=date]').val @model.get('activationDate').format('YYYY-MM-DD')
+    saveDate: ->
       $dateInput = @$el.find('input[type=date]')
       currentDate = $dateInput.val()
       dateMoment = moment currentDate
