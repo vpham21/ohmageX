@@ -53,6 +53,8 @@
 
       @show noticeView, region: @layout.noticeRegion
 
+    initBlockerView: ->
+      @blockerView = @getBlockerView()
     addRegion: (reminders) ->
       addView = @getAddView()
 
