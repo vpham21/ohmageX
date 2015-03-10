@@ -68,6 +68,11 @@
       @listenTo @blockerView, "reminder:submit", (model, response) =>
         console.log 'reminder:submit model', model
         App.vent.trigger "reminders:reminder:submit", model, response
+
+      @listenTo @blockerView, "delete:reminder", (view) =>
+        console.log 'reminder:delete view', view
+        App.vent.trigger "reminders:reminder:delete", view.model
+
     addRegion: (reminders) ->
       addView = @getAddView()
 
@@ -99,11 +104,6 @@
             # ensure the survey is populated with an ID only once.
             @surveyId = false
 
-      @listenTo listView, "childview:delete:reminder", (view, response) =>
-        console.log 'childview:reminder:delete model', view.model
-        # close any notices
-        @noticeRegion ''
-        App.vent.trigger "reminders:reminder:delete", view.model
 
       @listenTo reminders, "invalid", (reminderModel) =>
         # reminder submit validation failed
