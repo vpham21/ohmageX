@@ -17,8 +17,6 @@
 
   class Entities.Reminder extends Entities.ValidatedModel
     initialize: (options) ->
-      @listenTo @, 'visible:false', @visibleFalse
-      @listenTo @, 'visible:true', @visibleTrue
       @listenTo @, 'survey:selected', @selectSurvey
       @listenTo @, 'internal:success', @propagateResponses
       # Be sure to initialize activationDate as a moment if it's provided on init.
@@ -46,10 +44,6 @@
         futureTimestamp: 'activationDate'
       super attrs, options, myRulesMap
 
-    visibleFalse: ->
-      @set('renderVisible', false)
-    visibleTrue: ->
-      @set('renderVisible', true)
     defaults: ->
 
       return {
