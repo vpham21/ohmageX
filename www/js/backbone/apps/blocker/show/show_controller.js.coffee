@@ -92,6 +92,11 @@
             App.vent.trigger "blocker:reminder:update:reset"
           )
 
+          @listenTo App.vent, "notifications:update:complete", (=>
+            blocker.blockerHide()
+            @destroy()
+            App.vent.trigger "blocker:reminder:update:reset"
+          )
           reminderView
 
       @listenTo contentView, "error:show", (message) ->
