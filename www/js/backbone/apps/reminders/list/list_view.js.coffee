@@ -43,6 +43,7 @@
       @listenTo @, 'date:adjust', @saveDate
       @listenTo @, 'time:adjust', @saveTime
       @listenTo @, 'show:future:date', @showFutureDate
+      @listenTo @, 'revert:all', @revertAll
     template: "reminders/list/_item"
     attributes:
       class: "reminders-list"
@@ -63,6 +64,9 @@
       moment(dateString).second(0)
     showFutureDate: ->
       @$el.find('input[type=date]').val @model.get('activationDate').format('YYYY-MM-DD')
+    revertAll: (surveys) ->
+      @model.set('activationDate', @oldDate)
+      @model.trigger "survey:selected", surveys.findWhere(id: @oldSurveyId)
     saveDate: ->
       $dateInput = @$el.find('input[type=date]')
       currentDate = $dateInput.val()
