@@ -209,6 +209,9 @@
         # repeat is enabled
         if data.repeatDays.length is 7
           data.summaryText = "Repeats daily at #{currentDisplayTime}"
+      else
+        # one time reminder.
+        data.summaryText = data.activationDate.calendar()
       data
     triggers:
       "change .enable-switch input":
