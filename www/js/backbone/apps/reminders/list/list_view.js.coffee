@@ -202,6 +202,9 @@
       @listenTo @, "childview:toggle:activate", @toggleSelectedOnly
     template: "reminders/list/_item_summary"
     tagName: 'li'
+    serializeData: ->
+      data = @model.toJSON()
+      data
 
     toggleSelectedOnly: (options) ->
       visibleModel = @collection.findWhere(renderVisible: true)
