@@ -204,6 +204,11 @@
       @$el.find(".enable-switch input").prop('checked', true)
     serializeData: ->
       data = @model.toJSON()
+      currentDisplayTime = data.activationDate.format('h:mma')
+      if data.repeat
+        # repeat is enabled
+        if data.repeatDays.length is 7
+          data.summaryText = "Repeats daily at #{currentDisplayTime}"
       data
     triggers:
       "change .enable-switch input":
