@@ -160,7 +160,6 @@
       data
     regions:
       surveysRegion: '.surveys-region'
-      labelRegion: '.label-region'
     triggers:
       "blur .date-control input": "date:adjust"
       "blur .time-control input": "time:adjust"
