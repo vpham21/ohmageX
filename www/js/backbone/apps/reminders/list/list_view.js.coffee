@@ -43,6 +43,7 @@
       @listenTo @, 'check:enabled', @checkEnabled
       @listenTo @, 'date:adjust', @fixDate
       @listenTo @, 'time:adjust', @updateTime
+      @listenTo @, 'show:future:date', @showFutureDate
     template: "reminders/list/_item"
     selectLabel: (e) ->
       console.log 'selectedLabels'
@@ -60,6 +61,8 @@
       dateString = "#{@$el.find('input[type=date]').val()}T#{@$el.find('input[type=time]').val()}#{moment().format('Z')}"
       moment(dateString).second(0)
     fixDate: ->
+    showFutureDate: ->
+      @$el.find('input[type=date]').val @model.get('activationDate').format('YYYY-MM-DD')
       $dateInput = @$el.find('input[type=date]')
       currentDate = $dateInput.val()
       dateMoment = moment currentDate
