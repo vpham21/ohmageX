@@ -199,7 +199,6 @@
 
   class List.ReminderSummary extends App.Views.ItemView
     initialize: ->
-      @listenTo @, "childview:toggle:activate", @toggleSelectedOnly
     template: "reminders/list/_item_summary"
     tagName: 'li'
     serializeData: ->
