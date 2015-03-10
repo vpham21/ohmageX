@@ -40,7 +40,6 @@
     initialize: ->
       @listenTo @, 'save:reminder', @gatherResponses
       @listenTo @, 'repeat:toggle', @repeatToggle
-      @listenTo @, 'check:enabled', @checkEnabled
       @listenTo @, 'date:adjust', @fixDate
       @listenTo @, 'time:adjust', @updateTime
       @listenTo @, 'show:future:date', @showFutureDate
