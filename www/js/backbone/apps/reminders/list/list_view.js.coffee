@@ -146,7 +146,7 @@
 
       response =
         activationDate: @getProvidedDate()
-        active: @$el.find(".enable-switch input").prop('checked') is true
+        active: true
         repeat: myRepeat
         repeatDays: repeatDays
 
