@@ -191,6 +191,7 @@
 
   class List.ReminderSummary extends App.Views.ItemView
     initialize: ->
+      @listenTo @model, 'change', @render
       @listenTo @, 'check:enabled', @checkEnabled
     template: "reminders/list/_item_summary"
     tagName: 'li'
