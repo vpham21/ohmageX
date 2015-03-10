@@ -40,8 +40,8 @@
     initialize: ->
       @listenTo @, 'save:reminder', @gatherResponses
       @listenTo @, 'repeat:toggle', @repeatToggle
-      @listenTo @, 'time:adjust', @updateTime
       @listenTo @, 'date:adjust', @saveDate
+      @listenTo @, 'time:adjust', @saveTime
       @listenTo @, 'show:future:date', @showFutureDate
     template: "reminders/list/_item"
     selectLabel: (e) ->
@@ -75,7 +75,7 @@
       else
         # set the invalid date to now.
         $dateInput.val moment().format('YYYY-MM-DD')
-    updateTime: ->
+    saveTime: ->
       currentTime = @$el.find('.time-control input').val()
       timeMoment = moment("#{moment().format('YYYY-MM-DD')} #{currentTime}")
       if currentTime.length > 0 and timeMoment.isValid
