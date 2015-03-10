@@ -36,6 +36,7 @@
           if surveys.length is 0
             @noticeRegion 'No saved surveys! You must have saved surveys in order to create reminders.'
           else
+            @initBlockerView()
             @addRegion reminders
             @listRegion reminders
             if @surveyId then App.execute("reminders:add:new")
