@@ -229,6 +229,10 @@
         # one time reminder.
         data.summaryText = data.activationDate.calendar()
       data
+    onRender: ->
+      # prepopulate all fields
+      active = @model.get('active')
+      if active then @checkEnabled()
     triggers:
       "change .enable-switch input":
         event: "active:toggle"
