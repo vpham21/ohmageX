@@ -39,11 +39,9 @@
   class List.UpdateBlocker extends App.Views.Layout
     initialize: ->
       @listenTo @, 'save:reminder', @gatherResponses
-      @listenTo @, 'save:reminder', @toggleOff
       @listenTo @, 'repeat:toggle', @repeatToggle
       @listenTo @, 'check:enabled', @checkEnabled
       @listenTo @, 'date:adjust', @fixDate
-      @listenTo @, 'active:toggle', @gatherResponses
       @listenTo @, 'time:adjust', @updateTime
     tagName: 'li'
     template: "reminders/list/_item"
