@@ -44,6 +44,8 @@
       @listenTo @, 'time:adjust', @saveTime
       @listenTo @, 'show:future:date', @showFutureDate
     template: "reminders/list/_item"
+    attributes:
+      class: "reminders-list"
     selectLabel: (e) ->
       console.log 'selectedLabels'
       $label = $(e.currentTarget)

@@ -1,5 +1,7 @@
 <form class='reminder-form' id="reminder-form-<%= @id %>">
 
+  <div class="surveys-region"></div>
+
   <fieldset>
     <div class="repeat-enable-region">
       <div class="square-checkbox">
@@ -19,7 +21,6 @@
   </fieldset>
 
   <fieldset>
-    <div class="surveys-region"></div>
     <div class="date-control">
       <label for="date<%= @id %>">on </label>
       <input name="date<%= @id %>" value="<%= @currentDateValue %>" type="date">
