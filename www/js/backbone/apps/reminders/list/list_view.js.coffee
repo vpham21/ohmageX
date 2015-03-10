@@ -43,7 +43,6 @@
       @listenTo @, 'check:enabled', @checkEnabled
       @listenTo @, 'date:adjust', @fixDate
       @listenTo @, 'time:adjust', @updateTime
-    tagName: 'li'
     template: "reminders/list/_item"
     selectLabel: (e) ->
       console.log 'selectedLabels'
