@@ -83,6 +83,10 @@
             blocker.blockerHide()
             @destroy()
           changeView
+        when "reminder:update"
+          reminderView = options.reminderView
+
+          reminderView
 
       @listenTo contentView, "error:show", (message) ->
         @noticeRegion message
