@@ -85,10 +85,6 @@
       @repeater = new VisibilityToggleComponent('.repeat-days', @$el)
       @repeater.toggleOn('click', 'input[name="repeat"]', @$el)
 
-      # prepopulate all fields
-      active = @model.get('active')
-      if active then @checkEnabled()
-
       repeat = @model.get('repeat')
 
       if repeat
