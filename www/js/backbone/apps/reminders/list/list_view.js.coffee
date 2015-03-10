@@ -122,7 +122,7 @@
         repeat: myRepeat
         repeatDays: repeatDays
 
-      @trigger "reminder:submit", response
+      @trigger "reminder:submit", @model, response
 
     serializeData: ->
       data = @model.toJSON()
