@@ -82,7 +82,6 @@
       @saveDate()
     onRender: ->
       # set up
-      @toggler = new VisibilityToggleComponent("#reminder-form-#{@model.get('id')}", @$el)
       @repeater = new VisibilityToggleComponent('.repeat-days', @$el)
       @repeater.toggleOn('click', 'input[name="repeat"]', @$el)
 
