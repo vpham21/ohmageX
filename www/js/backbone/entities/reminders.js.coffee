@@ -218,3 +218,8 @@
 
   App.vent.on "reminder:set:success", (reminderModel) ->
     API.toggleSystemNotifications reminderModel
+
+  App.vent.on "reminder:toggle", (model) ->
+    API.updateLocal ->
+      console.log 'reminder toggle save complete'
+    API.toggleSystemNotifications model
