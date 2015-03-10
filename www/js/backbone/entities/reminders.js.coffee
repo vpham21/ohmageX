@@ -85,13 +85,12 @@
       console.log 'addReminder'
       currentReminders.add({}, { validate: false })
 
-    addNotification: (reminder) ->
-
+    toggleSystemNotifications: (reminder) ->
       if reminder.get('active') is true
         App.execute "system:notifications:add", reminder
       else
         # This reminder has been disabled. Be sure to deactivate its notifications.
-        console.log 'addNotification disabled notification ids', reminder.get('notificationIds')
+        console.log 'toggleSystemNotifications disabled notification ids', reminder.get('notificationIds')
         App.execute "system:notifications:delete", reminder
 
 
@@ -200,4 +199,4 @@
     if currentReminders.length > 0 then API.removeCampaignReminders(campaign_urn)
 
   App.vent.on "reminder:set:success", (reminderModel) ->
-    API.addNotification reminderModel
+    API.toggleSystemNotifications reminderModel
