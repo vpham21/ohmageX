@@ -86,6 +86,12 @@
         when "reminder:update"
           reminderView = options.reminderView
 
+          @listenTo reminderView, "delete:reminder", (=>
+            blocker.blockerHide()
+            @destroy()
+            App.vent.trigger "blocker:reminder:update:reset"
+          )
+
           reminderView
 
       @listenTo contentView, "error:show", (message) ->
