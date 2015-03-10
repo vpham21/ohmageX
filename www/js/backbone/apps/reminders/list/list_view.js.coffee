@@ -35,11 +35,6 @@
           false
         else true
 
-  class List.ReminderLabel extends App.Views.ItemView
-    initialize: ->
-      @listenTo @model, 'change', @render
-    template: "reminders/list/_label"
-    tagName: 'span'
 
   class List.Reminder extends App.Views.Layout
     initialize: ->
