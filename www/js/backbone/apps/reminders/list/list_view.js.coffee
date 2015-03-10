@@ -36,7 +36,7 @@
         else true
 
 
-  class List.Reminder extends App.Views.Layout
+  class List.UpdateBlocker extends App.Views.Layout
     initialize: ->
       @listenTo @, 'save:reminder', @gatherResponses
       @listenTo @, 'save:reminder', @toggleOff
