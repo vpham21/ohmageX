@@ -110,6 +110,9 @@
 
       @show listView, region: @layout.listRegion
 
+    activateBlocker: (reminder) ->
+      @blockerView.model = reminder
+      App.vent.trigger "blocker:reminder:update", reminderView: @blockerView
 
     getReminderSurveysView: (surveys) ->
       new List.ReminderSurveys
