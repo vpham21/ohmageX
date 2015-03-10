@@ -97,6 +97,9 @@
             @destroy()
             App.vent.trigger "blocker:reminder:update:reset"
           )
+          @listenTo App.vent, "reminder:validate:fail", (responseErrors) =>
+            @noticeRegion responseErrors
+
           reminderView
 
       @listenTo contentView, "error:show", (message) ->
