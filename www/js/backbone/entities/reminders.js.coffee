@@ -82,7 +82,7 @@
   class Entities.Reminders extends Entities.Collection
     model: Entities.Reminder
     initialize: ->
-      @listenTo @, "survey:selected", =>
+      @listenTo @, "survey:selected date:future:shift", =>
         App.execute "storage:save", 'reminders', @toJSON(), =>
           console.log "reminders entity Reminders Collection survey:selected storage success"
 
