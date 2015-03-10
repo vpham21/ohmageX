@@ -97,10 +97,6 @@
         App.vent.trigger "reminder:toggle", options.model
 
 
-          labelView = @getReminderLabelView childView.model
-          childView.labelRegion.show labelView
-
-
       @listenTo reminders, "invalid", (reminderModel) =>
         # reminder submit validation failed
         console.log "reminder invalid, errors are", reminderModel.validationError
