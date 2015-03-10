@@ -67,8 +67,6 @@
       $input = $label.prev()
       checked = $input.prop('checked')
       $input.prop('checked', !checked)
-    checkEnabled: ->
-      @$el.find(".enable-switch input").prop('checked', true)
     repeatToggle: ->
       enabled = @$el.find("input[name='repeat']").prop('checked')
       if enabled
@@ -183,10 +181,6 @@
       "blur .time-control input": "time:adjust"
       "click .toggler-button": "toggle:activate"
       "click .delete-button": "delete:reminder"
-      "click .enable-switch input":
-        event: "active:toggle"
-        preventDefault: false
-        stopPropagation: false
       "click .save-button": "save:reminder"
       "click input[name='repeat']":
         event: "repeat:toggle"
@@ -199,8 +193,11 @@
 
   class List.ReminderSummary extends App.Views.ItemView
     initialize: ->
+      @listenTo @, 'check:enabled', @checkEnabled
     template: "reminders/list/_item_summary"
     tagName: 'li'
+    checkEnabled: ->
+      @$el.find(".enable-switch input").prop('checked', true)
     serializeData: ->
       data = @model.toJSON()
       data
