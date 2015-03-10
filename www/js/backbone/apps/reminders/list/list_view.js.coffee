@@ -66,7 +66,8 @@
       @$el.find('input[type=date]').val @model.get('activationDate').format('YYYY-MM-DD')
     revertAll: (surveys) ->
       @model.set('activationDate', @oldDate)
-      @model.trigger "survey:selected", surveys.findWhere(id: @oldSurveyId)
+      if @oldSurveyId
+        @model.trigger "survey:selected", surveys.findWhere(id: @oldSurveyId)
     saveDate: ->
       $dateInput = @$el.find('input[type=date]')
       currentDate = $dateInput.val()
