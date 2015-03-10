@@ -85,6 +85,16 @@
       @listenTo @, "survey:selected date:future:shift", =>
         App.execute "storage:save", 'reminders', @toJSON(), =>
           console.log "reminders entity Reminders Collection survey:selected storage success"
+      @listenTo @, "change:activationDate", =>
+        @sort()
+
+    comparator: (model) ->
+      # sort by the hour, minute and second.
+      input = moment(model.get('activationDate'))
+      hour = input.hour()
+      minute = input.minute()
+
+      moment().startOf('day').hour(hour).minute(minute).second(0).unix()
 
   currentReminders = false
 
