@@ -122,6 +122,9 @@
     getAddView: ->
       new List.Add
 
+    getBlockerView: ->
+      new List.UpdateBlocker
+
     getListView: (reminders) ->
       new List.Reminders
         collection: reminders
