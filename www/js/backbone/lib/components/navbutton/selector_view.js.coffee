@@ -25,3 +25,14 @@
 
     triggers:
       "click": "button:clicked"
+
+  class Navbutton.AddReminder extends App.Views.ItemView
+    template: "navbutton/add_reminder"
+    tagName: "button"
+    className: "add icon"
+    initialize: ->
+      @listenTo @, "button:clicked", ->
+        @trigger "button:add:reminder"
+
+    triggers:
+      "click": "button:clicked"
