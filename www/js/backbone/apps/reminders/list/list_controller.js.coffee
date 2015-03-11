@@ -37,7 +37,6 @@
             @noticeRegion 'No saved surveys! You must have saved surveys in order to create reminders.'
           else
             @initBlockerView()
-            @addRegion reminders
             @listRegion reminders
             if @surveyId then App.execute("reminders:add:new")
 
@@ -77,14 +76,6 @@
       @listenTo @blockerView, "delete:reminder", (view) =>
         console.log 'reminder:delete view', view
         App.vent.trigger "reminders:reminder:delete", view.model
-
-    addRegion: (reminders) ->
-      addView = @getAddView()
-
-      @listenTo addView, "add:clicked", ->
-        App.execute "reminders:add:new"
-
-      @show addView, region: @layout.addRegion
 
     listRegion: (reminders) ->
       listView = @getListView reminders
@@ -139,9 +130,6 @@
     getNoticeView: (notice) ->
       new List.Notice
         model: notice
-
-    getAddView: ->
-      new List.Add
 
     getBlockerView: ->
       new List.UpdateBlocker
