@@ -25,7 +25,7 @@
           }
         when "reminder:update"
           {
-            title: "Update This Reminder"
+            title: "Configure Reminder"
             cancelLabel: "Cancel"
             okLabel: "Save"
           }
