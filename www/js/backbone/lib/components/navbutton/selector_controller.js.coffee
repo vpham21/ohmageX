@@ -33,6 +33,9 @@
         when "queue"
           return new Navbutton.Upload
             collection: navs
+        when "reminder"
+          return new Navbutton.AddReminder
+            collection: navs
         else
           return false
 
