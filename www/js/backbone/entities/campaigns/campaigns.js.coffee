@@ -140,6 +140,7 @@
       myData = 
         client: App.client_string
         output_format: 'short'
+        user_role: "participant"
       currentCampaignsUser.fetch
         reset: true
         type: 'POST' # not RESTful but the 2.0 API requires it
