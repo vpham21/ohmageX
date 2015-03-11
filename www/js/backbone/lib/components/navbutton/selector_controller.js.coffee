@@ -18,6 +18,10 @@
           console.log "button:upload in Navbutton Component"
           App.execute "uploadqueue:upload:all"
 
+        @listenTo @myView, "button:add:reminder", (type) ->
+          console.log "button:add:reminder in Navbutton Component"
+          App.execute "reminders:add:new"
+
         # Ensure this controller is removed during view cleanup.
         @listenTo @myView, "destroy", @destroy
 
