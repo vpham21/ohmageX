@@ -44,4 +44,4 @@
 
   App.vent.on "survey:upload:failure:network", (responseData, errorText, surveyId) ->
     # placeholder for network errors handler.
-    API.uploadFailureGeneral responseData, "Problem with Network:", errorText, surveyId
+    API.uploadFailureGeneral responseData, "", "Network Error", surveyId
