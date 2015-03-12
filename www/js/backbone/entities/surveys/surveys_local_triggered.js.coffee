@@ -86,5 +86,8 @@
   App.vent.on "campaign:saved:remove", (campaign_urn) ->
     if currentTriggered then API.removeCampaignTriggered(campaign_urn)
 
+  App.vent.on "credentials:cleared", ->
+    API.clear()
+
   Entities.on "start", ->
     API.init()
