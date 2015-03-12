@@ -5,7 +5,7 @@
   <div role="link">
     <h3><%= @title %></h3>
     <aside class="reminder">
-      <span class="time">12:30pm</span></p>
+      <span class="time"></span>
     </aside>
   </div>
 </div>
