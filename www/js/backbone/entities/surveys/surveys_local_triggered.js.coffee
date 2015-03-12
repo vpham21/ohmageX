@@ -11,3 +11,15 @@
   class Entities.SurveysTriggered extends Entities.Collection
     model: Entities.SurveyTriggered
 
+  API =
+    init: ->
+      App.request "storage:get", 'surveys_triggered', ((result) =>
+        # customChoice is retrieved from raw JSON.
+        console.log 'triggered surveys retrieved from storage'
+        currentTriggered = new Entities.SurveysTriggered result
+      ), =>
+        console.log 'triggered surveys not retrieved from storage'
+        currentTriggered = false
+
+  Entities.on "start", ->
+    API.init()
