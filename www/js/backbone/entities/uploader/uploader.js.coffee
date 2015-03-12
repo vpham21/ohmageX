@@ -43,11 +43,11 @@
         dataType: 'json'
         success: (response) =>
           @parseUploadErrors context, responseData, response, itemId
-        error: (response) =>
+        error: (xhr, ajaxOptions, thrownError) =>
           console.log 'survey upload error'
           # assume all error callbacks here are network relate
           App.vent.trigger "loading:hide"
-          App.vent.trigger "#{context}:upload:failure:network", responseData, response, itemId
+          App.vent.trigger "#{context}:upload:failure:network", responseData, xhr.status, itemId
 
   App.commands.setHandler "uploader:new", (context, responseData, itemId) ->
     # context is a means of determining the 
