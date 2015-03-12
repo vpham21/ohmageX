@@ -36,6 +36,17 @@
           console.log "surveys_triggered entity saved in localStorage"
           App.vent.trigger "surveys:local:triggered:new:success", surveyId
         )
+
+    removeTriggered: (surveyId) ->
+      removed = currentTriggered.where
+        surveyId: surveyId
+
+      currentTriggered.remove removed
+      @updateLocal( =>
+        console.log "surveys_triggered entity removed from localStorage"
+        App.vent.trigger "surveys:local:triggered:remove:success", surveyId
+      )
+
   App.reqres.setHandler "surveys:local:triggered:entity", ->
     currentTriggered
 
