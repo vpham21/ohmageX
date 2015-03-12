@@ -21,6 +21,9 @@
         console.log 'triggered surveys not retrieved from storage'
         currentTriggered = false
 
+    exists: (surveyId) ->
+      currentTriggered and currentTriggered.where(surveyId: surveyId).length > 0
+
   App.reqres.setHandler "surveys:local:triggered:entity", ->
     currentTriggered
 
