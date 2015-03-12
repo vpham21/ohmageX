@@ -152,6 +152,7 @@
 
       @updateLocal( =>
         console.log "reminders entity API.deleteReminder storage success"
+        App.vent.trigger "reminder:delete:success", myReminder
       )
 
     removeCampaignReminders: (campaign_urn) ->

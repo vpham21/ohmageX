@@ -11,6 +11,10 @@
       "click .stopped.survey button.navigate": "stopped:clicked"
       "click .running.survey [role=\"link\"]": "running:clicked"
       "click .running.survey button.navigate": "running:clicked"
+    serializeData: ->
+      data = @model.toJSON()
+      data.showTime = App.request("surveys:local:triggered:exists", @model.get('id'))
+      data
 
   class List.SelectorItem extends App.Views.ItemView
     tagName: "option"

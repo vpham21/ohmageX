@@ -4,8 +4,10 @@
   </div>
   <div role="link">
     <h3><%= @title %></h3>
+    <% if @showTime: %>
     <aside class="reminder">
-      <span class="time">12:30pm</span></p>
+      <span class="time"></span>
     </aside>
+    <% end %>
   </div>
 </div>
