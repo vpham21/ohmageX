@@ -73,7 +73,8 @@
       "click .running.item button.upload": "upload:clicked"
     serializeData: ->
       data = @model.toJSON()
-      console.log(data)
+      console.log 'item details data', data
+      data.locationExists = data.location?
       data.prettyTimestamp = new Date(data.timestamp).toString()
       data
 
