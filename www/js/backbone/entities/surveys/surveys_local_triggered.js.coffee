@@ -61,6 +61,13 @@
     updateLocal: (callback) ->
       # update localStorage index surveys_triggered with the current version of campaignsSaved entity
       App.execute "storage:save", 'surveys_triggered', currentTriggered.toJSON(), callback
+
+    clear: ->
+      currentTriggered = false
+      App.execute "storage:clear", 'surveys_triggered', ->
+        console.log 'triggered surveys erased'
+        App.vent.trigger "surveys:local:triggered:cleared"
+
   App.reqres.setHandler "surveys:local:triggered:entity", ->
     currentTriggered
 
