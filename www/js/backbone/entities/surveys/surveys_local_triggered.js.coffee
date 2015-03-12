@@ -58,5 +58,8 @@
 
   App.vent.on "survey:start", (surveyId) ->
     if currentTriggered then API.removeTriggered(surveyId)
+
+  App.vent.on "reminder:delete:success", (reminder) ->
+    if currentTriggered then API.removeTriggered(reminder.get('surveyId'))
   Entities.on "start", ->
     API.init()
