@@ -47,6 +47,16 @@
         App.vent.trigger "surveys:local:triggered:remove:success", surveyId
       )
 
+    removeCampaignTriggered: (campaign_urn) ->
+      removed = currentTriggered.where
+        campaign_urn: campaign_urn
+
+      currentTriggered.remove removed
+      @updateLocal( =>
+        console.log "campaign triggered surveys removed from localStorage"
+        App.vent.trigger "surveys:local:triggered:campaign:remove:success", campaign_urn
+      )
+
   App.reqres.setHandler "surveys:local:triggered:entity", ->
     currentTriggered
 
@@ -61,5 +71,9 @@
 
   App.vent.on "reminder:delete:success", (reminder) ->
     if currentTriggered then API.removeTriggered(reminder.get('surveyId'))
+
+  App.vent.on "campaign:saved:remove", (campaign_urn) ->
+    if currentTriggered then API.removeCampaignTriggered(campaign_urn)
+
   Entities.on "start", ->
     API.init()
