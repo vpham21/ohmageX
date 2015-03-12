@@ -41,5 +41,8 @@
 
   App.reqres.setHandler "surveys:local:triggered:exists", (surveyId) ->
     API.exists surveyId
+
+  App.commands.setHandler "surveys:local:triggered:add", (surveyId) ->
+    API.addTriggered surveyId
   Entities.on "start", ->
     API.init()
