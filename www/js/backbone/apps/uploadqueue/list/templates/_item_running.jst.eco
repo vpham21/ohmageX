@@ -3,7 +3,6 @@
   <button type="button" class="delete icon">Discard</button>
   <div role="link">
     <h3><%= @name %></h3>
-    <p class="text-error"><%= @errorText %></p>
-    <footer><small>Last submitted on <%= @prettyTimestamp %><small></footer>
+    <footer><small>Last submitted on <%= @prettyTimestamp %></small></footer>
   </div>
 </div>
