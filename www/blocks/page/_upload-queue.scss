@@ -18,7 +18,6 @@
     margin: 0;
     padding: 0;
     > li {
-      padding: $app-main-footer-padding;
       border-bottom: 1px solid $app-list-border-color;
       &.empty {
         font-style: italic;
@@ -27,28 +26,9 @@
       .item {
         position: relative;
         [role="link"] {
-          width: auto;
-          margin-right: 6rem;
           > * {
             margin: 0;
           }
-        }
-        button {
-          position: absolute;
-          top: 0;
-          right: 0;
-          width: 2rem;
-          height: 2rem;
-          background-size: 2rem;
-        }
-        button + button {
-          right: 3rem;
-        }
-        button + [role="link"] {
-          margin-right: 3rem;
-        }
-        button + button + [role="link"] {
-          margin-right: 6rem;
         }
       }
     }
