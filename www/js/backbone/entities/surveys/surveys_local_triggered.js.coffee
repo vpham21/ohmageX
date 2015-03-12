@@ -21,5 +21,8 @@
         console.log 'triggered surveys not retrieved from storage'
         currentTriggered = false
 
+  App.reqres.setHandler "surveys:local:triggered:entity", ->
+    currentTriggered
+
   Entities.on "start", ->
     API.init()
