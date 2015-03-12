@@ -55,5 +55,8 @@
 
   App.commands.setHandler "surveys:local:triggered:add", (surveyId) ->
     API.addTriggered surveyId
+
+  App.vent.on "survey:start", (surveyId) ->
+    if currentTriggered then API.removeTriggered(surveyId)
   Entities.on "start", ->
     API.init()
