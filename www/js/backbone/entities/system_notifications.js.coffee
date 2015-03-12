@@ -35,7 +35,7 @@
           ), (=>
             console.log 'dialog canceled'
           )
-
+        App.execute "surveys:local:triggered:add", result.surveyId
 
     generateId: ->
       # generate a numeric id (not a guid). Local notifications plugin
