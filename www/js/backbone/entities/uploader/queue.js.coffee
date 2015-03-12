@@ -42,6 +42,9 @@
         errorText: errorText
         responses: responses
 
+      if surveyObj[0].location_status is "valid"
+        _.extend(result, location: surveyObj[0].location)
+
       currentQueue.add result
       @updateLocal( =>
         App.vent.trigger 'uploadqueue:add:success', result
