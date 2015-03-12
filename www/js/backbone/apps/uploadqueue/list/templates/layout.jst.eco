@@ -1,2 +1,2 @@
 <div id="notice-region"></div>
-<div id="list-region"></div>
+<nav class="list" id="list-region"></nav>

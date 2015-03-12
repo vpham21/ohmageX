@@ -1,9 +1,12 @@
 <div class="running item">
-  <button type="button" class="upload icon">Upload</button>
-  <button type="button" class="delete icon">Discard</button>
+  <div class="action">
+    <button type="button" class="upload icon">Upload</button>
+  </div>
+  <div class="action">
+    <button type="button" class="icon right-arrow navigate">View</button>
+  </div>
   <div role="link">
     <h3><%= @name %></h3>
-    <p class="text-error"><%= @errorText %></p>
-    <footer><small>Last submitted on <%= @prettyTimestamp %><small></footer>
+    <footer><small>Last submitted on <%= @prettyTimestamp %></small></footer>
   </div>
 </div>
