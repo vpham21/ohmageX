@@ -24,6 +24,18 @@
     exists: (surveyId) ->
       currentTriggered and currentTriggered.where(surveyId: surveyId).length > 0
 
+    addTriggered: (surveyId) ->
+      if !@exists surveyId
+        if !currentTriggered then currentTriggered = new Entities.SurveysTriggered
+
+        currentTriggered.add
+          campaign_urn: App.request "survey:saved:urn", surveyId
+          surveyId: surveyId
+
+        @updateLocal( =>
+          console.log "surveys_triggered entity saved in localStorage"
+          App.vent.trigger "surveys:local:triggered:new:success", surveyId
+        )
   App.reqres.setHandler "surveys:local:triggered:entity", ->
     currentTriggered
 
