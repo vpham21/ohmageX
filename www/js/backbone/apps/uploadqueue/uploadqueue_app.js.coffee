@@ -83,5 +83,4 @@
 
   App.vent.on "uploadqueue:upload:failure:network", (responseData, errorText, itemId) ->
     # placeholder for network errors handler.
-    API.queueFailureGeneral responseData, "Problem with Network:", errorText, itemId
-
+    API.queueFailureGeneral responseData, "", "Network Error", itemId
