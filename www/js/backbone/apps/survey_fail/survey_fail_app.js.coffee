@@ -12,7 +12,7 @@
           title: "Survey Upload Error"
           description: "#{errorPrefix} #{errorText}"
           showCancel: true
-          cancelLabel: "Cancel"
+          cancelLabel: "Ok"
           okLabel: "Retry"
         cancelListener: =>
           # After Queue implemented: Put the survey item in the upload queue.
