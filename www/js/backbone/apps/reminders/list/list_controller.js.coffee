@@ -73,6 +73,10 @@
         console.log 'reminder:submit model', model
         App.vent.trigger "reminders:reminder:submit", model, response
 
+      @listenTo @blockerView, "new:revert", (model) =>
+        # delete the model when the new item is reverted.
+        App.vent.trigger "reminders:reminder:delete", model
+
       @listenTo @blockerView, "delete:reminder", (view) =>
         console.log 'reminder:delete view', view
         App.vent.trigger "reminders:reminder:delete", view.model
