@@ -2,7 +2,7 @@
 
   class List.QueueEmpty extends App.Views.ItemView
     tagName: 'li'
-    className: 'empty'
+    className: 'empty-container'
     template: "uploadqueue/list/_queue_empty"
 
   class List.QueueItem extends App.Views.ItemView
