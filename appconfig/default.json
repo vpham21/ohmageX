@@ -45,7 +45,6 @@
       "logout"
     ],
     "footer": [
-      "login",
       "campaign",
       "survey",
       "queue",
