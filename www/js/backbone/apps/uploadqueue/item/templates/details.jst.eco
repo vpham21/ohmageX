@@ -6,7 +6,7 @@
   <div>
     <h3><%= @name %></h3>
     <p><%= @description %></p>
-    <p>From campaign: <%= @campaign_urn %> at <%= @campaign_creation_timestamp %></p>
+    <p>Campaign: <small><%= @campaign_urn %> at <%= @campaign_creation_timestamp %></small></p>
     <% if @locationExists: %>
     <h4>GPS Location</h4>
     <ul>

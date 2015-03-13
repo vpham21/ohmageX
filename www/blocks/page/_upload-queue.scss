@@ -33,4 +33,12 @@
       }
     }
   }
+
+  #details-region, #responses-region {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    padding: (1*$app-main-footer-padding) $app-main-footer-padding;
+    word-wrap: break-word;
+  }
 }
