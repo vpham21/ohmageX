@@ -56,6 +56,7 @@
         client: App.client_string
         output_format: 'long'
         campaign_urn_list: campaign_urn
+        user_role: "participant"
       currentSurveysSaved.fetch
         reset: false
         remove: false # merge any newly fetched surveys with existing ones based on ID
