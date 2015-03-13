@@ -12,7 +12,7 @@
           title: "Survey Upload Error"
           description: "#{errorPrefix} #{errorText}"
           showCancel: true
-          cancelLabel: "Cancel"
+          cancelLabel: "Ok"
           okLabel: "Retry"
         cancelListener: =>
           # After Queue implemented: Put the survey item in the upload queue.
@@ -21,6 +21,7 @@
           # After Notice Center: Notify the user that the item was put into their upload queue.
           # Exit the survey.
           App.vent.trigger "survey:exit", surveyId
+          App.execute "dialog:alert", "Your response has been added to the Upload Queue."
         okListener: =>
           App.execute 'credentials:preflight:check', =>
             App.execute "survey:upload", surveyId

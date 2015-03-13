@@ -30,7 +30,7 @@
     className: 'survey-step'
     template: "survey_steps/show/show_layout"
     regions:
-      noticeRegion: '#notice'
+      noticeRegion: '#notice-region'
       progressRegion: '#progress'
       stepBodyRegion: '#step-body'
       skipButtonRegion: '#skip-button'
