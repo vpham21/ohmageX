@@ -62,6 +62,9 @@
       @model.set('activationDate', @oldDate)
       if @oldSurveyId
         @model.trigger "survey:selected", surveys.findWhere(id: @oldSurveyId)
+      else
+        # The reminder is a new one.
+        @trigger "new:revert", @model
     saveDate: ->
       $dateInput = @$el.find('input[type=date]')
       currentDate = $dateInput.val()
