@@ -55,7 +55,7 @@
       data
 
   class List.SurveysEmpty extends App.Views.ItemView
-    className: "text-container"
+    className: "empty-container"
     template: "surveys/list/_surveys_empty"
 
   class List.Surveys extends App.Views.CompositeView

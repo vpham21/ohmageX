@@ -1,3 +1,12 @@
 .text-container {
   margin: $app-main-footer-padding;
 }
+
+.empty-container, .notice-nopop {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  padding: (2*$app-main-footer-padding) $app-main-footer-padding;
+  width: 100%;
+}

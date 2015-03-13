@@ -151,7 +151,7 @@
         stopPropagation: false
 
   class List.RemindersEmpty extends App.Views.ItemView
-    className: "text-container"
+    className: "empty-container"
     template: "reminders/list/_reminders_empty"
 
   class List.ReminderSummary extends App.Views.ItemView
