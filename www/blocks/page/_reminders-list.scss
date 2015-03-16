@@ -141,6 +141,29 @@ $reminders-list-border-width: 1px;
     }
   }
 
+
+}
+
+.reminder-summary {
+  cursor: pointer;
+  padding: $global-form-control-padding;
+
+  .edit-container {
+    float: left;
+    width: 2rem;
+    height: 2rem;
+    margin-right: $global-form-control-padding;
+    button {
+      height: 2rem;
+      width: 2rem;
+      background-size: 2rem;
+    }
+  }
+
+  p {
+    margin-top: $global-form-control-padding/2;
+  }
+
   .enable-switch {
 
     float: right;
@@ -148,7 +171,7 @@ $reminders-list-border-width: 1px;
     height: $reminders-list-height;
     position: relative;
     font-size: $reminders-list-switch-font-size;
-    margin: 12px 12px 12px 4px;
+    margin: 0;
     text-transform: uppercase;
     font-weight: bold;
 

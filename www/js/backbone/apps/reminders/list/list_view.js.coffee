@@ -161,6 +161,8 @@
       @listenTo @, 'check:enabled', @checkEnabled
     template: "reminders/list/_item_summary"
     tagName: 'li'
+    attributes:
+      class: "reminder-summary"
     setSwitch: ->
       console.log 'setSwitch'
       @model.set 'active', @$el.find(".enable-switch input").prop('checked') is true
