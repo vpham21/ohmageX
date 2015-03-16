@@ -47,7 +47,7 @@
   }
 
   &.delete {
-    background-image: url("../img/icon/delete.png");
+    background-image: url("../img/icon/delete.svg");
   }
 
   &.save {
@@ -102,7 +102,7 @@
     background-size: 23px 36px;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url("../img/icon/right-arrow.png");
+    background-image: url("../img/icon/right-arrow.svg");
   }
 
   &.delete, &.save, &.info, &.right-arrow {
