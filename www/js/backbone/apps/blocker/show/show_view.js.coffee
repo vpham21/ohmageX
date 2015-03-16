@@ -19,6 +19,13 @@
     template: "blocker/show/password_invalid"
     serializeData: ->
       username: App.request "credentials:username"
+    onRender: ->
+      @$el.find('#updated-password').hideShowPassword
+        innerToggle: true
+        toggle:
+          styles:
+            marginTop: "4px"
+          verticalAlign: "top"
 
   class Show.PasswordChange extends App.Views.ItemView
     initialize: ->
