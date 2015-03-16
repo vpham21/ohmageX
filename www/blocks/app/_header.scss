@@ -16,6 +16,9 @@ body > header > div  {
       background-size: $app-header-image-size;
       background-repeat: no-repeat;
     }
+    &.sync {
+      background-size: $app-header-image-size*1.3;
+    }
   }
 
   > h1 {
