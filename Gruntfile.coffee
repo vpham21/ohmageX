@@ -187,6 +187,7 @@ module.exports = (grunt) ->
             "device-orientation",
             "dialogs",
             "file",
+            "geolocation",
             "media",
             "media-capture",
             "splashscreen",
