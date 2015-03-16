@@ -47,6 +47,12 @@ body > #ui-blocker  {
     }
   }
 
+  .blocker-title {
+    font-size: $app-header-menu-font-size;
+    padding: $global-form-control-padding;
+    margin: 0;
+  }
+
   button,
   input[type="button"],
   input[type="date"],
