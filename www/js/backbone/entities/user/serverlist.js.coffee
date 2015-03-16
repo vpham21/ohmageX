@@ -13,7 +13,7 @@
       )
       serverList = new Entities.ServerList serversObj
       if App.custom.server_list.custom then serverList.add
-        label: "Custom..."
+        label: "Custom Server..."
         name: 'custom'
 
       if !App.custom.server_list.custom and serverList.length is 0
