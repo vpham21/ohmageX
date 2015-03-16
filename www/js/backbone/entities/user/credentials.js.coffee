@@ -100,7 +100,7 @@
             App.vent.trigger "credentials:password:update:invalidated", 'Authentication failed.'
           App.vent.trigger "loading:hide"
         error: ->
-          App.vent.trigger "credentials:password:update:invalidated", 'Error, unable to update password'
+          App.vent.trigger "credentials:password:update:invalidated", 'Network error, unable to update password.'
           App.vent.trigger "loading:hide"
 
     changePassword: (path, oldPassword, newPassword) ->
@@ -128,7 +128,7 @@
           App.vent.trigger "loading:hide"
         error: (xhr, textStatus, errorText) ->
           console.log "Error", xhr.responseText, textStatus, xhr.statusText
-          App.vent.trigger "credentials:password:change:invalidated", 'Error, unable to change password'
+          App.vent.trigger "credentials:password:change:invalidated", 'Network error, unable to change password.'
           App.vent.trigger "loading:hide"
 
 
