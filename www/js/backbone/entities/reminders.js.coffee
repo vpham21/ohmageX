@@ -206,7 +206,8 @@
     API.getReminders()
 
   App.commands.setHandler "reminders:add:new", ->
-    API.addNewReminder()
+    if App.request('surveys:saved').length > 0
+      API.addNewReminder()
 
   App.commands.setHandler "reminder:delete", (model) ->
     App.execute "system:notifications:delete", model.get 'id'
