@@ -39,8 +39,9 @@ body > #ui-blocker  {
   figcaption {
     padding-top: 10px;
     display: inline-block;
+    width: 100%;
     color: $global-form-control-text-color;
-    font-size: $global-form-control-font-size;
+    font-size: $global-form-control-font-size*0.75;
   }
 
 }
