@@ -53,6 +53,12 @@ body > #ui-blocker  {
     margin: 0;
   }
 
+  .content-header {
+    font-size: $app-header-menu-font-size*0.85;
+    padding: $global-form-control-padding*0.85;
+    margin: 0;
+  }
+
   button,
   input[type="button"],
   input[type="date"],
