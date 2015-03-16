@@ -15,6 +15,7 @@
       "click .stopped.item [role=\"link\"]": "stopped:clicked"
       "click button.delete": "delete:clicked"
       "click .running.item [role=\"link\"]": "running:clicked"
+      "click .running.item .right-arrow": "running:clicked"
       "click .running.item button.upload": "upload:clicked"
     serializeData: ->
       data = @model.toJSON()
