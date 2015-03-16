@@ -8,9 +8,39 @@
 
       @listenTo @layout, "show", =>
         console.log "showing layout"
+        @noticeRegion()
         @formRegion()
 
       @show @layout
+
+      @listenTo App.vent, "credentials:invalidated", (responseErrors) =>
+        @showInvalidErrors responseErrors
+
+      @listenTo App.vent, "serverpath:set:error", (responseErrors) =>
+        @showInvalidErrors [
+          text: responseErrors[0]
+          code: '0000'
+        ]
+
+    showInvalidErrors: (responseErrors) ->
+      # response errors is an array containing objects:
+      # text: "error text"
+      # code: "error code"
+      console.log responseErrors
+      # append all errors into one string
+      result = _.reduce(responseErrors, ((errorStr, error) ->
+        suffix = if errorStr.length > 0 then ": #{errorStr}" else ""
+        return "#{error.text} #{suffix}"
+      ), "")
+
+      App.execute "notice:show",
+        data:
+          title: "Login Error"
+          description: result
+          showCancel: false
+
+    noticeRegion: ->
+      App.execute "notice:region:set", @layout.noticeRegion
 
     formRegion: ->
       myPath = App.request "serverpath:entity"
@@ -49,6 +79,10 @@
         App.execute "serverpath:update", value
 
       @show serversView, region: formView.serversRegion
+
+    getNoticeView: (notice) ->
+      new Show.Notice
+        model: notice
 
     getServersView: (serverList) ->
       new Show.ServerList

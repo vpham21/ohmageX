@@ -10,7 +10,9 @@ form.login {
   label {
     text-align: center;
     font-weight: bold;
-    margin-top: $app-main-footer-padding;
+    margin-top: $app-main-footer-padding/2;
+    margin-bottom: $app-main-footer-padding/4;
+
   }
   .error + label {
     margin-top: 0;
@@ -25,5 +27,14 @@ form.login {
     color: #fff;
     border-color: $global-form-control-border-color-dark;
     padding: 0.75rem;
+  }
+  .server-selector {
+    label {
+      text-align: left;
+      display: block;
+    }
+    select {
+      margin-bottom: $app-main-footer-padding/4;
+    }
   }
 }
