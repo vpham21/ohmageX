@@ -28,4 +28,13 @@ form.login {
     border-color: $global-form-control-border-color-dark;
     padding: 0.75rem;
   }
+  .server-selector {
+    label {
+      text-align: left;
+      display: block;
+    }
+    select {
+      margin-bottom: $app-main-footer-padding/4;
+    }
+  }
 }
