@@ -56,13 +56,13 @@
 
     getNavs: ->
       App.navs = new Entities.NavsCollection [
-        { name: "login", url: "#login", icon: "", visible: false }
-        { name: "campaign", url: "#campaigns", icon: "", visible: false }
-        { name: "survey", url: "#surveys", icon: "", visible: false }
-        { name: "queue", url: "#uploadqueue", icon: "", visible: false }
-        { name: "reminder", url: "#reminders", icon: "", visible: false }
-        { name: "profile", url: "#profile", icon: "", visible: false }
-        { name: "logout", url: "#logout", icon: "", visible: false }
+        { name: "login", url: "#login", icon: "profile", visible: false }
+        { name: "campaign", url: "#campaigns", icon: "campaign", visible: false }
+        { name: "survey", url: "#surveys", icon: "survey", visible: false }
+        { name: "queue", url: "#uploadqueue", icon: "upload", visible: false }
+        { name: "reminder", url: "#reminders", icon: "reminder", visible: false }
+        { name: "profile", url: "#profile", icon: "profile", visible: false }
+        { name: "logout", url: "#logout", icon: "logout", visible: false }
       ]
 
   App.vent.on "credentials:storage:load:success credentials:storage:load:failure", ->
