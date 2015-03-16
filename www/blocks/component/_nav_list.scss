@@ -28,13 +28,12 @@ nav.list {
       div.action {
         padding: $app-main-padding;
         float: left;
-        width: 2rem;
-        height: 2rem;
+        width: 1.5rem;
+        height: 1.5rem;
         .icon {
-          margin: 0.25rem;
-          width: 2rem;
-          height: 2rem;
-          background-size: 2rem;
+          width: 1.5rem;
+          height: 1.5rem;
+          background-size: 1.5rem;
           &.navigate {
             background-position: left;
             background-size: 1.2rem 2rem;
