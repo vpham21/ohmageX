@@ -36,6 +36,17 @@ body > #ui-blocker  {
 
   }
 
+  form {
+    text-align: left;
+    label {
+      margin-bottom: 3px;
+      display: inline-block;
+    }
+    input {
+      width: 100%;
+    }
+  }
+
   figcaption {
     padding-top: 10px;
     display: inline-block;
