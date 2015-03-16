@@ -53,6 +53,26 @@
     template: "blocker/show/password_change"
     serializeData: ->
       username: App.request "credentials:username"
+    onRender: ->
+      @$el.find('#old-password').hideShowPassword
+        innerToggle: true
+        toggle:
+          styles:
+            marginTop: "4px"
+          verticalAlign: "top"
+      @$el.find('#new-password').hideShowPassword
+        innerToggle: true
+        toggle:
+          styles:
+            marginTop: "4px"
+          verticalAlign: "top"
+      @$el.find('#confirm-password').hideShowPassword
+        innerToggle: true
+        toggle:
+          styles:
+            marginTop: "4px"
+          verticalAlign: "top"
+
 
   class Show.Layout extends App.Views.Layout
     tagName: "figure"
