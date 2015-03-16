@@ -177,7 +177,7 @@
         if data.repeatDays.length is 7
           data.summaryText = "Repeats daily at #{currentDisplayTime}"
         else
-          dayList = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
+          dayList = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
           console.log 'repeatDays', data.repeatDays
           if data.repeatDays.length is 1
             dayText = dayList[parseInt(data.repeatDays[0])]
