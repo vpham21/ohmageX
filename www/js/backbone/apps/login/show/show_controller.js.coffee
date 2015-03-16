@@ -8,6 +8,7 @@
 
       @listenTo @layout, "show", =>
         console.log "showing layout"
+        @noticeRegion()
         @formRegion()
 
       @show @layout
@@ -37,6 +38,10 @@
           title: "Login Error"
           description: result
           showCancel: false
+
+    noticeRegion: ->
+      App.execute "notice:region:set", @layout.noticeRegion
+
     formRegion: ->
       myPath = App.request "serverpath:entity"
 
@@ -74,6 +79,10 @@
         App.execute "serverpath:update", value
 
       @show serversView, region: formView.serversRegion
+
+    getNoticeView: (notice) ->
+      new Show.Notice
+        model: notice
 
     getServersView: (serverList) ->
       new Show.ServerList
