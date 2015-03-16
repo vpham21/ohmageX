@@ -1,5 +1,5 @@
-<h3><%= @title %></h3>
-<div id="notice"></div>
+<h4 class="blocker-title"><%= @title %></h4>
+<h5 id="notice"></h5>
 <figcaption id="content-region"></figcaption>
 <div class="button-pair">
     <div class="action">
