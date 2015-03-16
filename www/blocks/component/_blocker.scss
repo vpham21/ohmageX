@@ -36,6 +36,26 @@ body > #ui-blocker  {
 
   }
 
+  button,
+  input[type="button"],
+  input[type="date"],
+  input[type="email"],
+  input[type="number"],
+  input[type="password"],
+  input[type="reset"],
+  input[type="search"],
+  input[type="submit"],
+  input[type="tel"],
+  input[type="text"],
+  input[type="time"],
+  input[type="url"],
+  textarea {
+    font-size: $global-form-control-font-size*0.75;
+    padding: $global-form-control-padding*0.75;
+    border-radius: $global-form-control-border-radius*0.75;
+    line-height: 0.75;
+  }
+
   .button-pair {
     padding: 8px $global-form-control-padding;
     overflow: auto;
