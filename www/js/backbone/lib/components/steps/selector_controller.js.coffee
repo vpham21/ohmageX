@@ -36,23 +36,30 @@
             model: entity
         when "afterSurveySubmit"
 
-          if App.custom.build.debug or (App.request('reminders:current').findWhere(surveyId: @surveyId) and App.device.isNative)
-            # reminders for this survey already exist
+          if !App.custom.build.debug and !App.device.isNative
+            # no debugging and no native, just show the base exit summary.
+            return new Steps.AfterSubmission
+              model: entity
 
-            reminders = App.request "reminders:survey:scheduled:latertoday", @surveyId
-
-            if reminders.length is 0
-              # Reminders exist but they're not later today.
-              # just show the exit page.
-              return new Steps.AfterSubmission
-                model: entity
-            else
-              # reminders are scheduled later today for this survey.
-              return new Steps.AfterHasReminders
-                collection: reminders
           else
-            # reminders don't exist for this survey at all.
-            return new Steps.AfterNoReminders
+
+            if App.request('reminders:current').findWhere(surveyId: @surveyId)
+              # reminders for this survey already exist
+
+              reminders = App.request "reminders:survey:scheduled:latertoday", @surveyId
+
+              if reminders.length is 0
+                # Reminders exist but they're not later today.
+                # just show the exit page.
+                return new Steps.AfterSubmission
+                  model: entity
+              else
+                # reminders are scheduled later today for this survey.
+                return new Steps.AfterHasReminders
+                  collection: reminders
+            else
+              # reminders don't exist for this survey at all.
+              return new Steps.AfterNoReminders
 
         else
           # handle all other view types in the Prompts component.
