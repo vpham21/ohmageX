@@ -5,7 +5,7 @@
     border-bottom: 1px solid $app-list-border-color;
     h3 {
       margin: (-1 * $app-main-footer-padding) (-1 * $app-main-footer-padding) $app-main-footer-padding;
-      height: $info-region-header-height;
+      min-height: $info-region-header-height;
       padding: (($info-region-header-height - $info-region-header-font-size) / 2) $app-main-footer-padding;
       font-size: $info-region-header-font-size;
       line-height: 1;
