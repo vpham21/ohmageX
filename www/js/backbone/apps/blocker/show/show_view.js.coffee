@@ -26,6 +26,8 @@
           styles:
             marginTop: "4px"
           verticalAlign: "top"
+      @trigger "error:show", "Your password failed to authenticate. Please re-enter your password."
+
 
   class Show.PasswordChange extends App.Views.ItemView
     initialize: ->

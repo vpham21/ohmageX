@@ -36,11 +36,98 @@ body > #ui-blocker  {
 
   }
 
+  #notice {
+    font-size: $app-header-menu-font-size;
+    background-color: #FFDDEE;
+    color: #B01;
+    padding: $global-form-control-padding;
+    margin: 0;
+    &:empty {
+      display: none;
+    }
+  }
+
+  .blocker-title {
+    font-size: $app-header-menu-font-size;
+    padding: $global-form-control-padding;
+    margin: 0;
+  }
+
+  .content-header {
+    font-size: $app-header-menu-font-size*0.85;
+    padding: $global-form-control-padding*0.85;
+    margin: 0;
+  }
+
+  button,
+  input[type="button"],
+  input[type="date"],
+  input[type="email"],
+  input[type="number"],
+  input[type="password"],
+  input[type="reset"],
+  input[type="search"],
+  input[type="submit"],
+  input[type="tel"],
+  input[type="text"],
+  input[type="time"],
+  input[type="url"],
+  textarea {
+    font-size: $global-form-control-font-size*0.75;
+    padding: $global-form-control-padding*0.75;
+    border-radius: $global-form-control-border-radius*0.75;
+    line-height: 0.75;
+  }
+
+  .button-pair {
+    padding: 8px $global-form-control-padding;
+    overflow: auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    > * {
+      float: left;
+      width: 50%;
+    }
+    > :first-child {
+      button {
+        background-color: #b00;
+        color: #fff;
+      }
+      padding-right: 4px;
+    }
+    > :last-child {
+      button {
+        background-color: #00aeff;
+        color: #fff;
+      }
+      padding-left: 4px;
+    }
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 0;
+    }
+  }
+
+  form {
+    text-align: left;
+    label {
+      margin-bottom: 3px;
+      display: inline-block;
+    }
+    input {
+      width: 100%;
+    }
+  }
+
   figcaption {
     padding-top: 10px;
     display: inline-block;
+    width: 100%;
     color: $global-form-control-text-color;
-    font-size: $global-form-control-font-size;
+    font-size: $global-form-control-font-size*0.75;
   }
 
 }

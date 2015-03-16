@@ -15,13 +15,13 @@
           {
             title: "Change Password"
             cancelLabel: "Cancel"
-            okLabel: "Change Password"
+            okLabel: "Change"
           }
         when "password:invalid"
           {
             title: "Password Failed"
-            cancelLabel: "Cancel and Logout"
-            okLabel: "Submit Password"
+            cancelLabel: "Cancel"
+            okLabel: "Submit"
           }
         when "reminder:update"
           {
