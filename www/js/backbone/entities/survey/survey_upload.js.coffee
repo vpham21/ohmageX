@@ -69,6 +69,7 @@
     responses = App.request "responses:current"
 
     App.execute 'credentials:preflight:check', =>
+      App.vent.trigger "loading:show", "Getting Location..."
       API.getLocation responses, surveyId
 
   App.vent.on "survey:geolocation:fetch:failure", (surveyId) ->
