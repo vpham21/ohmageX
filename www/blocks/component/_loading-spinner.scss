@@ -54,3 +54,8 @@ body > #loading-spinner  {
   }
 
 }
+
+
+body[loading-spinner-state="active"] {
+  overflow: hidden;
+}

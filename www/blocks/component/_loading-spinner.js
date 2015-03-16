@@ -18,6 +18,7 @@ var LoadingSpinnerComponent = function(ele){
             // disable hiding sibling elements from screen readers.
         } else {
             // hide sibling elements from screen readers.
+            $('body').scrollTop(0);
         }
     };
 
@@ -29,6 +30,7 @@ var LoadingSpinnerComponent = function(ele){
     };
 
     __self__.show = function(){
+        $('body').scrollTop(0);
         $ele.attr('data-state', 'active');
         $('body').attr('loading-spinner-state', 'active');
         // disable hiding sibling elements from screen readers.
