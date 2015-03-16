@@ -28,12 +28,12 @@
     -moz-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
     box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
 
-    background: -webkit-linear-gradient(top, #222 0%, #45484d 100%);
-    background: -moz-linear-gradient(top, #222 0%, #45484d 100%);
-    background: -o-linear-gradient(top, #222 0%, #45484d 100%);
-    background: -ms-linear-gradient(top, #222 0%, #45484d 100%);
-    background: linear-gradient(top, #222 0%, #45484d 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#222', endColorstr='#45484d',GradientType=0 );
+    // background: -webkit-linear-gradient(top, #222 0%, #45484d 100%);
+    // background: -moz-linear-gradient(top, #222 0%, #45484d 100%);
+    // background: -o-linear-gradient(top, #222 0%, #45484d 100%);
+    // background: -ms-linear-gradient(top, #222 0%, #45484d 100%);
+    // background: linear-gradient(top, #222 0%, #45484d 100%);
+    // filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#222', endColorstr='#45484d',GradientType=0 );
   }
 
   label:after {
