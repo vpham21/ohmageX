@@ -55,6 +55,43 @@
     background-image: url("../img/icon/save.png");
   }
 
+  &.survey {
+    background-image: url("../img/icon/survey.svg");
+  }
+
+  &.campaign {
+    background-image: url("../img/icon/campaign.svg");
+  }
+
+  &.stream {
+    background-image: url("../img/icon/stream.svg");
+  }
+
+  &.analytics {
+    background-image: url("../img/icon/analytics.svg");
+  }
+
+  &.upload {
+    background-image: url("../img/icon/upload.svg");
+  }
+
+  &.reminder {
+    background-image: url("../img/icon/reminder.svg");
+  }
+
+  &.profile {
+    background-image: url("../img/icon/profile.svg");
+  }
+
+  &.logout {
+    background-image: url("../img/icon/logout.svg");
+  }
+
+
+  &.edit {
+    background-image: url("../img/icon/edit.svg");
+  }
+
   &.delete, &.save, &.info {
     background-size: 40px;
   }
