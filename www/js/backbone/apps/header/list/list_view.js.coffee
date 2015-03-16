@@ -81,7 +81,16 @@
   class List.Layout extends App.Views.Layout
     initialize: ->
       @listenTo @collection, "change:chosen", (model) ->
-        if model.isChosen() then @menu.close()
+        if model.isChosen()
+          @menu.close()
+          # TODO: Clean this up - perhaps fetch all nav icon values
+          # and remove all associated classnames
+          @$el.removeClass 'profile'
+          @$el.removeClass 'campaign'
+          @$el.removeClass 'survey'
+          @$el.removeClass 'upload'
+          @$el.removeClass 'reminder'
+          @$el.addClass model.get('icon')
       @listenTo @collection, "chosen:canceled", ->
         @menu.close()
     template: "header/list/layout"
