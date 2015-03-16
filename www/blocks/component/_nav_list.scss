@@ -26,7 +26,7 @@ nav.list {
       @include -clearfix;
 
       div.action {
-        padding: $app-main-padding;
+        padding: 0.8rem 1rem;
         float: left;
         width: 1.5rem;
         height: 1.5rem;
@@ -36,7 +36,7 @@ nav.list {
           background-size: 1.5rem;
           &.navigate {
             background-position: left;
-            background-size: 1.2rem 2rem;
+            background-size: 1.5rem 1.5rem;
           }
         }
       }
