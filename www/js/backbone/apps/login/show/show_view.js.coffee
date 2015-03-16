@@ -84,7 +84,13 @@
       "click button[type=submit]": "submit:clicked"
       "blur input[name=username]": "errors:reset"
       "blur input[name=pass]": "errors:reset"
-
+    onRender: ->
+      @$el.find('input.pass').hideShowPassword
+        innerToggle: true
+        toggle:
+          styles:
+            marginTop: "4px"
+          verticalAlign: "top"
 
   class Show.Layout extends App.Views.Layout
     template: "login/show/show_layout"
