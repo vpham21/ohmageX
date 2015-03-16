@@ -17,7 +17,7 @@ $reminders-list-border-width: 1px;
 
   .reminder-form {
     clear: both;
-    padding: 0 16px;
+    padding: 0;
   }
 
   .button-pair {
@@ -49,17 +49,24 @@ $reminders-list-border-width: 1px;
   }
 
   fieldset {
+    clear: right;
     margin:0;
     padding:0;
     border:0;
   }
 
   .date-control, .time-control {
-    display: inline-block;
+    display: block;
+  }
+  .repeat-days-container {
+    height: 65px;
+  }
+
+  .date-control, .time-control, .repeat-days-container {
+    font-size: 0.8rem;
   }
 
   .surveys-region, .date-control, .time-control {
-    font-size: 12px;
     input, select {
       margin-bottom: 8px;
       font-size: 12px;
@@ -70,9 +77,15 @@ $reminders-list-border-width: 1px;
     }
   }
 
+  .surveys-region {
+    width: 70%;
+    select {
+      width: 100%;
+    }
+  }
   ul.repeat-days {
     padding-left: 0;
-    margin-bottom: 10px;
+    margin: $global-form-control-padding/2 0;
     outline: none;
     user-select: none;
     > li {
@@ -88,9 +101,9 @@ $reminders-list-border-width: 1px;
       cursor: pointer;
       background-color: #eee;
       border-radius: 50%;
-      width: 24px;
-      height: 24px;
-      font-size: 14px;
+      width: 32px;
+      height: 32px;
+      font-size: 17px;
       text-align: center;
       padding: 4px;
     }
@@ -106,6 +119,17 @@ $reminders-list-border-width: 1px;
     padding: ($reminders-list-height - $reminders-list-font-size) / 2;
     font-size: $reminders-list-font-size;
     line-height: 1;
+  }
+  .delete-button-container {
+    padding: $global-form-control-padding;
+    text-align: right;
+    button {
+      height: 1.7rem;
+      width: 1.7rem;
+      background-size: 1.7rem 1.7rem;
+      cursor: pointer;
+    }
+
   }
 
   > li.active .toggler-button {
@@ -125,22 +149,11 @@ $reminders-list-border-width: 1px;
   }
 
   .repeat-enable-region {
-    padding-bottom: 16px;
+    float: right;
+    width: 27%;
     outline: none;
     user-select: none;
   }
-
-  @media (min-width: 260px) {
-    .repeat-enable-region {
-      float: left;
-      width: auto;
-    }
-
-    ul.repeat-days {
-      float: right;
-    }
-  }
-
 
 }
 
