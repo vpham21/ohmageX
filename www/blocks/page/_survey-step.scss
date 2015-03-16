@@ -126,7 +126,7 @@
     }
     div::before {
       content: '\2039';
-      left: $global-form-control-padding;
+      left: 0;
       color: #F00;
     }
   }
@@ -137,7 +137,7 @@
     }
     div::before {
       content: '\203A';
-      right: $global-form-control-padding;
+      right: 0;
       color: #0C0;
     }
   }
