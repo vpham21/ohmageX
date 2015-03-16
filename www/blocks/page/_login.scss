@@ -10,7 +10,9 @@ form.login {
   label {
     text-align: center;
     font-weight: bold;
-    margin-top: $app-main-footer-padding;
+    margin-top: $app-main-footer-padding/2;
+    margin-bottom: $app-main-footer-padding/4;
+
   }
   .error + label {
     margin-top: 0;
