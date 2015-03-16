@@ -73,4 +73,5 @@
   class Show.Layout extends App.Views.Layout
     template: "login/show/show_layout"
     regions:
+      noticeRegion: "#notice-region"
       formRegion: "#form-region"
