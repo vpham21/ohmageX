@@ -42,6 +42,7 @@
               model: entity
 
           else
+
             if App.request('reminders:current').findWhere(surveyId: @surveyId)
               # reminders for this survey already exist
 
