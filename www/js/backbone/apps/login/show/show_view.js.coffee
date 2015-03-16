@@ -1,5 +1,9 @@
 @Ohmage.module "LoginApp.Show", (Show, App, Backbone, Marionette, $, _) ->
 
+
+  class Show.Notice extends App.Views.ItemView
+    template: "login/show/_notice"
+
   class Show.Server extends App.Views.ItemView
     tagName: "option"
     template: "login/show/_serveritem"
