@@ -28,10 +28,7 @@
         timezone: currentTZ
         location_status: if location then "valid" else "unavailable"
         survey_id: App.request "survey:saved:server_id", surveyId
-        survey_launch_context:
-          launch_time: moment().unix()
-          launch_timezone: _.jstz()
-          active_triggers: []
+        survey_launch_context: App.request "survey:launchcontext"
         responses: submitResponses
 
       if location
