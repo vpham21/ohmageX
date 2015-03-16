@@ -1,48 +1,38 @@
 <form class='reminder-form' id="reminder-form-<%= @id %>">
 
+  <div class="repeat-enable-region">
+    <div class="square-checkbox">
+      <input type="checkbox" name="repeat" id="repeat<%= @id %>">
+      <label for="repeat<%= @id %>">Repeat</label>
+    </div>
+  </div>
   <div class="surveys-region"></div>
 
   <fieldset>
-    <div class="repeat-enable-region">
-      <div class="square-checkbox">
-        <input type="checkbox" name="repeat" id="repeat<%= @id %>">
-        <label for="repeat<%= @id %>">Repeat</label>
+    <div class="repeat-days-container">
+      <label for="date<%= @id %>">on </label>
+      <ul class="repeat-days" data-visible="false">
+        <li><input type="checkbox" value="1" name="repeatDays[]"> <label>M</label></li>
+        <li><input type="checkbox" value="2" name="repeatDays[]"> <label>T</label></li>
+        <li><input type="checkbox" value="3" name="repeatDays[]"> <label>W</label></li>
+        <li><input type="checkbox" value="4" name="repeatDays[]"> <label>T</label></li>
+        <li><input type="checkbox" value="5" name="repeatDays[]"> <label>F</label></li>
+        <li><input type="checkbox" value="6" name="repeatDays[]"> <label>S</label></li>
+        <li><input type="checkbox" value="0" name="repeatDays[]"> <label>S</label></li>
+      </ul>
+      <div class="date-control">
+        <input name="date<%= @id %>" value="<%= @currentDateValue %>" type="date">
       </div>
     </div>
-    <ul class="repeat-days" data-visible="false">
-      <li><input type="checkbox" value="1" name="repeatDays[]"> <label>M</label></li>
-      <li><input type="checkbox" value="2" name="repeatDays[]"> <label>T</label></li>
-      <li><input type="checkbox" value="3" name="repeatDays[]"> <label>W</label></li>
-      <li><input type="checkbox" value="4" name="repeatDays[]"> <label>T</label></li>
-      <li><input type="checkbox" value="5" name="repeatDays[]"> <label>F</label></li>
-      <li><input type="checkbox" value="6" name="repeatDays[]"> <label>S</label></li>
-      <li><input type="checkbox" value="0" name="repeatDays[]"> <label>S</label></li>
-    </ul>
-  </fieldset>
-
   <fieldset>
-    <div class="date-control">
-      <label for="date<%= @id %>">on </label>
-      <input name="date<%= @id %>" value="<%= @currentDateValue %>" type="date">
-    </div>
-    <div class="time-control">
       <label for="time<%= @id %>">at </label>
+    <div class="time-control">
       <input name="time<%= @id %>" value="<%= @currentTimeValue %>" type="time">
     </div>
   </fieldset>
 
-  <div>
-    <button type="button" class="delete-button">Delete</button>
+  <div class="delete-button-container">
+    <button type="button" class="delete-button icon trash">Delete</button>
   </div>
 
-  <!--
-  <div class="button-pair">
-    <div>
-      <button type="button" class="save-button">Save</button>
-    </div>
-    <div>
-      <button type="button" class="delete-button">Delete</button>
-    </div>
-  </div>
-  -->
 </form>
