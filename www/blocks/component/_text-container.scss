@@ -9,4 +9,8 @@
   text-align: center;
   padding: (2*$app-main-footer-padding) $app-main-footer-padding;
   width: 100%;
+
+  &:empty {
+    display: none;
+  }
 }
