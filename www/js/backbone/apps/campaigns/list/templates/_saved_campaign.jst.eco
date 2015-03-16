@@ -7,6 +7,6 @@
   </div>
   <div role="link">
     <h3><%= @name %></h3>
-    <p><small><%= @id %></small></p>
+    <!-- <p><small><%= @id %></small></p> -->
   </div>
 </div>
