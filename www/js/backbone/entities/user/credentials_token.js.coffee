@@ -95,3 +95,11 @@
   App.vent.on "surveys:saved:campaign:fetch:failure:auth campaigns:sync:failure:auth", (errorText) ->
     if !App.request("credentials:ispassword")
       API.tokenLoginRedirect()
+
+  App.vent.on "credentials:cleared", ->
+    if !App.request("credentials:ispassword")
+      # Go back to the token login page if credentials:cleared
+      # is somehow triggered in the browser.
+      setTimeout (=>
+        window.location.replace App.custom.api.token_redirect
+      ), 1500
