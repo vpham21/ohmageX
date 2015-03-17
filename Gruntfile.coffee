@@ -189,6 +189,7 @@ module.exports = (grunt) ->
             "dialogs",
             "file",
             "geolocation",
+            "inappbrowser",
             "media",
             "media-capture",
             "splashscreen",

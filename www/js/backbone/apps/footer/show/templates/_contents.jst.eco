@@ -1,6 +1,5 @@
 <p class="subheader">
-  <strong>Powered by <a href="#" target="_blank" onclick="window.open('http://ohmage.org', '_system');
-  ">ohmage</a></strong>
+  <strong>Powered by <a href="http://ohmage.org">ohmage</a></strong>
   <br><small class="text-muted"><em>v.<%= @version %><em></small>
 </p>
 <p>
