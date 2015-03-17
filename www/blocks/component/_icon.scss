@@ -6,13 +6,13 @@
   background: transparent;
 
   &.hamburger {
-    background-image: url("../img/icon/menu-open.png");
+    background-image: url("../img/icon/menu-open.svg");
     height: 38px;
     width: 36px;
   }
 
   &.close {
-    background: url("../img/icon/menu-close.png") center no-repeat;
+    background: url("../img/icon/menu-close.svg") center no-repeat;
     height: 40px;
     width: 40px;
   }
