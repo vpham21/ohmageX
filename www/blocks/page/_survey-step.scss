@@ -21,6 +21,8 @@
     background-color: $survey-step-inset-block-background-color;
     font-weight: bold;
     color: $survey-step-inset-block-font-color;
+    border-top: 1px solid $survey-step-inset-block-border-color;
+    border-bottom: 1px solid $survey-step-inset-block-border-color;
   }
 
   textarea {
@@ -58,6 +60,7 @@
       padding: $app-main-footer-padding;
       line-height: 1;
       z-index: 10;
+      font-size: $global-form-control-font-size;
     }
 
     button.delete {
@@ -91,10 +94,7 @@
     padding: 1rem
   }
 
-  #prev-button, #next-button, #skip-button {
-    float: left;
-    width: 33%;
-    padding: 0 0.5rem;
+  #skip-button, #prev-button, #next-button {
     position: relative;
     line-height: 1;
     &:first-child {
@@ -105,47 +105,74 @@
     }
     button {
       width: 100%;
-      padding: 0.75rem;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      padding: $global-form-control-padding*1.5;
     }
   }
+
+  #skip-button {
+    button {
+      background: $survey-step-skip-button-background-color;
+      background: linear-gradient(to bottom, adjust-color($survey-step-skip-button-background-color, $lightness: 5%, $saturation: -5%) 0%, adjust-color($survey-step-skip-button-background-color, $lightness: -5%, $saturation: 5%) 100%);    
+      border-radius: 0;
+      border: 1px solid adjust-color($survey-step-skip-button-background-color, $lightness: -5%, $saturation: 5%);
+      color: $survey-step-skip-button-font-color;
+    }
+  }
+
 
   #prev-button, #next-button {
     div::before {
       position: absolute;
-      padding: $global-form-control-padding;
-      line-height: 1;
       top: 0;
-      padding: 0.75rem;
       cursor: pointer;
+      opacity: 0.5;
+      height: 100%;
+      width: $global-form-control-font-size*1.5;
+      background-size: $global-form-control-font-size*0.85;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+    button {
+      text-transform: uppercase;
     }
   }
 
   #prev-button {
+
     button {
       padding-left: 2*$global-form-control-padding;
+      background: $survey-step-prev-button-background-color;
+      background: linear-gradient(to bottom, adjust-color($survey-step-prev-button-background-color, $lightness: 5%, $saturation: -5%) 0%, adjust-color($survey-step-prev-button-background-color, $lightness: -5%, $saturation: 5%) 100%);
     }
     div::before {
-      content: '\2039';
+      content: '';
+      background-image: url('../img/icon/left-triangle.svg');
       left: 0;
-      color: #F00;
     }
   }
 
   #next-button {
     button {
       padding-right: 2*$global-form-control-padding;
+      background: $survey-step-next-button-background-color;
+      background: linear-gradient(to bottom, adjust-color($survey-step-next-button-background-color, $lightness: 5%, $saturation: -5%) 0%, adjust-color($survey-step-next-button-background-color, $lightness: -5%, $saturation: 5%) 100%);
     }
     div::before {
-      content: '\203A';
+      content: '';
+      background-image: url('../img/icon/right-triangle.svg');
       right: 0;
-      color: #0C0;
     }
   }
 
-  #prev-button, #skip-button, #next-button {
+  #prev-button, #next-button {
     .disabled {
       visibility: hidden;
     }
+  }
+  #skip-button .disabled {
+    display: none;
   }
 
   .datetime-control {
