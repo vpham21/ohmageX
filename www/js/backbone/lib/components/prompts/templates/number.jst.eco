@@ -1,4 +1,4 @@
-<form>
+<form class="number-prompt-form">
   <h3 class="hide-accessible"><%= @displayLabel %></h3>
   <fieldset>
     <legend class="inset-block"><%= @promptText %></legend>
