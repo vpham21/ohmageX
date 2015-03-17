@@ -215,7 +215,7 @@
         event: "active:toggle"
         preventDefault: false
         stopPropagation: false
-      "click .edit-button,h3,p": "click:edit"
+      "click .edit-button,.summary-time,.repeat-time,.hotspot": "click:edit"
 
   class List.Reminders extends App.Views.CompositeView
     tagName: 'nav'
