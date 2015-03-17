@@ -160,26 +160,67 @@ $reminders-list-border-width: 1px;
 .reminder-summary {
   cursor: pointer;
   padding: $global-form-control-padding;
+  padding-bottom: 1rem+$global-form-control-padding;
+  position: relative;
 
   .edit-container {
     float: left;
-    width: 2rem;
-    height: 2rem;
+    width: 1.5rem;
+    height: 1.5rem;
     margin-right: $global-form-control-padding;
     button {
-      height: 2rem;
-      width: 2rem;
-      background-size: 2rem;
+      height: 1.5rem;
+      width: 1.5rem;
+      background-size: 1.5rem;
     }
   }
 
-  p {
-    margin-top: $global-form-control-padding/2;
+  .summary-time {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: rgb(0,132,174);
+    background: #F0F0FA;
+    font-weight: bold;
+    font-size: 0.65rem;
+    padding: $global-form-control-padding/2;
   }
 
+  .repeat-time {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+
+  .enable-switch-container {
+    float: right;
+    width: $reminders-list-width;
+    text-align: right;
+  }
+
+  .repeat-tag {
+    display: inline-block;
+    color: rgb(0,132,174);
+    background: #F0F0FA;
+    font-size: 0.65rem;
+    padding: $global-form-control-padding/2;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .interval {
+    font-size: 0.65rem;
+    color: rgb(0,132,174);
+  }
+  .hotspot {
+    z-index: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
   .enable-switch {
 
-    float: right;
     width: $reminders-list-width;
     height: $reminders-list-height;
     position: relative;
