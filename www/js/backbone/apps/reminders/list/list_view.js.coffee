@@ -175,7 +175,8 @@
       if data.repeat
         # repeat is enabled
         if data.repeatDays.length is 7
-          data.summaryText = "Repeats at #{currentDisplayTime} daily"
+          data.summaryText = "#{currentDisplayTime}"
+          data.intervalText = 'Every Day'
         else
           dayList = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
           console.log 'repeatDays', data.repeatDays
@@ -196,15 +197,18 @@
                 suffix = ""
               dayText + "#{prefix}#{dayList[parseInt(repeatDay)]}#{suffix}"
             , "")
-          data.summaryText = "Repeats at #{currentDisplayTime} on #{dayText}"
+          data.summaryText = "#{currentDisplayTime}"
+          data.intervalText = "#{dayText}"
       else
         # one time reminder.
         if moment(data.activationDate).startOf('day').diff(moment().startOf('day'), 'weeks') > 0
           # moment calendar() method doesn't display time if it's been more than a week.
           # show a custom formatted date instead.
-          data.summaryText = "At #{data.activationDate.format('h:mma')} on #{data.activationDate.format('dddd, MMMM Do YYYY')}"
+          data.summaryText = "#{data.activationDate.format('h:mma')} on #{data.activationDate.format('dddd, MMMM Do YYYY')}"
+          data.intervalText = ""
         else
           data.summaryText = data.activationDate.calendar()
+          data.intervalText = ""
       data
     onRender: ->
       # prepopulate all fields
