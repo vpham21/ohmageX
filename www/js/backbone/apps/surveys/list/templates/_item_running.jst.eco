@@ -2,12 +2,12 @@
   <div class="action right">
     <button type="button" class="icon right-arrow navigate">View</button>
   </div>
+  <% if @showTime: %>
+  <div class="action right clock">
+    <button type="button" class="icon clock">Pending</button>
+  </div>
+  <% end %>
   <div role="link">
     <h3><%= @title %></h3>
-    <% if @showTime: %>
-    <aside class="reminder">
-      <span class="time"></span>
-    </aside>
-    <% end %>
   </div>
 </div>
