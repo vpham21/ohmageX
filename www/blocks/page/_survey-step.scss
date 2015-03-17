@@ -128,9 +128,9 @@
       background: linear-gradient(to bottom, adjust-color($survey-step-prev-button-background-color, $lightness: 5%, $saturation: -5%) 0%, adjust-color($survey-step-prev-button-background-color, $lightness: -5%, $saturation: 5%) 100%);
     }
     div::before {
-      content: '\2039';
+      content: '';
+      background-image: url('../img/icon/left-triangle.svg');
       left: 0;
-      color: #F00;
     }
   }
 
@@ -141,9 +141,9 @@
       background: linear-gradient(to bottom, adjust-color($survey-step-next-button-background-color, $lightness: 5%, $saturation: -5%) 0%, adjust-color($survey-step-next-button-background-color, $lightness: -5%, $saturation: 5%) 100%);
     }
     div::before {
-      content: '\203A';
+      content: '';
+      background-image: url('../img/icon/right-triangle.svg');
       right: 0;
-      color: #0C0;
     }
   }
 
