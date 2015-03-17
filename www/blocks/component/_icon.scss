@@ -43,7 +43,7 @@
   }
 
   &.info {
-    background-image: url("../img/icon/info.png");
+    background-image: url("../img/icon/info.svg");
   }
 
   &.delete {
@@ -51,7 +51,7 @@
   }
 
   &.save {
-    background-image: url("../img/icon/save.png");
+    background-image: url("../img/icon/save.svg");
   }
 
   &.survey {
@@ -111,14 +111,17 @@
   }
 
   &.search {
-    background-image: url("../img/icon/search.png");
+    background-image: url("../img/icon/search.svg");
     height: 56px;
     width: 56px;
 
     &.form-control {
       height: ((3/2) * $global-form-control-font-size + 2 * $global-form-control-padding);
       width: ((3/2) * $global-form-control-font-size + 2 * $global-form-control-padding);
-      background-size: ((3/2) * $global-form-control-font-size + 2 * $global-form-control-padding);
+      background-size: $global-form-control-font-size*1.5;
+      background-position: center center;
+      background-color: #4384dc;
+      background-repeat: no-repeat;
       border: 1px solid $global-form-control-border-color;
     }
 
