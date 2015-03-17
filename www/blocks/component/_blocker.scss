@@ -37,7 +37,7 @@ body > #ui-blocker  {
   }
 
   #notice {
-    font-size: $app-header-menu-font-size;
+    font-size: $global-form-control-font-size*0.95;
     background-color: #FFDDEE;
     color: #B01;
     padding: $global-form-control-padding;
