@@ -293,4 +293,58 @@
     }
   }
 
+  .number-prompt-form {
+    $number-section-header-width: 3rem;
+    $number-row-height: 1rem;
+    font-size: 0.75rem;
+    header {
+      text-transform: uppercase;
+      background-color: #11deff;
+      color: white;
+      font-weight: bold;
+    }
+    aside.number-range {
+      height: $number-row-height*2+$global-form-control-padding*2;
+      & > header {
+        text-align: center;
+        height: $number-row-height+$global-form-control-padding;
+        padding: $global-form-control-padding/2;
+      }
+      section {
+        height: $number-row-height+$global-form-control-padding;
+        width: 50%;
+        span {
+          display: inline-block;
+          font-weight: bold;
+          padding: $global-form-control-padding/2 0;
+        }
+      }
+      section.left {
+        float: left;
+        header {
+          float: left;
+        }
+        span {
+          margin-left: $global-form-control-padding;
+        }
+      }
+      section.right {
+        float: right;
+        text-align: right;
+        header {
+          float: right;
+        }
+        span {
+          margin-right: $global-form-control-padding;
+        }
+      }
+      section header {
+        color: rgb(0,132,174);
+        background: #F0F0FA;
+        padding: $global-form-control-padding/2;
+        height: $number-row-height+$global-form-control-padding;
+        width: $number-section-header-width;
+      }
+    }
+  }
 }
