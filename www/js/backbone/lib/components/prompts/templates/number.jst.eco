@@ -2,6 +2,13 @@
   <h3 class="hide-accessible"><%= @displayLabel %></h3>
   <fieldset>
     <legend class="inset-block"><%= @promptText %></legend>
+    <% if @min and @max: %>
+    <aside class="number-range">
+      <header>Range</header>
+      <section class="left"><header>Min</header><span><strong><%= @min %></strong></span></section>
+      <section class="right"><header>Max</header><span><strong><%= @max %></strong></span></section>
+    </aside>
+    <% end %>
     <div class="number-control">
       <button type="button" class="increment">
         <span class="hide-accessible">Increment</span>
