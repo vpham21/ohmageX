@@ -10,7 +10,7 @@
         latitude: position.coords.latitude
         longitude: position.coords.longitude
         accuracy: position.coords.accuracy
-        time: position.timestamp
+        time: moment(position.timestamp).valueOf()
         timezone: _.jstz()
       App.vent.trigger "survey:geolocation:fetch:success", @surveyId
 
