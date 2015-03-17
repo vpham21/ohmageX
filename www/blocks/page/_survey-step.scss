@@ -257,4 +257,40 @@
     }
   }
 
+  .button-pair {
+    padding: 8px 0;
+    overflow: auto;
+    > * {
+      float: left;
+      width: 50%;
+    }
+    > :first-child {
+      button {
+        background-color: #b00;
+        color: #fff;
+      }
+      padding-right: 4px;
+    }
+    > :last-child {
+      button {
+        background-color: #00aeff;
+        color: #fff;
+      }
+      padding-left: 4px;
+    }
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 0;
+    }
+  }
+  .custom-choice-form {
+    .add-form input {
+      width: 100%;
+    }
+    .add-form button {
+      font-size: 0.9rem;
+    }
+  }
+
 }
