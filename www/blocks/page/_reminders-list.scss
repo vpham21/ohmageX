@@ -178,7 +178,7 @@ $reminders-list-border-width: 1px;
   .summary-time {
     position: absolute;
     bottom: 0;
-    left: 0;
+    right: 0;
     color: rgb(0,132,174);
     background: #F0F0FA;
     font-weight: bold;
@@ -189,7 +189,7 @@ $reminders-list-border-width: 1px;
   .repeat-time {
     position: absolute;
     bottom: 0;
-    right: 0;
+    left: 0;
   }
 
   .enable-switch-container {
@@ -206,6 +206,7 @@ $reminders-list-border-width: 1px;
     padding: $global-form-control-padding/2;
     text-transform: uppercase;
     margin: 0;
+    margin-right: $global-form-control-padding;
   }
   .interval {
     font-size: 0.65rem;
