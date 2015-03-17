@@ -55,6 +55,13 @@
       console.log 'serializeData data', data
       if !data.currentValue
         data.currentValue = ''
+      data.min = false
+      data.max = false
+
+      if @model.get('properties').get('min') isnt undefined and @model.get('properties').get('max') isnt undefined
+        data.min = @model.get('properties').get('min')
+        data.max = @model.get('properties').get('max')
+
       data
 
   class Prompts.Timestamp extends Prompts.Base
