@@ -19,7 +19,7 @@
 
       submitResponses = @prepResponseUpload currentResponses
 
-      currentTime = (new Date).getTime()
+      currentTime = moment().valueOf()
       currentTZ = _.jstz()
 
       submitSurveys = 

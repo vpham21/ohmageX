@@ -7,7 +7,7 @@
   API =
     setContext: ->
       currentContext =
-        launch_time: (new Date).getTime()
+        launch_time: moment().valueOf()
         launch_timezone: _.jstz()
         active_triggers: []
     removeContext: ->
