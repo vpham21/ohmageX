@@ -1,4 +1,4 @@
-<form>
+<form class="custom-choice-form">
   <h3 class="hide-accessible"><%= @displayLabel %></h3>
   <label for="<%= @id %>" class="inset-block"><%= @promptText %></label>
   <ul class="prompt-list"></ul>
@@ -6,7 +6,15 @@
   <div class="add-form hidden">
     <h4 class="hide-accessible">Custom Choice</h4>
     <input type="text" class="add-value" />
-    <button type="button" class="add-submit">Create Custom Choice</button>
-    <button type="button" class="add-cancel">Close</button>
+
+    <div class="button-pair">
+      <div class="action">
+        <button type="button" class="add-cancel">Close</button>
+      </div>
+      <div class="action">
+        <button type="button" class="add-submit">Create Choice</button>
+      </div>
+    </div>
+
   </div>
 </form>
