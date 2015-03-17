@@ -78,9 +78,6 @@
   App.reqres.setHandler "credentials:token:param", ->
     API.getTokenParam()
 
-  App.commands.setHandler "credentials:token:redirect", ->
-    API.tokenLoginRedirect()
-
   App.vent.on "uploadqueue:upload:failure:auth", (responseData, errorText, surveyId) ->
     if !App.request("credentials:ispassword")
       API.tokenLoginRedirect()
