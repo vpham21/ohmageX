@@ -5,6 +5,7 @@
 
   App.on "before:start", (options) ->
     App.environment = options.environment
+    App.version = options.app_version
     App.cordova = options.cordova
     App.custom = options.app_config
     App.device = App.request "device:init"

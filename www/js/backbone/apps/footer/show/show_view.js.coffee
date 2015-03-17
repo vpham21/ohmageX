@@ -2,6 +2,10 @@
 
   class Show.Contents extends App.Views.ItemView
     template: "footer/show/_contents"
+    serializeData: ->
+      data = {}
+      data.version = App.version
+      data
 
   class Show.Footer extends App.Views.Layout
     template: "footer/show/footer"

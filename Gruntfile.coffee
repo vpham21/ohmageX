@@ -126,6 +126,7 @@ module.exports = (grunt) ->
             js_path: "js/<%= pkg.name %>.js"
             js_env: "development"
             js_url: "http://0.0.0.0:8088/"
+            app_version: "<%= pkg.version %>"
             app_config: "<%= JSON.stringify(appConfig) %>"
             package_info: "<%= JSON.stringify(appConfig.build) %>"
             root_path: "/"

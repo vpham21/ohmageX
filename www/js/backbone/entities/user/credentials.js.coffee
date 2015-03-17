@@ -188,3 +188,6 @@
     # On native:
     # in the future, could show a temporary login modal to update password
     # if it's an "invalid password" type of error
+
+  App.vent.on "appversion:update", (oldVersion) ->
+    API.logout()

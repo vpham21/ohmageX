@@ -26,6 +26,7 @@
         environment: "<%= js_env %>",
         root_path: "<%= root_path %>",
         url: "<%= js_url %>",
+        app_version: "<%= app_version %>",
         package_info: <%= package_info %>,
         app_config: <%= app_config %>
       };
