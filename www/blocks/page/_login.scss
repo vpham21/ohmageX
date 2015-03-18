@@ -4,6 +4,15 @@ form.login {
   > :first-child {
     margin-top: 0;
   }
+  h1 {
+    text-indent: -999px;
+    overflow: hidden;
+    border: 0;
+    background-image: url('../img/big-logo.svg');
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
   > * {
     display: block;
   }
