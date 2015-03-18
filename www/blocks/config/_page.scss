@@ -1,3 +1,16 @@
+$modal-close-background-color: #b00;
+$modal-close-background: linear-gradient(to bottom, adjust-color($modal-close-background-color, $lightness: 5%, $saturation: -5%) 0%, adjust-color($modal-close-background-color, $lightness: -5%, $saturation: 5%) 100%);
+$modal-close-font-color: #fff;
+
+$modal-close-icon-size: 2.3rem;
+
+$modal-close-box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.25) !default;
+
+$modal-activate-background-color: #00aeff;
+$modal-activate-background: linear-gradient(to bottom, adjust-color($modal-activate-background-color, $lightness: 5%, $saturation: -5%) 0%, adjust-color($modal-activate-background-color, $lightness: -5%, $saturation: 5%) 100%);
+$modal-activate-font-color: #fff;
+
+
 $info-region-header-height: 2.6rem !default;
 $info-region-header-font-size: 1rem !default;
 
