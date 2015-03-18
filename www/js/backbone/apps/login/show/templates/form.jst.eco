@@ -6,5 +6,9 @@
   <input class="username" type="text" name="username" autocapitalize="none" autocorrect="off" />
   <label for="pass">Password</label>
   <input class="pass" type="password" name="pass" />
-  <button type="submit">Submit</button>
+  <div class="button-single">
+    <div class="action">
+      <button type="submit">Submit</button>    
+    </div>
+  </div>
 </form>
