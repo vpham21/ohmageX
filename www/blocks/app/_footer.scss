@@ -3,6 +3,7 @@ body > footer {
   text-align: center;
   font-size: $app-main-footer-font-size;
   .subheader {
+    margin-top: 0;
     margin-bottom: $global-form-control-padding/2;
   }
   .help-section {
