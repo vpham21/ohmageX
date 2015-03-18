@@ -142,6 +142,7 @@ module.exports = (grunt) ->
             description: "<%= pkg.description %>"
             author: "<%= pkg.author %>"
             image_folder: "<%= appConfig.build.image_folder %>"
+            app_version: "<%= pkg.version %>"
         files:
           "config.xml": ["config.xml.tpl"]
 
