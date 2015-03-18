@@ -7,7 +7,7 @@ $reminders-list-border-width: 1px;
 
 .reminders-list {
 
-  input, button, select {
+  input, button {
     font-size: 12px;
   }
 
@@ -20,38 +20,10 @@ $reminders-list-border-width: 1px;
     padding: 0;
   }
 
-  .button-pair {
-    padding: 8px 0;
-    overflow: auto;
-    > * {
-      float: left;
-      width: 50%;
-    }
-    > :first-child {
-      button {
-        background-color: #00aeff;
-        color: #fff;
-      }
-      padding-right: 4px;
-    }
-    > :last-child {
-      button {
-        background-color: #b00;
-        color: #fff;
-      }
-      padding-left: 4px;
-    }
-    button {
-      width: 100%;
-      border: 0;
-      border-radius: 0;
-    }
-  }
-
   fieldset {
     clear: right;
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: $global-form-control-padding;
     border:0;
   }
 
@@ -67,11 +39,6 @@ $reminders-list-border-width: 1px;
   }
 
   .surveys-region, .date-control, .time-control {
-    input, select {
-      margin-bottom: 8px;
-      font-size: 12px;
-      padding: 4px;
-    }
     input {
       width: 125px;
     }
@@ -80,7 +47,9 @@ $reminders-list-border-width: 1px;
   .surveys-region {
     width: 70%;
     select {
-      width: 100%;
+      outline: none;
+      font-size: $global-form-control-font-size*0.8;
+      max-width: 100%;
     }
   }
   ul.repeat-days {
@@ -153,6 +122,7 @@ $reminders-list-border-width: 1px;
     width: 27%;
     outline: none;
     user-select: none;
+    padding: $global-form-control-padding;
   }
 
 }
@@ -160,7 +130,7 @@ $reminders-list-border-width: 1px;
 .reminder-summary {
   cursor: pointer;
   padding: $global-form-control-padding;
-  padding-bottom: 1rem+$global-form-control-padding;
+  padding-bottom: 1rem+$global-form-control-padding*1.5;
   position: relative;
 
   .edit-container {

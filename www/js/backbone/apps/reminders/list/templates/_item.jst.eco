@@ -6,7 +6,7 @@
       <label for="repeat<%= @id %>">Repeat</label>
     </div>
   </div>
-  <div class="surveys-region"></div>
+  <div class="surveys-region select-block"></div>
 
   <fieldset>
     <div class="repeat-days-container">
@@ -24,8 +24,7 @@
         <input name="date<%= @id %>" value="<%= @currentDateValue %>" type="date">
       </div>
     </div>
-  <fieldset>
-      <label for="time<%= @id %>">at </label>
+    <label for="time<%= @id %>">at </label>
     <div class="time-control">
       <input name="time<%= @id %>" value="<%= @currentTimeValue %>" type="time">
     </div>
