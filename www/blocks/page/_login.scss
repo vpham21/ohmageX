@@ -47,7 +47,12 @@ form.login {
       text-align: left;
       display: block;
     }
+    .select-block {
+      width: 100%;
+      margin: 0 auto;
+    }
     select {
+      outline: none;
       margin-bottom: $app-main-footer-padding/4;
     }
   }
