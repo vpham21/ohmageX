@@ -1,11 +1,10 @@
 @Ohmage.module "FooterApp.Show", (Show, App, Backbone, Marionette, $, _) ->
 
   class Show.Contents extends App.Views.ItemView
-    initialize: ->
-      @listenTo @, "link:clicked", @openLink
     template: "footer/show/_contents"
-    openLink: ->
-      targetHref = @$el.find('a').attr('href')
+    openLink: (e) ->
+      e.preventDefault()
+      targetHref = $(e.currentTarget).attr('href')
       if App.device.isNative
         window.open targetHref, '_system'
       else
@@ -14,8 +13,11 @@
       data = {}
       data.version = App.version
       data
-    triggers:
-      "click a": "link:clicked"
+    events: ->
+      if App.device.isNative
+        "touchstart a": "openLink"
+      else
+        "click a": "openLink"
 
   class Show.Footer extends App.Views.Layout
     template: "footer/show/footer"
