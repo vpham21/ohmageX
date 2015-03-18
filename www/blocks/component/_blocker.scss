@@ -73,14 +73,14 @@ body > #ui-blocker  {
   input[type="time"],
   input[type="url"],
   textarea {
-    font-size: $global-form-control-font-size*0.75;
-    padding: $global-form-control-padding*0.75;
-    border-radius: $global-form-control-border-radius*0.75;
-    line-height: 0.75;
+    font-size: $global-form-control-font-size*0.85;
+    padding: $global-form-control-padding*0.85;
+    border-radius: $global-form-control-border-radius*0.85;
+    line-height: 0.85;
   }
 
   .button-pair {
-    padding: 8px $global-form-control-padding;
+    padding: $global-form-control-padding;
     overflow: auto;
     position: absolute;
     bottom: 0;
@@ -92,22 +92,23 @@ body > #ui-blocker  {
     }
     > :first-child {
       button {
-        background-color: #b00;
-        color: #fff;
+        background: $modal-close-background;
+        color: $modal-close-font-color;
       }
-      padding-right: 4px;
+      padding-right: $global-form-control-padding/2;
     }
     > :last-child {
       button {
-        background-color: #00aeff;
-        color: #fff;
+        background: $modal-activate-background;
+        color: $modal-activate-font-color;
       }
-      padding-left: 4px;
+      padding-left: $global-form-control-padding/2;
     }
     button {
       width: 100%;
       border: 0;
       border-radius: 0;
+      text-transform: uppercase;
     }
   }
 
