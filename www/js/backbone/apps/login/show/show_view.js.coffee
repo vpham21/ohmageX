@@ -69,6 +69,10 @@
           styles:
             marginTop: "4px"
           verticalAlign: "top"
+    serializeData: ->
+      data = {}
+      data.app_name = App.custom.build.app_name
+      data
 
   class Show.Layout extends App.Views.Layout
     template: "login/show/show_layout"
