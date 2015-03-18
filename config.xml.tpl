@@ -9,6 +9,8 @@
     </author>
     <content src="index.html" />
     <platform name="ios">
+        <!-- iOS 8.0+ -->
+        <icon src="../res/<%= image_folder %>/ios/icons/icon-60@3x.png" width="180" height="180" />
         <!-- iOS 7.0+ -->
         <!-- iPhone / iPod Touch  -->
         <icon src="../res/<%= image_folder %>/ios/icons/60x60.png" width="60" height="60" />
