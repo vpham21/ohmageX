@@ -271,11 +271,11 @@
         border: solid rgba(255,255,255,0.8);
         content: "";
         background-image: url('../img/icon/camera.svg');
-        background-size: 1.5rem;
+        background-size: $list-icon-size;
         background-position: 97% center;
         background-repeat: no-repeat;
         border-width: 2px 0;
-        padding: 1rem;
+        padding: $global-form-control-padding*2.5;
         font-size: 0.8rem;
         line-height: 1;
         outline: none;

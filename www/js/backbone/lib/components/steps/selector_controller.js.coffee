@@ -36,7 +36,8 @@
             model: entity
         when "afterSurveySubmit"
 
-          if !App.custom.build.debug and !App.device.isNative
+          # for now, disable the post-survey summary - not fully functional
+          if true or !App.custom.build.debug and !App.device.isNative
             # no debugging and no native, just show the base exit summary.
             return new Steps.AfterSubmission
               model: entity
