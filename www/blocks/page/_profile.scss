@@ -4,6 +4,9 @@
     display: inline-block;
     vertical-align: middle;
     text-align: left;
+    margin: 0;
+    padding: $app-main-footer-padding;
+    width: 100%;
   }
   .change-password {
     margin: $app-main-footer-padding 0;
