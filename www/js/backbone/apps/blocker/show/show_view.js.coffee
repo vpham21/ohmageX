@@ -23,8 +23,6 @@
       @$el.find('#updated-password').hideShowPassword
         innerToggle: true
         toggle:
-          styles:
-            marginTop: "4px"
           verticalAlign: "top"
       @trigger "error:show", "Your password failed to authenticate. Please re-enter your password."
 
@@ -59,20 +57,14 @@
       @$el.find('#old-password').hideShowPassword
         innerToggle: true
         toggle:
-          styles:
-            marginTop: "4px"
           verticalAlign: "top"
       @$el.find('#new-password').hideShowPassword
         innerToggle: true
         toggle:
-          styles:
-            marginTop: "4px"
           verticalAlign: "top"
       @$el.find('#confirm-password').hideShowPassword
         innerToggle: true
         toggle:
-          styles:
-            marginTop: "4px"
           verticalAlign: "top"
 
 
