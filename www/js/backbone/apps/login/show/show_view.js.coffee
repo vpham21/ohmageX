@@ -66,8 +66,6 @@
       @$el.find('input.pass').hideShowPassword
         innerToggle: true
         toggle:
-          styles:
-            marginTop: "4px"
           verticalAlign: "top"
     serializeData: ->
       data = {}
