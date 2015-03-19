@@ -10,7 +10,10 @@
   }
 
   .button-single {
+    width: 100%;
+    text-align: center;
     button {
+      display: inline-block;
       border: 0;
       border-radius: 0;
       text-transform: uppercase;
