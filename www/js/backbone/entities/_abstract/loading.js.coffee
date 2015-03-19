@@ -12,7 +12,7 @@
       # disruptively flash the loading spinner.
       @timer = window.setTimeout (=>
         @trigger 'loading:show'
-      ), 500
+      ), 250
     loadHide: ->
       @set 'message', 'Now Loading...'
       @trigger 'loading:hide'
