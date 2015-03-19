@@ -25,7 +25,9 @@
         label: currentStep.get 'skipLabel'
 
     prevEntity: (stepType, stepId) ->
-      disabled = stepType in ["intro", "beforeSurveySubmit", "afterSurveySubmit"]
+      # Disable the 'automatic survey upload' that made this step a Loading step
+      # disabled = stepType in ["intro", "beforeSurveySubmit", "afterSurveySubmit"]
+      disabled = stepType in ["intro", "afterSurveySubmit"]
 
       new Entities.StepButtonPrev
         disabled: disabled
