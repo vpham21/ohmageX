@@ -70,7 +70,7 @@
         validate: (options) ->
           {value, rulesMap} = options
           if value.length > parseInt(rulesMap.maxLength)
-            @errors.push 'value too long.'
+            @errors.push "Value too long, length must be less than #{rulesMap.minLength}."
       minValue:
         validate: (options) ->
           {value, rulesMap} = options
