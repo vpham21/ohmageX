@@ -22,7 +22,9 @@
     serializeData: ->
       data = @model.toJSON()
       console.log 'Steps.BeforeSubmission data', data
-      data.completeTitle = 'Uploading Survey...'
+      # Disable the 'automatic survey upload' that made this step a Loading step
+      # data.completeTitle = 'Uploading Survey'
+      data.completeTitle = 'Survey Submit'
       data
 
   class Steps.AfterNoReminders extends App.Views.ItemView
