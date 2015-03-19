@@ -62,6 +62,9 @@
 
   App.vent.on "credentials:cleared", ->
     API.clear()
+    # reset the server to the default on logout, ensure the view updates.
+    currentServer = new Entities.ServerPath
+      path: App.request('serverlist:default')
 
   Entities.on "start", ->
     API.init()
