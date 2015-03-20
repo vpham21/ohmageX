@@ -9,10 +9,19 @@
 
   API =
     getProgress: (currentFlow, currentStep) ->
-      # subtract 1 from duration, 0th array indexing
+      # also makes the first step count as "zero"
+      myPosition = currentFlow.indexOf(currentStep) - 1
+
+      # If an intro step was displayed, it would result in a negative myPosition.
+      # set it to zero to prevent an invalid progress amount.
+      if myPosition < 0 then myPosition = 0
+
+      # removes introStep, beforeSubmit, and afterSubmit from progress count.
+      myDuration = currentFlow.length - 3
+
       new Entities.FlowProgress
-        duration: currentFlow.length - 1
-        position: currentFlow.indexOf(currentStep)
+        duration: myDuration
+        position: if myPosition > myDuration then myDuration else myPosition
 
   App.reqres.setHandler "flow:progress", (stepId) ->
     currentFlow = App.request "flow:current"
