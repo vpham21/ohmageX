@@ -84,6 +84,7 @@
         error: (collection, response, options) =>
           console.log 'surveys fetch error'
           App.vent.trigger 'surveys:saved:campaign:fetch:error', options.data.campaign_urn_list
+          App.execute "dialog:alert", "Network error fetching #{App.dictionary('page','campaign')}."
           App.vent.trigger "loading:hide"
     getCampaignSurveys: (urn) ->
       surveys = currentSurveysSaved.where
