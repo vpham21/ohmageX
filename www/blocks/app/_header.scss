@@ -6,11 +6,11 @@ body > header > div  {
   height: $app-header-height;
   border-bottom: 1px solid $app-header-border-color;
 
-  &.profile  { background: rgba(117,239, 79, 0.4) }
-  &.campaign { background: rgba(190, 73,254, 0.25) }
-  &.survey   { background: rgba( 81,178,240, 0.4) }
-  &.upload   { background: rgba(26, 173, 173, 0.3) }
-  &.reminder { background: rgba(255,147, 57, 0.4) }
+  // &.profile  { background: rgba(117,239, 79, 0.4) }
+  // &.campaign { background: rgba(190, 73,254, 0.25) }
+  // &.survey   { background: rgba( 81,178,240, 0.4) }
+  // &.upload   { background: rgba(26, 173, 173, 0.3) }
+  // &.reminder { background: rgba(255,147, 57, 0.4) }
 
   > * {
     float: left;
