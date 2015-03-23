@@ -164,6 +164,7 @@
           App.vent.trigger "loading:hide"
         error: (collection, response, options) =>
           console.log 'campaign fetch error'
+          App.execute "dialog:alert", "Network error syncing campaigns."
           App.vent.trigger "loading:hide"
       currentCampaignsUser
     saveLocalCampaigns: (collection) ->
