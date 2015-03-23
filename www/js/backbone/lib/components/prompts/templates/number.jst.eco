@@ -1,6 +1,6 @@
 <form class="number-prompt-form" onsubmit="return false;">
-  <h3 class="hide-accessible"><%= @displayLabel %></h3>
   <input type="button" class="submit-disabler" value="Send" onclick="form.submit();" />
+  <h3 class="hide-accessible"><%= @displayLabel %></h3>
   <fieldset>
     <legend class="inset-block"><%= @promptText %></legend>
     <div class="number-control">
