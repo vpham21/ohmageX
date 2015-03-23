@@ -3,7 +3,7 @@
   <div class="photo-control">
     <label for="<%= @id %>" class="inset-block"><%= @promptText %></label>
     <div class="container">
-      <input name="<%= @id %>" type="file" accepts="image/*" capture />
+      <input name="<%= @id %>" type="file" accept="image/*" capture />
       <img src="" style="display:none" class="preview-image" />
       <canvas style="display:none"></canvas>
     </div>
