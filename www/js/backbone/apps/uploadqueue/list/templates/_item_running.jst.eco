@@ -7,6 +7,6 @@
   </div>
   <div role="link">
     <h3><%= @name %></h3>
-    <footer><small>Last submitted on <%= @prettyTimestamp %></small></footer>
+    <footer><small><%= @prettyTimestamp %></small></footer>
   </div>
 </div>

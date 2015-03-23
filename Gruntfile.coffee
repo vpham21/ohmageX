@@ -129,6 +129,7 @@ module.exports = (grunt) ->
             app_version: "<%= pkg.version %>"
             app_config: "<%= JSON.stringify(appConfig) %>"
             package_info: "<%= JSON.stringify(appConfig.build) %>"
+            app_name: "<%= appConfig.build.app_name %>"
             root_path: "/"
         files:
           "<%= web_root_folder %>/index.html": ["<%= web_root_folder %>/index.html.tpl"]

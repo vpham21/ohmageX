@@ -336,12 +336,6 @@
       font-weight: bold;
     }
     aside.number-range {
-      height: $number-row-height*2+$global-form-control-padding*2;
-      & > header {
-        text-align: center;
-        height: $number-row-height+$global-form-control-padding;
-        padding: $global-form-control-padding/2;
-      }
       section {
         height: $number-row-height+$global-form-control-padding;
         width: 50%;
