@@ -34,11 +34,17 @@ body > header > div  {
     color: $app-header-font-color;
     margin: 0;
     line-height: 1;
-    padding: (($app-header-height - $app-header-font-size) / 2) (($app-header-height - $app-header-font-size) / 2) 0;
   }
 
   &.ios7 {
     margin-top: $app-status-bar-offset;
+  }
+
+  #button-region .icon, .app-menu-trigger.hamburger.icon {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=85)";
+    filter: alpha(opacity=85);
+    -moz-opacity: 0.85;
+    opacity: 0.85;
   }
 
 }
