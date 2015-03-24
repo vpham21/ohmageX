@@ -241,7 +241,7 @@
       switch @model.get('currentValueType')
         when 'response'
           # Saved responses use the label, not the key.
-          matchingValue = @$el.find("label:containsExact('#{currentValue}')").parent().find('input').prop('checked', true)
+          matchingValue = @$el.find("label:containsExact('#{currentValue}')").parent().parent().find('input').prop('checked', true)
         when 'default'
           # Default responses match keys instead of labels.
           # Select based on value.
@@ -302,7 +302,7 @@
       # this expects the radio buttons to be in the format:
       # <li><input type=radio ... /><label>labelText</label></li>
       $checkedInput = @$el.find('input[type=radio]').filter(':checked')
-      response = if !!!$checkedInput.length then false else $checkedInput.parent().find('label').text()
+      response = if !!!$checkedInput.length then false else $checkedInput.parent().parent().find('label').text()
       @trigger "response:submit", response, surveyId, stepId
 
 
@@ -313,7 +313,7 @@
       # into a JSON string
       return false unless $responses.length > 0
       result = _.map($responses, (response) ->
-        $(response).parent().find('label').text()
+        $(response).parent().parent().find('label').text()
       )
       JSON.stringify result
     selectCurrentValues: (currentValues) ->
