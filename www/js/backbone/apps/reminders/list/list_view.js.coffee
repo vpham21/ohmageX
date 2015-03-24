@@ -186,9 +186,6 @@
             dayText = "#{dayList[parseInt(data.repeatDays[0])]} and #{dayList[parseInt(data.repeatDays[1])]}"
           else
             dayText = _.reduce(data.repeatDays, (dayText, repeatDay, index) ->
-              console.log 'repeatDay', repeatDay
-              console.log 'repeatDay parseint', parseInt(repeatDay)
-              console.log 'index', index
               if index isnt data.repeatDays.length-1
                 prefix = ""
                 suffix = ", "
