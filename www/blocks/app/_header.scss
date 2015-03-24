@@ -34,6 +34,20 @@ body > header > div  {
     color: $app-header-font-color;
     margin: 0;
     line-height: 1;
+    font-weight: normal;
+    text-transform: uppercase;
+    height: $app-header-height;
+    padding: (($app-header-height - $app-header-font-size) / 2);
+    padding-right: 0;
+    .icon {
+      background-position: center;
+      background-size: $app-header-image-size*0.70;
+      background-repeat: no-repeat;
+      display: inline-block;
+      height: $app-header-image-size*0.75;
+      width: $app-header-image-size*0.75;
+      margin-right: $app-header-image-size*0.45;
+    }
   }
 
   &.ios7 {
