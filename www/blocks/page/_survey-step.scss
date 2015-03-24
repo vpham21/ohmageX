@@ -267,39 +267,53 @@
       min-height: 200px;
       background-color: $component-background-color;
     }
-    input[type="file"] {
-      top: 100%;
+    .input-activate {
       position: absolute;
-      height: 0;
       width: 100%;
-      color: transparent;
-      &::-webkit-file-upload-button {
-        visibility: hidden;
-      }
-      &::before {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: -2rem;
-        color: #fff;
-        font-weight: bold;
-        background-color: rgba(55,55,55,0.9);
-        border: solid rgba(255,255,255,0.8);
-        content: "";
+      height: $global-form-control-padding*1.75+$list-icon-size;
+      bottom: $global-form-control-padding;
+      text-align: center;
+      button {
         background-image: url('../img/icon/camera.svg');
         background-size: $list-icon-size;
-        background-position: 97% center;
+        background-position: $global-form-control-padding center;
         background-repeat: no-repeat;
-        border-width: 2px 0;
-        padding: $global-form-control-padding*2.5;
-        font-size: 0.8rem;
+        color: #fff;
+        font-weight: bold;
+        background-color: rgba(0,141,230,0.9);
+        border: solid rgba(0,141,230,0.9);
+        border-width: 1px 0;
+        padding: $global-form-control-padding*1.75 0;
+        font-size: $global-form-control-font-size;
         line-height: 1;
         outline: none;
         white-space: nowrap;
         -webkit-user-select: none;
-        cursor: pointer;
+        width: 80%;
+        max-width: 320px;
+        min-width: 225px;
+        display: inline-block;
       }
+      input[type="file"] {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: transparent;
+        opacity: 0;
+        -moz-opacity: 0;
+        filter: alpha(opacity=0);
+        cursor: pointer;
+        &::-webkit-file-upload-button {
+          visibility: hidden;
+        }
+        // Needed for Firefox
+        width: 100%;
+      }
+
     }
+
     .preview-image {
       width: 100%;
     }
