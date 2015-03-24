@@ -5,6 +5,22 @@
     template: "uploadqueue/item/_responses_empty"
 
   class Item.ResponseBase extends App.Views.ItemView
+    getIcon: ->
+      switch @model.get('type')
+        when 'multi_choice','multi_choice_custom'
+          'th'
+        when 'number'
+          'sort-numeric-asc'
+        when 'photo'
+          'camera-retro'
+        when 'single_choice','single_choice_custom'
+          'list'
+        when 'text'
+          'align-left'
+        when 'timestamp'
+          'clock-o'
+        else
+          'question'
 
   class Item.ResponseString extends Item.ResponseBase
     template: "uploadqueue/item/response_string"
