@@ -4,8 +4,8 @@
     "token_redirect": "../web/#login"
   },
   "build": {
-    "app_name": "ohmage MWF",
-    "bundle_id": "org.ohmage.mwf",
+    "app_name": "ohmage X",
+    "bundle_id": "org.ohmage.x",
     "image_folder": "default",
     "debug": false
   },
