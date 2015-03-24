@@ -30,8 +30,8 @@
 
   class Entities.NumberResponse extends Entities.ResponseValidated
     validate: (attrs, options) ->
-      # set wholeNumber to default to false
-      if !attrs.properties.wholeNumber? then attrs.properties.wholeNumber = "false"
+      # set wholeNumber to default to true
+      if !attrs.properties.wholeNumber? then attrs.properties.wholeNumber = "true"
       myRulesMap =
         minValue: 'min'
         maxValue: 'max'
