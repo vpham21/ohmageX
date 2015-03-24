@@ -1,8 +1,8 @@
-<div class="item">
+<header>
   <h5><%= @question %></h5>
-  <div class="container">
-    <img src="" style="display:none; width:100%" class="preview-image" />
-    <canvas style="display:none"></canvas>
-  </div>
-  <footer><small><%= @type %></small></footer>
+  <i class="fa fa-<%= @icon %>"></i>
+</header>
+<div class="container">
+  <img src="" style="display:none; width:100%" class="preview-image" />
+  <canvas style="display:none"></canvas>
 </div>

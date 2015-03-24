@@ -1,5 +1,5 @@
-<div class="item">
+<header>
   <h5><%= @question %></h5>
-  <p>This prompt type is <%= @type %>, which is unsupported.</p>
-  <footer><small>unsupported</small></footer>
-</div>
+  <i class="fa fa-<%= @icon %>"></i>
+</header>
+<p>This prompt type is <%= @type %>, which is unsupported.</p>

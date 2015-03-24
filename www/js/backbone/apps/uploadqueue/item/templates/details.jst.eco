@@ -5,17 +5,16 @@
   <div>
     <h3><%= @name %></h3>
     <!-- <p><%= @description %></p> -->
-    <p>Campaign: <small><%= @campaign_name %> with timestamp <%= @campaign_creation_timestamp %></small></p>
-    <% if @locationExists: %>
-    <ul>
-      <li>Latitude: <%= @location.latitude %></li>
-      <li>Longitude: <%= @location.longitude %></li>
-    </ul>
-    <% end %>
-    <div class="icon-box">
-      <button type="button" class="delete icon">Discard</button>
-    </div>
-    <footer><small>Submitted <%= @prettyTimestamp %><small><br />
-    <small class="text-error">Last Upload Error: <%= @errorText %></small></footer>
+    <p><%= @campaign_name %></p>
+    <footer>
+      <% if @locationExists: %>
+        <small class="location"><strong>Location:</strong> <span><strong>lat</strong> <%= @location.latitude %></span>, <span><strong>long</strong> <%= @location.longitude %></small><br />
+      <% end %>
+      <div class="icon-box">
+        <button type="button" class="delete icon">Discard</button>
+      </div>
+      <small>Timestamp: <%= @prettyTimestamp %></small><br />
+      <small class="text-error">Upload Error: <%= @errorText %></small>
+    </footer>
   </div>
 </div>

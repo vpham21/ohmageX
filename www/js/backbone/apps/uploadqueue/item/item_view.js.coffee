@@ -4,20 +4,44 @@
     className: "empty-container"
     template: "uploadqueue/item/_responses_empty"
 
+  class Item.ResponseBase extends App.Views.ItemView
+    getIcon: ->
+      switch @model.get('type')
+        when 'multi_choice','multi_choice_custom'
+          'th'
+        when 'number'
+          'sort-numeric-asc'
+        when 'photo'
+          'camera-retro'
+        when 'single_choice','single_choice_custom'
+          'list'
+        when 'text'
+          'align-left'
+        when 'timestamp'
+          'clock-o'
+        else
+          'question'
+    attributes:
+      "class": "item"
+    serializeData: ->
+      data = @model.toJSON()
+      data.icon = @getIcon()
+      data
 
-  class Item.ResponseString extends App.Views.ItemView
+  class Item.ResponseString extends Item.ResponseBase
     template: "uploadqueue/item/response_string"
+
 
   class Item.ResponseSingleChoice extends Item.ResponseString
     serializeData: ->
-      data = @model.toJSON()
+      data = super
       data.response = data.options[data.response]
       data
 
-  class Item.ResponseMultiChoice extends App.Views.ItemView
+  class Item.ResponseMultiChoice extends Item.ResponseBase
     template: "uploadqueue/item/response_multi_choice"
     serializeData: ->
-      data = @model.toJSON()
+      data = super
       # the response is a stringified array referencing options.
       selectionsArr = JSON.parse data.response
       # responses is an array that will be iterated over inside the view.
@@ -27,14 +51,14 @@
 
   class Item.ResponseMultiChoiceCustom extends Item.ResponseMultiChoice
     serializeData: ->
-      data = @model.toJSON()
+      data = super
       # the response is a stringified array referencing custom choice strings.
       selectionsArr = JSON.parse data.response
       # responses is an array that will be iterated over inside the view.
       data.responses = selectionsArr
       data
 
-  class Item.ResponsePhoto extends App.Views.ItemView
+  class Item.ResponsePhoto extends Item.ResponseBase
     template: "uploadqueue/item/response_photo"
     onRender: ->
       savedImage = @model.get('response')
@@ -45,7 +69,7 @@
       $img.prop 'src', img64
       $img.css 'display', 'block'
 
-  class Item.ResponseUnsupported extends App.Views.ItemView
+  class Item.ResponseUnsupported extends Item.ResponseBase
     template: "uploadqueue/item/response_unsupported"
 
   class Item.Responses extends App.Views.CollectionView
