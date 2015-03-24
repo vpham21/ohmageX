@@ -168,6 +168,7 @@ $reminders-list-border-width: 1px;
     float: right;
     width: $reminders-list-width;
     text-align: right;
+    visibility: hidden;
   }
 
   .repeat-tag {
