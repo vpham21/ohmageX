@@ -136,8 +136,6 @@ module.exports = (grunt) ->
       cordova_config:
         options:
           data:
-            # TODO: add formal version number to config.xml later,
-            # may cause certificate issues.
             app_name: "<%= appConfig.build.app_name %>"
             bundle_id: "<%= appConfig.build.bundle_id %>"
             description: "<%= pkg.description %>"
