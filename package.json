@@ -1,12 +1,12 @@
 {
-  "name": "ohmage-mwf",
+  "name": "ohmage-x",
   "author": {
     "name": "Ohmage Team",
     "email": "rrocchio@oit.ucla.edu",
     "url": "http://ohmage.org"
   },
   "description": "An open-source participatory sensing technology platform.",
-  "version": "0.2.0",
+  "version": "3.0.0",
   "devDependencies": {
     "bower": "^1.3.12",
     "grunt": "^0.4.5",
