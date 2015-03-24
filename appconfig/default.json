@@ -1,11 +1,11 @@
 {
   "api": {
-    "client_base_string": "ohmage-mwf-dw-",
+    "client_base_string": "ohmage-x-",
     "token_redirect": "../web/#login"
   },
   "build": {
-    "app_name": "ohmage MWF",
-    "bundle_id": "org.ohmage.mwf",
+    "app_name": "ohmage X",
+    "bundle_id": "org.ohmage.x",
     "image_folder": "default",
     "debug": false
   },
@@ -55,8 +55,8 @@
   "server_list": {
     "custom": true,
     "servers": [
-      "https://test.mobilizingcs.org",
-      "https://pilots.mobilizelabs.org"
+      "https://pilots.mobilizelabs.org",
+      "https://sandbox.mobilizingcs.org"
     ]
   }
 }
