@@ -1,20 +1,21 @@
 <div class="running item">
   <div class="icon-box">
-  <button type="button" class="upload icon">Upload</button>
-  <button type="button" class="delete icon">Discard</button>
+    <button type="button" class="upload icon">Upload</button>
   </div>
   <div>
     <h3><%= @name %></h3>
-    <p><%= @description %></p>
-    <p>Campaign: <small><%= @campaign_urn %> at <%= @campaign_creation_timestamp %></small></p>
+    <!-- <p><%= @description %></p> -->
+    <p>Campaign: <small><%= @campaign_name %> with timestamp <%= @campaign_creation_timestamp %></small></p>
     <% if @locationExists: %>
-    <h4>GPS Location</h4>
     <ul>
       <li>Latitude: <%= @location.latitude %></li>
       <li>Longitude: <%= @location.longitude %></li>
     </ul>
     <% end %>
-    <footer><small>Last submitted on <%= @prettyTimestamp %><small><br />
+    <div class="icon-box">
+      <button type="button" class="delete icon">Discard</button>
+    </div>
+    <footer><small>Submitted <%= @prettyTimestamp %><small><br />
     <small class="text-error">Last Upload Error: <%= @errorText %></small></footer>
   </div>
 </div>
