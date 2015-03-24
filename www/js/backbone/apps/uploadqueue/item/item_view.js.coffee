@@ -21,6 +21,8 @@
           'clock-o'
         else
           'question'
+    attributes:
+      "class": "item"
 
   class Item.ResponseString extends Item.ResponseBase
     template: "uploadqueue/item/response_string"
