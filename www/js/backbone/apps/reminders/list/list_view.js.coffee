@@ -175,7 +175,7 @@
       if data.repeat
         # repeat is enabled
         if data.repeatDays.length is 7
-          data.summaryText = "#{currentDisplayTime}"
+          data.summaryText = "Repeats at #{currentDisplayTime}"
           data.intervalText = 'Every Day'
         else
           dayList = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
@@ -193,11 +193,11 @@
                 prefix = ""
                 suffix = ", "
               else
-                prefix = " and "
+                prefix = " & "
                 suffix = ""
               dayText + "#{prefix}#{dayList[parseInt(repeatDay)]}#{suffix}"
             , "")
-          data.summaryText = "#{currentDisplayTime}"
+          data.summaryText = "Repeats at #{currentDisplayTime}"
           data.intervalText = "#{dayText}"
       else
         # one time reminder.
