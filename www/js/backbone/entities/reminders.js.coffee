@@ -123,7 +123,22 @@
         console.log 'toggleSystemNotifications disabled notification ids', reminder.get('notificationIds')
         App.execute "system:notifications:delete", reminder
 
+    purgeExpired: ->
+      expired = currentReminders.filter (reminder) =>
+        if reminder.get('active') and !reminder.get('repeat')
+          # active, non-repeating reminder. Is it a date in the past?
+          return moment().diff(moment(reminder.get('activationDate'))) > 0
+        false
+      console.log 'expired reminders', expired
+
+      if expired.length > 0
+        currentReminders.remove expired
+        @updateLocal( =>
+          console.log "reminders entity API.purgeExpired storage success"
+        )
+
     getReminders: ->
+      @purgeExpired()
       currentReminders
 
     validateReminder: (model, response) ->
