@@ -34,6 +34,7 @@
       result =
         data: responseData
         timestamp: responseData.timestamp
+        campaign_name: App.request "campaign:name", responseData.campaign_urn
         campaign_urn: responseData.campaign_urn
         campaign_creation_timestamp: responseData.campaign_creation_timestamp
         name: App.request('survey:saved:title', surveyId)
