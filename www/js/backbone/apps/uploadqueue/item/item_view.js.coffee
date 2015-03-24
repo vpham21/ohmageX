@@ -75,7 +75,8 @@
       data = @model.toJSON()
       console.log 'item details data', data
       data.locationExists = data.location?
-      data.prettyTimestamp = new Date(data.timestamp).toString()
+      data.prettyTimestamp = moment(data.timestamp).format("MM/DD/YYYY, h:mma")
+      data.campaign_creation_timestamp = moment(data.campaign_creation_timestamp).format("MM/DD/YYYY, h:mma")
       data
 
   class Item.Layout extends App.Views.Layout

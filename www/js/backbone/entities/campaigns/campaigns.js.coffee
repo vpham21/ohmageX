@@ -181,6 +181,9 @@
         currentCampaignsUser
     getCampaign: (id) ->
       currentCampaignsUser.get id
+    getCampaignName: (id) ->
+      campaign = @getCampaign id
+      campaign.get('name')
     setCampaignStatus: (id, status) ->
       console.log 'setCampaignStatus'
       currentCampaignsUser.get(id).set('status', status)
@@ -218,6 +221,9 @@
 
   App.reqres.setHandler "campaign:entity", (id) ->
     API.getCampaign id
+
+  App.reqres.setHandler "campaign:name", (id) ->
+    API.getCampaignName id
 
   App.reqres.setHandler "campaigns:user", ->
     API.getCampaigns()
