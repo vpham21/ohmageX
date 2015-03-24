@@ -100,7 +100,7 @@
           {value, rulesMap} = options
           if rulesMap.wholeNumber is "false"
             # allow decimal numbers only.
-            validChars = /^\-?[0-9]+(\.[0-9]+)?$/i
+            validChars = /^(?!\.?$)\d{0,99}(\.\d{0,9})?$/i
             if !validChars.test(value)
               @errors = ["Not a valid decimal number."]
           else
