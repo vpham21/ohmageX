@@ -154,7 +154,7 @@
       'change input[type=file]': "file:changed"
 
   class Prompts.SingleChoiceItem extends App.Views.ItemView
-    tagName: 'li'
+    tagName: 'tr'
     template: "prompts/single_choice_item"
     triggers:
       "click button.delete": "customchoice:remove"
@@ -173,6 +173,7 @@
 
   class Prompts.MultiChoiceItem extends Prompts.SingleChoiceItem
     template: "prompts/multi_choice_item"
+
 
   # Prompt Multi Choice
   class Prompts.MultiChoice extends Prompts.SingleChoice
