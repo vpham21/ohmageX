@@ -36,6 +36,9 @@
 
   #details-region {
     width: 100%;
+    h3:first-child {
+      margin-top: 0;
+    }
   }
 
   #details-region, #responses-region {
@@ -44,5 +47,8 @@
     vertical-align: middle;
     padding: (1*$app-main-footer-padding) $app-main-footer-padding;
     word-wrap: break-word;
+  }
+  #responses-region {
+    background: $app-background;
   }
 }
