@@ -23,20 +23,25 @@
           'question'
     attributes:
       "class": "item"
+    serializeData: ->
+      data = @model.toJSON()
+      data.icon = @getIcon()
+      data
 
   class Item.ResponseString extends Item.ResponseBase
     template: "uploadqueue/item/response_string"
 
+
   class Item.ResponseSingleChoice extends Item.ResponseString
     serializeData: ->
-      data = @model.toJSON()
+      data = super
       data.response = data.options[data.response]
       data
 
   class Item.ResponseMultiChoice extends Item.ResponseBase
     template: "uploadqueue/item/response_multi_choice"
     serializeData: ->
-      data = @model.toJSON()
+      data = super
       # the response is a stringified array referencing options.
       selectionsArr = JSON.parse data.response
       # responses is an array that will be iterated over inside the view.
@@ -46,7 +51,7 @@
 
   class Item.ResponseMultiChoiceCustom extends Item.ResponseMultiChoice
     serializeData: ->
-      data = @model.toJSON()
+      data = super
       # the response is a stringified array referencing custom choice strings.
       selectionsArr = JSON.parse data.response
       # responses is an array that will be iterated over inside the view.
