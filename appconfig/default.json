@@ -5,7 +5,7 @@
   },
   "build": {
     "app_name": "ohmageX",
-    "bundle_id": "org.ohmage.x",
+    "bundle_id": "org.ohmage.x.ohmage",
     "image_folder": "default",
     "debug": false
   },
