@@ -1,10 +1,10 @@
 {
   "api": {
-    "client_base_string": "ohmage-x-",
+    "client_base_string": "ohmagex-",
     "token_redirect": "../web/#login"
   },
   "build": {
-    "app_name": "ohmage X",
+    "app_name": "ohmageX",
     "bundle_id": "org.ohmage.x",
     "image_folder": "default",
     "debug": false
