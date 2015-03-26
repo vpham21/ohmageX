@@ -1,8 +1,8 @@
-# ohmage MWF vDW - Dragon Well (龍井) 
+# ohmageX v3.0.0
 
 [ohmage](http://ohmage.org/) is an open-source, mobile to web platform that records, analyzes, and visualizes data from both prompted experience samples entered by the user, as well as continuous streams of data passively collected from sensors or applications onboard the mobile device. 
 
-**ohmage MWF version DW** is a revamped version of ohmage MWF, which aims to deliver a single-source and platform-independent mobile application integrated with the Ohmage API. It includes enhancements such as a modular event-driven architecture with [Backbone](http://backbonejs.org/) + [Marionette](http://marionettejs.com/), automated development workflow enhancements, and extensive use of preprocessors (e.g. [Coffeescript](http://coffeescript.org/) and [SASS](http://sass-lang.com/)).
+**ohmageX** is a revamped version of ohmage MWF, which aims to deliver a single-source and platform-independent mobile application integrated with the Ohmage API. It includes enhancements such as a modular event-driven architecture with [Backbone](http://backbonejs.org/) + [Marionette](http://marionettejs.com/), automated development workflow enhancements, and extensive use of preprocessors (e.g. [Coffeescript](http://coffeescript.org/) and [SASS](http://sass-lang.com/)).
 
 ## Installation and Setup
 
@@ -22,11 +22,19 @@ bundle
 npm install
 ```
 
+WebBlocks requires Bower, ensure it can see with an export for the `$PATH` includes the node bin.
+
+```
+export NODE_PATH=$(npm config get prefix)/lib/node_modules
+```
+
 Compile assets with WebBlocks:
 
 ```
 node_modules/grunt-cli/bin/grunt exec:blocks_build
 ```
+
+
 
 Compile assets with Grunt:
 
@@ -37,13 +45,20 @@ node_modules/grunt-cli/bin/grunt dev
 If files in `/blocks` weren't updated, you may skip the WebBlocks build.
 
 
-#### Build Cordova for iOS
+#### Build Cordova for mobile
 
-The following task prepares the app for mobile builds, and is required before the first mobile build:
+The following task prepares the app for iOS builds only, and is required before the first iOS build:
+
+```
+grunt ios_firstrun
+```
+
+To build for both iOS and Android, execute the following command instead:
 
 ```
 grunt mobile_firstrun
 ```
+
 
 After this, the mobile app can be built at any time with the following:
 
@@ -51,7 +66,8 @@ After this, the mobile app can be built at any time with the following:
 grunt mobile_www_build
 ```
 
-Note that `mobile_www_build` creates a build with updated contents of the `www` folder. If other assets need to be updated in the build, check the **Cordova Build Process Notes** section.
+Note that `mobile_www_build` creates a build with updated contents of the `www` folder. If other assets need to be updated in the build such as Webblocks, check the **Cordova Build Process Details** section.
+
 
 ##### Troubleshooting
 
@@ -60,7 +76,7 @@ During the first time that `mobile_www_build` is executed, Grunt may stop it wit
 
 ##### Cordova Build Process Details
 
-`grunt mobile_firstrun` does the following:
+`grunt mobile_firstrun` and `grunt ios_firstrun` do the following:
 
 - cleans any mobile build folders, if they exist
 - creates a cordova project in a build folder
@@ -81,13 +97,85 @@ If you need to execute a Grunt `cordovacli` task, you must navigate to the Cordo
 The `mobile_firstrun` task executes in the root folder without issues, and avoids this problem by executing a custom `grunt-exec` task with a forced `cwd` context from the shell.
 
 
-## Development using **ohmage-mwf-DW**
+## Development using **ohmageX**
 
 - [Development Workflow (wiki)](https://github.com/ucla/ohmage-mwf-dw/wiki/Development-Workflow)
 
 ## Version Notes
 
-> The name "Dragon Well" comes from a variety of Chinese green tea (龍井茶).
+### 3.0.0 - iOS Release
+
+> Change project name to "ohmageX"
+> The first major release begins with 3.0.0, because this new codebase is the successor to version 2.0.0 of ohmage MWF.
+
+- Date Management
+  - Use `Moment.js` for date manipulations [https://github.com/moment/moment/](https://github.com/moment/moment/)
+
+- Build Process Streamlining
+  - root is no longer the Cordova build location
+  - now creates only necessary files in a separate Cordova build folder
+  - Remove unnecessary modules and includes from the build process
+  - Cordova build now executes in seconds rather than minutes
+  - uses `cordova-cli` [https://github.com/csantanapr/grunt-cordovacli](https://github.com/csantanapr/grunt-cordovacli)
+
+- Touch Events
+  - Switch from a custom implementation of `backbone.touch` to FastClick [https://github.com/ftlabs/fastclick](https://github.com/ftlabs/fastclick)
+    - Required updating Marionette core from `v2.2.0` to `v2.3.0`
+    - in Marionette view, `onAttach` event fires `FastClick.attach` on the attaching element
+
+- Network error and auth error handling
+
+- Loading graphic during processing
+  - delay timer so loading messages don't flash abruptly for rapid requests
+
+- General alert and confirmation box system
+  - Uses system alerts and confirmation boxes when native, browser alerts and confirmation when not
+
+- iOS Reminders Section
+  - Schedule reminders to take a saved survey. Can be one-time reminders, daily repeating reminders, or repeating weekly on selected days of the week
+  - Reminders use Local Notification plugin
+    - Handle Local Notification permissions
+    - Shows Blocker Component when configuring a reminder
+
+- Updated Geolocation plugin
+
+- GUI
+  - interaction responsiveness improvements
+  - "unstyled" GUI elements styled
+  - Multiple pages redesigned
+  - Add min and max display to number prompt
+  - Add show/hide for password fields using [https://github.com/cloudfour/hideShowPassword](https://github.com/cloudfour/hideShowPassword)
+
+- New Graphic Elements
+  - New ohmageX icon and splash screen
+  - New App logo header
+  - Custom icons per section
+
+- Build Customization
+  - Customizable app name, icons, client string
+  - Customizable dictionary for common terms, with single and plural, menu labels, etc.
+    - Not quite localization, but swapping out important terms
+  - Customizable menu items
+  - customizable server list
+    - customizable toggle of displaying "Custom..." input for server entry
+
+- Auth
+  - Implement browser token-based auth
+  - Separate device auth (using hashed password) and token-based auth
+
+- Blocker UI component
+  - Blocks the entire UI when active
+    - password auth blocker - if a request fails because of invalid password, user must logout or fix it
+
+- Change Password Functionality
+  - uses the Blocker component to show a change password form
+
+- Upload Queue
+  - Response summary page
+    - Show all responses with survey questions that the user has submitted
+
+- Version Checking
+  - If the version changes, clear settings (old settings may be incompatible)
 
 #### 0.2.0 - GUI Release
 
@@ -107,7 +195,7 @@ The `mobile_firstrun` task executes in the root folder without issues, and avoid
   - Custom choices can be individually deleted
   - User data deleted on logout
 
-- PhoneGap optimizations
+- Cordova optimizations
   - status bar overlay
   - Device Detection
   - Touch event optimization
@@ -173,4 +261,7 @@ Includes the following functionality:
 
 #### 0.0.1 - Initial Setup
 
-- Set up Phonegap, Backbone + Marionette, and vendor libraries
+> Ohmage MWF Dragon Well 龍井
+> The name "Dragon Well" comes from a variety of Chinese green tea (龍井茶).
+
+- Set up Cordova, Backbone + Marionette, and vendor libraries
