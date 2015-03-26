@@ -22,7 +22,8 @@ bundle
 npm install
 ```
 
-WebBlocks requires Bower, ensure it can see with an export for the `$PATH` includes the node bin.
+WebBlocks requires Bower, ensure it can see it with an export for the `$PATH` that includes the node bin.
+
 
 ```
 export NODE_PATH=$(npm config get prefix)/lib/node_modules
