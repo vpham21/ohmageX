@@ -18,16 +18,23 @@
           console.log "button:upload in Navbutton Component"
           App.execute "uploadqueue:upload:all"
 
+        @listenTo @myView, "button:add:reminder", (type) ->
+          console.log "button:add:reminder in Navbutton Component"
+          App.execute "reminders:add:new"
+
         # Ensure this controller is removed during view cleanup.
         @listenTo @myView, "destroy", @destroy
 
     selectView: (navs, selected) ->
       switch selected
-        when "Campaigns"
+        when "campaign"
           return new Navbutton.Sync
             collection: navs
-        when "Upload Queue"
+        when "queue"
           return new Navbutton.Upload
+            collection: navs
+        when "reminder"
+          return new Navbutton.AddReminder
             collection: navs
         else
           return false

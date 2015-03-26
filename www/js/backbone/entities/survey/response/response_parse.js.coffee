@@ -31,8 +31,8 @@
           # even though they have been tested with the validator, they
           # have not been saved in the required ISO format, and
           # must be parsed.
-          myDateObj = new Date Date.parse(responseValue)
-          return myDateObj.toISOString()
+          m = moment(responseValue)
+          return m.format()
         when 'photo'
           # photo responses must reference a UUID, not the base64.
           # base64 are submitted with a separate parameter `images`

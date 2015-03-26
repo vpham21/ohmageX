@@ -1,1 +1,1 @@
-<%= @pageTitle %>
+<i class="<%= @icon %> icon"></i><%= @pageTitle %>

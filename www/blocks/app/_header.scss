@@ -1,20 +1,31 @@
+body > header {
+  background: $app-header-background;
+}
 body > header > div  {
 
-  background: $app-header-background;
   height: $app-header-height;
   border-bottom: 1px solid $app-header-border-color;
+
+  // &.profile  { background: rgba(117,239, 79, 0.4) }
+  // &.campaign { background: rgba(190, 73,254, 0.25) }
+  // &.survey   { background: rgba( 81,178,240, 0.4) }
+  // &.upload   { background: rgba(26, 173, 173, 0.3) }
+  // &.reminder { background: rgba(255,147, 57, 0.4) }
 
   > * {
     float: left;
   }
 
   button.icon {
-    &.hamburger, &.sync, &.upload {
+    &.hamburger, &.sync, &.upload-queue, &.add {
       margin-left: 1rem;
       height: $app-header-height;
       background-position: center;
       background-size: $app-header-image-size;
       background-repeat: no-repeat;
+    }
+    &.sync {
+      background-size: $app-header-image-size*1.3;
     }
   }
 
@@ -23,11 +34,31 @@ body > header > div  {
     color: $app-header-font-color;
     margin: 0;
     line-height: 1;
-    padding: (($app-header-height - $app-header-font-size) / 2) (($app-header-height - $app-header-font-size) / 2) 0;
+    font-weight: normal;
+    text-transform: uppercase;
+    height: $app-header-height;
+    padding: (($app-header-height - $app-header-font-size) / 2);
+    padding-right: 0;
+    .icon {
+      background-position: center;
+      background-size: $app-header-image-size*0.70;
+      background-repeat: no-repeat;
+      display: inline-block;
+      height: $app-header-image-size*0.75;
+      width: $app-header-image-size*0.75;
+      margin-right: $app-header-image-size*0.45;
+    }
   }
 
   &.ios7 {
     margin-top: $app-status-bar-offset;
+  }
+
+  #button-region .icon, .app-menu-trigger.hamburger.icon {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=85)";
+    filter: alpha(opacity=85);
+    -moz-opacity: 0.85;
+    opacity: 0.85;
   }
 
 }

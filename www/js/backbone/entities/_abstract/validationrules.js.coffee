@@ -26,6 +26,12 @@
         rulesMap: myProperties
       if RulesChecker.errors.length > 0
         return RulesChecker.errors
+
+      # pass along attributes to an internal success
+      # event that the child model can listen for and
+      # use to propagate updates up the event chain.
+      @trigger "internal:success", attrs
+
       # this does not return if there are no errors,
       # because the BB Model validate method
       # only succeeds when nothing is returned
@@ -42,8 +48,16 @@
       @rulesList = _.map(options.rulesMap, (compareValue, ruleName) -> 
         ruleName
       )
+      if 'minValue' in @rulesList and 'maxValue' in @rulesList
+        @replaceWithRangeRule options
       @validate options
 
+    replaceWithRangeRule: (options) ->
+      options.rulesMap.range =
+        minValue: options.rulesMap.minValue
+        maxValue: options.rulesMap.maxValue
+      @rulesList = _.filter(@rulesList, (name) -> name isnt 'minValue' and name isnt 'maxValue')
+      @rulesList.push('range')
     rules:
       # Rules expect that the comparison value they're using
       # has the same name as the rule.
@@ -51,32 +65,42 @@
         validate: (options) ->
           {value, rulesMap} = options
           if value.length < parseInt(rulesMap.minLength)
-            @errors.push 'value too short.'
+            @errors.push "Value too short, length must be at least #{rulesMap.minLength}."
       maxLength:
         validate: (options) ->
           {value, rulesMap} = options
           if value.length > parseInt(rulesMap.maxLength)
-            @errors.push 'value too long.'
+            @errors.push "Value too long, length must be less than #{rulesMap.maxLength}."
       minValue:
         validate: (options) ->
           {value, rulesMap} = options
           valueNum = parseInt(value)
           minValue = parseInt(rulesMap.minValue)
           if valueNum < minValue
-            @errors.push 'value too low.'
+            @errors.push "Value too low, must be greater than #{minValue}."
       maxValue:
         validate: (options) ->
           {value, rulesMap} = options
           valueNum = parseInt(value)
           maxValue = parseInt(rulesMap.maxValue)
           if valueNum > maxValue
-            @errors.push 'value too high.'
+            @errors.push "Value too high, must be less than #{maxValue}."
+      range:
+        validate: (options) ->
+          {value, rulesMap} = options
+          valueNum = parseInt(value)
+          minValue = parseInt(rulesMap.range.minValue)
+          maxValue = parseInt(rulesMap.range.maxValue)
+          if valueNum < minValue
+            @errors.push "Value too low, must be between #{minValue} and #{maxValue}."
+          if valueNum > maxValue
+            @errors.push "Value too high, must be between #{minValue} and #{maxValue}."
       wholeNumber:
         validate: (options) ->
           {value, rulesMap} = options
           if rulesMap.wholeNumber is "false"
             # allow decimal numbers only.
-            validChars = /^\-?[0-9]+(\.[0-9]+)?$/i
+            validChars = /^(?!\.?$)\d{0,99}(\.\d{0,9})?$/i
             if !validChars.test(value)
               @errors = ["Not a valid decimal number."]
           else
@@ -93,11 +117,24 @@
           # rulesMap is not used in this rule, there's
           # no custom property XML.
           {value} = options
+
           try
-            myDateObj = new Date Date.parse(value)
-            response = myDateObj.toISOString()
+            m = moment(value)
+            if !m.isValid() then @errors = ["Invalid timestamp."]
           catch
             @errors = ['Invalid timestamp.']
+      futureTimestamp:
+        validate: (options) ->
+          # we're testing that the value is a Date object in the future.
+
+          # rulesMap is not used in this rule, there's
+          # no custom property XML.
+          {value} = options
+          try
+            now = moment()
+            if now.diff(value) > 0 then @errors = ["Timestamp needs to be in the future."]
+          catch
+            @errors = ['Timestamp needs to be in the future.']
       httpHost:
         validate: (options) ->
           # rulesMap is not used here, no custom property XML.

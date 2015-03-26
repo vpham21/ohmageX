@@ -3,14 +3,17 @@
   > div {
     padding: $app-main-footer-padding;
     border-bottom: 1px solid $app-list-border-color;
+    border-radius: $global-form-control-border-radius*2;
     h3 {
       margin: (-1 * $app-main-footer-padding) (-1 * $app-main-footer-padding) $app-main-footer-padding;
-      height: $info-region-header-height;
+      min-height: $info-region-header-height;
       padding: (($info-region-header-height - $info-region-header-font-size) / 2) $app-main-footer-padding;
       font-size: $info-region-header-font-size;
       line-height: 1;
       background-color: #f4f4f4;
       border-bottom: 1px solid $app-list-border-color;
+      border-top-left-radius: $global-form-control-border-radius*2;
+      border-top-right-radius: $global-form-control-border-radius*2;
     }
   }
 
@@ -28,20 +31,72 @@
     > div {
       position: fixed;
       background-color: #fff;
-      border-radius: 8px;
       top: 2rem;
       right: 2rem;
       left: 2rem;
       padding: $app-main-footer-padding;
       z-index: 1001;
-      overflow: hidden;
       word-wrap: break-word;
-      border: 1px solid #999;
+      // border: 1px solid #999;
       h3 {
         background-color: #eee;
       }
     }
+    .button-close {
+      background: $modal-close-background-color url(../img/icon/menu-close.svg) center center no-repeat;
+      width: $modal-close-icon-size;
+      height: $modal-close-icon-size;
+      background-size: $modal-close-icon-size/2;
+      color: $modal-close-font-color;
+      border: 0;
+      text-indent: -999px;
+      overflow: hidden;
+      box-shadow: $modal-close-box-shadow;
+      // same as the wrapper div padding, put it in the corner
+      margin-top: -$app-main-footer-padding;
+      margin-right: -$app-main-footer-padding;
+      float: right;
+    }
 
+    .button-pair,.button-single {
+      button {
+        width: 100%;
+        border: 0;
+        border-radius: 0;
+        text-transform: uppercase;
+      }
+    }
+
+    .button-pair {
+      padding-top: $global-form-control-padding*2;
+      padding-bottom: 0;
+      overflow: auto;
+      width: 100%;
+      > * {
+        float: left;
+        width: 50%;
+      }
+      > :first-child {
+        button {
+          background: $modal-close-background;
+          color: $modal-close-font-color;
+        }
+        padding-right: $global-form-control-padding/2;
+      }
+      > :last-child {
+        button {
+          background: $modal-activate-background;
+          color: $modal-activate-font-color;
+        }
+        padding-left: $global-form-control-padding/2;
+      }
+    }
+    .button-single {
+      button {
+        background: $modal-activate-background;
+        color: $modal-activate-font-color;
+      }
+    }
   }
 
 }

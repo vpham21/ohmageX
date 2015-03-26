@@ -1,3 +1,18 @@
 <h3><%= @title %></h3>
 <p><%= @description %></p>
-<% if @showCancel is true: %><button type="button" class="cancel-button"><%= @cancelLabel %></button><% end %><button type="button" class="ok-button"><%= @okLabel %></button>
+<% if @showCancel is true: %>
+<div class="button-pair">
+    <div class="action">
+        <button type="button" class="cancel-button"><%= @cancelLabel %></button>
+    </div>
+    <div class="action">
+        <button type="button" class="ok-button"><%= @okLabel %></button>
+    </div>
+</div>
+<% else: %>
+<div class="button-single">
+    <div class="action">
+        <button type="button" class="ok-button"><%= @okLabel %></button>
+    </div>
+</div>
+<% end %>

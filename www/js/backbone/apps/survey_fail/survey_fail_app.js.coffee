@@ -12,17 +12,19 @@
           title: "Survey Upload Error"
           description: "#{errorPrefix} #{errorText}"
           showCancel: true
-          cancelLabel: "Cancel"
+          cancelLabel: "Ok"
           okLabel: "Retry"
         cancelListener: =>
           # After Queue implemented: Put the survey item in the upload queue.
           console.log 'responseData in cancelListener', responseData
-          App.execute "uploadqueue:item:add", responseData, "#{errorPrefix} #{errorText}"
+          App.execute "uploadqueue:item:add", responseData, "#{errorPrefix} #{errorText}", surveyId
           # After Notice Center: Notify the user that the item was put into their upload queue.
           # Exit the survey.
           App.vent.trigger "survey:exit", surveyId
+          App.execute "dialog:alert", "Your response has been added to the Upload Queue."
         okListener: =>
-          App.execute "survey:upload", surveyId
+          App.execute 'credentials:preflight:check', =>
+            App.execute "survey:upload", surveyId
 
   App.vent.on "survey:upload:failure:campaign", (responseData, errorText, surveyId) ->
     console.log responseData
@@ -43,4 +45,4 @@
 
   App.vent.on "survey:upload:failure:network", (responseData, errorText, surveyId) ->
     # placeholder for network errors handler.
-    API.uploadFailureGeneral responseData, "Problem with Network:", errorText, surveyId
+    API.uploadFailureGeneral responseData, "", "Network Error", surveyId

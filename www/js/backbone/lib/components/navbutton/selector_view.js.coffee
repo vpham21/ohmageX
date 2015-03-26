@@ -16,12 +16,23 @@
   class Navbutton.Upload extends App.Views.ItemView
     template: "navbutton/upload"
     tagName: "button"
-    className: "upload icon"
+    className: "upload-queue icon"
     initialize: ->
       # TODO: Add handlers for disabling the button
       # when sync is happening
       @listenTo @, "button:clicked", ->
         @trigger "button:upload"
+
+    triggers:
+      "click": "button:clicked"
+
+  class Navbutton.AddReminder extends App.Views.ItemView
+    template: "navbutton/add_reminder"
+    tagName: "button"
+    className: "add icon"
+    initialize: ->
+      @listenTo @, "button:clicked", ->
+        @trigger "button:add:reminder"
 
     triggers:
       "click": "button:clicked"

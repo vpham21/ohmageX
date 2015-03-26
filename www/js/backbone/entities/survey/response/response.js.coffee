@@ -30,8 +30,8 @@
 
   class Entities.NumberResponse extends Entities.ResponseValidated
     validate: (attrs, options) ->
-      # set wholeNumber to default to false
-      if !attrs.properties.wholeNumber? then attrs.properties.wholeNumber = "false"
+      # set wholeNumber to default to true
+      if !attrs.properties.wholeNumber? then attrs.properties.wholeNumber = "true"
       myRulesMap =
         minValue: 'min'
         maxValue: 'max'
@@ -78,6 +78,16 @@
         propObj[$(child).tagText("key")] = $(child).tagText('label')
       )
       propObj
+    getOptions: ($xml, type) ->
+      if !(type in ['single_choice', 'multi_choice'])
+        return false
+      $options = $xml.find("property")
+      propObj = {}
+      _.each($options, (child) ->
+        $child = $(child)
+        propObj[$(child).tagText("key")] = $(child).tagText('label')
+      )
+      propObj
     createResponses: ($contentXML) ->
       # Loop through all responses.
       # Only want to create a Response for a contentItem that actually
@@ -94,7 +104,9 @@
           return {
             id: $child.tagText('id')
             type: myType
+            question: $child.tagText('promptText')
             properties: @getValidationProperties($child, myType)
+            options: @getOptions($child, myType)
           }
         else
           return false
@@ -102,6 +114,11 @@
     getResponses: ->
       throw new Error "responses not initialized, use 'responses:init' to create new Responses" unless currentResponses isnt false
       currentResponses
+    getValidResponses: ->
+      responses = @getResponses()
+      responses.filter (response) ->
+        # valid responses only.
+        if !response.get('response') then false else true
     destroyResponses: ->
       currentResponses = false
 
@@ -111,6 +128,9 @@
 
   App.reqres.setHandler "responses:current", ->
     API.getResponses()
+
+  App.reqres.setHandler "responses:current:valid", ->
+    API.getValidResponses()
 
   App.reqres.setHandler "response:get", (id) ->
     currentResponses = API.getResponses()

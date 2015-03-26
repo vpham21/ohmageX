@@ -2,7 +2,7 @@
 
   class List.QueueEmpty extends App.Views.ItemView
     tagName: 'li'
-    className: 'empty'
+    className: 'empty-container'
     template: "uploadqueue/list/_queue_empty"
 
   class List.QueueItem extends App.Views.ItemView
@@ -15,11 +15,12 @@
       "click .stopped.item [role=\"link\"]": "stopped:clicked"
       "click button.delete": "delete:clicked"
       "click .running.item [role=\"link\"]": "running:clicked"
+      "click .running.item .right-arrow": "running:clicked"
       "click .running.item button.upload": "upload:clicked"
     serializeData: ->
       data = @model.toJSON()
       console.log(data)
-      data.prettyTimestamp = new Date(data.timestamp).toString()
+      data.prettyTimestamp = moment(data.timestamp).format("MM/DD/YYYY, h:mma")
       data
 
   class List.Queue extends App.Views.CollectionView

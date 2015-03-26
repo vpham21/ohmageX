@@ -37,7 +37,7 @@
     font-size: $global-form-control-font-size;
     background-color: transparent;
     margin: 0;
-    padding: $global-form-control-padding (3.5 * $global-form-control-font-size) $global-form-control-padding ($global-form-control-padding + (0.25 * $global-form-control-font-size));
+    padding: $global-form-control-padding (2 * $global-form-control-font-size) $global-form-control-padding ($global-form-control-padding + (0.25 * $global-form-control-font-size));
     border: 0;
     border-radius: 0;
     -webkit-appearance: none;

@@ -5,19 +5,12 @@
       if !App.request("credentials:isloggedin")
         App.navigate Routes.default_route(), trigger: true
         return false
-      surveyActive = App.request "surveytracker:active"
-      if surveyActive
-        if !confirm('do you want to exit the survey?')
-          # They don't want to exit the survey, cancel.
-          # Move the history to its previous URL.
-          App.historyPrevious()
-          return false
     appRoutes:
       "survey/:id": "show"
 
   API =
     show: (id) ->
-      App.vent.trigger "nav:choose", "Surveys"
+      App.vent.trigger "nav:choose", "survey"
       console.log 'surveyApp show'
 
       $mySurveyXML = App.request "survey:saved:xml", id # gets the jQuery Survey XML by ID
@@ -31,7 +24,11 @@
         # someone navigates backwards via hitting the Back Button.
         # this cleans up and exits the survey properly.
         console.log Error
-        App.vent.trigger "survey:exit", id
+        App.execute "dialog:confirm", "Do you want to exit the #{App.dictionary('page','survey')}?", (=>
+          App.vent.trigger "survey:exit", id
+        ),(=>
+          App.historyPrevious()
+        )
         return false
 
       App.vent.trigger "survey:start", id

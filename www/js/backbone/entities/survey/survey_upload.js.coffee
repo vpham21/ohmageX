@@ -19,7 +19,7 @@
 
       submitResponses = @prepResponseUpload currentResponses
 
-      currentTime = (new Date).getTime()
+      currentTime = moment().valueOf()
       currentTZ = _.jstz()
 
       submitSurveys = 
@@ -28,10 +28,7 @@
         timezone: currentTZ
         location_status: if location then "valid" else "unavailable"
         survey_id: App.request "survey:saved:server_id", surveyId
-        survey_launch_context:
-          launch_time: 1411671398146
-          launch_timezone: "America/Los_Angeles"
-          active_triggers: []
+        survey_launch_context: App.request "survey:launchcontext"
         responses: submitResponses
 
       if location
@@ -45,7 +42,7 @@
       myCampaign = App.request "campaign:entity", campaign_urn
 
       completeSubmit = 
-        client: 'ohmage-mwf-dw-browser'
+        client: App.client_string
         images: App.request "survey:images:string"
         surveys: JSON.stringify([submitSurveys])
         campaign_creation_timestamp: myCampaign.get('creation_timestamp')
@@ -67,7 +64,10 @@
 
   App.commands.setHandler "survey:upload", (surveyId) ->
     responses = App.request "responses:current"
-    API.getLocation responses, surveyId
+
+    App.execute 'credentials:preflight:check', =>
+      App.vent.trigger "loading:show", "Getting Location..."
+      API.getLocation responses, surveyId
 
   App.vent.on "survey:geolocation:fetch:failure", (surveyId) ->
     console.log 'geolocation fetch failure', surveyId

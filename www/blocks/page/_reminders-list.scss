@@ -1,0 +1,272 @@
+$reminders-list-width: 80px;
+$reminders-list-spacing: 1px;
+$reminders-list-height: 32px;
+$reminders-list-font-size: 14px;
+$reminders-list-switch-font-size: 10px;
+$reminders-list-border-width: 1px;
+
+.reminders-list {
+
+  input, button {
+    font-size: 12px;
+  }
+
+  > li {
+    overflow: auto;
+  }
+
+  .reminder-form {
+    clear: both;
+    padding: 0;
+  }
+
+  fieldset {
+    clear: right;
+    margin: 0;
+    padding: $global-form-control-padding;
+    border:0;
+  }
+
+  .date-control, .time-control {
+    display: block;
+  }
+  .repeat-days-container {
+    height: 65px;
+  }
+
+  .date-control, .time-control, .repeat-days-container {
+    font-size: 0.8rem;
+  }
+
+  .surveys-region, .date-control, .time-control {
+    input {
+      width: 125px;
+    }
+  }
+
+  .surveys-region {
+    width: 70%;
+    select {
+      outline: none;
+      font-size: $global-form-control-font-size*0.8;
+      max-width: 100%;
+    }
+  }
+  ul.repeat-days {
+    padding-left: 0;
+    margin: $global-form-control-padding/2 0;
+    outline: none;
+    user-select: none;
+    > li {
+      display: inline-block;
+    }
+    input {
+      position: absolute;
+      margin-left: -9999px;
+      visibility: hidden;
+    }
+    label {
+      display: inline-block;
+      cursor: pointer;
+      background-color: #eee;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 17px;
+      text-align: center;
+      padding: 4px;
+    }
+    input:checked + label {
+      background-color: #00aeff;
+      color: #fff;
+    }
+  }
+
+  .toggler-button, .label-region {
+    float: left;
+    margin: 12px 4px;
+    padding: ($reminders-list-height - $reminders-list-font-size) / 2;
+    font-size: $reminders-list-font-size;
+    line-height: 1;
+  }
+  .delete-button-container {
+    padding: $global-form-control-padding;
+    text-align: right;
+    button {
+      height: 1.7rem;
+      width: 1.7rem;
+      background-size: 1.7rem 1.7rem;
+      cursor: pointer;
+    }
+
+  }
+
+  > li.active .toggler-button {
+    border-width: 0;
+  }
+
+  .toggler-button {
+    width: 5rem;
+    font-size: 12px;
+    padding-top: 10px;
+    border-width: 0 $reminders-list-border-width 0 0;
+    border-radius: 0;
+  }
+
+  .label-region {
+    font-weight: bold;
+  }
+
+  .repeat-enable-region {
+    float: right;
+    width: 27%;
+    outline: none;
+    user-select: none;
+    padding: $global-form-control-padding;
+  }
+
+}
+
+.reminder-summary {
+  cursor: pointer;
+  padding: $global-form-control-padding;
+  padding-bottom: 1rem+$global-form-control-padding*1.5;
+  position: relative;
+
+  .edit-container {
+    float: left;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: $global-form-control-padding;
+    button {
+      height: 1.5rem;
+      width: 1.5rem;
+      background-size: 1.5rem;
+    }
+  }
+
+  .summary-time, .repeat-time {
+    font-size: 0.65rem;
+    padding: $global-form-control-padding/2;
+    position: absolute;
+    bottom: 0;
+  }
+
+  .summary-time {
+    left: 0;
+    color: rgb(0,132,174);
+    background: #F0F0FA;
+    font-weight: bold;
+  }
+
+  .repeat-time {
+    right: 0;
+    color: rgb(0,132,174);
+  }
+
+  .enable-switch-container {
+    float: right;
+    width: $reminders-list-width;
+    text-align: right;
+    visibility: hidden;
+  }
+
+  .repeat-tag {
+    display: none;
+  }
+
+  // .repeat-tag {
+  //   display: inline-block;
+  //   color: rgb(0,132,174);
+  //   background: #F0F0FA;
+  //   font-size: 0.65rem;
+  //   padding: $global-form-control-padding/2;
+  //   text-transform: uppercase;
+  //   margin: 0;
+  //   margin-right: $global-form-control-padding;
+  // }
+  // .interval {
+  //   font-size: 0.65rem;
+  //   color: rgb(0,132,174);
+  // }
+
+  .hotspot {
+    z-index: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  .enable-switch {
+
+    width: $reminders-list-width;
+    height: $reminders-list-height;
+    position: relative;
+    font-size: $reminders-list-switch-font-size;
+    margin: 0;
+    text-transform: uppercase;
+    font-weight: bold;
+
+    input {
+      position: absolute;
+      margin-left: -9999px;
+      visibility: hidden;
+    }
+
+    input + label {
+      display: block;
+      position: relative;
+      cursor: pointer;
+      outline: none;
+      user-select: none;
+      padding: $reminders-list-spacing;
+      width: $reminders-list-width;
+      height: $reminders-list-height;
+      background-color: #fff; // change this to same as input + label:after color to get a border the same color as the button
+      border: $reminders-list-border-width solid #ddd;
+      transition: background 0.4s;
+    }
+
+    input + label:before,
+    input + label:after {
+      display: block;
+      position: absolute;
+      content: "";
+    }
+
+    input + label:before {
+      top: $reminders-list-spacing;
+      left: $reminders-list-spacing;
+      bottom: $reminders-list-spacing;
+      right: $reminders-list-spacing;
+      background-color: #fff;
+      transition: background 0.4s;
+    }
+
+    input + label:after {
+      top: $reminders-list-spacing;
+      left: $reminders-list-spacing;
+      bottom: $reminders-list-spacing;
+      width: ($reminders-list-width / 2) - ($reminders-list-spacing * 2) - ($reminders-list-border-width * 2);
+      text-align: center;
+      background-color: #b00;
+      padding-top: ($reminders-list-height - $reminders-list-spacing * 4 - $reminders-list-switch-font-size) / 2 - 1;
+      color: #fff;
+      transition: margin 0.4s, background 0.4s;
+      content: 'Off';
+    }
+
+    input:checked + label {
+      background-color: #fff; // change this to same as input:checked + label:after color to get a border the same color as the button
+    }
+
+    input:checked + label:after {
+      margin-left: $reminders-list-width / 2;
+      background-color: #00aeff;
+      color: #fff;
+      content: 'On';
+    }
+
+  }
+}

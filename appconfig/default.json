@@ -1,0 +1,62 @@
+{
+  "api": {
+    "client_base_string": "ohmagex-",
+    "token_redirect": "../web/#login"
+  },
+  "build": {
+    "app_name": "ohmageX",
+    "bundle_id": "org.ohmage.x.ohmage",
+    "image_folder": "default",
+    "debug": false
+  },
+  "dictionary": {
+    "page": {
+      "login": "login",
+      "campaign": "campaign",
+      "survey": "survey",
+      "queue": "upload queue",
+      "reminder": "reminder",
+      "profile": "profile",
+      "logout": "logout"
+    },
+    "pages": {
+      "login": "login",
+      "campaign": "campaigns",
+      "survey": "surveys",
+      "queue": "upload queue",
+      "reminder": "reminders",
+      "profile": "profile",
+      "logout": "logout"
+    },
+    "menu": {
+      "login": "Login",
+      "campaign": "Campaigns",
+      "survey": "Surveys",
+      "queue": "Upload Queue",
+      "reminder": "Reminders",
+      "profile": "Profile",
+      "logout": "Logout"
+    }
+  },
+  "menu_items_disabled": {
+    "native": [],
+    "browser": [
+      "reminder",
+      "logout"
+    ],
+    "footer": [
+      "campaign",
+      "survey",
+      "queue",
+      "reminder",
+      "logout"
+    ]
+  },
+  "server_list": {
+    "custom": true,
+    "servers": [
+      "https://pilots.mobilizelabs.org",
+      "https://sandbox.mobilizingcs.org"
+    ]
+  }
+}

@@ -14,6 +14,13 @@
       @stepId = stepId
 
       myView = @selectView entity, type
+
+      if type is "afterSurveySubmit"
+        @listenTo myView, 'new:reminder', =>
+          App.vent.trigger "reminders:survey:new", @surveyId
+        @listenTo myView, 'update:reminders', (ids) =>
+          App.vent.trigger "reminders:survey:suppress", @surveyId, ids
+
       @showSelectedView myView
 
     selectView: (entity, type) ->
@@ -26,10 +33,35 @@
             model: entity
         when "beforeSurveySubmit"
           return new Steps.BeforeSubmission
-            model: entity          
-        when "afterSurveySubmit"
-          return new Steps.AfterSubmission
             model: entity
+        when "afterSurveySubmit"
+
+          # for now, disable the post-survey summary - not fully functional
+          if true or !App.custom.build.debug and !App.device.isNative
+            # no debugging and no native, just show the base exit summary.
+            return new Steps.AfterSubmission
+              model: entity
+
+          else
+
+            if App.request('reminders:current').findWhere(surveyId: @surveyId)
+              # reminders for this survey already exist
+
+              reminders = App.request "reminders:survey:scheduled:latertoday", @surveyId
+
+              if reminders.length is 0
+                # Reminders exist but they're not later today.
+                # just show the exit page.
+                return new Steps.AfterSubmission
+                  model: entity
+              else
+                # reminders are scheduled later today for this survey.
+                return new Steps.AfterHasReminders
+                  collection: reminders
+            else
+              # reminders don't exist for this survey at all.
+              return new Steps.AfterNoReminders
+
         else
           # handle all other view types in the Prompts component.
           return App.request "prompts:view", @surveyId, @stepId, entity, type

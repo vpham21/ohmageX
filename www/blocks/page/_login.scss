@@ -4,13 +4,29 @@ form.login {
   > :first-child {
     margin-top: 0;
   }
+  .error:empty {
+    display: none;
+  }
+  h1 {
+    text-indent: -999px;
+    overflow: hidden;
+    border: 0;
+    background-image: url('../img/app-logo-header.png');
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-bottom: $global-form-control-padding*2;
+    height: 3.5rem;
+  }
   > * {
     display: block;
   }
   label {
     text-align: center;
     font-weight: bold;
-    margin-top: $app-main-footer-padding;
+    margin-top: $app-main-footer-padding/2;
+    margin-bottom: $app-main-footer-padding/4;
+
   }
   .error + label {
     margin-top: 0;
@@ -19,11 +35,31 @@ form.login {
     width: 100%;
     margin-bottom: 0.4rem;
   }
-  button[type="submit"] {
-    margin-top: $app-main-footer-padding;
-    background-color: #3ac;
-    color: #fff;
-    border-color: $global-form-control-border-color-dark;
-    padding: 0.75rem;
+  .button-single {
+    button {
+      margin-top: $app-main-footer-padding;
+      border: 0;
+      border-radius: 0;
+      text-transform: uppercase;
+      background: $modal-activate-background;
+      color: $modal-activate-font-color;
+      border-color: $global-form-control-border-color-dark;
+      padding: $global-form-control-padding*2;
+    }
+  }
+  .server-selector {
+    label {
+      text-align: left;
+      display: block;
+    }
+    .select-block {
+      width: 100%;
+      margin: 0 auto;
+    }
+    select {
+      outline: none;
+      margin-bottom: $app-main-footer-padding/4;
+      width: 100%;
+    }
   }
 }

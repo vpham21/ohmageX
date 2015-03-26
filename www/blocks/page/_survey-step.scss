@@ -13,6 +13,15 @@
     padding: 0;
   }
 
+  .submit-disabler {
+    display: none;
+  }
+
+  .survey-navigation > * {
+    margin: 0 auto;
+    max-width: 500px;
+  }
+
   .inset-block {
     width: 100%;
     overflow: auto;
@@ -21,6 +30,8 @@
     background-color: $survey-step-inset-block-background-color;
     font-weight: bold;
     color: $survey-step-inset-block-font-color;
+    border-top: 1px solid $survey-step-inset-block-border-color;
+    border-bottom: 1px solid $survey-step-inset-block-border-color;
   }
 
   textarea {
@@ -38,32 +49,44 @@
     margin: 0;
     padding: 0;
 
-    > li {
-      background-color: #ddd;
-      position: relative;
-      overflow: hidden;
-    }
+    table-layout: fixed;
+    width: 100%;
+    word-wrap: break-word;
 
     input[type="checkbox"], input[type="radio"], button.delete {
       margin: $app-main-footer-padding;
       line-height: 1;
     }
 
-    label {
+    tr {
+      border-bottom: 1px solid $app-list-border-color;
+    }
+    tr:last-child {
+      border-bottom: none;
+    }
+
+    td.left,td.right {
+      width: 3rem;
+      &:empty {
+        width: 0;
+      }
+    }
+    td.left {
+      background-color: $app-background;
+    }
+
+    td.content {
       background-color: #fff;
-      position: absolute;
-      height: 3rem;
-      right: 0;
-      left: (3 * $app-main-footer-padding);
-      padding: $app-main-footer-padding;
+    }
+    label {
       line-height: 1;
-      z-index: 10;
+      font-size: $global-form-control-font-size;
+      display: inline-block;
+      padding: $global-form-control-padding*2;
+      width: 100%;
     }
 
     button.delete {
-      position: absolute;
-      right: 0;
-      z-index: 11;
       background-size: 1rem;
       height: 1rem;
       width: 1rem;
@@ -81,7 +104,8 @@
     }
   }
 
-  .my-add, .prompt-list > li {
+  .my-add {
+    border-top: 1px solid $app-list-border-color;
     border-bottom: 1px solid $app-list-border-color;
     width: 100%;
     height: 3rem;
@@ -91,10 +115,7 @@
     padding: 1rem
   }
 
-  #prev-button, #next-button, #skip-button {
-    float: left;
-    width: 33%;
-    padding: 0 0.5rem;
+  #skip-button, #prev-button, #next-button {
     position: relative;
     line-height: 1;
     &:first-child {
@@ -105,44 +126,74 @@
     }
     button {
       width: 100%;
-      background-color: #fff;
-      padding: 0.75rem;
-      &[disabled] {
-        background-color: #ccc;
-      }
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      padding: $global-form-control-padding*1.5;
     }
   }
 
+  #skip-button {
+    button {
+      background: $survey-step-skip-button-background-color;
+      background: linear-gradient(to bottom, adjust-color($survey-step-skip-button-background-color, $lightness: 5%, $saturation: -5%) 0%, adjust-color($survey-step-skip-button-background-color, $lightness: -5%, $saturation: 5%) 100%);    
+      border-radius: 0;
+      border: 1px solid adjust-color($survey-step-skip-button-background-color, $lightness: -5%, $saturation: 5%);
+      color: $survey-step-skip-button-font-color;
+    }
+  }
+
+
   #prev-button, #next-button {
-    &::before {
+    div::before {
       position: absolute;
-      padding: $global-form-control-padding;
-      line-height: 1;
       top: 0;
-      padding: 0.75rem;
+      cursor: pointer;
+      opacity: 0.5;
+      height: 100%;
+      width: $global-form-control-font-size*1.5;
+      background-size: $global-form-control-font-size*0.85;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
+    button {
+      text-transform: uppercase;
     }
   }
 
   #prev-button {
+
     button {
       padding-left: 2*$global-form-control-padding;
+      background: $survey-step-prev-button-background-color;
+      background: linear-gradient(to bottom, adjust-color($survey-step-prev-button-background-color, $lightness: 5%, $saturation: -5%) 0%, adjust-color($survey-step-prev-button-background-color, $lightness: -5%, $saturation: 5%) 100%);
     }
-    &::before {
-      content: '\2039';
-      left: $global-form-control-padding;
-      color: #F00;
+    div::before {
+      content: '';
+      background-image: url('../img/icon/left-triangle.svg');
+      left: 0;
     }
   }
 
   #next-button {
     button {
       padding-right: 2*$global-form-control-padding;
+      background: $survey-step-next-button-background-color;
+      background: linear-gradient(to bottom, adjust-color($survey-step-next-button-background-color, $lightness: 5%, $saturation: -5%) 0%, adjust-color($survey-step-next-button-background-color, $lightness: -5%, $saturation: 5%) 100%);
     }
-    &::before {
-      content: '\203A';
-      right: $global-form-control-padding;
-      color: #0C0;
+    div::before {
+      content: '';
+      background-image: url('../img/icon/right-triangle.svg');
+      right: 0;
     }
+  }
+
+  #prev-button, #next-button {
+    .disabled {
+      visibility: hidden;
+    }
+  }
+  #skip-button .disabled {
+    display: none;
   }
 
   .datetime-control {
@@ -216,39 +267,140 @@
       min-height: 200px;
       background-color: $component-background-color;
     }
-    input[type="file"] {
-      top: 50%;
+    .input-activate {
       position: absolute;
-      height: 3rem;
       width: 100%;
-      color: transparent;
-      &::-webkit-file-upload-button {
-        visibility: hidden;
-      }
-      &::before {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        content: '[TAKE PICTURE ICON HERE]';
-        text-align: center;
+      height: $global-form-control-padding*1.75+$list-icon-size;
+      bottom: $global-form-control-padding;
+      text-align: center;
+      button {
+        background-image: url('../img/icon/camera.svg');
+        background-size: $list-icon-size;
+        background-position: $global-form-control-padding center;
+        background-repeat: no-repeat;
         color: #fff;
         font-weight: bold;
-        background-color: rgba(55,55,55,0.9);
-        border: solid rgba(255,255,255,0.8);
-        border-width: 2px 0;
-        padding: 1rem;
-        font-size: 1rem;
+        background-color: rgba(0,141,230,0.9);
+        border: solid rgba(0,141,230,0.9);
+        border-width: 1px 0;
+        padding: $global-form-control-padding*1.75 0;
+        font-size: $global-form-control-font-size;
         line-height: 1;
         outline: none;
         white-space: nowrap;
         -webkit-user-select: none;
-        cursor: pointer;
+        width: 80%;
+        max-width: 320px;
+        min-width: 225px;
+        display: inline-block;
       }
+      input[type="file"] {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: transparent;
+        opacity: 0;
+        -moz-opacity: 0;
+        filter: alpha(opacity=0);
+        cursor: pointer;
+        &::-webkit-file-upload-button {
+          visibility: hidden;
+        }
+        // Needed for Firefox
+        width: 100%;
+      }
+
     }
+
     .preview-image {
       width: 100%;
     }
   }
 
+  .button-pair {
+    padding: 8px 0;
+    overflow: auto;
+    > * {
+      float: left;
+      width: 50%;
+    }
+    > :first-child {
+      button {
+        background-color: #b00;
+        color: #fff;
+      }
+      padding-right: 4px;
+    }
+    > :last-child {
+      button {
+        background-color: #00aeff;
+        color: #fff;
+      }
+      padding-left: 4px;
+    }
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 0;
+    }
+  }
+  .custom-choice-form {
+    .add-form input {
+      width: 100%;
+    }
+    .add-form button {
+      font-size: 0.9rem;
+    }
+  }
+
+  .number-prompt-form {
+    $number-section-header-width: 3rem;
+    $number-row-height: 1rem;
+    font-size: 0.75rem;
+    header {
+      text-transform: uppercase;
+      background-color: #11deff;
+      color: white;
+      font-weight: bold;
+    }
+    aside.number-range {
+      section {
+        height: $number-row-height+$global-form-control-padding;
+        width: 50%;
+        span {
+          display: inline-block;
+          font-weight: bold;
+          padding: $global-form-control-padding/2 0;
+        }
+      }
+      section.left {
+        float: left;
+        header {
+          float: left;
+        }
+        span {
+          margin-left: $global-form-control-padding;
+        }
+      }
+      section.right {
+        float: right;
+        text-align: right;
+        header {
+          float: right;
+        }
+        span {
+          margin-right: $global-form-control-padding;
+        }
+      }
+      section header {
+        color: rgb(0,132,174);
+        background: #F0F0FA;
+        padding: $global-form-control-padding/2;
+        height: $number-row-height+$global-form-control-padding;
+        width: $number-section-header-width;
+      }
+    }
+  }
 }

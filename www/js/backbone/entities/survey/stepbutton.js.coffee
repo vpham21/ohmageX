@@ -11,7 +11,7 @@
   class Entities.StepButtonPrev extends Entities.Model
     defaults: # default values for all StepButtonPrevs
       disabled: false # enable all by default
-      label: "Prev"
+      label: "Back"
 
   class Entities.StepButtonNext extends Entities.Model
     defaults: # default values for all StepButtonNexts
@@ -25,7 +25,9 @@
         label: currentStep.get 'skipLabel'
 
     prevEntity: (stepType, stepId) ->
-      disabled = stepType is "intro" or stepType is "afterSurveySubmit"
+      # Disable the 'automatic survey upload' that made this step a Loading step
+      # disabled = stepType in ["intro", "beforeSurveySubmit", "afterSurveySubmit"]
+      disabled = stepType in ["intro", "afterSurveySubmit"]
 
       new Entities.StepButtonPrev
         disabled: disabled
@@ -34,7 +36,7 @@
       myLabel = switch stepType
         when "intro" then "Begin Survey"
         when "beforeSurveySubmit" then "Submit"
-        when "afterSurveySubmit" then "Exit Survey"
+        when "afterSurveySubmit" then "Exit"
         else "Next"
 
       new Entities.StepButtonNext

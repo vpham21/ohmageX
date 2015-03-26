@@ -71,7 +71,8 @@
   App.commands.setHandler "uploadqueue:upload:all", ->
     queue = App.request 'uploadqueue:entity'
 
-    API.uploadAll queue
+    if queue.length > 0
+      API.uploadAll queue
 
   App.vent.on "uqall:upload:success", (response, itemId) ->
     API.queueSuccess itemId

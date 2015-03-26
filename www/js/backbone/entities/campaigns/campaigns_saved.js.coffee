@@ -83,3 +83,6 @@
 
   App.vent.on "credentials:cleared", ->
     API.clear()
+
+  App.vent.on 'surveys:saved:campaign:fetch:error', (id) ->
+    API.unsaveCampaign id

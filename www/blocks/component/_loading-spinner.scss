@@ -1,0 +1,61 @@
+body > #loading-spinner  {
+  display: none;
+
+  &[data-state="active"] {
+    display: block;
+  }
+
+  position: absolute;
+
+  z-index: 1999;
+
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(20, 20, 20, .8);
+
+  figure {
+    display: block;
+    position: absolute;
+    z-index: 2000;
+    top: 50%;
+    left: 50%;
+    height: $component-loader-height;
+    width: $component-loader-width;
+    margin-left: -$component-loader-width/2;
+    margin-top: -$component-loader-height/2;
+
+    text-align: center;
+
+    background-color: #F2F2F2;
+    display: inline-block;
+    padding: $global-form-control-padding;
+    -moz-border-radius: $global-form-control-border-radius;
+    border-radius: $global-form-control-border-radius;
+
+  }
+
+  .spinner {
+    display: inline-block;
+    background-image: url("../img/icon/spinner.gif");
+    // make image size use variables. compute this size
+    // based on the component loader width minus the padding.
+    background-size: 100px 100px;
+    width: 100px;
+    height: 100px;
+  }
+
+  figcaption {
+    padding-top: 10px;
+    display: inline-block;
+    color: $global-form-control-text-color;
+    font-size: $global-form-control-font-size;
+  }
+
+}
+
+
+body[loading-spinner-state="active"] {
+  overflow: hidden;
+}

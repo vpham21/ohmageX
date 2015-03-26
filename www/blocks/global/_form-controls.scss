@@ -21,6 +21,9 @@ textarea {
   color: $global-form-control-text-color;
   line-height: 1;
 
+  &:active {
+    background-color: $global-form-control-active-background-color;
+  }
 }
 
 input[type="date"],

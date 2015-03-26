@@ -14,7 +14,7 @@
   class Entities.UploadQueue extends Entities.Collection
     model: Entities.UploadQueueItem
     comparator: (item) ->
-      item.get 'timestamp'
+      -(item.get 'timestamp')
 
   API =
     init: ->
@@ -26,14 +26,25 @@
         console.log 'user upload queue not retrieved from storage'
         currentQueue = new Entities.UploadQueue
 
-    addItem: (responseData, errorText) ->
+    addItem: (responseData, errorText, responses, surveyId) ->
       console.log 'addItem responseData', responseData
 
-      result = 
+      surveyObj = JSON.parse responseData.surveys
+      console.log 'surveyObj', surveyObj
+      result =
         data: responseData
-        name: 'test'
+        timestamp: responseData.timestamp
+        campaign_name: App.request "campaign:name", responseData.campaign_urn
+        campaign_urn: responseData.campaign_urn
+        campaign_creation_timestamp: responseData.campaign_creation_timestamp
+        name: App.request('survey:saved:title', surveyId)
+        description: App.request('survey:saved:description', surveyId)
         id: _.guid()
         errorText: errorText
+        responses: responses
+
+      if surveyObj[0].location_status is "valid"
+        _.extend(result, location: surveyObj[0].location)
 
       currentQueue.add result
       @updateLocal( =>
@@ -65,8 +76,9 @@
   App.on "before:start", ->
     API.init()
 
-  App.commands.setHandler "uploadqueue:item:add", (responseData, errorText) ->
-    API.addItem responseData, errorText
+  App.commands.setHandler "uploadqueue:item:add", (responseData, errorText, surveyId) ->
+    responses = App.request 'responses:current:valid'
+    API.addItem responseData, errorText, responses, surveyId
 
   App.commands.setHandler "uploadqueue:item:remove", (id) ->
     API.removeItem id
@@ -76,6 +88,10 @@
 
   App.reqres.setHandler "uploadqueue:entity", ->
     currentQueue
+
+  App.reqres.setHandler "uploadqueue:item", (id) ->
+    if !!!currentQueue.get(id) then throw new Error "item id #{id} does not exist in upload queue"
+    currentQueue.get(id)
 
   App.reqres.setHandler "uploadqueue:length", ->
     currentQueue.length

@@ -10,15 +10,17 @@
       if response.result is "success"
         if context is 'survey' then App.execute "survey:images:destroy"
         console.log 'newUploader Success!'
+        App.vent.trigger "loading:hide"
         App.vent.trigger "#{context}:upload:success", response, itemId
       else
         console.log 'response.errors[0].code', response.errors[0].code
         type = switch response.errors[0].code
           when '0710','0703','0617','0700' then "campaign"
           when '0100' then "server"
-          when '0600','0307','0302' then "response"
-          when '0200' then "auth"
+          when '0600','0307','0302','0304' then "response"
+          when '0200','0201','0202' then "auth"
         console.log 'type', type
+        App.vent.trigger "loading:hide"
         App.vent.trigger "#{context}:upload:failure:#{type}", responseData, response.errors[0].text, itemId
 
     newUploader: (context, responseData, itemId) ->
@@ -41,10 +43,11 @@
         dataType: 'json'
         success: (response) =>
           @parseUploadErrors context, responseData, response, itemId
-        error: (response) =>
+        error: (xhr, ajaxOptions, thrownError) =>
           console.log 'survey upload error'
           # assume all error callbacks here are network relate
-          App.vent.trigger "#{context}:upload:failure:network", responseData, response, itemId
+          App.vent.trigger "loading:hide"
+          App.vent.trigger "#{context}:upload:failure:network", responseData, xhr.status, itemId
 
   App.commands.setHandler "uploader:new", (context, responseData, itemId) ->
     # context is a means of determining the 
@@ -56,5 +59,6 @@
     # in a 'survey' context, this is a reference to the surveyId.
     # in an 'uploadqueue' context, this is a reference to the queue item's
     # model id.
+    App.vent.trigger "loading:show", "Submitting Survey..."
 
     API.newUploader context, responseData, itemId

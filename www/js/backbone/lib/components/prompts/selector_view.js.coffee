@@ -55,6 +55,13 @@
       console.log 'serializeData data', data
       if !data.currentValue
         data.currentValue = ''
+      data.min = false
+      data.max = false
+
+      if @model.get('properties').get('min') isnt undefined and @model.get('properties').get('max') isnt undefined
+        data.min = @model.get('properties').get('min')
+        data.max = @model.get('properties').get('max')
+
       data
 
   class Prompts.Timestamp extends Prompts.Base
@@ -130,6 +137,11 @@
         console.log 'Please select an image.'
     recordImage: (img64) ->
       @model.set('currentValue', img64)
+      @renderImageThumb img64
+    onRender: ->
+      savedImage = @model.get('currentValue')
+      if savedImage then @renderImageThumb(savedImage)
+    renderImageThumb: (img64) ->
       # display the image in the preview
       $img = @$el.find '.preview-image'
       $img.prop 'src', img64
@@ -142,15 +154,9 @@
       'change input[type=file]': "file:changed"
 
   class Prompts.SingleChoiceItem extends App.Views.ItemView
-    initialize: ->
-      @listenTo @, "item:select", @selectItem
-    tagName: 'li'
+    tagName: 'tr'
     template: "prompts/single_choice_item"
-    selectItem: (args) ->
-      @$el.find( "input" ).prop('checked', true)
     triggers:
-      "click label": "item:select"
-      "touchstart input": "item:select"
       "click button.delete": "customchoice:remove"
 
   # Prompt Single Choice
@@ -167,10 +173,7 @@
 
   class Prompts.MultiChoiceItem extends Prompts.SingleChoiceItem
     template: "prompts/multi_choice_item"
-    selectItem: (args) ->
-      oldValue = @$el.find( "input" ).prop('checked')
-      # flip the item to its opposite value.
-      @$el.find( "input" ).prop('checked', !oldValue)
+
 
   # Prompt Multi Choice
   class Prompts.MultiChoice extends Prompts.SingleChoice
@@ -228,8 +231,8 @@
 
       @listenTo @, 'childview:customchoice:remove', @removeChoice
 
-      @listenTo @, 'customchoice:add:invalid', (-> alert('invalid custom choice, please try again.'))
-      @listenTo @, 'customchoice:add:exists', (-> alert('Custom choice exists, please try again.'))
+      @listenTo @, 'customchoice:add:invalid', (-> App.execute "dialog:alert", 'invalid custom choice, please try again.')
+      @listenTo @, 'customchoice:add:exists', (-> App.execute "dialog:alert", 'Custom choice exists, please try again.')
     onRender: ->
       currentValue = @model.get('currentValue')
       if currentValue then @chooseValue currentValue
@@ -238,7 +241,7 @@
       switch @model.get('currentValueType')
         when 'response'
           # Saved responses use the label, not the key.
-          matchingValue = @$el.find("label:containsExact('#{currentValue}')").parent().find('input').prop('checked', true)
+          matchingValue = @$el.find("label:containsExact('#{currentValue}')").parent().parent().find('input').prop('checked', true)
         when 'default'
           # Default responses match keys instead of labels.
           # Select based on value.
@@ -299,7 +302,7 @@
       # this expects the radio buttons to be in the format:
       # <li><input type=radio ... /><label>labelText</label></li>
       $checkedInput = @$el.find('input[type=radio]').filter(':checked')
-      response = if !!!$checkedInput.length then false else $checkedInput.parent().find('label').text()
+      response = if !!!$checkedInput.length then false else $checkedInput.parent().parent().find('label').text()
       @trigger "response:submit", response, surveyId, stepId
 
 
@@ -310,7 +313,7 @@
       # into a JSON string
       return false unless $responses.length > 0
       result = _.map($responses, (response) ->
-        $(response).parent().find('label').text()
+        $(response).parent().parent().find('label').text()
       )
       JSON.stringify result
     selectCurrentValues: (currentValues) ->

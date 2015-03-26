@@ -40,7 +40,7 @@
         App.navigate "survey/#{surveyId}/step/#{prevId}", { trigger: true }
       else
         # There is no previous ID.
-        if confirm('Do you want to exit the survey?')
+        App.execute "dialog:confirm", "Do you want to exit the #{App.dictionary('page','survey')}?", =>
           App.vent.trigger "survey:exit", surveyId
 
     goNext: (surveyId, stepId) ->
@@ -79,10 +79,20 @@
   App.vent.on "survey:aftersubmit:next:clicked", (surveyId, stepId) ->
     App.vent.trigger "survey:exit", surveyId
 
+  App.vent.on "reminders:survey:new", (surveyId) ->
+    App.vent.trigger "survey:reset", surveyId
+
+  App.vent.on "reminders:survey:suppress", (surveyId, reminderIds) ->
+    App.vent.trigger "survey:exit", surveyId
+
   App.vent.on "response:set:success", (response, surveyId, stepId) ->
     API.goNext surveyId, stepId
 
   App.vent.on "response:set:error", (error) ->
     console.log "response:set:error", error
-    alert "Response contains errors: #{error.toString()}"
+    App.execute "dialog:alert", "#{error.toString()}"
 
+  App.vent.on "survey:upload:failure:auth", (responseData, errorText, surveyId) ->
+    if !App.request("credentials:ispassword")
+      # dump to queue and save survey
+      App.execute "uploadqueue:item:add", responseData, "#{errorPrefix} #{errorText}", surveyId

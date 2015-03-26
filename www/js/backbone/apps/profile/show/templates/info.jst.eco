@@ -1,1 +1,9 @@
 Logged in as <strong><%= @username %></strong>
+<br />
+<% if @showPassword: %>
+<div class="button-single">
+  <div class="action">
+    <button class="change-password" type="button">Change Password</button>
+  </div>
+</div>
+<% end %>

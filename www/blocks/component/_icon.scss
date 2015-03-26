@@ -6,45 +6,96 @@
   background: transparent;
 
   &.hamburger {
-    background-image: url("../img/icon/menu-open.png");
+    background-image: url("../img/icon/menu-open.svg");
     height: 38px;
     width: 36px;
   }
 
   &.close {
-    background: url("../img/icon/menu-close.png") center no-repeat;
+    background: url("../img/icon/menu-close.svg") center no-repeat;
     height: 40px;
     width: 40px;
   }
 
   &.sync {
-    background-image: url("../img/icon/sync.png");
+    background-image: url("../img/icon/sync.svg");
     height: 55px;
     width: 55px;
   }
 
-  &.upload {
-    background-image: url("../img/icon/sync.png");
+  &.upload-queue {
+    background-image: url("../img/icon/upload-queue.png");
+    height: 55px;
+    width: 55px;
+  }
+
+  &.add {
+    // needs to be replaced with custom add icon
+    background-image: url("../img/icon/add.svg");
     height: 55px;
     width: 55px;
   }
 
   &.clock {
-    background-image: url("../img/icon/clock.png");
+    background-image: url("../img/icon/clock.svg");
     height: 31px;
     width: 31px;
   }
 
   &.info {
-    background-image: url("../img/icon/info.png");
+    background-image: url("../img/icon/info.svg");
   }
 
   &.delete {
-    background-image: url("../img/icon/delete.png");
+    background-image: url("../img/icon/trash.svg");
   }
 
   &.save {
-    background-image: url("../img/icon/save.png");
+    background-image: url("../img/icon/save.svg");
+  }
+
+  &.survey {
+    background-image: url("../img/icon/survey.svg");
+  }
+
+  &.campaign {
+    background-image: url("../img/icon/campaign.svg");
+  }
+
+  &.stream {
+    background-image: url("../img/icon/stream.svg");
+  }
+
+  &.analytics {
+    background-image: url("../img/icon/analytics.svg");
+  }
+
+  &.help {
+    background-image: url("../img/icon/help.svg");
+  }
+
+  &.upload {
+    background-image: url("../img/icon/upload.svg");
+  }
+
+  &.reminder {
+    background-image: url("../img/icon/reminder.svg");
+  }
+
+  &.profile {
+    background-image: url("../img/icon/profile.svg");
+  }
+
+  &.logout {
+    background-image: url("../img/icon/logout.svg");
+  }
+
+  &.trash {
+    background-image: url("../img/icon/trash.svg");
+  }
+
+  &.edit {
+    background-image: url("../img/icon/edit.svg");
   }
 
   &.delete, &.save, &.info {
@@ -55,7 +106,7 @@
     background-size: 23px 36px;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url("../img/icon/right-arrow.png");
+    background-image: url("../img/icon/right-arrow.svg");
   }
 
   &.delete, &.save, &.info, &.right-arrow {
@@ -64,14 +115,17 @@
   }
 
   &.search {
-    background-image: url("../img/icon/search.png");
+    background-image: url("../img/icon/search.svg");
     height: 56px;
     width: 56px;
 
     &.form-control {
       height: ((3/2) * $global-form-control-font-size + 2 * $global-form-control-padding);
       width: ((3/2) * $global-form-control-font-size + 2 * $global-form-control-padding);
-      background-size: ((3/2) * $global-form-control-font-size + 2 * $global-form-control-padding);
+      background-size: $global-form-control-font-size*1.5;
+      background-position: center center;
+      background-color: #4384dc;
+      background-repeat: no-repeat;
       border: 1px solid $global-form-control-border-color;
     }
 

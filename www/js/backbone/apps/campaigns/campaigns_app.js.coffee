@@ -5,22 +5,12 @@
       if !App.request("credentials:isloggedin")
         App.navigate Routes.default_route(), trigger: true
         return false
-      surveyActive = App.request "surveytracker:active"
-      if surveyActive
-        if confirm('do you want to exit the survey?')
-          # reset the survey's entities.
-          App.vent.trigger "survey:reset"
-        else
-          # They don't want to exit the survey, cancel.
-          # Move the history to its previous URL.
-          App.historyPrevious()
-          return false
     appRoutes:
       "campaigns": "list"
 
   API =
     list: ->
-      App.vent.trigger "nav:choose", "Campaigns"
+      App.vent.trigger "nav:choose", "campaign"
       new CampaignsApp.List.Controller
 
   App.addInitializer ->
@@ -34,7 +24,12 @@
     App.execute "campaign:save", model
 
   App.vent.on "campaign:list:unsave:clicked", (model, view, filterType) ->
-    if confirm "are you sure you want to unsave this campaign?"
+    if App.request("user:metadata:has:campaign", model.get('id'))
+      App.execute "dialog:confirm", "Are you sure you want to unsave this #{App.dictionary('page','campaign')}? You have saved data for it.", (=>
+        App.execute "campaign:unsave", model.get 'id'
+        if filterType is 'saved' then view.destroy()
+      )
+    else
       App.execute "campaign:unsave", model.get 'id'
       if filterType is 'saved' then view.destroy()
 

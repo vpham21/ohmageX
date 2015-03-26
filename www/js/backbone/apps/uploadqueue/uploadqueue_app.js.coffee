@@ -5,23 +5,18 @@
       if !App.request("credentials:isloggedin")
         App.navigate Routes.default_route(), trigger: true
         return false
-      surveyActive = App.request "surveytracker:active"
-      if surveyActive
-        if confirm('do you want to exit the survey?')
-          # reset the survey's entities.
-          App.vent.trigger "survey:reset"
-        else
-          # They don't want to exit the survey, cancel.
-          # Move the history to its previous URL.
-          App.historyPrevious()
-          return false
     appRoutes:
       "uploadqueue": "list"
+      "uploadqueue/:id": "item"
 
   API =
-    list: (campaign_id) ->
-      App.vent.trigger "nav:choose", "Upload Queue"
+    list: ->
+      App.vent.trigger "nav:choose", "queue"
       new Uploadqueue.List.Controller
+    item: (id) ->
+      App.vent.trigger "nav:choose", "queue"
+      new Uploadqueue.Item.Controller
+        queue_id: id
     queueFailureGeneral: (responseData, errorPrefix, errorText, itemId) ->
       # show notice that it failed.
       console.log 'uploadqueue:upload:failure:campaign itemId', itemId
@@ -30,7 +25,7 @@
 
       App.execute "notice:show",
         data:
-          title: "Response Upload Error"
+          title: "Upload Failure"
           description: "Problem with Response: #{errorPrefix} #{errorText}"
 
   App.addInitializer ->
@@ -50,7 +45,9 @@
         App.execute "uploadqueue:item:remove", model.get('id')
 
   App.vent.on "uploadqueue:list:running:clicked", (model) ->
-    # do something when a running queue item's title is clicked
+    myId = model.get 'id'
+    API.item myId
+    App.navigate "uploadqueue/#{myId}"
 
   App.vent.on "uploadqueue:list:delete:clicked", (model) ->
     App.execute "notice:show",
@@ -86,5 +83,4 @@
 
   App.vent.on "uploadqueue:upload:failure:network", (responseData, errorText, itemId) ->
     # placeholder for network errors handler.
-    API.queueFailureGeneral responseData, "Problem with Network:", errorText, itemId
-
+    API.queueFailureGeneral responseData, "", "Network Error", itemId

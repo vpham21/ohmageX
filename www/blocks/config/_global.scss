@@ -1,11 +1,12 @@
 $global-form-control-background-color: #fff !default;
+$global-form-control-active-background-color: #eeeeee !default;
 $global-form-control-border-color: #ccc !default;
 $global-form-control-border-color-dark: darken($global-form-control-border-color, 30%) !default;
 $global-form-control-text-color: #555 !default;
-$global-form-control-font-size: 1rem !default;
-$global-form-control-padding: 0.5rem !default;
+$global-form-control-font-size: 0.9rem !default;
+$global-form-control-padding: 0.45rem !default;
 $global-form-control-box-shadow: inset 0 2px 2px rgba(0,0,0,.075) !default;
-$global-form-control-border-radius: 4px !default;
+$global-form-control-border-radius: 2px !default;
 
 $global-progress-gradient-background-color: #fff !default;
 $global-progress-gradient-start: #09c !default;

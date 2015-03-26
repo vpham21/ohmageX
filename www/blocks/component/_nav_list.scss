@@ -26,18 +26,17 @@ nav.list {
       @include -clearfix;
 
       div.action {
-        padding: $app-main-padding;
+        padding: 0.8rem 1rem;
         float: left;
-        width: 2rem;
-        height: 2rem;
+        width: 1.5rem;
+        height: 1.5rem;
         .icon {
-          margin: 0.25rem;
-          width: 2rem;
-          height: 2rem;
-          background-size: 2rem;
+          width: 1.5rem;
+          height: 1.5rem;
+          background-size: 1.5rem;
           &.navigate {
             background-position: left;
-            background-size: 1.2rem 2rem;
+            background-size: 1.5rem 1.5rem;
           }
         }
       }
@@ -53,11 +52,11 @@ nav.list {
       }
 
       div.action:first-child:not(.right) ~ [role="link"] {
-        margin-left: 2.5rem + $app-main-padding;
+        margin-left: 1.5rem + $app-main-padding;
       }
 
       div.action + div.action + [role="link"], div.action.right + [role="link"] {
-        margin-right: 2.5rem + $app-main-padding;
+        margin-right: 1.5rem + $app-main-padding;
       }
 
       [role="link"] {
@@ -69,7 +68,7 @@ nav.list {
 
     h3 {
       font-weight: bold;
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
     h3, p {
       margin: 0;

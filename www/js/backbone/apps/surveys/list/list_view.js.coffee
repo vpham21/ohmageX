@@ -11,6 +11,11 @@
       "click .stopped.survey button.navigate": "stopped:clicked"
       "click .running.survey [role=\"link\"]": "running:clicked"
       "click .running.survey button.navigate": "running:clicked"
+      "click .running.survey .clock button": "running:clicked"
+    serializeData: ->
+      data = @model.toJSON()
+      data.showTime = App.request("surveys:local:triggered:exists", @model.get('id'))
+      data
 
   class List.SelectorItem extends App.Views.ItemView
     tagName: "option"
@@ -51,7 +56,7 @@
       data
 
   class List.SurveysEmpty extends App.Views.ItemView
-    className: "text-container"
+    className: "empty-container"
     template: "surveys/list/_surveys_empty"
 
   class List.Surveys extends App.Views.CompositeView
@@ -70,7 +75,6 @@
       infobuttonRegion: "#infobutton-region"
       selectorRegion: "#selector-region"
       listRegion: "#list-region"
-      logoutRegion: "#logout-region"
     serializeData: ->
       data = @collection.findWhere(chosen: true).toJSON()
       data

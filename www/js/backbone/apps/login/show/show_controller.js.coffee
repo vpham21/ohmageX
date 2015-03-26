@@ -1,7 +1,6 @@
 @Ohmage.module "LoginApp.Show", (Show, App, Backbone, Marionette, $, _) ->
 
-  # LoginApp renders a Login form with minimal functionality,
-  # enough to allow testing.
+  # LoginApp renders a Login form.
 
   class Show.Controller extends App.Controllers.Application
     initialize: ->
@@ -9,9 +8,39 @@
 
       @listenTo @layout, "show", =>
         console.log "showing layout"
+        @noticeRegion()
         @formRegion()
 
       @show @layout
+
+      @listenTo App.vent, "credentials:invalidated", (responseErrors) =>
+        @showInvalidErrors responseErrors
+
+      @listenTo App.vent, "serverpath:set:error", (responseErrors) =>
+        @showInvalidErrors [
+          text: responseErrors[0]
+          code: '0000'
+        ]
+
+    showInvalidErrors: (responseErrors) ->
+      # response errors is an array containing objects:
+      # text: "error text"
+      # code: "error code"
+      console.log responseErrors
+      # append all errors into one string
+      result = _.reduce(responseErrors, ((errorStr, error) ->
+        suffix = if errorStr.length > 0 then ": #{errorStr}" else ""
+        return "#{error.text} #{suffix}"
+      ), "")
+
+      App.execute "notice:show",
+        data:
+          title: "Login Error"
+          description: result
+          showCancel: false
+
+    noticeRegion: ->
+      App.execute "notice:region:set", @layout.noticeRegion
 
     formRegion: ->
       myPath = App.request "serverpath:entity"
@@ -28,15 +57,36 @@
 
       formView = @getFormView myPath
 
-      @listenTo formView, "serverpath:submit", (value) =>
-        console.log 'serverpath:submit', value
-        App.execute "serverpath:update", value
-
       @listenTo formView, "form:submit", (formValues) ->
         console.log 'form:submit', formValues
         App.vent.trigger "login:form:submit:clicked", formValues
 
+      if App.request('serverlist:selectable')
+        @listenTo formView, "show", =>
+          @serversRegion formView, App.request('serverlist:entity')
+
       @show formView, region: @layout.formRegion
+
+    serversRegion: (formView, serverList) ->
+
+      serversView = @getServersView serverList
+
+      @listenTo serversView, "custom:focus", =>
+        formView.trigger "errors:reset"
+
+      @listenTo serversView, "serverpath:submit", (value) =>
+        console.log 'serverpath:submit', value
+        App.execute "serverpath:update", value
+
+      @show serversView, region: formView.serversRegion
+
+    getNoticeView: (notice) ->
+      new Show.Notice
+        model: notice
+
+    getServersView: (serverList) ->
+      new Show.ServerList
+        collection: serverList
 
     getFormView: (myPath) ->
 

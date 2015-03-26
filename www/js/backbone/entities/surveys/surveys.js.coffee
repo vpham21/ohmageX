@@ -14,11 +14,12 @@
     url: ->
       "#{App.request("serverpath:current")}/app/campaign/read"
     parse: (response, options) ->
-      console.log 'options in parse', options
-      urn = options.data.campaign_urn_list
-      campaignXML = response.data[urn].xml
-      $surveys = @getSurveyXML campaignXML
-      @parseSurveysXML $surveys, urn, campaignXML
+      if response.result isnt "failure"
+        console.log 'options in parse', options
+        urn = options.data.campaign_urn_list
+        campaignXML = response.data[urn].xml
+        $surveys = @getSurveyXML campaignXML
+        @parseSurveysXML $surveys, urn, campaignXML
     getSurveyXML: (rawXML) ->
       $XML = $( $.parseXML(rawXML) )
       $XML.find 'survey'
@@ -42,33 +43,51 @@
         # user saved surveys retrieved from raw JSON.
         console.log 'user saved surveys retrieved from storage'
         currentSurveysSaved = new Entities.SurveysSaved result
+        App.vent.trigger('surveys:saved:load:complete')
       ), =>
         console.log 'user saved surveys not retrieved from storage'
         currentSurveysSaved = new Entities.SurveysSaved
+        App.vent.trigger('surveys:saved:load:complete')
 
     getSurveys: (campaign_urn) ->
       console.log campaign_urn
-      credentials = App.request "credentials:current"
+      App.vent.trigger "loading:show", "Saving campaign..."
+      myData =
+        client: App.client_string
+        output_format: 'long'
+        campaign_urn_list: campaign_urn
+        user_role: "participant"
       currentSurveysSaved.fetch
         reset: false
         remove: false # merge any newly fetched surveys with existing ones based on ID
         type: 'POST' # not RESTful but the 2.0 API requires it
-        data:
-          user: credentials.get 'username'
-          password: credentials.get 'password'
-          client: 'ohmage-mwf-dw-browser'
-          output_format: 'long'
-          campaign_urn_list: campaign_urn
+        data: _.extend(myData, App.request("credentials:upload:params"))
         success: (collection, response, options) =>
-          console.log 'surveys fetch success', response, collection
-          @updateLocal( =>
-            App.vent.trigger 'surveys:saved:campaign:fetch:success', options.data.campaign_urn_list
-          )
+          console.log 'surveys fetch attempt complete', response, collection, options
+
+          if response.result isnt "failure"
+            @updateLocal( =>
+              App.vent.trigger 'surveys:saved:campaign:fetch:success', options.data.campaign_urn_list
+            )
+          else
+            message = "The following errors prevented the #{App.dictionary('page','campaign')} from downloading: "
+            showAlert = true
+            _.every response.errors, (error) =>
+              message += error.text
+              if error.code in ["0200","0201","0202"]
+                App.vent.trigger "surveys:saved:campaign:fetch:failure:auth", error.text
+                showAlert = false
+                return false
+            App.vent.trigger 'surveys:saved:campaign:fetch:error', options.data.campaign_urn_list
+            if showAlert then App.execute "dialog:alert", message
+          App.vent.trigger "loading:hide"
         error: (collection, response, options) =>
           console.log 'surveys fetch error'
           App.vent.trigger 'surveys:saved:campaign:fetch:error', options.data.campaign_urn_list
+          App.execute "dialog:alert", "Network error fetching #{App.dictionary('page','campaign')}."
+          App.vent.trigger "loading:hide"
     getCampaignSurveys: (urn) ->
-      surveys = currentSurveysSaved.where 
+      surveys = currentSurveysSaved.where
         campaign_urn: urn
       new Entities.SurveysSaved surveys
     removeSurveys: (urn) ->
@@ -104,6 +123,14 @@
   App.reqres.setHandler "survey:saved:server_id", (id) ->
     # note the survey's id is formatted `campaign_urn:server_id`
     API.getSurveyAttr id, 'server_id'
+
+  App.reqres.setHandler "survey:saved:title", (id) ->
+    # note the survey's id is formatted `campaign_urn:server_id`
+    API.getSurveyAttr id, 'title'
+
+  App.reqres.setHandler "survey:saved:description", (id) ->
+    # note the survey's id is formatted `campaign_urn:server_id`
+    API.getSurveyAttr id, 'description'
 
   App.on "before:start", ->
     API.init()

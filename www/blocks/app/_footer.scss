@@ -2,4 +2,31 @@ body > footer {
   padding-top: $app-main-footer-padding;
   text-align: center;
   font-size: $app-main-footer-font-size;
+  .subheader {
+    margin-top: 0;
+    margin-bottom: $global-form-control-padding/2;
+  }
+  .help-section {
+    margin-top: 0;
+    a {    
+      display: inline-block;
+      padding: $global-form-control-padding/2;
+      background: $app-footer-background-color;
+      text-transform: uppercase;
+      color: $app-background;
+      border-radius: $global-form-control-border-radius;
+      font-weight: bold;
+    }
+    .icon, span {
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .icon {
+      height: 1rem;
+      width: 1rem;
+      background-size: 1rem;
+      margin-right: $global-form-control-padding/2;
+    }
+  }
 }

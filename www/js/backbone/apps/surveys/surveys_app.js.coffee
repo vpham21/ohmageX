@@ -5,27 +5,17 @@
       if !App.request("credentials:isloggedin")
         App.navigate Routes.default_route(), trigger: true
         return false
-      surveyActive = App.request "surveytracker:active"
-      if surveyActive
-        if confirm('do you want to exit the survey?')
-          # reset the survey's entities.
-          App.vent.trigger "survey:reset"
-        else
-          # They don't want to exit the survey, cancel.
-          # Move the history to its previous URL.
-          App.historyPrevious()
-          return false
     appRoutes:
       "surveys/:campaign_id": "single"
       "surveys": "all"
 
   API =
     all: ->
-      App.vent.trigger "nav:choose", "Surveys"
+      App.vent.trigger "nav:choose", "survey"
       new SurveysApp.List.Controller
         campaign_id: false
     single: (campaign_id) ->
-      App.vent.trigger "nav:choose", "Surveys"
+      App.vent.trigger "nav:choose", "survey"
       new SurveysApp.List.Controller
         campaign_id: campaign_id
 

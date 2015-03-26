@@ -22,6 +22,15 @@
     }
   }
 
+  .icon {
+    display: inline-block;
+    border-radius: 0;
+    height: $app-header-menu-font-size;
+    width: $app-header-menu-font-size;
+    background-size: $app-header-menu-header-font-size $app-header-menu-header-font-size;
+    margin-right: $app-header-menu-header-font-size/2;
+  }
+
   > .list-container > ul {
     list-style: none;
     margin: 0;

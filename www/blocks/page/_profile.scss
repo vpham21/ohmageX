@@ -1,0 +1,28 @@
+#profile-region {
+  .text-container {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: left;
+    margin: 0;
+    padding: $app-main-footer-padding;
+    width: 100%;
+  }
+  .change-password {
+    margin: $app-main-footer-padding 0;
+  }
+
+  .button-single {
+    width: 100%;
+    text-align: center;
+    button {
+      display: inline-block;
+      border: 0;
+      border-radius: 0;
+      text-transform: uppercase;
+      background: $modal-activate-background;
+      color: $modal-activate-font-color;
+      padding: $global-form-control-padding*1.5;
+    }
+  }
+}

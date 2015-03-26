@@ -136,21 +136,36 @@
       currentCampaignsUser.reset sync
       @saveLocalCampaigns currentCampaignsUser
     syncCampaigns: ->
-      credentials = App.request "credentials:current"
+      App.vent.trigger 'loading:show', 'Syncing Campaigns...'
+      myData = 
+        client: App.client_string
+        output_format: 'short'
+        user_role: "participant"
       currentCampaignsUser.fetch
         reset: true
         type: 'POST' # not RESTful but the 2.0 API requires it
-        data:
-          user: credentials.get 'username'
-          password: credentials.get 'password'
-          client: 'ohmage-mwf-dw-browser'
-          output_format: 'short'
+        data: _.extend(myData, App.request("credentials:upload:params"))
         saved_campaigns: App.request 'campaigns:saved:current'
         success: (collection, response, options) =>
-          console.log 'campaign fetch success', response, collection
-          @saveLocalCampaigns collection
+          console.log 'campaign fetch attempt complete', response, collection
+          if response.result isnt "failure"
+            @saveLocalCampaigns collection
+          else
+            message = "The following errors prevented the #{App.dictionary('pages','campaign')} from syncing: "
+            showAlert = true
+            _.every response.errors, (error) =>
+              console.log 'error array item', error
+              message += error.text
+              if error.code in ["0200","0201","0202"]
+                App.vent.trigger "campaigns:sync:failure:auth", error.text
+                showAlert = false
+                return false
+            if showAlert then App.execute "dialog:alert", message
+          App.vent.trigger "loading:hide"
         error: (collection, response, options) =>
           console.log 'campaign fetch error'
+          App.execute "dialog:alert", "Network error syncing #{App.dictionary('pages','campaign')}."
+          App.vent.trigger "loading:hide"
       currentCampaignsUser
     saveLocalCampaigns: (collection) ->
       # update localStorage index campaigns_user with the current version of campaignsUser entity
@@ -166,6 +181,9 @@
         currentCampaignsUser
     getCampaign: (id) ->
       currentCampaignsUser.get id
+    getCampaignName: (id) ->
+      campaign = @getCampaign id
+      campaign.get('name')
     setCampaignStatus: (id, status) ->
       console.log 'setCampaignStatus'
       currentCampaignsUser.get(id).set('status', status)
@@ -203,6 +221,9 @@
 
   App.reqres.setHandler "campaign:entity", (id) ->
     API.getCampaign id
+
+  App.reqres.setHandler "campaign:name", (id) ->
+    API.getCampaignName id
 
   App.reqres.setHandler "campaigns:user", ->
     API.getCampaigns()

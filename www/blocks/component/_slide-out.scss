@@ -33,3 +33,7 @@
   }
 
 }
+
+body[slideout-state="active"] {
+  overflow: hidden;
+}

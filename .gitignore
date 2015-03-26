@@ -39,32 +39,16 @@ Thumbs.db
 nbproject/*
 .idea/*
 
-# Phonegap generated files #
+# Mobile Build files #
 ############################
-/cordova
-/hooks
-/merges
-/platforms/ios/.gitignore
-/platforms/ios/cordova
-/platforms/ios/CordovaLib
-/platforms/ios/ohmage\ MWF/.gitignore
-/platforms/ios/ohmage\ MWF/Classes
-/platforms/ios/ohmage\ MWF/config.xml
-/platforms/ios/ohmage\ MWF/Plugins
-/platforms/ios/ohmage\ MWF/main.m
-/platforms/ios/ohmage\ MWF/Resources
-/platforms/ios/ohmage\ MWF/ohmage\ MWF-Info.plist
-/platforms/ios/ohmage\ MWF/ohmage\ MWF-Prefix.pch
-/platforms/ios/ohmage\ MWF.xcodeproj
-/platforms/ios/platform_www
-/platforms/ios/www/
-/plugins
-/.cordova
+cordova-build
+www-mobile
+/config.xml
 
 # www project files #
 #####################
 /www/.blocks
-/www/.sass-cache
+/.sass-cache
 /www/bower_components
 /www/npm-debug.log
 /www/node_modules

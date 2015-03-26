@@ -1,0 +1,3 @@
+<h2>Survey Complete - Add Reminder?</h2>
+<p>Would you like to set a reminder to take this survey again later?</p>
+<button class="reminder-create" type="button">Create Reminder for this Survey</button>

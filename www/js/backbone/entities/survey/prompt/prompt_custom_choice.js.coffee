@@ -1,7 +1,6 @@
 @Ohmage.module "Entities", (Entities, App, Backbone, Marionette, $, _) ->
 
-  # The ServerPath Entity contains the initializer for server configuration.
-  # Used when the user selects a server.
+  # The Custom Choice Entity saves and restores custom choices for a user.
 
   currentChoices = false
 
@@ -27,6 +26,7 @@
       if !currentChoices then currentChoices = new Entities.CustomChoices
 
       currentChoices.add
+        campaign_urn: App.request "survey:saved:urn", surveyId
         surveyId: surveyId
         stepId: stepId
         value: value
@@ -48,6 +48,22 @@
         App.vent.trigger "prompt:customchoice:remove:success", surveyId, stepId, value
       )
 
+    removeCampaignChoices: (campaign_urn) ->
+      removed = currentChoices.where
+        campaign_urn: campaign_urn
+
+      currentChoices.remove removed
+      @updateLocal( =>
+        console.log "campaign custom choices removed from localStorage"
+        App.vent.trigger "prompt:customchoice:campaign:remove:success", campaign_urn
+      )
+
+
+    getCampaignChoices: (campaign_urn) ->
+      choices = currentChoices.where
+        campaign_urn: campaign_urn
+      if choices.length is 0 then false else choices
+
     getMergedChoices: (surveyId, stepId, original) ->
       
       # map currentChoices to an array that matches the format of ChoiceCollection Models.
@@ -63,7 +79,11 @@
 
       # merge the currentChoices formatted array with the original ChoiceCollection
       # into a new collection for output. 
-      new Entities.ChoiceCollection _.union(original.toJSON(), customArr)
+      result = new Entities.ChoiceCollection _.union(original.toJSON(), customArr)
+
+      # saving the merged collection to a variable before returning it prevents the 
+      # "duplicate custom choice" error that may happen when re-displaying a custom choice
+      result
 
     updateLocal: (callback) ->
       # update localStorage index custom_choices with the current version of campaignsSaved entity
@@ -87,6 +107,12 @@
 
   App.commands.setHandler "prompt:customchoice:remove", (surveyId, stepId, value) ->
     API.removeChoice surveyId, stepId, value
+
+  App.reqres.setHandler "prompt:customchoice:campaign", (campaign_urn) ->
+    if !!currentChoices then API.getCampaignChoices(campaign_urn) else false
+
+  App.vent.on "campaign:saved:remove", (campaign_urn) ->
+    if currentChoices then API.removeCampaignChoices(campaign_urn)
 
   App.vent.on "credentials:cleared", ->
     API.clear()

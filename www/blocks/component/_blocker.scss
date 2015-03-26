@@ -1,0 +1,134 @@
+body > #ui-blocker  {
+  display: none;
+
+  &[data-state="active"] {
+    display: block;
+  }
+
+  position: absolute;
+
+  z-index: 1999;
+
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(20, 20, 20, .8);
+
+  figure {
+    display: block;
+    position: absolute;
+    z-index: 2000;
+    top: 50%;
+    left: 50%;
+    height: $component-blocker-height;
+    width: $component-blocker-width;
+    margin-left: -$component-blocker-width/2;
+    margin-top: -$component-blocker-height/2;
+
+    text-align: center;
+
+    background-color: #F2F2F2;
+    display: inline-block;
+    padding: $global-form-control-padding;
+    -moz-border-radius: $global-form-control-border-radius;
+    border-radius: $global-form-control-border-radius;
+
+  }
+
+  #notice {
+    font-size: $global-form-control-font-size*0.95;
+    background-color: #FFDDEE;
+    color: #B01;
+    padding: $global-form-control-padding;
+    margin: 0;
+    &:empty {
+      display: none;
+    }
+  }
+
+  .blocker-title {
+    font-size: $app-header-menu-font-size;
+    padding: $global-form-control-padding;
+    margin: 0;
+  }
+
+  .content-header {
+    font-size: $app-header-menu-font-size*0.85;
+    padding: $global-form-control-padding*0.85;
+    margin: 0;
+  }
+
+  button,
+  input[type="button"],
+  input[type="date"],
+  input[type="email"],
+  input[type="number"],
+  input[type="password"],
+  input[type="reset"],
+  input[type="search"],
+  input[type="submit"],
+  input[type="tel"],
+  input[type="text"],
+  input[type="time"],
+  input[type="url"],
+  textarea {
+    font-size: $global-form-control-font-size*0.85;
+    padding: $global-form-control-padding*0.85;
+    border-radius: $global-form-control-border-radius*0.85;
+    line-height: 0.85;
+  }
+
+  .button-pair {
+    padding: $global-form-control-padding;
+    overflow: auto;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    > * {
+      float: left;
+      width: 50%;
+    }
+    > :first-child {
+      button {
+        background: $modal-close-background;
+        color: $modal-close-font-color;
+      }
+      padding-right: $global-form-control-padding/2;
+    }
+    > :last-child {
+      button {
+        background: $modal-activate-background;
+        color: $modal-activate-font-color;
+      }
+      padding-left: $global-form-control-padding/2;
+    }
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 0;
+      text-transform: uppercase;
+    }
+  }
+
+  form {
+    text-align: left;
+    label {
+      margin-bottom: 3px;
+      display: inline-block;
+    }
+    input {
+      width: 100%;
+    }
+  }
+
+  figcaption {
+    padding-top: 10px;
+    display: inline-block;
+    width: 100%;
+    color: $global-form-control-text-color;
+    font-size: $global-form-control-font-size*0.75;
+  }
+
+}

@@ -4,6 +4,13 @@
 
   _.extend Marionette.View::,
 
+    onAttach: ->
+      # add fastclick to the view
+      # possible TODO: only do this if it contains "click" event triggers?
+      # But, may not be possible if events hash isn't accessible here.
+      # Investigate further if FastClick cause any touch issues.
+      if App.device.isNative then FastClick.attach @el
+
     addOpacityWrapper: (init = true) ->
       @$el.toggleWrapper
         className: "opacity"

@@ -1,0 +1,11 @@
+<h4 class="blocker-title"><%= @title %></h4>
+<h5 id="notice"></h5>
+<figcaption id="content-region"></figcaption>
+<div class="button-pair">
+    <div class="action">
+        <button type="button" class="cancel-button"><%= @cancelLabel %></button>
+    </div>
+    <div class="action">
+        <button type="button" class="ok-button"><%= @okLabel %></button>
+    </div>
+</div>

@@ -28,16 +28,25 @@
     reveal: (isLoggedIn) ->
       console.log 'reveal isLoggedIn', isLoggedIn
       if isLoggedIn
-        visibleItems = [
-          "Campaigns"
-          "Surveys"
-          "Upload Queue"
-          "Profile"
-          "Logout"
+        loginItems = [
+          "campaign"
+          "survey"
+          "queue"
+          "reminder"
+          "profile"
+          "logout"
         ]
+        if App.custom.build.debug
+          filterItems = []
+        else if App.device.isNative
+          filterItems = App.custom.menu_items_disabled.native
+        else
+          filterItems = App.custom.menu_items_disabled.browser
+
+        visibleItems = _.difference(loginItems, filterItems)
       else
         visibleItems = [
-          "Login"
+          "login"
         ]
       App.navs.each((nav) ->
         visible = nav.get('name') in visibleItems
@@ -47,12 +56,13 @@
 
     getNavs: ->
       App.navs = new Entities.NavsCollection [
-        { name: "Login", url: "#login", icon: "", visible: false }
-        { name: "Campaigns", url: "#campaigns", icon: "", visible: false }
-        { name: "Surveys", url: "#surveys", icon: "", visible: false }
-        { name: "Upload Queue", url: "#uploadqueue", icon: "", visible: false }
-        { name: "Profile", url: "#profile", icon: "", visible: false }
-        { name: "Logout", url: "#logout", icon: "", visible: false }
+        { name: "login", url: "#login", icon: "profile", visible: false }
+        { name: "campaign", url: "#campaigns", icon: "campaign", visible: false }
+        { name: "survey", url: "#surveys", icon: "survey", visible: false }
+        { name: "queue", url: "#uploadqueue", icon: "upload", visible: false }
+        { name: "reminder", url: "#reminders", icon: "reminder", visible: false }
+        { name: "profile", url: "#profile", icon: "profile", visible: false }
+        { name: "logout", url: "#logout", icon: "logout", visible: false }
       ]
 
   App.vent.on "credentials:storage:load:success credentials:storage:load:failure", ->

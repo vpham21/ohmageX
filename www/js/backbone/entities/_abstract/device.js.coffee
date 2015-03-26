@@ -3,14 +3,23 @@
   API =
     initDevice: ->
       myDevice = {}
-      myDevice.isNative = document.URL.indexOf('http://') is -1 and document.URL.indexOf('https://') is -1
+      myDevice.isNative = App.cordova
+      myDevice.isiOS7 = false
 
-      if myDevice.isNative
+      if myDevice.isNative and device.platform is "iOS"
         myDevice.isiOS7 = @isDeviceiOS7Plus()
-      else
-        myDevice.isiOS7 = false
+
+      @setClientString myDevice
 
       myDevice
+
+    setClientString: (myDevice) ->
+      App.client_string = App.custom.api.client_base_string
+
+      if myDevice.isNative
+        App.client_string += device.platform
+      else
+        App.client_string += 'browser'
 
     isDeviceiOS7Plus: ->
       version = @getDeviceiOSVersion()

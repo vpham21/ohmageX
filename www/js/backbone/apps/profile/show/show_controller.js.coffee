@@ -17,6 +17,9 @@
     profileRegion: (profile) ->
       profileView = @getInfoView profile
 
+      @listenTo profileView, "password:clicked", ->
+        App.vent.trigger "profile:password:clicked"
+
       @show profileView, region: @layout.profileRegion
 
     getInfoView: (profile) ->

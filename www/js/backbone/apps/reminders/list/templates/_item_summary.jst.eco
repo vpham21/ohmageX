@@ -1,0 +1,20 @@
+<div class="hotspot"></div>
+<div class="enable-switch-container">
+  <div class="enable-switch">
+    <input id="enable-switch-<%= @id %>" type="checkbox">
+    <label for="enable-switch-<%= @id %>"></label>
+  </div>
+</div>
+
+<div class="edit-container">
+  <button type="button" class="icon edit edit-button">Edit</button>
+</div>
+
+<h3><%= @surveyTitle %></h3>
+<div class="summary-time"><%= @summaryText %></div>
+
+<% if @repeat: %>
+<div class="repeat-time">
+  <span class="repeat-tag">Repeats</span><span class="interval"><%= @intervalText %> </span>
+</div>
+<% end %>
