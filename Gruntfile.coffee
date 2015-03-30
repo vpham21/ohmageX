@@ -243,7 +243,9 @@ module.exports = (grunt) ->
       mobile_build:
         cmd: "grunt cordova_build_ios"
         cwd: "<%= cordova_project_folder %>"
-
+      android_theme_fix:
+        cmd: "sed -i '' 's|android:theme=\"@android:style/Theme.Black.NoTitleBar\"||g' AndroidManifest.xml"
+        cwd: "<%= cordova_project_folder %>/platforms/android"
 
   grunt.loadNpmTasks "grunt-contrib-clean"
   grunt.loadNpmTasks "grunt-contrib-coffee"
@@ -322,6 +324,7 @@ module.exports = (grunt) ->
     "exec:mobile_init" # must pass it through a custom exec to change cwd
     "clean:cordova_ios_splash"
     "copy:cordova_ios_splash"
+    "exec:android_theme_fix"
   ]
 
   grunt.registerTask "ios_firstrun", [
