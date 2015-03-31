@@ -105,6 +105,7 @@
     initialize: ->
       super
       @listenTo @, "file:changed", @processFile
+      @listenTo @, "mobile:get", @getMobileImage
     processFile: ->
       fileDOM = @$el.find('input[type=file]')[0]
       myInput = fileDOM.files[0]
@@ -135,12 +136,35 @@
           console.log 'Please upload an image in jpeg or png format.'
       else
         console.log 'Please select an image.'
+    getMobileImage: ->
+      # Take picture using device camera and retrieve image as base64-encoded string
+      console.log 'getMobileImage method'
+      navigator.camera.getPicture ((img64) =>
+        # success callback
+        @recordImage "data:image/jpeg;base64,#{img64}"
+
+      ),((message) =>
+        # error callback
+        window.setTimeout (=>
+          # setTimeout hack required to display alerts properly in iOS camera callbacks
+          App.execute "dialog:alert", "Failed to get image: #{message}"
+        ), 0
+      ),
+        quality: 50
+        allowEdit: false
+        destinationType: navigator.camera.DestinationType.DATA_URL
+
     recordImage: (img64) ->
       @model.set('currentValue', img64)
       @renderImageThumb img64
     onRender: ->
       savedImage = @model.get('currentValue')
       if savedImage then @renderImageThumb(savedImage)
+      if App.device.isNative
+        # hide the input button on native so the "Get Photo"
+        # button beneath it can activate
+        @$el.find('.input-activate input').hide()
+
     renderImageThumb: (img64) ->
       # display the image in the preview
       $img = @$el.find '.preview-image'
@@ -150,8 +174,11 @@
       response = @model.get('currentValue')
       @trigger "response:submit", response, surveyId, stepId
 
-    triggers:
-      'change input[type=file]': "file:changed"
+    triggers: ->
+      if App.device.isNative
+        return 'click .input-activate button': "mobile:get"
+      else
+        return 'change input[type=file]': "file:changed"
 
   class Prompts.SingleChoiceItem extends App.Views.ItemView
     tagName: 'tr'
