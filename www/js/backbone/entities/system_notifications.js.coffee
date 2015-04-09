@@ -130,7 +130,7 @@
       else
         callback.call(@)
 
-    deleteNotifications: (reminder) ->
+    turnOff: (reminder) ->
       ids = reminder.get('notificationIds')
       if ids.length > 0
         # ensure this is only executed when ids are present.
