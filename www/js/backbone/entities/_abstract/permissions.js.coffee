@@ -34,7 +34,7 @@
         console.log 'ADDREFRESHCHECK'
       )
     checkPermissions: ->
-      window.plugin.notification.local.hasPermission((granted) =>
+      cordova.plugins.notification.local.hasPermission((granted) =>
         currentPermissions.set 'localNotification', granted
         currentPermissions.trigger "localnotification:checked"
 
@@ -44,7 +44,7 @@
       )
 
     registerLocalNotifications: ->
-      window.plugin.notification.local.registerPermission((granted) =>
+      cordova.plugins.notification.local.registerPermission((granted) =>
         currentPermissions.set 'localNotification', granted
         currentPermissions.trigger "localnotification:registered"
 
