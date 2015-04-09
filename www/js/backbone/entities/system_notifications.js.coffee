@@ -174,6 +174,7 @@
         App.execute "reminder:notifications:set", reminder, []
         App.vent.trigger "notifications:update:complete"
 
+
     suppressNotifications: (reminder) ->
       if reminder.get('repeat')
         newDate = moment(reminder.get('activationDate'))
