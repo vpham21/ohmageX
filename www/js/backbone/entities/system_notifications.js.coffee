@@ -36,34 +36,31 @@
         v.toString 10
       myId
 
-    nextDayofWeek: (myMoment, weekday) ->
-      # myMoment is a JS moment
-      # weekday is the zero indexed day of week (0 - 6)
-      myInput = moment(myMoment)
-      myTodayHourMinute = moment().hour(myInput.hour()).minute(myInput.minute())
-      myOutput = myTodayHourMinute.clone().startOf('week').day(weekday).hour(myInput.hour()).minute(myInput.minute()).second(myInput.second())
+    newBumpedWeekdayHourMinuteDate: (options) ->
+      # retuns a new date base on the provided weekday, hour and minute,
+      # with any past dates bumped to the future by the provided pastBumpInterval.
 
-      if myOutput > myTodayHourMinute then myOutput else myOutput.add(1, 'weeks')
+      { weekday, hour, minute, pastBumpInterval } = options
 
-    nextHourMinuteSecond: (myMoment, interval) ->
-      # gets the next occurrence of a moment's hours, minutes, and seconds.
-      # Ignores the month, day and year.
-      # it jumps ahead by the given 'interval' for the next occurrence.
-      # expected - Moment.js intervals like 'days' or 'weeks'
+      newDate = moment().startOf('week').day(weekday).hour(hour).minute(minute)
 
-      input = moment(myMoment)
+      if weekday < moment().day()
+        # in this week, the provided day comes before today's 
+        # day of the week. Bump it
+        # (watch for type conversion here)
+        newDate.add(1, interval)
 
-      hour = input.hour()
-      minute = input.minute()
-      second = input.second()
-      output = moment().startOf('day').hour(hour).minute(minute).second(second)
+      else if weekday is moment().day()
+        # the provided weekday matches today's day of the week
 
-      if output > moment() then output else output.add(1, interval)
+        # use a buffer of 2 minutes for setting notifications.
+        bufferedNow = moment().add(2, 'minutes')
 
-    addNotifications: (reminder) ->
-      if App.device.isNative
-        # Delete any of the reminder's system notifications
-        API.deleteNotifications reminder
+        if hour < bufferedNow.hour() and minute < bufferedNow.minute()
+          # the hour and minute are in the past, bump it
+          newDate.add(1, interval)
+
+      newDate
 
       myIds = []
       if !reminder.get('repeat')
