@@ -117,7 +117,7 @@
 
     toggleSystemNotifications: (reminder) ->
       if reminder.get('active') is true
-        App.execute "system:notifications:add", reminder
+        App.execute "system:notifications:turn:on", reminder
       else
         # This reminder has been disabled. Be sure to deactivate its notifications.
         console.log 'toggleSystemNotifications disabled notification ids', reminder.get('notificationIds')
