@@ -130,6 +130,42 @@
       else
         callback.call(@)
 
+
+    scheduleNotifications: (reminder, myIds) ->
+
+      result = []
+
+      repeatDays = reminder.get('repeatDays')
+      targetHour = reminder.get('activationDate').hour()
+      targetMinute = reminder.get('activationDate').minute()
+
+      _.each repeatDays, (repeatDay) ->
+        myId = @generateId()
+        myIds.push myId
+
+        newDate = @newBumpedWeekdayHourMinuteDate
+          weekday: "#{repeatDay}" # type conversion required for day comparison
+          hour: targetHour
+          minute: targetMinute
+          pastBumpInterval: 'weeks'
+
+        result.push
+          id: myId
+          every: 'week'
+          firstAt: newDate.toDate()
+          data:
+            surveyId: reminder.get('surveyId')
+
+      if App.device.isNative
+        # Multiple notifications can be sent to the plugin `schedule` method
+        # as an array of JSON objects and be scheduled simultaneously.
+
+        cordova.plugins.notification.local.schedule result, (=>
+          # trigger the callback when notification updates complete.
+          App.vent.trigger "notifications:update:complete"
+        )
+
+
     turnOff: (reminder) ->
       ids = reminder.get('notificationIds')
       if ids.length > 0
