@@ -135,13 +135,7 @@
       if ids.length > 0
         # ensure this is only executed when ids are present.
         if App.device.isNative
-          window.plugin.notification.local.getScheduledIds((scheduledIds) ->
-            console.log 'Ids to delete', JSON.stringify ids
-            console.log 'scheduled Ids', JSON.stringify scheduledIds
-            _.each ids, (id) =>
-              # ensures we only attempt to remove a scheduled notification.
-              if id in scheduledIds then window.plugin.notification.local.cancel(id)
-          )
+          cordova.plugins.notification.local.cancel ids
         # clear out the reminder's notification IDs immediately, they now reference nothing
         App.execute "reminder:notifications:set", reminder, []
         App.vent.trigger "notifications:update:complete"
