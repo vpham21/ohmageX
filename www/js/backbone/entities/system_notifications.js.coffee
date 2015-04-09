@@ -200,9 +200,9 @@
   App.commands.setHandler "system:notifications:delete", (reminderId) ->
     API.deleteNotifications App.request('reminders:current').get(reminderId)
 
-  App.commands.setHandler "system:notifications:add", (reminder) ->
-    console.log "system:notifications:add", reminder
-    API.addNotifications reminder
+  App.commands.setHandler "system:notifications:turn:on", (reminder) ->
+    console.log "system:notifications:turn:on", reminder
+    API.turnOn reminder
 
   App.commands.setHandler "system:notifications:suppress", (reminder) ->
     API.suppressNotifications reminder
