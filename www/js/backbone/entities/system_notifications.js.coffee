@@ -62,18 +62,19 @@
 
       newDate
 
+    turnOn: (reminder) ->
       myIds = []
       if !reminder.get('repeat')
-        # reminder is non-repeating.
+        # schedule a one-time notification using the full activationDate.
         myId = @generateId()
-        @createReminderNotification 
-          notificationId: myId
-          reminder: reminder
-          frequency: ''
-          activationDate: reminder.get('activationDate').toDate()
-
-        App.vent.trigger "notifications:update:complete"
         myIds.push myId
+
+        @scheduleNotification
+          notificationId: myId
+          surveyId: reminder.get('surveyId')
+          every: 0 # 0 means that the system triggers the local notification once
+          firstAt: reminder.get('activationDate').toDate()
+
       else
         if reminder.get('repeatDays').length is 7
           # create one daily notification since it's repeating every day.
