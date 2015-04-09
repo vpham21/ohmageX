@@ -193,7 +193,7 @@ module.exports = (grunt) ->
             "media",
             "media-capture",
             "splashscreen",
-            "https://github.com/katzer/cordova-plugin-local-notifications.git#a364be1364fe63f556029c604e6d5f5270a848bc"
+            "https://github.com/katzer/cordova-plugin-local-notifications.git"
           ]
 
       build_ios:
