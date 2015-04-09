@@ -98,11 +98,9 @@
             firstAt: newDate.toDate()
 
         else
-          # send a copy of repeatDays to recursive @generateMultipleNotifications
-          # so the original isn't sliced to nothing.
-          repeatDays = reminder.get('repeatDays').slice(0)
-
-          @generateMultipleNotifications repeatDays, reminder, myIds
+          # schedule multiple non-consecutive weekly notifications
+          # using the activation date's hour:minute
+          @scheduleNotifications reminder, myIds
 
       App.execute "reminder:notifications:set", reminder, myIds
 
