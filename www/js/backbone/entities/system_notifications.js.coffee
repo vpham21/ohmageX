@@ -19,22 +19,11 @@
         # Suppress this reminder now that it's been activated.
         App.execute "reminders:suppress", [result.id]
 
-      # this is only needed on iOS, since currently the notification does not appear
-      # in the iOS notification banner while the app is open.
       window.plugin.notification.local.on "trigger", (notification) =>
-        # this seems to only activate when the app is in the foreground.
+        # in the old version of the plugin, this seems to only activate when the app is in the foreground.
         console.log 'trigger event'
         console.log 'JSON', notification.data
         result = JSON.parse notification.data
-        if device.platform is "iOS"
-          App.execute "dialog:confirm", "Reminder to take the survey #{result.surveyTitle}. Go to the survey?", (=>
-            App.navigate "survey/#{result.surveyId}", trigger: true
-
-            # Suppress this reminder now that it's been activated.
-            App.execute "reminders:suppress", [result.id]
-          ), (=>
-            console.log 'dialog canceled'
-          )
         App.execute "surveys:local:triggered:add", result.surveyId
 
     generateId: ->
