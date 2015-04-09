@@ -107,49 +107,6 @@
       App.execute "reminder:notifications:set", reminder, myIds
 
 
-    generateMultipleNotifications: (repeatDays, reminder, myIds) ->
-      # Generates multiple notifications recursively, each iteration
-      # completes when the plugin notification creation callback fires.
-      # Required because creating multiple system notifications in rapid
-      # succession may fail.
-
-      myId = @generateId()
-      myIds.push myId
-
-      activationDayofWeek = moment().day()
-      repeatDay = repeatDays[0]
-
-      if "#{activationDayofWeek}" is repeatDay
-
-        # if the day of week is the same as the current day,
-        # we get the NEXT occurrence of that hour:minute:second
-        activationDate = @nextHourMinuteSecond reminder.get('activationDate'), 'weeks'
-      else
-        activationDate = @nextDayofWeek(reminder.get('activationDate'), repeatDay)
-
-      if repeatDays.length is 1
-        # base condition
-        callback = (=>
-          console.log 'final of many notification created, activationDate', activationDate.format("dddd, MMMM Do YYYY, h:mm:ss a")
-          App.vent.trigger "notifications:update:complete"
-        )
-      else
-        callback = (=>
-          console.log 'one of many notifications created, activationDate', activationDate.format("dddd, MMMM Do YYYY, h:mm:ss a")
-          # shrink repeatDays from the front, ensuring that repeatDays[0]
-          # will always be a valid value for repeatDay in the recursive loop
-          repeatDays.shift()
-          @generateMultipleNotifications repeatDays, reminder, myIds
-        )
-
-      @createReminderNotification
-        notificationId: myId
-        reminder: reminder
-        frequency: 'weekly'
-        activationDate: activationDate.toDate()
-        callback: callback
-
-
     scheduleNotification: (options) ->
       _.defaults options,
         callback: (=>
