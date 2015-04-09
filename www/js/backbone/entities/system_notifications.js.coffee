@@ -142,25 +142,25 @@
         callback: callback
 
 
-    createReminderNotification: (options) ->
+    scheduleNotification: (options) ->
       _.defaults options,
         callback: (=>
+          # trigger the callback when notification updates complete.
+          App.vent.trigger "notifications:update:complete"
           console.log 'notification creation default callback'
         )
 
-      { notificationId, reminder, frequency, activationDate, callback } = options
-
-      metadata = JSON.stringify reminder.toJSON()
+      { notificationId, surveyId, every, firstAt, callback } = options
 
       if App.device.isNative
-        window.plugin.notification.local.schedule
+        cordova.plugins.notification.local.schedule
           id: notificationId
           title: "#{reminder.get('surveyTitle')}"
           message: "Take survey #{reminder.get('surveyTitle')}"
-          repeat: frequency
-          date: activationDate
-          autoCancel: !reminder.get('repeat') # autoCancel NON-repeating reminders
-          json: metadata
+          every: every
+          firstAt: firstAt
+          data:
+            surveyId: surveyId
         , callback, @
       else
         callback.call(@)
