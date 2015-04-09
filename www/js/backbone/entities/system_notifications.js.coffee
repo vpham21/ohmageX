@@ -76,20 +76,27 @@
           firstAt: reminder.get('activationDate').toDate()
 
       else
+
         if reminder.get('repeatDays').length is 7
-          # create one daily notification since it's repeating every day.
+          # schedule a daily notification using the activation date's hour:minute
           myId = @generateId()
-
-          activationDate = @nextHourMinuteSecond reminder.get('activationDate'), 'days'
-
-          @createReminderNotification
-            notificationId: myId
-            reminder: reminder
-            frequency: 'daily'
-            activationDate: activationDate.toDate()
-
-          App.vent.trigger "notifications:update:complete"
           myIds.push myId
+
+          targetHour = reminder.get('activationDate').hour()
+          targetMinute = reminder.get('activationDate').minute()
+
+          newDate = @newBumpedWeekdayHourMinuteDate
+            weekday: moment().day()
+            hour: targetHour
+            minute: targetMinute
+            pastBumpInterval: 'days'
+
+          @scheduleNotification
+            notificationId: myId
+            surveyId: reminder.get('surveyId')
+            every: 'day' # 0 means that the system triggers the local notification once
+            firstAt: newDate.toDate()
+
         else
           # send a copy of repeatDays to recursive @generateMultipleNotifications
           # so the original isn't sliced to nothing.
