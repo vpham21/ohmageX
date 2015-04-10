@@ -103,7 +103,6 @@
         @scheduleNotification
           notificationId: myId
           surveyId: reminder.get('surveyId')
-          every: 0 # 0 means that the system triggers the local notification once
           firstAt: reminder.get('activationDate').toDate()
 
       else
@@ -151,6 +150,16 @@
             surveyId: surveyId
             surveyTitle: surveyTitle
 
+        # In the plugin schedule method:
+        # `every` property must either be NOT included at all or set to a pre-defined interval string.
+        # Even though the plugin documentation says the default value is 0, setting
+        # it to `0` or `false` crashes the app.
+
+        result = if every isnt false then _.extend(result, every: every) else result
+
+        cordova.plugins.notification.local.schedule result
+
+      App.vent.trigger "notifications:update:complete"
 
     scheduleNotifications: (reminder, myIds) ->
 
