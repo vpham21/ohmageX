@@ -233,7 +233,7 @@
 
   App.commands.setHandler "reminder:notifications:set", (reminder, ids) ->
     # ids - array of IDs to set for the notification
-    console.log "reminder:notifications:set", JSON.stringify(reminder.toJSON())
+    console.log "reminder:notifications:set ids", ids
     API.setAttribute reminder.get('id'), 'notificationIds', ids
 
   App.commands.setHandler "reminder:date:set", (reminder, date) ->
