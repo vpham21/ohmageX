@@ -178,7 +178,7 @@
         myIds.push myId
 
         newDate = @newBumpedWeekdayHourMinuteDate
-          weekday: "#{repeatDay}" # type conversion required for day comparison
+          weekday: parseInt(repeatDay) # type conversion required for day comparison
           hour: targetHour
           minute: targetMinute
           pastBumpInterval: 'weeks'
