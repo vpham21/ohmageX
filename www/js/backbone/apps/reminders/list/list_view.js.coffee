@@ -159,6 +159,9 @@
       @listenTo @, "active:toggle", @setSwitch
       @listenTo @model, 'change', @render
       @listenTo @, 'check:enabled', @checkEnabled
+      @listenTo @model, "date:future:shift", @render
+      @listenTo App.vent, "notifications:update:complete", @render
+
     template: "reminders/list/_item_summary"
     tagName: 'li'
     attributes:
