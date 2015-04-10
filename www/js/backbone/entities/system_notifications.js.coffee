@@ -127,7 +127,7 @@
           @scheduleNotification
             notificationId: myId
             surveyId: reminder.get('surveyId')
-            every: 'day' # 0 means that the system triggers the local notification once
+            every: 'day'
             firstAt: newDate.toDate()
             surveyTitle: reminder.get('surveyTitle')
 
