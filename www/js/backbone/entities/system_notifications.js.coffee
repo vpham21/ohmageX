@@ -173,7 +173,7 @@
       targetHour = reminder.get('activationDate').hour()
       targetMinute = reminder.get('activationDate').minute()
 
-      _.each repeatDays, (repeatDay) ->
+      _.each repeatDays, (repeatDay) =>
         myId = @generateId()
         myIds.push myId
 
