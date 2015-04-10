@@ -91,6 +91,9 @@
       newDate
 
     turnOn: (reminder) ->
+      # turn the reminder off before you turn it on, in case a currently active (or ON)
+      # reminder was saved, meaning two turnOn events would happen in sequence.
+      @turnOff reminder
       myIds = []
       if !reminder.get('repeat')
         # schedule a one-time notification using the full activationDate.
