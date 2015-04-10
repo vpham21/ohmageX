@@ -100,10 +100,12 @@
         myId = @generateId()
         myIds.push myId
 
+
         @scheduleNotification
           notificationId: myId
           surveyId: reminder.get('surveyId')
           firstAt: reminder.get('activationDate').toDate()
+          surveyTitle: reminder.get('surveyTitle')
 
       else
 
@@ -114,6 +116,7 @@
 
           targetHour = reminder.get('activationDate').hour()
           targetMinute = reminder.get('activationDate').minute()
+
 
           newDate = @newBumpedWeekdayHourMinuteDate
             weekday: moment().day()
@@ -126,6 +129,7 @@
             surveyId: reminder.get('surveyId')
             every: 'day' # 0 means that the system triggers the local notification once
             firstAt: newDate.toDate()
+            surveyTitle: reminder.get('surveyTitle')
 
         else
           # schedule multiple non-consecutive weekly notifications
