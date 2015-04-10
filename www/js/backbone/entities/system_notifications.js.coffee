@@ -138,17 +138,18 @@
 
     scheduleNotification: (options) ->
 
-      { notificationId, surveyId, every, firstAt, callback } = options
-
+      { notificationId, surveyId, every, firstAt, surveyTitle } = options
+      console.log 'scheduleNotification'
+      console.log JSON.stringify(options)
       if App.device.isNative
-        cordova.plugins.notification.local.schedule
+        result =
           id: notificationId
-          title: "#{reminder.get('surveyTitle')}"
-          message: "Take survey #{reminder.get('surveyTitle')}"
-          every: every
-          firstAt: firstAt
+          title: "#{surveyTitle}"
+          text: "Take survey #{surveyTitle}"
+          at: firstAt
           data:
             surveyId: surveyId
+            surveyTitle: surveyTitle
 
 
     scheduleNotifications: (reminder, myIds) ->
