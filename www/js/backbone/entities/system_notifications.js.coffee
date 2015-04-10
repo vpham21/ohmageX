@@ -66,21 +66,27 @@
 
       newDate = moment().startOf('week').day(weekday).hour(hour).minute(minute)
 
-      if weekday < moment().day()
+      # use a buffer of 2 minutes for setting notifications.
+      bufferedNow = moment().add(2, 'minutes')
+
+      if weekday < bufferedNow.day()
         # in this week, the provided day comes before today's 
         # day of the week. Bump it
         # (watch for type conversion here)
-        newDate.add(1, interval)
+        newDate.add(1, pastBumpInterval)
 
-      else if weekday is moment().day()
+      else if weekday is bufferedNow.day()
         # the provided weekday matches today's day of the week
 
-        # use a buffer of 2 minutes for setting notifications.
-        bufferedNow = moment().add(2, 'minutes')
+        console.log "newDate", newDate.format("MM/DD/YYYY, h:mma")
+        console.log "bufferedNow", bufferedNow.format("MM/DD/YYYY, h:mma")
 
-        if hour < bufferedNow.hour() and minute < bufferedNow.minute()
-          # the hour and minute are in the past, bump it
-          newDate.add(1, interval)
+        if newDate.diff(bufferedNow) < 0
+          console.log "DATE IS IN THE PAST"
+          # the new date is in the past, bump it
+          newDate.add(1, pastBumpInterval)
+
+      console.log "reminder NEW BUMPED SCHEDULE TIME", newDate.format("MM/DD/YYYY, h:mma")
 
       newDate
 
