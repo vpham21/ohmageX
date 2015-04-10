@@ -197,10 +197,9 @@
         # Multiple notifications can be sent to the plugin `schedule` method
         # as an array of JSON objects and be scheduled simultaneously.
 
-        cordova.plugins.notification.local.schedule result, (=>
-          # trigger the callback when notification updates complete.
-          App.vent.trigger "notifications:update:complete"
-        )
+        cordova.plugins.notification.local.schedule result
+
+      App.vent.trigger "notifications:update:complete"
 
 
     turnOff: (reminder) ->
