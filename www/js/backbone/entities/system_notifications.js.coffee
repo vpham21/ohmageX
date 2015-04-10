@@ -21,8 +21,12 @@
         cordova.plugins.notification.local.clear notification.id, ->
           console.log 'Notification cleared'
 
-      window.plugin.notification.local.on "trigger", (notification) =>
-        # in the old version of the plugin, this seems to only activate when the app is in the foreground.
+      window.plugin.notification.local.on "cancel", (notification) =>
+        console.log 'canceled notification', notification.id
+
+      window.plugin.notification.local.on "schedule", (notification) =>
+        console.log 'scheduled notification', notification.id
+
         console.log 'trigger event'
         console.log 'JSON', notification.data
         result = JSON.parse notification.data
