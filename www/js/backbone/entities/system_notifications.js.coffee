@@ -185,10 +185,13 @@
 
         result.push
           id: myId
+          title: "#{reminder.get('surveyTitle')}"
+          text: "Take survey #{reminder.get('surveyTitle')}"
           every: 'week'
-          firstAt: newDate.toDate()
+          at: newDate.toDate()
           data:
             surveyId: reminder.get('surveyId')
+            surveyTitle: reminder.get('surveyTitle')
 
       if App.device.isNative
         # Multiple notifications can be sent to the plugin `schedule` method
