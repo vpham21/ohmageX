@@ -229,8 +229,8 @@
     if App.device.isNative
       API.init()
 
-  App.commands.setHandler "system:notifications:delete", (reminderId) ->
-    API.deleteNotifications App.request('reminders:current').get(reminderId)
+  App.commands.setHandler "system:notifications:turn:off", (reminder) ->
+    API.turnOff reminder
 
   App.commands.setHandler "system:notifications:turn:on", (reminder) ->
     console.log "system:notifications:turn:on", reminder
