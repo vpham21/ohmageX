@@ -121,7 +121,7 @@
       else
         # This reminder has been disabled. Be sure to deactivate its notifications.
         console.log 'toggleSystemNotifications disabled notification ids', reminder.get('notificationIds')
-        App.execute "system:notifications:delete", reminder
+        App.execute "system:notifications:turn:off", reminder
 
     purgeExpired: ->
       expired = currentReminders.filter (reminder) =>
@@ -180,7 +180,7 @@
 
       _.each removed, (reminder) =>
         console.log 'reminder ID', reminder.get 'id'
-        App.execute "system:notifications:delete", reminder.get 'id'
+        App.execute "system:notifications:turn:off", reminder
 
       currentReminders.remove removed
 
@@ -225,7 +225,7 @@
       API.addNewReminder()
 
   App.commands.setHandler "reminder:delete", (model) ->
-    App.execute "system:notifications:delete", model.get 'id'
+    App.execute "system:notifications:turn:off", model
     API.deleteReminder model.get 'id'
 
   App.commands.setHandler "reminder:validate", (model, response) ->
