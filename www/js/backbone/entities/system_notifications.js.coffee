@@ -137,12 +137,6 @@
 
 
     scheduleNotification: (options) ->
-      _.defaults options,
-        callback: (=>
-          # trigger the callback when notification updates complete.
-          App.vent.trigger "notifications:update:complete"
-          console.log 'notification creation default callback'
-        )
 
       { notificationId, surveyId, every, firstAt, callback } = options
 
@@ -155,9 +149,6 @@
           firstAt: firstAt
           data:
             surveyId: surveyId
-        , callback, @
-      else
-        callback.call(@)
 
 
     scheduleNotifications: (reminder, myIds) ->
