@@ -16,8 +16,10 @@
         console.log "survey/#{result.surveyId}"
         App.navigate "survey/#{result.surveyId}", trigger: true
 
-        # Suppress this reminder now that it's been activated.
-        App.execute "reminders:suppress", [result.id]
+        # clear the notification from the notification center now
+        # that it has been activated.
+        cordova.plugins.notification.local.clear notification.id, ->
+          console.log 'Notification cleared'
 
       window.plugin.notification.local.on "trigger", (notification) =>
         # in the old version of the plugin, this seems to only activate when the app is in the foreground.
