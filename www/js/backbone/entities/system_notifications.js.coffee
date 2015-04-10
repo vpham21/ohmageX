@@ -27,9 +27,25 @@
       window.plugin.notification.local.on "schedule", (notification) =>
         console.log 'scheduled notification', notification.id
 
+      window.plugin.notification.local.on "trigger", (notification, state) =>
         console.log 'trigger event'
         console.log 'JSON', notification.data
         result = JSON.parse notification.data
+
+        if device.platform is "iOS" and state is "foreground"
+          # The notification doesn't show up in the banner on iOS if the app is in the foreground.
+          cordova.plugins.notification.local.clear notification.id, ->
+            console.log 'Notification cleared'
+
+          App.request 'reminders:current' # request current reminders to cleanup any expired reminders
+
+          App.execute "dialog:confirm", "Reminder to take the survey #{result.surveyTitle}. Go to the survey?", (=>
+            App.navigate "survey/#{result.surveyId}", trigger: true
+
+          ), (=>
+           console.log 'dialog canceled'
+          )
+
         App.execute "surveys:local:triggered:add", result.surveyId
 
     generateId: ->
