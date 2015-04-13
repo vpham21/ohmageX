@@ -150,7 +150,7 @@
           App.execute "dialog:alert", "Failed to get image: #{message}"
         ), 0
       ),
-        quality: 50
+        quality: 45
         allowEdit: false
         destinationType: navigator.camera.DestinationType.DATA_URL
     recordImage: (img64) ->
