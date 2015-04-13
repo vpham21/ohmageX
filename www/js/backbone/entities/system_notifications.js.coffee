@@ -13,6 +13,12 @@
       document.addEventListener 'pause', (=>
         App.vent.trigger "notification:blocker:close"
       )
+
+      document.addEventListener 'resume', (=>
+        cordova.plugins.notification.local.clearAll =>
+          console.log 'any triggered notifications cleared from notification center'
+      )
+
       cordova.plugins.notification.local.on "click", (notification) =>
         console.log "notification onclick event"
         result = JSON.parse notification.data
