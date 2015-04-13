@@ -214,7 +214,7 @@
 
 
     clear: ->
-      window.plugin.notification.local.cancelAll ->
+      cordova.plugins.notification.local.cancelAll ->
         console.log 'All system notifications canceled'
 
   App.vent.on "surveys:saved:load:complete", ->
