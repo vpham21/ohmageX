@@ -10,6 +10,9 @@
       @initNotificationEvents()
 
     initNotificationEvents: ->
+      document.addEventListener 'pause', (=>
+        App.vent.trigger "notification:blocker:close"
+      )
       cordova.plugins.notification.local.on "click", (notification) =>
         console.log "notification onclick event"
         result = JSON.parse notification.data
