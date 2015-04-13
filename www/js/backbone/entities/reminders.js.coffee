@@ -228,6 +228,9 @@
     App.execute "system:notifications:turn:off", model
     API.deleteReminder model.get 'id'
 
+  App.commands.setHandler "reminder:delete:byid", (id) ->
+    API.deleteReminder id
+
   App.commands.setHandler "reminder:validate", (model, response) ->
     API.validateReminder model, response
 
