@@ -10,7 +10,10 @@
       @initNotificationEvents()
 
     initNotificationEvents: ->
-      window.plugin.notification.local.on "click", (notification) =>
+      document.addEventListener 'pause', (=>
+        App.vent.trigger "notification:blocker:close"
+      )
+      cordova.plugins.notification.local.on "click", (notification) =>
         console.log "notification onclick event"
         result = JSON.parse notification.data
         console.log "survey/#{result.surveyId}"
@@ -21,13 +24,13 @@
         cordova.plugins.notification.local.clear notification.id, ->
           console.log 'Notification cleared'
 
-      window.plugin.notification.local.on "cancel", (notification) =>
+      cordova.plugins.notification.local.on "cancel", (notification) =>
         console.log 'canceled notification', notification.id
 
-      window.plugin.notification.local.on "schedule", (notification) =>
+      cordova.plugins.notification.local.on "schedule", (notification) =>
         console.log 'scheduled notification', notification.id
 
-      window.plugin.notification.local.on "trigger", (notification, state) =>
+      cordova.plugins.notification.local.on "trigger", (notification, state) =>
         console.log 'trigger event'
         console.log 'JSON', notification.data
         result = JSON.parse notification.data

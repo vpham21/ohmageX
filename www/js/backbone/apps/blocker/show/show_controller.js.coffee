@@ -104,6 +104,9 @@
             @noticeRegion ''
             reminderView.trigger "save:reminder"
 
+          @listenTo App.vent, 'notification:blocker:close', =>
+            @layout.trigger 'cancel:clicked'
+
           @listenTo @layout, 'cancel:clicked', =>
             blocker.blockerHide()
             App.vent.trigger 'blocker:reminder:update:cancel'
