@@ -53,7 +53,7 @@
                   model: entity
               else
                 # reminders are scheduled later today for this survey.
-                return new Steps.AfterHasReminders
+                return new Steps.AfterSuppressReminders
                   collection: App.request("notifications:survey:scheduled:latertoday", @surveyId)
             else
               # reminders don't exist for this survey at all.
