@@ -45,21 +45,22 @@
       deleteByDefault = true
       if deleteByDefault then @$el.find("input").prop('checked', true)
 
-  class Steps.AfterHasReminders extends App.Views.CompositeView
+  class Steps.AfterSuppressReminders extends App.Views.CompositeView
     initialize: ->
-      @listenTo @, "submit:reminders", @gatherResponses
-    gatherResponses: ->
+      @listenTo @, "submit:notifications", @gatherIds
+    gatherIds: ->
       # loop through all reminder input boxes. create an array of
       # all the selected values and return that.
-      responses = _.map @$el.find('input:checked'), (myInput) ->
+      notificationIds = _.map @$el.find('input:checked'), (myInput) ->
         return $(myInput).val()
-      @trigger 'update:reminders', responses
+      if notificationIds.length > 0 then @collection.trigger("suppress", notificationIds)
+
     className: "text-container"
-    template: "steps/after_hasreminders"
+    template: "steps/after_suppressreminders"
     childView: Steps.ReminderTime
     childViewContainer: ".reminder-times"
     triggers:
-      "click .reminder-submit": "submit:reminders"
+      "click .reminder-submit": "submit:notifications"
 
 
   class Steps.AfterSubmission extends App.Views.ItemView

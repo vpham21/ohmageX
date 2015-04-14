@@ -57,16 +57,6 @@
 
         App.execute "surveys:local:triggered:add", result.surveyId
 
-    generateId: ->
-      # generate a numeric id (not a guid). Local notifications plugin
-      # fails if the id is not an Android-valid integer (Max for 32 bits is 2147483647)
-
-      myId = "9xxxxxxxx".replace /[xy]/g, (c) ->
-        r = Math.random() * 9 | 0
-        v = (if c is "x" then r else (r & 0x3 | 0x8))
-        v.toString 10
-      myId
-
     newBumpedWeekdayHourMinuteDate: (options) ->
       # retuns a new date base on the provided weekday, hour and minute,
       # with any past dates bumped to the future by the provided pastBumpInterval.
@@ -106,13 +96,14 @@
       myIds = []
       if !reminder.get('repeat')
         # schedule a one-time notification using the full activationDate.
-        myId = @generateId()
+        myId = App.request "system:notifications:id:generate", reminder.get('repeat')
         myIds.push myId
 
 
         @scheduleNotification
           notificationId: myId
           surveyId: reminder.get('surveyId')
+          reminderId: reminder.get('id')
           firstAt: reminder.get('activationDate').toDate()
           surveyTitle: reminder.get('surveyTitle')
 
@@ -120,7 +111,7 @@
 
         if reminder.get('repeatDays').length is 7
           # schedule a daily notification using the activation date's hour:minute
-          myId = @generateId()
+          myId = App.request "system:notifications:id:generate", reminder.get('repeat')
           myIds.push myId
 
           targetHour = reminder.get('activationDate').hour()
@@ -183,7 +174,7 @@
       targetMinute = reminder.get('activationDate').minute()
 
       _.each repeatDays, (repeatDay) =>
-        myId = @generateId()
+        myId = App.request "system:notifications:id:generate", reminder.get('repeat'), repeatDay
         myIds.push myId
 
         newDate = @newBumpedWeekdayHourMinuteDate

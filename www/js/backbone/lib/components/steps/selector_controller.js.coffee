@@ -18,8 +18,6 @@
       if type is "afterSurveySubmit"
         @listenTo myView, 'new:reminder', =>
           App.vent.trigger "reminders:survey:new", @surveyId
-        @listenTo myView, 'update:reminders', (ids) =>
-          App.vent.trigger "reminders:survey:suppress", @surveyId, ids
 
       @showSelectedView myView
 
@@ -36,8 +34,7 @@
             model: entity
         when "afterSurveySubmit"
 
-          # for now, disable the post-survey summary - not fully functional
-          if true or !App.custom.build.debug and !App.device.isNative
+          if !App.custom.build.debug and !App.device.isNative
             # no debugging and no native, just show the base exit summary.
             return new Steps.AfterSubmission
               model: entity
@@ -56,8 +53,8 @@
                   model: entity
               else
                 # reminders are scheduled later today for this survey.
-                return new Steps.AfterHasReminders
-                  collection: reminders
+                return new Steps.AfterSuppressReminders
+                  collection: App.request("notifications:survey:scheduled:latertoday", @surveyId)
             else
               # reminders don't exist for this survey at all.
               return new Steps.AfterNoReminders
