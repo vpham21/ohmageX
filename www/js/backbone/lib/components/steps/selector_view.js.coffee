@@ -45,7 +45,7 @@
       deleteByDefault = true
       if deleteByDefault then @$el.find("input").prop('checked', true)
 
-  class Steps.AfterHasReminders extends App.Views.CompositeView
+  class Steps.AfterSuppressReminders extends App.Views.CompositeView
     initialize: ->
       @listenTo @, "submit:notifications", @gatherIds
     gatherIds: ->
@@ -56,7 +56,7 @@
       if notificationIds.length > 0 then @collection.trigger("suppress", notificationIds)
 
     className: "text-container"
-    template: "steps/after_hasreminders"
+    template: "steps/after_suppressreminders"
     childView: Steps.ReminderTime
     childViewContainer: ".reminder-times"
     triggers:
