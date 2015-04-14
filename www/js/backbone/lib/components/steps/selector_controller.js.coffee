@@ -54,7 +54,7 @@
               else
                 # reminders are scheduled later today for this survey.
                 return new Steps.AfterHasReminders
-                  collection: reminders
+                  collection: App.request("notifications:survey:scheduled:latertoday", @surveyId)
             else
               # reminders don't exist for this survey at all.
               return new Steps.AfterNoReminders
