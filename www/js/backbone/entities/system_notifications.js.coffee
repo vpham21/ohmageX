@@ -149,7 +149,7 @@
           id: notificationId
           title: "#{surveyTitle}"
           text: "Take survey #{surveyTitle}"
-          at: firstAt
+          firstAt: firstAt
           data:
             surveyId: surveyId
             surveyTitle: surveyTitle
