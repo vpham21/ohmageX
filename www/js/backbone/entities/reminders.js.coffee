@@ -317,6 +317,9 @@
   App.commands.setHandler "reminder:date:set", (reminder, date) ->
     API.setAttribute reminder.get('id'), 'activationDate', date
 
+  App.commands.setHandler "reminder:repeating:date:bump:byid", (id) ->
+    API.bumpRepeatingDate id
+
   App.vent.on "campaign:saved:remove", (campaign_urn) ->
     if currentReminders.length > 0 then API.removeCampaignReminders(campaign_urn)
 
