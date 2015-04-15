@@ -60,7 +60,7 @@
     childView: Steps.ReminderTime
     childViewContainer: ".reminder-times"
     triggers:
-      "click .reminder-submit": "submit:notifications"
+      "click .reminder-suppress": "submit:notifications"
 
 
   class Steps.AfterSubmission extends App.Views.ItemView
