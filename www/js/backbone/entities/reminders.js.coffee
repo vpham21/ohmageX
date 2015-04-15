@@ -229,6 +229,25 @@
         console.log "reminder notification #{attribute} set", value
       )
 
+    bumpRepeatingDate: (reminderId) ->
+      reminder = currentReminders.get reminderId
+      throw new Error "can only bump repeating reminders, #{reminderId} is non-repeating" if reminder.get('repeat') is false
+      # bump a repeating reminder's activationDate.
+      targetHour = reminder.get('activationDate').hour()
+      targetMinute = reminder.get('activationDate').minute()
+
+      # bump everything to after 11:59:59 of the current day.
+      endOfDay = moment().startOf('day').hour(23).minute(59).second(59)
+
+      if reminder.get('repeatDays').length is 7
+        # if it's daily, it bumps it to tomorrow's next hour:minute
+        newDate = reminder.newBumpedWeekdayHourMinuteDate
+            weekday: moment().day()
+            hour: targetHour
+            minute: targetMinute
+            pastBumpInterval: 'days'
+            bumpAfter: endOfDay
+
     updateLocal: (callback) ->
       # update localStorage index reminders with the current version of campaignsSaved entity
       App.execute "storage:save", 'reminders', currentReminders.toJSON(), callback
