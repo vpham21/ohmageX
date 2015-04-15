@@ -20,15 +20,29 @@
 
     getLaterToday: (reminders) ->
 
-      notifications = []
+      todaysNotifications = []
 
       reminders.each (reminder) =>
-        # The notification has the repeat information encoded
-        # as metadata within the last digit of the ID.
+        reminderNotifications = reminder.get('notificationIds')
 
+        if reminderNotifications.length is 1
+          # one-time notifications
+          # daily repeating notifications
+          idToAdd = reminderNotifications[0]
+        else
+          # weekly notifications that match the current weekday
+          idToAdd = _.find reminderNotifications, (id) =>
+            # extract repeat information encoded
+            # as metadata within the ID.
+            repeat = App.request "system:notifications:id:repeat", id
+            repeat.weekday is moment().day()
 
+        todaysNotifications.push
+          id: idToAdd
+          activationDate: reminder.get('activationDate')
+          reminderId: reminder.get('id')
 
-      new Entities.SuppressionNotifications notifications
+      new Entities.SuppressionNotifications todaysNotifications
 
   App.reqres.setHandler "notifications:survey:scheduled:latertoday", (surveyId) ->
     reminders = App.request "reminders:survey:scheduled:latertoday", surveyId
