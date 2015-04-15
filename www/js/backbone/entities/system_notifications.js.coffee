@@ -57,38 +57,6 @@
 
         App.execute "surveys:local:triggered:add", result.surveyId
 
-    newBumpedWeekdayHourMinuteDate: (options) ->
-      # retuns a new date base on the provided weekday, hour and minute,
-      # with any past dates bumped to the future by the provided pastBumpInterval.
-
-      { weekday, hour, minute, pastBumpInterval } = options
-
-      newDate = moment().startOf('week').day(weekday).hour(hour).minute(minute)
-
-      # use a buffer of 2 minutes for setting notifications.
-      bufferedNow = moment().add(2, 'minutes')
-
-      if weekday < bufferedNow.day()
-        # in this week, the provided day comes before today's 
-        # day of the week. Bump it
-        # (watch for type conversion here)
-        newDate.add(1, pastBumpInterval)
-
-      else if weekday is bufferedNow.day()
-        # the provided weekday matches today's day of the week
-
-        console.log "newDate", newDate.format("MM/DD/YYYY, h:mma")
-        console.log "bufferedNow", bufferedNow.format("MM/DD/YYYY, h:mma")
-
-        if newDate.diff(bufferedNow) < 0
-          console.log "DATE IS IN THE PAST"
-          # the new date is in the past, bump it
-          newDate.add(1, pastBumpInterval)
-
-      console.log "reminder NEW BUMPED SCHEDULE TIME", newDate.format("MM/DD/YYYY, h:mma")
-
-      newDate
-
     turnOn: (reminder) ->
       # turn the reminder off before you turn it on, in case a currently active (or ON)
       # reminder was saved, meaning two turnOn events would happen in sequence.
@@ -118,7 +86,7 @@
           targetMinute = reminder.get('activationDate').minute()
 
 
-          newDate = @newBumpedWeekdayHourMinuteDate
+          newDate = reminder.newBumpedWeekdayHourMinuteDate
             weekday: moment().day()
             hour: targetHour
             minute: targetMinute
@@ -177,7 +145,7 @@
         myId = App.request "system:notifications:id:generate", reminder.get('repeat'), repeatDay
         myIds.push myId
 
-        newDate = @newBumpedWeekdayHourMinuteDate
+        newDate = reminder.newBumpedWeekdayHourMinuteDate
           weekday: parseInt(repeatDay) # type conversion required for day comparison
           hour: targetHour
           minute: targetMinute

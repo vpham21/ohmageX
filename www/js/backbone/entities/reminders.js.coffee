@@ -63,6 +63,38 @@
       myRulesMap =
         futureTimestamp: 'activationDate'
       super attrs, options, myRulesMap
+    newBumpedWeekdayHourMinuteDate: (options) ->
+      # retuns a new date base on the provided weekday, hour and minute,
+      # with any past dates bumped to the future by the provided pastBumpInterval.
+
+      _.defaults options,
+        # default to bumping everything 2 minutes from now.
+        bumpAfter: moment().add(2, 'minutes')
+
+      { weekday, hour, minute, pastBumpInterval, bumpAfter } = options
+
+      newDate = moment().startOf('week').day(weekday).hour(hour).minute(minute)
+
+      if weekday < bumpAfter.day()
+        # in this week, the provided day comes before today's
+        # day of the week. Bump it
+        # (watch for type conversion here)
+        newDate.add(1, pastBumpInterval)
+
+      else if weekday is bumpAfter.day()
+        # the provided weekday matches today's day of the week
+
+        console.log "newDate", newDate.format("MM/DD/YYYY, h:mma")
+        console.log "bumpAfter", bumpAfter.format("MM/DD/YYYY, h:mma")
+
+        if newDate.diff(bumpAfter) < 0
+          console.log "DATE IS IN THE PAST"
+          # the new date is in the past, bump it
+          newDate.add(1, pastBumpInterval)
+
+      console.log "reminder NEW BUMPED SCHEDULE TIME", newDate.format("MM/DD/YYYY, h:mma")
+
+      newDate
 
     defaults: ->
 
