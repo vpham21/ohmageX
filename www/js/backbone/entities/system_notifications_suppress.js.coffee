@@ -8,6 +8,19 @@
     model: Entities.SuppressionNotification
     initialize: ->
       @listenTo @, "suppress", @suppress
+
+    cancelNotificationsDeleteReminders: (onceIds) ->
+      # cancel all notifications passed in and delete their reminders.
+      if onceIds.length > 0
+        console.log 'canceling notifications'
+
+        if App.device.isNative
+          cordova.plugins.notification.local.cancel onceIds, =>
+            # after the cancel has finished, delete all corresponding reminders
+            _.each onceIds, (onceId) =>
+              suppressNotification = @get onceId
+              console.log 'deleting reminders'
+              App.execute "reminder:delete:byid", suppressNotification.get 'reminderId'
     suppress: (ids) ->
       # suppression is triggered with an event that includes
       # an array of notification IDs to suppress.
