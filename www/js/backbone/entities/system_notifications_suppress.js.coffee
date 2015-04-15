@@ -52,6 +52,9 @@
         # - if it's weekly, add 1 week so it's 1 week from today 12am.
         # - add the activationDate's hour and minute.
 
+        suppressNotification = @get repeatId
+        App.execute "reminder:repeating:date:bump:byid", suppressNotification.get 'reminderId'
+
         updateObjs.push
           id: repeatId
           at: moment().startOf('day').add(1, interval).hour(hour).minute(minute).toDate()
