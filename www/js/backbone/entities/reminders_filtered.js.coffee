@@ -23,19 +23,20 @@
         activationDate = reminder.get('activationDate')
         todayHourMinute = @todayHourMinute activationDate
 
+        console.log 'reminders filter'
         # active reminders only.
         if !reminder.get('active') then return false
-        console.log 'passed active'
+        console.log 'active PASSED'
         # ensure the reminder matches the survey ID.
         if reminder.get('surveyId') isnt surveyId then return false
-        console.log 'passed survey ID match'
+        console.log 'survey ID match PASSED'
 
         # for all cases:
         # verify the hour and minute of this activationDate
         # is later than now.
-        # daily reminders will pass the filter if this is true.
+        # non-suppressed daily reminders will pass the filter if this is true.
         if now > todayHourMinute then return false
-        console.log 'passed hour minute later than now'
+        console.log 'hour minute later than now PASSED'
 
         if !reminder.get('repeat')
           # reminder is non-repeating
@@ -44,13 +45,19 @@
           # only passes if:
           # now < activationDate < dayEnd
           if !(now < activationDate and activationDate < dayEnd) then return false
-          console.log 'non-repeating, passed now < activationDate < dayEnd'
-        else if reminder.get('repeatDays').length isnt 7
-          # reminder is a collection of "weekly" notifications
-          # must make sure that today is in the collection of repeatDays.
-          # note type conversion of now.day() to string for comparison.
-          if !("#{now.day()}" in reminder.get('repeatDays')) then return false
-          console.log 'repeating weekly-ish, passed today is in repeatDays'
+          console.log 'non-repeating, now < activationDate < dayEnd PASSED'
+        else 
+          # because of suppression, repeating reminders that pass this test
+          # must have an activationDate that is before the end of today.
+          if activationDate >= dayEnd then return false
+          console.log 'repeating reminder suppression check, activationDate in the past PASSED'
+
+          if reminder.get('repeatDays').length isnt 7
+            # reminder is a collection of "weekly" notifications
+            # must make sure that today is in the collection of repeatDays.
+            # note type conversion of now.day() to string for comparison.
+            if !("#{now.day()}" in reminder.get('repeatDays')) then return false
+            console.log 'non-consecutive repeating, today is in repeatDays PASSED'
 
         return true
 
