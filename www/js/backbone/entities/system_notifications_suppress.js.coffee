@@ -27,6 +27,12 @@
               suppressNotification = @get onceId
               console.log 'deleting reminders'
               App.execute "reminder:delete:byid", suppressNotification.get 'reminderId'
+        else
+          # call the callback directly for debugging
+          _.each onceIds, (onceId) =>
+            suppressNotification = @get onceId
+            console.log 'deleting reminders'
+            App.execute "reminder:delete:byid", suppressNotification.get 'reminderId'
 
     updateRepeatingNotifications: (repeatIds, onceIds) ->
       # this method takes in the onceIds so the onceIds
@@ -55,6 +61,9 @@
         cordova.plugins.notification.local.update updateObjs, =>
           console.log 'update complete'
           @cancelNotificationsDeleteReminders onceIds
+      else
+        # call the callback directly for debugging
+        @cancelNotificationsDeleteReminders onceIds
 
     suppress: (ids) ->
       # suppression is triggered with an event that includes
