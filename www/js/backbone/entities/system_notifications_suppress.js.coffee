@@ -61,8 +61,21 @@
       # an array of notification IDs to suppress.
       console.log 'suppress ids', ids 
 
+      onceIds = []
+      repeatIds = []
 
+      _.each ids, (id) =>
+        repeat = App.request "system:notifications:id:repeat", id
+        if !repeat.type
+          onceIds.push id
+        else
+          repeatIds.push id
 
+      if repeatIds.length > 0
+        @updateRepeatingNotifications repeatIds, onceIds
+      else
+        console.log 'no repeating ids to update, remove all one-time ids'
+        @cancelNotificationsDeleteReminders onceIds
 
   API =
 
