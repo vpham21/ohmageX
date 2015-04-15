@@ -248,6 +248,8 @@
             pastBumpInterval: 'days'
             bumpAfter: endOfDay
 
+      reminder.set 'activationDate', newDate
+
     updateLocal: (callback) ->
       # update localStorage index reminders with the current version of campaignsSaved entity
       App.execute "storage:save", 'reminders', currentReminders.toJSON(), callback
