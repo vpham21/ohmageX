@@ -92,6 +92,9 @@
             minute: targetMinute
             pastBumpInterval: 'days'
 
+          # set the new activationDate to the next occurrence of the daily reminder
+          App.execute "reminder:date:set", reminder, newDate
+
           @scheduleNotification
             notificationId: myId
             surveyId: reminder.get('surveyId')
