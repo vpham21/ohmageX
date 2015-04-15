@@ -144,6 +144,9 @@
       targetHour = reminder.get('activationDate').hour()
       targetMinute = reminder.get('activationDate').minute()
 
+      nextOccurrence = false
+      occurrenceFutureInterval = false
+
       _.each repeatDays, (repeatDay) =>
         myId = App.request "system:notifications:id:generate", reminder.get('repeat'), repeatDay
         myIds.push myId
@@ -154,15 +157,24 @@
           minute: targetMinute
           pastBumpInterval: 'weeks'
 
+        if occurrenceFutureInterval is false or newDate.diff(moment()) < occurrenceFutureInterval
+          # get the date with the smallest interval after the present.
+          nextOccurrence = newDate
+          occurrenceFutureInterval = newDate.diff(moment())
+
         result.push
           id: myId
           title: "#{reminder.get('surveyTitle')}"
           text: "Take survey #{reminder.get('surveyTitle')}"
           every: 'week'
-          at: newDate.toDate()
+          firstAt: newDate.toDate()
           data:
             surveyId: reminder.get('surveyId')
             surveyTitle: reminder.get('surveyTitle')
+
+      # set the new activationDate to the next occurrence of
+      # the non-consecutive repeating reminder
+      App.execute "reminder:date:set", reminder, nextOccurrence
 
       if App.device.isNative
         # Multiple notifications can be sent to the plugin `schedule` method
