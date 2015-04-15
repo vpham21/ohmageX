@@ -11,6 +11,12 @@
 
     cancelNotificationsDeleteReminders: (onceIds) ->
       # cancel all notifications passed in and delete their reminders.
+
+      # verify that all notifications passed in are non-repeating.
+      _.each onceIds, (onceId) =>
+        repeat = App.request "system:notifications:id:repeat", onceId
+        throw new Error "suppression: repeating notification id #{onceId} being canceled" if repeat.type isnt false
+
       if onceIds.length > 0
         console.log 'canceling notifications'
 
