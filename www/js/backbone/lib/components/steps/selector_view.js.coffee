@@ -53,14 +53,15 @@
       # all the selected values and return that.
       notificationIds = _.map @$el.find('input:checked'), (myInput) ->
         return $(myInput).val()
-      if notificationIds.length > 0 then @collection.trigger("suppress", notificationIds)
-
+      if notificationIds.length > 0 
+        @collection.trigger("suppress", notificationIds)
+        @trigger "suppress:notifications", notificationIds
     className: "text-container"
     template: "steps/after_suppressreminders"
     childView: Steps.ReminderTime
     childViewContainer: ".reminder-times"
     triggers:
-      "click .reminder-submit": "submit:notifications"
+      "click .reminder-suppress": "submit:notifications"
 
 
   class Steps.AfterSubmission extends App.Views.ItemView

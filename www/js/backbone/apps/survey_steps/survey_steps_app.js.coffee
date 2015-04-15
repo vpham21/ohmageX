@@ -82,7 +82,7 @@
   App.vent.on "reminders:survey:new", (surveyId) ->
     App.vent.trigger "survey:reset", surveyId
 
-  App.vent.on "reminders:survey:suppress", (surveyId, reminderIds) ->
+  App.vent.on "survey:notifications:suppress", (surveyId, notificationIds) ->
     App.vent.trigger "survey:exit", surveyId
 
   App.vent.on "response:set:success", (response, surveyId, stepId) ->

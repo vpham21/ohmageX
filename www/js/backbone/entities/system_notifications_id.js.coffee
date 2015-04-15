@@ -40,6 +40,36 @@
 
       myId
 
+    getRepeat: (id) ->
+      # extract repeat information from a given notification's ID.
+
+      # return the following object properties:
+
+      # `type`:
+      #   false - non-repeating notification
+      #   'daily' - daily notification
+      #   'weekly' - weekly notificatoin
+      # if weekly, it includes `weekday`:
+      # - the Moment.js weekday that it repeats
+
+      repeatStr = id.slice(-1)
+
+      if repeatStr is "9"
+        return {
+          type: false
+        }
+      else if repeatStr is "7"
+        return {
+          type: 'daily'
+        }
+      else
+        return {
+          type: 'weekly'
+          weekday: parseInt(repeatStr)
+        }
+
   App.reqres.setHandler "system:notifications:id:generate", (repeat, repeatDay = false) ->
     API.generateMetadataId repeat, repeatDay
 
+  App.reqres.setHandler "system:notifications:id:repeat", (id) ->
+    API.getRepeat id

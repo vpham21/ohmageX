@@ -3,89 +3,107 @@
 
 
   class Entities.SuppressionNotification extends Entities.Model
-    initialize: ->
-      @listenTo @, "suppress:id", @suppress
-    bumpNotification: (interval) ->
-      # TODO: remove this method, must do this in the collection instead
-      # to aggregate notification update
-      myId = @get('id')
-
-      cordova.plugins.notification.local.get myId, (notifications) =>
-        # get whatever the notification's starting date is.
-        # Then bump it by the interval.
-        cordova.plugins.notification.local.update
-          id: myId
-          at: moment(notifications.at).add(1, interval).toDate()
-    suppress: ->
-      # TODO: remove this method, must do this in the collection instead
-      # to aggregate notification update / cancel
-      switch @get('repeat')
-        when 'day'
-          @bumpNotification 'days'
-        when 'week'
-          @bumpNotification 'weeks'
-        when false
-          # non-repeating reminder, just delete it
-          App.execute "reminder:delete:byid", @get('reminderId')
 
   class Entities.SuppressionNotifications extends Entities.Collection
     model: Entities.SuppressionNotification
     initialize: ->
       @listenTo @, "suppress", @suppress
+
+    cancelNotificationsDeleteReminders: (onceIds) ->
+      # cancel all notifications passed in and delete their reminders.
+
+      # verify that all notifications passed in are non-repeating.
+      _.each onceIds, (onceId) =>
+        repeat = App.request "system:notifications:id:repeat", onceId
+        throw new Error "suppression: repeating notification id #{onceId} being canceled" if repeat.type isnt false
+
+      if onceIds.length > 0
+        console.log 'canceling notifications'
+
+        if App.device.isNative
+          cordova.plugins.notification.local.cancel onceIds, =>
+            # after the cancel has finished, delete all corresponding reminders
+            _.each onceIds, (onceId) =>
+              suppressNotification = @get onceId
+              console.log 'deleting reminders'
+              App.execute "reminder:delete:byid", suppressNotification.get 'reminderId'
+
+    updateRepeatingNotifications: (repeatIds, onceIds) ->
+      # this method takes in the onceIds so the onceIds
+      # can be passed to this update's callback for subsequent canceling.
+      updateObjs = []
+      _.each repeatIds, (repeatId) =>
+        repeat = App.request "system:notifications:id:repeat", repeatId
+        throw new Error "suppression: one-time notification id #{repeatId} being updated" if repeat.type is false
+        activationDate = @get(repeatId).get('activationDate')
+        hour = activationDate.hour()
+        minute = activationDate.minute()
+        interval = if repeat.type is 'daily' then 'days' else 'weeks'
+
+        # setting the new date:
+        # - get 12am today.
+        # - if it's daily, add 1 day to it so it's tomorrow 12am.
+        # - if it's weekly, add 1 week so it's 1 week from today 12am.
+        # - add the activationDate's hour and minute.
+
+        updateObjs.push
+          id: repeatId
+          at: moment().startOf('day').add(1, interval).hour(hour).minute(minute).toDate()
+
+      console.log 'update objects', updateObjs
+      if App.device.isNative
+        cordova.plugins.notification.local.update updateObjs, =>
+          console.log 'update complete'
+          @cancelNotificationsDeleteReminders onceIds
+
     suppress: (ids) ->
       # suppression is triggered with an event that includes
       # an array of notification IDs to suppress.
       console.log 'suppress ids', ids 
 
-      ### 
-      TODO:
-      loop through all ids that will be suppressed.
-      check the ID metadata. For a given notification:
+      onceIds = []
+      repeatIds = []
 
-      append all one-time notifications to a one-time array.
-      this is so all of the one-times can be `cancel()`ed simultaneously.
-      after cancel, delete the matching one-time Reminder entities by id.
+      _.each ids, (id) =>
+        repeat = App.request "system:notifications:id:repeat", id
+        if !repeat.type
+          onceIds.push id
+        else
+          repeatIds.push id
 
-      Then append all repeating notifications to repeating array.
-      This is so the repeating items can be `update()`ed simultaneously.
-      Any repeats should already be filtered by:
-      Non-consecutive repeating notification that matches today
-      A daily notification
-
-      update() and cancel() may need to be chained so they don't clobber
-      each other (has happened with past plugin versions)
-
-      most likely remove this code, left for reference:
-      suppressed = @filter (model) => model.get('id') in ids
-      _.each suppressed, (model) =>
-        model.trigger "suppress:id"
-      ###
+      if repeatIds.length > 0
+        @updateRepeatingNotifications repeatIds, onceIds
+      else
+        console.log 'no repeating ids to update, remove all one-time ids'
+        @cancelNotificationsDeleteReminders onceIds
 
   API =
 
     getLaterToday: (reminders) ->
 
-      notifications = []
+      todaysNotifications = []
 
       reminders.each (reminder) =>
-        # The notification has the repeat information encoded
-        # as metadata within the last digit of the ID.
+        reminderNotifications = reminder.get('notificationIds')
 
-        # TODO
-        # push all valid notifications to a flat array:
-        # - one-time notifications
-        # - daily repeating notifications
-        # - weekly notifications that match the current weekday
-        #   - no need to loop through `notificationIds`, just
-        #     get the one that matches today
+        if reminderNotifications.length is 1
+          # one-time notifications
+          # daily repeating notifications
+          idToAdd = reminderNotifications[0]
+        else
+          # weekly notifications that match the current weekday
+          idToAdd = _.find reminderNotifications, (id) =>
+            # extract repeat information encoded
+            # as metadata within the ID.
+            repeat = App.request "system:notifications:id:repeat", id
+            repeat.weekday is moment().day()
 
-        # notifications.push
-        #   id: notificationId
-        #   activationDate: reminder.get('activationDate')
-        #   reminderId: reminder.get('id')
-        #   # no need to add repeat, it's encoded in `id`
+        todaysNotifications.push
+          id: idToAdd
+          activationDate: reminder.get('activationDate')
+          reminderId: reminder.get('id')
 
-      new Entities.SuppressionNotifications notifications
+      new Entities.SuppressionNotifications todaysNotifications
 
   App.reqres.setHandler "notifications:survey:scheduled:latertoday", (surveyId) ->
     reminders = App.request "reminders:survey:scheduled:latertoday", surveyId
