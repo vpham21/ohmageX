@@ -248,6 +248,28 @@
             pastBumpInterval: 'days'
             bumpAfter: endOfDay
 
+      else
+        # if it's non-consecutive repeating, it bumps it to the next occurrence
+        # after the end of the day.
+        nextOccurrence = false
+        occurrenceFutureInterval = false
+
+        _.each reminder.get('repeatDays'), (repeatDay) =>
+
+          repeatDate = reminder.newBumpedWeekdayHourMinuteDate
+            weekday: parseInt(repeatDay) # type conversion required for day comparison
+            hour: targetHour
+            minute: targetMinute
+            pastBumpInterval: 'weeks'
+            bumpAfter: endOfDay
+
+          if occurrenceFutureInterval is false or repeatDate.diff(moment()) < occurrenceFutureInterval
+            # get the date with the smallest interval after the present.
+            nextOccurrence = repeatDate
+            occurrenceFutureInterval = repeatDate.diff(moment())
+
+        newDate = nextOccurrence
+
       reminder.set 'activationDate', newDate
 
     updateLocal: (callback) ->
