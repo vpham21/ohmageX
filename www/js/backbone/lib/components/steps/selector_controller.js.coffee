@@ -19,6 +19,9 @@
         @listenTo myView, 'new:reminder', =>
           App.vent.trigger "reminders:survey:new", @surveyId
 
+        @listenTo myView, 'suppress:notifications', (notificationIds) =>
+          App.vent.trigger "survey:notifications:suppress", @surveyId, notificationIds
+
       @showSelectedView myView
 
     selectView: (entity, type) ->
