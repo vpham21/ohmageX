@@ -153,6 +153,8 @@
         quality: 45
         allowEdit: false
         destinationType: navigator.camera.DestinationType.DATA_URL
+        targetWidth: 1600
+        targetHeight: 1200
     recordImage: (img64) ->
       @model.set('currentValue', img64)
       @renderImageThumb img64
