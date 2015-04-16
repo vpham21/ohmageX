@@ -63,6 +63,38 @@
       myRulesMap =
         futureTimestamp: 'activationDate'
       super attrs, options, myRulesMap
+    newBumpedWeekdayHourMinuteDate: (options) ->
+      # retuns a new date base on the provided weekday, hour and minute,
+      # with any past dates bumped to the future by the provided pastBumpInterval.
+
+      _.defaults options,
+        # default to bumping everything 2 minutes from now.
+        bumpAfter: moment().add(2, 'minutes')
+
+      { weekday, hour, minute, pastBumpInterval, bumpAfter } = options
+
+      newDate = moment().startOf('week').day(weekday).hour(hour).minute(minute)
+
+      if weekday < bumpAfter.day()
+        # in this week, the provided day comes before today's
+        # day of the week. Bump it
+        # (watch for type conversion here)
+        newDate.add(1, pastBumpInterval)
+
+      else if weekday is bumpAfter.day()
+        # the provided weekday matches today's day of the week
+
+        console.log "newDate", newDate.format("MM/DD/YYYY, h:mma")
+        console.log "bumpAfter", bumpAfter.format("MM/DD/YYYY, h:mma")
+
+        if newDate.diff(bumpAfter) < 0
+          console.log "DATE IS IN THE PAST"
+          # the new date is in the past, bump it
+          newDate.add(1, pastBumpInterval)
+
+      console.log "reminder NEW BUMPED SCHEDULE TIME", newDate.format("MM/DD/YYYY, h:mma")
+
+      newDate
 
     defaults: ->
 
@@ -197,6 +229,46 @@
         console.log "reminder notification #{attribute} set", value
       )
 
+    bumpRepeatingDate: (reminderId, bumpAfter) ->
+      reminder = currentReminders.get reminderId
+      throw new Error "can only bump repeating reminders, #{reminderId} is non-repeating" if reminder.get('repeat') is false
+      # bump a repeating reminder's activationDate.
+      targetHour = reminder.get('activationDate').hour()
+      targetMinute = reminder.get('activationDate').minute()
+
+      if reminder.get('repeatDays').length is 7
+        # if it's daily, it bumps it to tomorrow's next hour:minute
+        newDate = reminder.newBumpedWeekdayHourMinuteDate
+            weekday: moment().day()
+            hour: targetHour
+            minute: targetMinute
+            pastBumpInterval: 'days'
+            bumpAfter: bumpAfter
+
+      else
+        # if it's non-consecutive repeating, it bumps it to the next occurrence
+        # after the end of the day.
+        nextOccurrence = false
+        occurrenceFutureInterval = false
+
+        _.each reminder.get('repeatDays'), (repeatDay) =>
+
+          repeatDate = reminder.newBumpedWeekdayHourMinuteDate
+            weekday: parseInt(repeatDay) # type conversion required for day comparison
+            hour: targetHour
+            minute: targetMinute
+            pastBumpInterval: 'weeks'
+            bumpAfter: bumpAfter
+
+          if occurrenceFutureInterval is false or repeatDate.diff(moment()) < occurrenceFutureInterval
+            # get the date with the smallest interval after the present.
+            nextOccurrence = repeatDate
+            occurrenceFutureInterval = repeatDate.diff(moment())
+
+        newDate = nextOccurrence
+
+      reminder.set 'activationDate', newDate
+
     updateLocal: (callback) ->
       # update localStorage index reminders with the current version of campaignsSaved entity
       App.execute "storage:save", 'reminders', currentReminders.toJSON(), callback
@@ -240,8 +312,12 @@
     API.setAttribute reminder.get('id'), 'notificationIds', ids
 
   App.commands.setHandler "reminder:date:set", (reminder, date) ->
-    # ids - array of IDs to set for the notification
     API.setAttribute reminder.get('id'), 'activationDate', date
+
+  App.commands.setHandler "reminder:repeating:date:bump:dayend:byid", (id) ->
+    # bump this to after 11:59:59 of the current day.
+    endOfDay = moment().startOf('day').hour(23).minute(59).second(59)
+    API.bumpRepeatingDate id, endOfDay
 
   App.vent.on "campaign:saved:remove", (campaign_urn) ->
     if currentReminders.length > 0 then API.removeCampaignReminders(campaign_urn)

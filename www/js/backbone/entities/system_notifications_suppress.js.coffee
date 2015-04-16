@@ -27,6 +27,12 @@
               suppressNotification = @get onceId
               console.log 'deleting reminders'
               App.execute "reminder:delete:byid", suppressNotification.get 'reminderId'
+        else
+          # call the callback directly for debugging
+          _.each onceIds, (onceId) =>
+            suppressNotification = @get onceId
+            console.log 'deleting reminders'
+            App.execute "reminder:delete:byid", suppressNotification.get 'reminderId'
 
     updateRepeatingNotifications: (repeatIds, onceIds) ->
       # this method takes in the onceIds so the onceIds
@@ -46,6 +52,12 @@
         # - if it's weekly, add 1 week so it's 1 week from today 12am.
         # - add the activationDate's hour and minute.
 
+        suppressNotification = @get repeatId
+
+        # bump the activationDate after the endOfDay, to indicate
+        # that this updated Reminder was suppressed 
+        App.execute "reminder:repeating:date:bump:dayend:byid", suppressNotification.get 'reminderId'
+
         updateObjs.push
           id: repeatId
           at: moment().startOf('day').add(1, interval).hour(hour).minute(minute).toDate()
@@ -55,6 +67,9 @@
         cordova.plugins.notification.local.update updateObjs, =>
           console.log 'update complete'
           @cancelNotificationsDeleteReminders onceIds
+      else
+        # call the callback directly for debugging
+        @cancelNotificationsDeleteReminders onceIds
 
     suppress: (ids) ->
       # suppression is triggered with an event that includes
