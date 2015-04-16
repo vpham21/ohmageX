@@ -53,7 +53,10 @@
         # - add the activationDate's hour and minute.
 
         suppressNotification = @get repeatId
-        App.execute "reminder:repeating:date:bump:byid", suppressNotification.get 'reminderId'
+
+        # bump the activationDate after the endOfDay, to indicate
+        # that this updated Reminder was suppressed 
+        App.execute "reminder:repeating:date:bump:dayend:byid", suppressNotification.get 'reminderId'
 
         updateObjs.push
           id: repeatId

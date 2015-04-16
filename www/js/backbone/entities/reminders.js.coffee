@@ -229,15 +229,12 @@
         console.log "reminder notification #{attribute} set", value
       )
 
-    bumpRepeatingDate: (reminderId) ->
+    bumpRepeatingDate: (reminderId, bumpAfter) ->
       reminder = currentReminders.get reminderId
       throw new Error "can only bump repeating reminders, #{reminderId} is non-repeating" if reminder.get('repeat') is false
       # bump a repeating reminder's activationDate.
       targetHour = reminder.get('activationDate').hour()
       targetMinute = reminder.get('activationDate').minute()
-
-      # bump everything to after 11:59:59 of the current day.
-      endOfDay = moment().startOf('day').hour(23).minute(59).second(59)
 
       if reminder.get('repeatDays').length is 7
         # if it's daily, it bumps it to tomorrow's next hour:minute
@@ -246,7 +243,7 @@
             hour: targetHour
             minute: targetMinute
             pastBumpInterval: 'days'
-            bumpAfter: endOfDay
+            bumpAfter: bumpAfter
 
       else
         # if it's non-consecutive repeating, it bumps it to the next occurrence
@@ -261,7 +258,7 @@
             hour: targetHour
             minute: targetMinute
             pastBumpInterval: 'weeks'
-            bumpAfter: endOfDay
+            bumpAfter: bumpAfter
 
           if occurrenceFutureInterval is false or repeatDate.diff(moment()) < occurrenceFutureInterval
             # get the date with the smallest interval after the present.
@@ -317,8 +314,10 @@
   App.commands.setHandler "reminder:date:set", (reminder, date) ->
     API.setAttribute reminder.get('id'), 'activationDate', date
 
-  App.commands.setHandler "reminder:repeating:date:bump:byid", (id) ->
-    API.bumpRepeatingDate id
+  App.commands.setHandler "reminder:repeating:date:bump:dayend:byid", (id) ->
+    # bump this to after 11:59:59 of the current day.
+    endOfDay = moment().startOf('day').hour(23).minute(59).second(59)
+    API.bumpRepeatingDate id, endOfDay
 
   App.vent.on "campaign:saved:remove", (campaign_urn) ->
     if currentReminders.length > 0 then API.removeCampaignReminders(campaign_urn)
