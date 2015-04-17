@@ -62,7 +62,8 @@
 
       @listenTo @blockerView, "render", (blockerView) =>
         console.log 'blockerView render'
-        surveysView = @getReminderSurveysView App.request("reminders:surveys", blockerView.model.get('surveyId'))
+        startingSurvey = if @surveyId then @surveyId else blockerView.model.get('surveyId')
+        surveysView = @getReminderSurveysView App.request("reminders:surveys", startingSurvey)
         blockerView.surveysRegion.show surveysView
 
         @listenTo surveysView, "survey:selected", (model) ->
