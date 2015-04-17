@@ -19,8 +19,9 @@
           console.log 'responseData in cancelListener', responseData
           App.execute "uploadqueue:item:add", responseData, "#{errorPrefix} #{errorText}", surveyId
           # After Notice Center: Notify the user that the item was put into their upload queue.
-          # Exit the survey.
-          App.vent.trigger "survey:exit", surveyId
+
+          # Broadcast that the user selected OK after the failure happened.
+          App.vent.trigger "survey:upload:failure:ok", responseData, surveyId
           App.execute "dialog:alert", "Your response has been added to the Upload Queue."
         okListener: =>
           App.execute 'credentials:preflight:check', =>
