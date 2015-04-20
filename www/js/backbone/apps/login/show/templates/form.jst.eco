@@ -3,12 +3,12 @@
   <p class="error"></p>
   <div class="server-selector"></div>
   <label for="username">Username</label>
-  <input class="username" type="text" name="username" autocapitalize="none" autocorrect="off" />
+  <input class="username" type="text" name="username" autocapitalize="off" autocorrect="off" />
   <label for="pass">Password</label>
   <input class="pass" type="password" name="pass" />
   <div class="button-single">
     <div class="action">
-      <button type="submit">Submit</button>    
+      <button type="submit">Submit</button>
     </div>
   </div>
 </form>
