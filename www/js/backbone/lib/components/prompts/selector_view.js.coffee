@@ -140,6 +140,9 @@
       # Take picture using device camera and retrieve image as base64-encoded string
       console.log 'getMobileImage method'
       maxDimension = @model.get('properties').get('maxDimension')
+      # on some devices a max dimension larger than 1200 may cause memory errors.
+      if !!maxDimension and maxDimension > 1200 then maxDimension = 1200
+
       navigator.camera.getPicture ((img64) =>
         # success callback
         @recordImage "data:image/jpeg;base64,#{img64}"
@@ -154,8 +157,8 @@
         quality: 45
         allowEdit: false
         destinationType: navigator.camera.DestinationType.DATA_URL
-        targetWidth: 1200
-        targetHeight: if !!!maxDimension then 800 else maxDimension
+        targetWidth: if !!!maxDimension then 1200 else maxDimension
+        targetHeight: if !!!maxDimension then 1200 else maxDimension
     recordImage: (img64) ->
       @model.set('currentValue', img64)
       @renderImageThumb img64
