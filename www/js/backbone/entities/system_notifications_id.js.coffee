@@ -6,6 +6,8 @@
   # ID. This reduces complexity, eliminating asynchronous requests
   # to the notifications plugin.
 
+  oldId = false
+
   API =
 
     generateMetadataId: (repeat, repeatDay) ->
@@ -67,9 +69,25 @@
           type: 'weekly'
           weekday: parseInt(repeatStr)
         }
+    compare: (id) ->
+      # This ensure that duplicate notification IDs aren't called successively.
+      # workaround for a plugin bug that causes multiple trigger events to fire
+      # for a single notification ID when it triggers once.
+
+      if id isnt oldId
+        oldId = id
+        return true
+      else
+        return false
 
   App.reqres.setHandler "system:notifications:id:generate", (repeat, repeatDay = false) ->
     API.generateMetadataId repeat, repeatDay
 
   App.reqres.setHandler "system:notifications:id:repeat", (id) ->
     API.getRepeat id
+
+  App.reqres.setHandler "system:notifications:oldid:compare", (id) ->
+    API.compare id
+
+  App.reqres.setHandler "system:notifications:oldid:reset", ->
+    oldId = false
