@@ -15,8 +15,19 @@
       )
 
       document.addEventListener 'resume', (=>
-        cordova.plugins.notification.local.clearAll =>
-          console.log 'any triggered notifications cleared from notification center'
+
+        if device.platform is "iOS"
+          # iOS needs to fire the surveys trigger event on resume,
+          # because the trigger event does not fire in the background there.
+          cordova.plugins.notification.local.getTriggered (notifications) =>
+            _.each notifications, (notification) =>
+              result = JSON.parse notification.data
+              App.execute "surveys:local:triggered:add", result.surveyId
+            cordova.plugins.notification.local.clearAll =>
+              console.log 'triggered surveys noted, cleared all from notification center'
+        else
+          cordova.plugins.notification.local.clearAll =>
+            console.log 'triggered surveys noted, cleared all from notification center'
       )
 
       cordova.plugins.notification.local.on "click", (notification) =>
