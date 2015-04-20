@@ -15,8 +15,19 @@
       )
 
       document.addEventListener 'resume', (=>
-        cordova.plugins.notification.local.clearAll =>
-          console.log 'any triggered notifications cleared from notification center'
+
+        if device.platform is "iOS"
+          # iOS needs to fire the surveys trigger event on resume,
+          # because the trigger event does not fire in the background there.
+          cordova.plugins.notification.local.getTriggered (notifications) =>
+            _.each notifications, (notification) =>
+              result = JSON.parse notification.data
+              App.execute "surveys:local:triggered:add", result.surveyId
+            cordova.plugins.notification.local.clearAll =>
+              console.log 'triggered surveys noted, cleared all from notification center'
+        else
+          cordova.plugins.notification.local.clearAll =>
+            console.log 'triggered surveys noted, cleared all from notification center'
       )
 
       cordova.plugins.notification.local.on "click", (notification) =>
@@ -48,13 +59,34 @@
 
           App.request 'reminders:current' # request current reminders to cleanup any expired reminders
 
-          App.execute "dialog:confirm", "Reminder to take the survey #{result.surveyTitle}. Go to the survey?", (=>
-            App.navigate "survey/#{result.surveyId}", trigger: true
+          # We must compare the notification ID to the "oldId", an id that is stored
+          # outside of this callback and is updated when different. Why do this? The plugin has
+          # an iOS bug that causes repeating notifications in certain circumstances to fire the
+          # `trigger` event multiple times for a single notification.
+          if App.request "system:notifications:oldid:compare", notification.id
+            App.execute "dialog:confirm", "Reminder to take the survey #{result.surveyTitle}. Go to the survey?", (=>
+              App.navigate "survey/#{result.surveyId}", trigger: true
+              setTimeout (=>
+                # add a 2 second buffer after this dialog box is closed
+                # that resets the oldId back to false, in case this
+                # notification would be the next notification
+                # to trigger in the future, and no other notifications
+                # are fired to clear out the oldId.
+                # The time buffer is for the possibility where the user closes
+                # the dialog box immediately, and one of the superfluous 
+                # trigger events hasn't fired yet.
+                App.request "system:notifications:oldid:reset"
+              ), 2000
+            ), (=>
+              console.log 'dialog canceled'
+              setTimeout (=>
+                App.request "system:notifications:oldid:reset"
+              ), 2000
+            )
 
-          ), (=>
-           console.log 'dialog canceled'
-          )
-
+        # This event fires in the `background` state successfully on Android,
+        # but it doesn't fire on iOS. The document `resume` event handler
+        # above deals with this on iOS.
         App.execute "surveys:local:triggered:add", result.surveyId
 
     turnOn: (reminder) ->
