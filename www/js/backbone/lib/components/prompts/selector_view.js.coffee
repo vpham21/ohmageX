@@ -144,8 +144,12 @@
           console.log 'Please upload an image in jpeg or png format.'
       else
         console.log 'Please select an image.'
-    getMobileImage: ->
-      # Take picture using device camera and retrieve image as base64-encoded string
+    takePicture: ->
+      @getPicture navigator.camera.PictureSourceType.CAMERA
+    fromLibrary: ->
+      @getPicture navigator.camera.PictureSourceType.PHOTOLIBRARY
+    getPicture: (source) ->
+      # Device camera plugin, get picture and retrieve image as base64-encoded string
       console.log 'getMobileImage method'
       maxDimension = @model.get('properties').get('maxDimension')
       # on some devices a max dimension larger than 1200 may cause memory errors.
@@ -165,6 +169,7 @@
         quality: 45
         allowEdit: false
         destinationType: navigator.camera.DestinationType.DATA_URL
+        sourceType: source
         targetWidth: if !!!maxDimension then 1200 else maxDimension
         targetHeight: if !!!maxDimension then 1200 else maxDimension
     recordImage: (img64) ->
