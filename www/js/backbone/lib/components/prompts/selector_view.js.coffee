@@ -105,7 +105,16 @@
     initialize: ->
       super
       @listenTo @, "file:changed", @processFile
-      @listenTo @, "mobile:get", @getMobileImage
+      @listenTo @, "take:picture", @takePicture
+      @listenTo @, "from:library", @fromLibrary
+    serializeData: ->
+      data = {}
+      # only show a single button in the browser, or on iPad
+      # (iPad shows a popover that allows the user to select a picture)
+      data.showSingleButton = !App.device.isNative or 
+        (device.platform is "iOS" and device.model.indexOf('iPad') isnt -1)
+      data
+
     processFile: ->
       fileDOM = @$el.find('input[type=file]')[0]
       myInput = fileDOM.files[0]
@@ -136,8 +145,12 @@
           console.log 'Please upload an image in jpeg or png format.'
       else
         console.log 'Please select an image.'
-    getMobileImage: ->
-      # Take picture using device camera and retrieve image as base64-encoded string
+    takePicture: ->
+      @getPicture navigator.camera.PictureSourceType.CAMERA
+    fromLibrary: ->
+      @getPicture navigator.camera.PictureSourceType.PHOTOLIBRARY
+    getPicture: (source) ->
+      # Device camera plugin, get picture and retrieve image as base64-encoded string
       console.log 'getMobileImage method'
       maxDimension = @model.get('properties').get('maxDimension')
       # on some devices a max dimension larger than 1200 may cause memory errors.
@@ -157,8 +170,10 @@
         quality: 45
         allowEdit: false
         destinationType: navigator.camera.DestinationType.DATA_URL
+        sourceType: source
         targetWidth: if !!!maxDimension then 1200 else maxDimension
         targetHeight: if !!!maxDimension then 1200 else maxDimension
+
     recordImage: (img64) ->
       @model.set('currentValue', img64)
       @renderImageThumb img64
@@ -181,7 +196,11 @@
 
     triggers: ->
       if App.device.isNative
-        return 'click .input-activate button': "mobile:get"
+        return {
+          'click .input-activate .get-photo': "take:picture"
+          'click .input-activate .take-picture': "take:picture"
+          'click .input-activate .from-library': "from:library"
+        }
       else
         return 'change input[type=file]': "file:changed"
 
