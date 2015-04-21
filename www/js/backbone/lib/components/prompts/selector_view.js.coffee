@@ -105,7 +105,8 @@
     initialize: ->
       super
       @listenTo @, "file:changed", @processFile
-      @listenTo @, "mobile:get", @getMobileImage
+      @listenTo @, "take:picture", @takePicture
+      @listenTo @, "from:library", @fromLibrary
     serializeData: ->
       data = {}
       # only show a single button in the browser, or on iPad
@@ -172,6 +173,7 @@
         sourceType: source
         targetWidth: if !!!maxDimension then 1200 else maxDimension
         targetHeight: if !!!maxDimension then 1200 else maxDimension
+
     recordImage: (img64) ->
       @model.set('currentValue', img64)
       @renderImageThumb img64
@@ -194,7 +196,11 @@
 
     triggers: ->
       if App.device.isNative
-        return 'click .input-activate button': "mobile:get"
+        return {
+          'click .input-activate .get-photo': "take:picture"
+          'click .input-activate .take-picture': "take:picture"
+          'click .input-activate .from-library': "from:library"
+        }
       else
         return 'change input[type=file]': "file:changed"
 
