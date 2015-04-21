@@ -311,6 +311,14 @@
         // Needed for Firefox
         width: 100%;
       }
+      &.two-buttons {
+        bottom: $global-form-control-padding*6;
+      }
+      &.two-buttons button {
+        padding: $global-form-control-padding*1.5 0;
+        background-size: $list-icon-size*.75;
+        font-size: $global-form-control-font-size*.85;
+      }
 
     }
 
