@@ -106,6 +106,14 @@
       super
       @listenTo @, "file:changed", @processFile
       @listenTo @, "mobile:get", @getMobileImage
+    serializeData: ->
+      data = {}
+      # only show a single button in the browser, or on iPad
+      # (iPad shows a popover that allows the user to select a picture)
+      data.showSingleButton = !App.device.isNative or 
+        (device.platform is "iOS" and device.model.indexOf('iPad') isnt -1)
+      data
+
     processFile: ->
       fileDOM = @$el.find('input[type=file]')[0]
       myInput = fileDOM.files[0]
