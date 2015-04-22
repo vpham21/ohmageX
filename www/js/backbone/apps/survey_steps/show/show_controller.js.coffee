@@ -73,6 +73,10 @@
       @listenTo prevView, "prev:clicked", =>
         App.vent.trigger "survey:step:prev:clicked", @surveyId, @stepId
 
+      @listenTo App.vent, 'external:survey:prev:navigate', =>
+        # Add external hook for navigating backwards in a survey
+        App.vent.trigger "survey:step:prev:clicked", @surveyId, @stepId
+
       @show prevView, region: @layout.prevButtonRegion
 
     nextButtonRegion: ->
