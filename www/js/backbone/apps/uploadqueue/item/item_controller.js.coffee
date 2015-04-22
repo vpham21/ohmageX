@@ -8,7 +8,7 @@
       @queue_id = queue_id
 
       @listenTo App.vent, 'uploadqueue:remove:success', (queue_id) =>
-        if queue_id is @queue_id then App.navigate "uploadqueue", trigger: true
+        if queue_id is @queue_id then App.historyBack()
 
       item = App.request "uploadqueue:item", @queue_id
 
