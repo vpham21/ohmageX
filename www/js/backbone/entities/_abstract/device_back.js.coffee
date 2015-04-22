@@ -30,6 +30,12 @@
 
       App.vent.on 'device:dialog:alert:close device:dialog:confirm:close', ->
         API.disableOverwrite()
+
+      App.vent.on 'device:back:button', ->
+        App.vent.trigger 'external:blocker:cancel'
+        App.vent.trigger 'external:survey:prev:navigate'
+        App.vent.trigger 'external:hamburgermenu:close'
+
     enableOverwrite: ->
       console.log 'overwrite enabled'
       backOverwrite = true
