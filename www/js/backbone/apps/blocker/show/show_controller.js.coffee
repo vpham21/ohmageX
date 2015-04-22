@@ -8,7 +8,7 @@
       @layout = @getLayoutView blocker
 
       @listenTo App.loading, 'loading:show', =>
-        blocker.blockerHide()
+        blocker.blockerClose()
 
       @listenTo App.loading, 'loading:hide', =>
         blocker.blockerShow()
@@ -16,6 +16,7 @@
       @listenTo @layout, "show", =>
         @contentRegion blocker, options
         blocker.blockerShow()
+
       @show @layout
 
     noticeRegion: (message) ->
@@ -41,7 +42,7 @@
           @listenTo App.vent, "credentials:password:update:validated", options.successListener
           @listenTo App.vent, "credentials:password:update:validated", (=>
             console.log 'test'
-            blocker.blockerHide()
+            blocker.blockerClose()
             @destroy()
           )
 
@@ -52,7 +53,7 @@
             saveLocation = if App.device.isNative then "on this device" else "on this web browser"
             App.execute "dialog:confirm", "Are you sure you want to logout? Any data saved #{saveLocation} will be lost.", (=>
               App.navigate "logout", { trigger: true }
-              blocker.blockerHide()
+              blocker.blockerClose()
               @destroy()
             ), (=>
               console.log 'dialog canceled'
@@ -71,7 +72,7 @@
 
           @listenTo App.vent, "credentials:password:change:validated", options.successListener
           @listenTo App.vent, "credentials:password:change:validated", (=>
-            blocker.blockerHide()
+            blocker.blockerClose()
             @destroy()
           )
 
@@ -80,20 +81,22 @@
 
 
           @listenTo @layout, 'cancel:clicked', =>
-            blocker.blockerHide()
+            blocker.blockerClose()
             @destroy()
+
           changeView
+
         when "reminder:update"
           reminderView = options.reminderView
 
           @listenTo reminderView, "delete:reminder", (=>
-            blocker.blockerHide()
+            blocker.blockerClose()
             @destroy()
             App.vent.trigger "blocker:reminder:update:reset"
           )
 
           @listenTo App.vent, "notifications:update:complete", (=>
-            blocker.blockerHide()
+            blocker.blockerClose()
             @destroy()
             App.vent.trigger "blocker:reminder:update:reset"
           )
@@ -108,7 +111,7 @@
             @layout.trigger 'cancel:clicked'
 
           @listenTo @layout, 'cancel:clicked', =>
-            blocker.blockerHide()
+            blocker.blockerClose()
             App.vent.trigger 'blocker:reminder:update:cancel'
             @destroy()
             App.vent.trigger "blocker:reminder:update:reset"

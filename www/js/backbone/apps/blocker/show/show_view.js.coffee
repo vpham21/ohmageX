@@ -73,7 +73,7 @@
     initialize: ->
       @listenTo @model, "blocker:show", ->
         @blocker.show()
-      @listenTo @model, "blocker:hide", ->
+      @listenTo @model, "blocker:close", ->
         @blocker.hide()
     template: "blocker/show/layout"
     attributes: ->
