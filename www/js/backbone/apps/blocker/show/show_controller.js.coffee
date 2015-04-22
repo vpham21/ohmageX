@@ -79,6 +79,10 @@
           @listenTo App.vent, "credentials:password:change:invalidated", (responseErrors) =>
             @noticeRegion responseErrors
 
+          @listenTo App.vent, "external:blocker:cancel", =>
+            # add external hook for canceling the blocker
+            blocker.blockerClose()
+            @destroy()
 
           @listenTo @layout, 'cancel:clicked', =>
             blocker.blockerClose()
@@ -111,6 +115,13 @@
             @layout.trigger 'cancel:clicked'
 
           @listenTo @layout, 'cancel:clicked', =>
+            blocker.blockerClose()
+            App.vent.trigger 'blocker:reminder:update:cancel'
+            @destroy()
+            App.vent.trigger "blocker:reminder:update:reset"
+
+          @listenTo App.vent, "external:blocker:cancel", =>
+            # add external hook for canceling the blocker
             blocker.blockerClose()
             App.vent.trigger 'blocker:reminder:update:cancel'
             @destroy()
