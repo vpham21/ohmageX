@@ -192,6 +192,7 @@ module.exports = (grunt) ->
             "inappbrowser",
             "media",
             "media-capture",
+            "network-information",
             "splashscreen",
             "https://github.com/katzer/cordova-plugin-local-notifications.git"
           ]
