@@ -9,7 +9,20 @@
     init: ->
       document.addEventListener 'backbutton', (=>
         console.log 'device back button activated'
-        App.vent.trigger "android:back:button"
+
+        if !backOverwrite and 
+          !App.request("surveytracker:active") and 
+          !App.request("appstate:hamburgermenu:active") and 
+          !App.request("appstate:loading:active")
+            # Event hasn't been overwritten,
+            # there is no current survey active,
+            # the hamburger menu is not open,
+            # and the loader / blocker isn't showing.
+            # By default, just go back
+            App.historyBack()
+        else
+          App.vent.trigger "device:back:button"
+
       ), false
 
       App.vent.on 'device:dialog:alert:show device:dialog:confirm:show', ->
