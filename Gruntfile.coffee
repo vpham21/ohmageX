@@ -356,3 +356,12 @@ module.exports = (grunt) ->
     "exec:ios_build" # must pass it through a custom exec to change cwd
   ]
 
+  grunt.registerTask "android_www_build", [
+    "dev"
+    "clean:hybrid_build"
+    "copy:hybrid_build"
+    "clean:cordova_www"
+    "copy:cordova_www"
+    "exec:android_build" # must pass it through a custom exec to change cwd
+  ]
+
