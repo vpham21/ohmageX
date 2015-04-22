@@ -347,7 +347,7 @@ module.exports = (grunt) ->
     "copy:cordova_ios_splash"
   ]
 
-  grunt.registerTask "mobile_www_build", [
+  grunt.registerTask "ios_www_build", [
     "dev"
     "clean:hybrid_build"
     "copy:hybrid_build"
