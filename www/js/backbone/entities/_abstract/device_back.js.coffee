@@ -12,6 +12,11 @@
         App.vent.trigger "android:back:button"
       ), false
 
+      App.vent.on 'device:dialog:alert:show device:dialog:confirm:show', ->
+        API.enableOverwrite()
+
+      App.vent.on 'device:dialog:alert:close device:dialog:confirm:close', ->
+        API.disableOverwrite()
     enableOverwrite: ->
       console.log 'overwrite enabled'
       backOverwrite = true
