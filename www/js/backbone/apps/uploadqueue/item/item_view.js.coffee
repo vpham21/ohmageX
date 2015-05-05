@@ -71,6 +71,14 @@
       $img.prop 'src', img64
       $img.css 'display', 'block'
 
+  class Item.ResponseDocument extends Item.ResponseBase
+    template: "uploadqueue/item/response_document"
+    serializeData: ->
+      data = super
+      # TODO: Replace placeholder with a file reference of some kind.
+      data.response = "Selected Document Placeholder"
+      data
+
   class Item.ResponseUnsupported extends Item.ResponseBase
     template: "uploadqueue/item/response_unsupported"
 
@@ -85,6 +93,8 @@
           Item.ResponseMultiChoiceCustom
         when 'photo'
           Item.ResponsePhoto
+        when 'document'
+          Item.ResponseDocument
         when 'text','number','timestamp','single_choice_custom'
           Item.ResponseString
         else
