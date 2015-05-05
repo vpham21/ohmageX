@@ -13,6 +13,8 @@
           'sort-numeric-asc'
         when 'photo'
           'camera-retro'
+        when 'document'
+          'file-code-o'
         when 'single_choice','single_choice_custom'
           'list'
         when 'text'
