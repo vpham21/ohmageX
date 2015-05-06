@@ -194,6 +194,7 @@ module.exports = (grunt) ->
             "media-capture",
             "network-information",
             "splashscreen",
+            "org.apache.cordova.file-transfer",
             "https://github.com/ucla/cordova-plugin-local-notifications.git"
           ]
 
