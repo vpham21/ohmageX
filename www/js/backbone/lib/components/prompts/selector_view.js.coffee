@@ -406,6 +406,49 @@
       $responses = @$el.find('input[type=checkbox]').filter(':checked')
       @trigger "response:submit", @extractJSONString($responses), surveyId, stepId
 
+  class Prompts.Document extends Prompts.Base
+    initialize: ->
+      @listenTo @, 'get:native:file', @getNativeFile
+      @listenTo @, 'file:changed', @processFile
+    template: "prompts/document"
+    getNativeFile: ->
+      console.log 'get Native File'
+    processFile: ->
+      fileDOM = @$el.find('input[type=file]')[0]
+      myInput = fileDOM.files[0]
+
+      if myInput
+        @model.set 'currentValue',
+          fileObj: myInput
+          fileName: myInput.name
+      else
+        @model.set 'currentValue', false
+
+    gatherResponses: (surveyId, stepId) =>
+      response = @model.get('currentValue')
+      @trigger "response:submit", response, surveyId, stepId
+
+    serializeData: ->
+      data = @model.toJSON()
+      console.log 'serializeData data', data
+
+      # data.nativeFilePicker = App.device.isNative and device.platform is ""
+      data.nativeFilePicker = false
+
+      if !data.currentValue
+        data.fileName= 'No File Selected'
+      else
+        data.fileName = data.currentValue.fileName
+
+      data
+
+    triggers: ->
+      if App.device.isNative
+        return 'click .input-activate .get-file': "get:native:file"
+      else
+        return 'change input[type=file]': "file:changed"
+
+
   class Prompts.Unsupported extends Prompts.Base
     className: "text-container"
     template: "prompts/unsupported"
