@@ -44,6 +44,20 @@
 
           App.execute "survey:images:add", responseValue
           return App.request "survey:images:uuid:last"
+        when 'document'
+          # document prompts must return different values,
+          # depending on whether the document was generated in a
+          # native context or a browser context.
+
+          if App.device.isNative
+            # We expect the responseValue to be a Cordova File object
+            # properties: name, fullPath, type, lastModifiedDate, size
+            #
+            # return the Cordova File Object
+            return responseValue.fileObj
+          else
+            # TODO: replace placeholder with actual HTML5 file name
+            return "Selected file name"
         else
           return responseValue
 
