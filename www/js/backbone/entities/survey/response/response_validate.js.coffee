@@ -18,6 +18,7 @@
         message = switch type
           when "single_choice", "single_choice_custom", "multi_choice", "multi_choice_custom" then "Please select an option."
           when "photo" then "Please take an image to submit."
+          when "document" then "Please select a document."
           else "Please enter a response."
         App.vent.trigger "response:set:error", message
         return false
