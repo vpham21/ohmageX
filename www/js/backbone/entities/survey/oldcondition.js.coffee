@@ -25,7 +25,7 @@
         if @isArrayResponse response
           myResponse = @stringsToArrays(response.get 'response')
         else
-          myResponse = App.request "response:value:parsed", { stepId: myId, addImageUUID: false }
+          myResponse = App.request "response:value:parsed", { stepId: myId, addUploadUUIDs: false }
         oldParserResponses[myId] = myResponse
         oldParserResponses
       )

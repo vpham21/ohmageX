@@ -24,7 +24,7 @@
           throw new Error "false response for step #{stepId} with invalid flow status: #{myStatus}"
 
     parseValueByType: (options) ->
-      { responseValue, type, addImageUUID } = options
+      { responseValue, type, addUploadUUIDs } = options
       switch type
         when 'timestamp'
           # because timestamp responses are raw strings,
@@ -40,7 +40,7 @@
 
           # we only want to add and create Image UUIDs in special
           # circumstances, such as survey upload.
-          if !addImageUUID then return responseValue
+          if !addUploadUUIDs then return responseValue
 
           App.execute "survey:images:add", responseValue
           return App.request "survey:images:uuid:last"
@@ -62,7 +62,7 @@
           return responseValue
 
     parseValue: (options) ->
-      { stepId, myResponse, addImageUUID } = options
+      { stepId, myResponse, addUploadUUIDs } = options
 
       if myResponse.get('response') is false
         return @parseFalseToValue App.request("flow:status", stepId), options.stepId
@@ -70,7 +70,7 @@
         return @parseValueByType
           responseValue: myResponse.get 'response'
           type: myResponse.get 'type'
-          addImageUUID: addImageUUID
+          addUploadUUIDs: addUploadUUIDs
 
   App.reqres.setHandler "response:value:parsed", (options) ->
     options.myResponse = App.request "response:get", options.stepId

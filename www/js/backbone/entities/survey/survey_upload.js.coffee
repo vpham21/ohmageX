@@ -7,7 +7,7 @@
     prepResponseUpload: (currentResponses, currentFlow) ->
       currentResponses.map( (response) =>
         myId = response.get 'id'
-        myResponse = App.request "response:value:parsed", { stepId: myId, addImageUUID: true }
+        myResponse = App.request "response:value:parsed", { stepId: myId, addUploadUUIDs: true }
         {
           prompt_id: myId
           value: myResponse
