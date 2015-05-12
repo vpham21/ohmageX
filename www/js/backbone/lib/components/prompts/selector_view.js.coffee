@@ -421,6 +421,7 @@
         @model.set 'currentValue',
           fileObj: myInput
           fileName: myInput.name
+          UUID: _.guid()
       else
         @model.set 'currentValue', false
 
