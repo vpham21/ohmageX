@@ -61,4 +61,7 @@
     # model id.
     App.vent.trigger "loading:show", "Submitting Survey..."
 
-    API.newUploader context, responseData, itemId
+    if App.request("responses:contains:file")
+      API.fileUploader context, responseData, itemId
+    else
+      API.ajaxUploader context, responseData, itemId
