@@ -408,6 +408,7 @@
 
   class Prompts.Document extends Prompts.Base
     initialize: ->
+      super
       @listenTo @, 'get:native:file', @getNativeFile
       @listenTo @, 'file:changed', @processFile
     template: "prompts/document"
