@@ -41,7 +41,7 @@
       campaign_urn = App.request "survey:saved:urn", surveyId
       myCampaign = App.request "campaign:entity", campaign_urn
 
-      completeSubmit = 
+      completeSubmit =
         client: App.client_string
         images: App.request "survey:images:string"
         surveys: JSON.stringify([submitSurveys])
