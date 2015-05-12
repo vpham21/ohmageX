@@ -23,7 +23,7 @@
         App.vent.trigger "loading:hide"
         App.vent.trigger "#{context}:upload:failure:#{type}", responseData, response.errors[0].text, itemId
 
-    newUploader: (context, responseData, itemId) ->
+    ajaxUploader: (context, responseData, itemId) ->
 
       # add auth credentials to the response before saving.
       # may later move this to the model's custom "sync" method.
