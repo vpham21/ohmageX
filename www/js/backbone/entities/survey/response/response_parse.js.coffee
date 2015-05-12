@@ -49,15 +49,16 @@
           # depending on whether the document was generated in a
           # native context or a browser context.
 
-          if App.device.isNative
-            # We expect the responseValue to be a Cordova File object
-            # properties: name, fullPath, type, lastModifiedDate, size
-            #
-            # return the Cordova File Object
-            return responseValue.fileObj
-          else
-            # TODO: replace placeholder with actual HTML5 file name
-            return "Selected file name"
+          # The value of a file is its UUID before uploading.
+          # these will later get attached to the response object as separate properties.
+
+          # we only want to add and create File UUIDs in special
+          # circumstances, such as survey upload.
+          if !addUploadUUIDs then return responseValue.fileName
+
+          App.execute "survey:file:add", responseValue
+          return responseValue.UUID
+
         else
           return responseValue
 
