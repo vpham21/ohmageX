@@ -51,6 +51,16 @@
           App.vent.trigger "loading:hide"
           App.vent.trigger "#{context}:upload:failure:network", responseData, xhr.status, itemId
 
+    xhrFormData: (responseObj) ->
+      console.log 'xhrFormData responseObj', responseObj
+
+      myData = new FormData()
+      _.each responseObj, (value, key) ->
+        # set all properties using the FormData API, including files
+        myData.append key, value
+
+      myData
+
   App.commands.setHandler "uploader:new", (context, responseData, itemId) ->
     # context is a means of determining the 
     # execution context of the `uploader:new` command.
