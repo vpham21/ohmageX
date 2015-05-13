@@ -64,6 +64,16 @@
       ), false
 
       xhr.upload.addEventListener 'loadend', (=> App.vent.trigger "loading:hide")
+
+      xhr.onreadystatechange = (evt) =>
+        if xhr.readyState is 4
+          if xhr.status is 200
+            @parseUploadErrors context, responseData, xhr.response, itemId
+          else
+            console.log 'survey upload error'
+            # assume all error callbacks here are network relate
+            App.vent.trigger "#{context}:upload:failure:network", responseData, xhr.upload.status, itemId
+
       myData = @xhrFormData _.extend(myAuth, responseData, App.request("survey:files"))
     xhrFormData: (responseObj) ->
       console.log 'xhrFormData responseObj', responseObj
