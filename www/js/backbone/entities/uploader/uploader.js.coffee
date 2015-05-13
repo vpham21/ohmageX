@@ -51,6 +51,13 @@
           App.vent.trigger "loading:hide"
           App.vent.trigger "#{context}:upload:failure:network", responseData, xhr.status, itemId
 
+    fileUploader: (context, responseData, itemId) ->
+
+      # add auth credentials to the response before saving.
+      # may later move this to the model's custom "sync" method.
+      myAuth = App.request 'credentials:upload:params'
+      throw new Error "Authentication credentials not set in uploader" if myAuth is false
+
     xhrFormData: (responseObj) ->
       console.log 'xhrFormData responseObj', responseObj
 
