@@ -75,6 +75,12 @@
             App.vent.trigger "#{context}:upload:failure:network", responseData, xhr.upload.status, itemId
 
       myData = @xhrFormData _.extend(myAuth, responseData, App.request("survey:files"))
+
+      xhr.open 'POST', "#{App.request("serverpath:current")}/app/survey/upload", true
+      xhr.responseType = "json"
+      xhr.setRequestHeader "Content-Type","application/x-www-form-urlencoded; charset=UTF-8"
+      xhr.send myData
+
     xhrFormData: (responseObj) ->
       console.log 'xhrFormData responseObj', responseObj
 
