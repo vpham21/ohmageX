@@ -78,7 +78,7 @@
 
       xhr.open 'POST', "#{App.request("serverpath:current")}/app/survey/upload", true
       xhr.responseType = "json"
-      xhr.setRequestHeader "Content-Type","application/x-www-form-urlencoded; charset=UTF-8"
+      xhr.setRequestHeader "Content-Type","multipart/form-data"
       xhr.send myData
 
     xhrFormData: (responseObj) ->
