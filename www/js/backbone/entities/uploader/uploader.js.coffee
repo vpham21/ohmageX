@@ -64,6 +64,7 @@
       ), false
 
       xhr.upload.addEventListener 'loadend', (=> App.vent.trigger "loading:hide")
+      myData = @xhrFormData _.extend(myAuth, responseData, App.request("survey:files"))
     xhrFormData: (responseObj) ->
       console.log 'xhrFormData responseObj', responseObj
 
