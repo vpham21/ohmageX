@@ -408,6 +408,7 @@
 
   class Prompts.Document extends Prompts.Base
     initialize: ->
+      super
       @listenTo @, 'get:native:file', @getNativeFile
       @listenTo @, 'file:changed', @processFile
     template: "prompts/document"
@@ -421,6 +422,7 @@
         @model.set 'currentValue',
           fileObj: myInput
           fileName: myInput.name
+          UUID: _.guid()
       else
         @model.set 'currentValue', false
 
@@ -443,10 +445,10 @@
       data
 
     triggers: ->
-      if App.device.isNative
-        return 'click .input-activate .get-file': "get:native:file"
-      else
-        return 'change input[type=file]': "file:changed"
+      # if App.device.isNative
+      #   return 'click .input-activate .get-file': "get:native:file"
+      # else
+      return 'change input[type=file]': "file:changed"
 
 
   class Prompts.Unsupported extends Prompts.Base

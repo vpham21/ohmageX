@@ -111,6 +111,14 @@
         else
           return false
       ).filter((result) -> !!result).value()
+    containsFile: ->
+      responses = @getResponses()
+      fileResponseTypes = ["document"]
+      result = responses.find (response) ->
+        response.get('type') in fileResponseTypes
+      console.log 'containsFile result', result
+      typeof result isnt "undefined"
+
     getResponses: ->
       throw new Error "responses not initialized, use 'responses:init' to create new Responses" unless currentResponses isnt false
       currentResponses
@@ -131,6 +139,9 @@
 
   App.reqres.setHandler "responses:current:valid", ->
     API.getValidResponses()
+
+  App.reqres.setHandler "responses:contains:file", ->
+    API.containsFile()
 
   App.reqres.setHandler "response:get", (id) ->
     currentResponses = API.getResponses()

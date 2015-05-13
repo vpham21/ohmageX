@@ -8,8 +8,10 @@
     parseUploadErrors: (context, responseData, response, itemId) ->
       console.log 'parseUploadErrors'
       if response.result is "success"
-        if context is 'survey' then App.execute "survey:images:destroy"
-        console.log 'newUploader Success!'
+        if context is 'survey'
+          App.execute "survey:images:destroy"
+          App.execute "survey:files:destroy"
+        console.log 'Uploader Success!'
         App.vent.trigger "loading:hide"
         App.vent.trigger "#{context}:upload:success", response, itemId
       else
@@ -23,7 +25,7 @@
         App.vent.trigger "loading:hide"
         App.vent.trigger "#{context}:upload:failure:#{type}", responseData, response.errors[0].text, itemId
 
-    newUploader: (context, responseData, itemId) ->
+    ajaxUploader: (context, responseData, itemId) ->
 
       # add auth credentials to the response before saving.
       # may later move this to the model's custom "sync" method.
@@ -49,6 +51,46 @@
           App.vent.trigger "loading:hide"
           App.vent.trigger "#{context}:upload:failure:network", responseData, xhr.status, itemId
 
+    fileUploader: (context, responseData, itemId) ->
+
+      # add auth credentials to the response before saving.
+      # may later move this to the model's custom "sync" method.
+      myAuth = App.request 'credentials:upload:params'
+      throw new Error "Authentication credentials not set in uploader" if myAuth is false
+
+      xhr = new XMLHttpRequest()
+      xhr.upload.addEventListener 'progress',( (ev) =>
+        App.vent.trigger "loading:show", "Uploading #{Math.round(ev.loaded / ev.total * 100)}%..."
+      ), false
+
+      xhr.upload.addEventListener 'loadend', (=> App.vent.trigger "loading:hide")
+
+      xhr.onreadystatechange = (evt) =>
+        if xhr.readyState is 4
+          if xhr.status is 200
+            @parseUploadErrors context, responseData, xhr.response, itemId
+          else
+            console.log 'survey upload error'
+            # assume all error callbacks here are network relate
+            App.vent.trigger "#{context}:upload:failure:network", responseData, xhr.upload.status, itemId
+
+      myData = @xhrFormData _.extend(myAuth, responseData, App.request("survey:files"))
+
+      xhr.open 'POST', "#{App.request("serverpath:current")}/app/survey/upload", true
+      xhr.responseType = "json"
+      xhr.setRequestHeader "Content-Type","multipart/form-data"
+      xhr.send myData
+
+    xhrFormData: (responseObj) ->
+      console.log 'xhrFormData responseObj', responseObj
+
+      myData = new FormData()
+      _.each responseObj, (value, key) ->
+        # set all properties using the FormData API, including files
+        myData.append key, value
+
+      myData
+
   App.commands.setHandler "uploader:new", (context, responseData, itemId) ->
     # context is a means of determining the 
     # execution context of the `uploader:new` command.
@@ -61,4 +103,7 @@
     # model id.
     App.vent.trigger "loading:show", "Submitting Survey..."
 
-    API.newUploader context, responseData, itemId
+    if App.request("responses:contains:file")
+      API.fileUploader context, responseData, itemId
+    else
+      API.ajaxUploader context, responseData, itemId
