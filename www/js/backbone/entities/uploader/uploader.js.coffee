@@ -63,6 +63,7 @@
         App.vent.trigger "loading:show", "Uploading #{Math.round(ev.loaded / ev.total * 100)}%..."
       ), false
 
+      xhr.upload.addEventListener 'loadend', (=> App.vent.trigger "loading:hide")
     xhrFormData: (responseObj) ->
       console.log 'xhrFormData responseObj', responseObj
 
