@@ -8,9 +8,6 @@
     parseUploadErrors: (context, responseData, response, itemId) ->
       console.log 'parseUploadErrors'
       if response.result is "success"
-        if context is 'survey'
-          App.execute "survey:images:destroy"
-          App.execute "survey:files:destroy"
         console.log 'Uploader Success!'
         App.vent.trigger "loading:hide"
         App.vent.trigger "#{context}:upload:success", response, itemId
