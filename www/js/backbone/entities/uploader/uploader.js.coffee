@@ -113,6 +113,11 @@
 
       myData
 
+    videoParams: (responseObj) ->
+      params = {}
+      _.each responseObj, (value, key) ->
+        params[key] = value
+
   App.commands.setHandler "uploader:new", (context, responseData, itemId) ->
     # context is a means of determining the 
     # execution context of the `uploader:new` command.
