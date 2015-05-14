@@ -48,7 +48,7 @@
           App.vent.trigger "loading:hide"
           App.vent.trigger "#{context}:upload:failure:network", responseData, xhr.status, itemId
 
-    fileUploader: (context, responseData, itemId) ->
+    documentUploader: (context, responseData, itemId) ->
 
       # add auth credentials to the response before saving.
       # may later move this to the model's custom "sync" method.
@@ -178,7 +178,9 @@
     # model id.
     App.vent.trigger "loading:show", "Submitting Survey..."
 
-    if App.request("responses:contains:file")
-      API.fileUploader context, responseData, itemId
+    if App.request("responses:contains:video") and App.request('survey:files')
+      API.videoUploader context, responseData, itemId
+    else if App.request("responses:contains:file")
+      API.documentUploader context, responseData, itemId
     else
       API.ajaxUploader context, responseData, itemId
