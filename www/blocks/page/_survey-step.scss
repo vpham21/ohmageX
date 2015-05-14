@@ -261,7 +261,7 @@
     }
   }
 
-  .photo-control {
+  .photo-control, .video-control {
     .container {
       position: relative;
       min-height: 200px;
@@ -324,6 +324,13 @@
 
     .preview-image {
       width: 100%;
+    }
+    .video-name {
+      text-align: center;
+      font-size: $global-form-control-font-size*.85;
+      &:empty {
+        display: none;
+      }
     }
   }
 
