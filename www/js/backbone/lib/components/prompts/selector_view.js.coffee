@@ -451,6 +451,8 @@
       return 'change input[type=file]': "file:changed"
 
 
+  class Prompts.Video extends Prompts.Base
+    template: "prompts/video"
   class Prompts.Unsupported extends Prompts.Base
     className: "text-container"
     template: "prompts/unsupported"
