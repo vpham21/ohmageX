@@ -493,6 +493,41 @@
         limit: 1,
         duration: 600 # 10 minute capture length
 
+    fromLibrary: ->
+      navigator.camera.getPicture ( (fileURI) =>
+        # success callback
+
+        window.resolveLocalFileSystemURL fileURI, ( (fileEntry) =>
+          # success callback to convert the retrieved fileURI
+          # into an actual useful File object rather than a string
+
+          fileEntry.file (file) =>
+
+            console.log 'file entry success'
+
+            @model.set 'currentValue',
+              source: "library"
+              fileObj: file
+              videoName: fileURI.split('/').pop()
+              UUID: _.guid()
+
+        ),( (error) =>
+          # error callback when reading the generated fileURI
+          console.log 'file entry error'
+          App.execute "dialog:alert", "Unable to read captured video file. #{JSON.stringify(error)}"
+        )
+
+      ),( (message) =>
+        # error callback
+        window.setTimeout (=>
+          # setTimeout hack required to display alerts properly in iOS camera callbacks
+          App.execute "dialog:alert", "Failed to get video from library: #{message}"
+        ), 0
+      ),
+        destinationType: navigator.camera.DestinationType.FILE_URI
+        mediaType: navigator.camera.MediaType.VIDEO
+        sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+
     gatherResponses: (surveyId, stepId) =>
       response = @model.get('currentValue')
       @trigger "response:submit", response, surveyId, stepId
