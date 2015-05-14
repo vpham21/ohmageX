@@ -471,6 +471,14 @@
 
       data.showSingleButton = !App.device.isNative
       data
+
+    triggers: ->
+      if App.device.isNative
+        return {
+          'click .input-activate .record-video': "record:video"
+          'click .input-activate .from-library': "from:library"
+        }
+
   class Prompts.Unsupported extends Prompts.Base
     className: "text-container"
     template: "prompts/unsupported"
