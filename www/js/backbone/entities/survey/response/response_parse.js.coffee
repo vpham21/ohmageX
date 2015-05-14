@@ -58,6 +58,19 @@
 
           App.execute "survey:file:add", responseValue
           return responseValue.UUID
+        when 'video'
+          # video prompts must return different values,
+          # depending on the video's source type.
+
+          # The value of a file is its UUID before uploading.
+          # these will later get attached to the response object as separate properties.
+
+          # we only want to add and create File UUIDs in special
+          # circumstances, such as survey upload.
+          if !addUploadUUIDs then return responseValue.videoName
+
+          App.execute "survey:file:add", responseValue
+          return responseValue.UUID
 
         else
           return responseValue
