@@ -13,7 +13,6 @@
       currentFiles[responseValue.UUID] = responseValue.fileObj
     getFilesHash: ->
       console.log 'currentFiles', currentFiles
-      if !currentFiles then throw new Error "Files hash is empty"
       currentFiles
 
   App.commands.setHandler "survey:file:add", (responseValue) ->
@@ -23,4 +22,7 @@
     API.getFilesHash()
 
   App.commands.setHandler "survey:files:destroy", ->
+    currentFiles = false
+
+  App.vent.on "survey:exit survey:reset", ->
     currentFiles = false

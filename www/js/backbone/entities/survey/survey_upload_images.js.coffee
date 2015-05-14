@@ -34,3 +34,7 @@
   App.commands.setHandler "survey:images:destroy", ->
     currentImages = false
     lastUUID = false
+
+  App.vent.on "survey:exit survey:reset", ->
+    currentImages = false
+    lastUUID = false

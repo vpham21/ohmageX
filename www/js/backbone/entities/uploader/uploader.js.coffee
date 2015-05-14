@@ -8,9 +8,6 @@
     parseUploadErrors: (context, responseData, response, itemId) ->
       console.log 'parseUploadErrors'
       if response.result is "success"
-        if context is 'survey'
-          App.execute "survey:images:destroy"
-          App.execute "survey:files:destroy"
         console.log 'Uploader Success!'
         App.vent.trigger "loading:hide"
         App.vent.trigger "#{context}:upload:success", response, itemId
@@ -58,6 +55,7 @@
       myAuth = App.request 'credentials:upload:params'
       throw new Error "Authentication credentials not set in uploader" if myAuth is false
 
+      ###
       xhr = new XMLHttpRequest()
       xhr.upload.addEventListener 'progress',( (ev) =>
         App.vent.trigger "loading:show", "Uploading #{Math.round(ev.loaded / ev.total * 100)}%..."
@@ -80,6 +78,25 @@
       xhr.responseType = "json"
       xhr.setRequestHeader "Content-Type","multipart/form-data"
       xhr.send myData
+      ###
+
+      myData = @xhrFormData _.extend(myAuth, responseData, App.request("survey:files"))
+
+      $.ajax
+        url: "#{App.request("serverpath:current")}/app/survey/upload"
+        data: myData
+        cache: false
+        contentType: false
+        processData: false
+        type: "POST"
+        success: (response) =>
+          @parseUploadErrors context, responseData, response, itemId
+        error: (xhr, ajaxOptions, thrownError) =>
+          App.execute "survey:files:destroy"
+          console.log 'survey upload error'
+          # assume all error callbacks here are network relate
+          App.vent.trigger "loading:hide"
+          App.vent.trigger "#{context}:upload:failure:network", responseData, xhr.status, itemId
 
     xhrFormData: (responseObj) ->
       console.log 'xhrFormData responseObj', responseObj
@@ -87,7 +104,12 @@
       myData = new FormData()
       _.each responseObj, (value, key) ->
         # set all properties using the FormData API, including files
-        myData.append key, value
+        if key is 'surveys'
+          # surveys requires the JSON to be formatted as a Blob 
+          survey_blob = new Blob([value], {type: 'application/json'})
+          myData.append key, survey_blob
+        else
+          myData.append key, value
 
       myData
 
