@@ -451,6 +451,104 @@
       return 'change input[type=file]': "file:changed"
 
 
+  class Prompts.Video extends Prompts.Base
+    template: "prompts/video"
+    initialize: ->
+      super
+      @listenTo @, "record:video", @recordVideo
+      @listenTo @, "from:library", @fromLibrary
+      @listenTo @model, "change:currentValue", @render
+
+    recordVideo: ->
+      navigator.device.capture.captureVideo ( (mediaFiles) =>
+        # capture success
+        # returns an array of media files
+        # mediaFile properties: name, fullPath, type, lastModifiedDate, size (bytes)
+        mediaFile = mediaFiles[0]
+
+        @model.set 'currentValue',
+          source: "capture"
+          fileObj: mediaFile
+          videoName: mediaFile.name
+          UUID: _.guid()
+
+      ),( (error) =>
+        # capture error
+        message = switch error.code
+          when navigator.device.capture.CaptureError.CAPTURE_INTERNAL_ERR
+            "Camera failed to capture video."
+          when navigator.device.capture.CaptureError.CAPTURE_APPLICATION_BUSY
+            "Camera is busy with another application."
+          when navigator.device.capture.CaptureError.CAPTURE_INVALID_ARGUMENT
+            "Camera API Error."
+          when navigator.device.capture.CaptureError.CAPTURE_NO_MEDIA_FILES
+            "No video captured."
+          when navigator.device.capture.CaptureError.CAPTURE_NOT_SUPPORTED
+            "Video capture is not supported."
+
+        App.execute "dialog:alert", "Unable to capture: #{message}"
+        @model.set 'currentValue', false
+
+      ),
+        limit: 1,
+        duration: 600 # 10 minute capture length
+
+    fromLibrary: ->
+      navigator.camera.getPicture ( (fileURI) =>
+        # success callback
+
+        window.resolveLocalFileSystemURL fileURI, ( (fileEntry) =>
+          # success callback to convert the retrieved fileURI
+          # into an actual useful File object rather than a string
+
+          fileEntry.file (file) =>
+
+            console.log 'file entry success'
+
+            @model.set 'currentValue',
+              source: "library"
+              fileObj: file
+              videoName: fileURI.split('/').pop()
+              UUID: _.guid()
+
+        ),( (error) =>
+          # error callback when reading the generated fileURI
+          console.log 'file entry error'
+          App.execute "dialog:alert", "Unable to read captured video file. #{JSON.stringify(error)}"
+        )
+
+      ),( (message) =>
+        # error callback
+        window.setTimeout (=>
+          # setTimeout hack required to display alerts properly in iOS camera callbacks
+          App.execute "dialog:alert", "Failed to get video from library: #{message}"
+        ), 0
+      ),
+        destinationType: navigator.camera.DestinationType.FILE_URI
+        mediaType: navigator.camera.MediaType.VIDEO
+        sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+
+    gatherResponses: (surveyId, stepId) =>
+      response = @model.get('currentValue')
+      @trigger "response:submit", response, surveyId, stepId
+
+    serializeData: ->
+      data = {}
+      myVideo = @model.get('currentValue')
+      data.videoName = ""
+
+      if myVideo then data.videoName = myVideo.videoName
+
+      data.showSingleButton = !App.device.isNative
+      data
+
+    triggers: ->
+      if App.device.isNative
+        return {
+          'click .input-activate .record-video': "record:video"
+          'click .input-activate .from-library': "from:library"
+        }
+
   class Prompts.Unsupported extends Prompts.Base
     className: "text-container"
     template: "prompts/unsupported"

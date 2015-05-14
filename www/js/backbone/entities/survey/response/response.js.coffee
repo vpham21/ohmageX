@@ -118,6 +118,13 @@
         response.get('type') in fileResponseTypes
       console.log 'containsFile result', result
       typeof result isnt "undefined"
+    containsVideo: ->
+      responses = @getResponses()
+      fileResponseTypes = ["video"]
+      result = responses.find (response) ->
+        response.get('type') in fileResponseTypes
+      console.log 'containsFile result', result
+      typeof result isnt "undefined"
 
     getResponses: ->
       throw new Error "responses not initialized, use 'responses:init' to create new Responses" unless currentResponses isnt false
@@ -142,6 +149,10 @@
 
   App.reqres.setHandler "responses:contains:file", ->
     API.containsFile()
+
+  App.reqres.setHandler "responses:contains:video", ->
+    API.containsVideo()
+
 
   App.reqres.setHandler "response:get", (id) ->
     currentResponses = API.getResponses()

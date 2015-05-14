@@ -29,16 +29,20 @@
 
   App.vent.on "survey:upload:failure:campaign", (responseData, errorText, surveyId) ->
     console.log responseData
-    API.uploadFailureGeneral responseData, "Problem with Survey Campaign:", errorText, surveyId
+    API.uploadFailureGeneral responseData, "Problem with #{App.dictionary('page','survey')} #{App.dictionary('page','campaign')}:", errorText, surveyId
 
   App.vent.on "survey:upload:failure:response", (responseData, errorText, surveyId) ->
     # placeholder for response errors handler.
     console.log responseData
-    API.uploadFailureGeneral responseData, "Problem with Survey Response:", errorText, surveyId
+    API.uploadFailureGeneral responseData, "Problem with #{App.dictionary('page','survey')} Response:", errorText, surveyId
 
   App.vent.on "survey:upload:failure:server", (responseData, errorText, surveyId) ->
     # placeholder for server errors handler.
     API.uploadFailureGeneral responseData, "Problem with Server:", errorText, surveyId
+
+  App.vent.on "survey:upload:failure:abort", (responseData, errorText, surveyId) ->
+    # placeholder for server errors handler.
+    API.uploadFailureGeneral responseData, "#{App.dictionary('page','survey')} upload aborted:", errorText, surveyId
 
   App.vent.on "survey:upload:failure:auth", (responseData, errorText, surveyId) ->
     # placeholder for auth errors handler.

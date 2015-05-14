@@ -78,6 +78,9 @@
         when "document"
           return new Prompts.Document
             model: entity
+        when "video"
+          return new Prompts.Video
+            model: entity
         else
           return new Prompts.Unsupported
             model: App.request('prompt:unsupported:entity', type)
