@@ -40,6 +40,10 @@
     # placeholder for server errors handler.
     API.uploadFailureGeneral responseData, "Problem with Server:", errorText, surveyId
 
+  App.vent.on "survey:upload:failure:abort", (responseData, errorText, surveyId) ->
+    # placeholder for server errors handler.
+    API.uploadFailureGeneral responseData, "#{App.dictionary('page','survey')} upload aborted:", errorText, surveyId
+
   App.vent.on "survey:upload:failure:auth", (responseData, errorText, surveyId) ->
     # placeholder for auth errors handler.
     API.uploadFailureGeneral responseData, "Problem with Auth:", errorText, surveyId
