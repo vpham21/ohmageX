@@ -23,3 +23,6 @@
 
   App.commands.setHandler "survey:files:destroy", ->
     currentFiles = false
+
+  App.vent.on "survey:exit survey:reset", ->
+    currentFiles = false
