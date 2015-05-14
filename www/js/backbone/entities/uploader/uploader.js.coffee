@@ -86,7 +86,12 @@
       myData = new FormData()
       _.each responseObj, (value, key) ->
         # set all properties using the FormData API, including files
-        myData.append key, value
+        if key is 'surveys'
+          # surveys requires the JSON to be formatted as a Blob 
+          survey_blob = new Blob([value], {type: 'application/json'})
+          myData.append key, survey_blob
+        else
+          myData.append key, value
 
       myData
 
