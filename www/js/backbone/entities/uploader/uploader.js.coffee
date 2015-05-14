@@ -113,6 +113,54 @@
 
       myData
 
+    videoUploader: (context, responseData, itemId) ->
+      # we're currently assuming there is only one video file per upload at this time.
+
+      # add auth credentials to the response before saving.
+      # may later move this to the model's custom "sync" method.
+      myAuth = App.request 'credentials:upload:params'
+      throw new Error "Authentication credentials not set in uploader" if myAuth is false
+
+
+      uri = encodeURI("#{App.request("serverpath:current")}/app/survey/upload")
+      options = new FileUploadOptions()
+
+      firstFile = App.request("survey:files:first:file")
+      console.log "firstFile #{JSON.stringify(firstFile)}"
+      options.fileName = firstFile.name
+      options.mimeType = firstFile.type
+      options.fileKey = App.request("survey:files:first:uuid")
+      options.params = @videoParams _.extend(myAuth, responseData)
+
+      console.log "file upload options: #{JSON.stringify(options)}"
+
+      ft = new FileTransfer()
+      ft.upload firstFile.localURL, uri, ( (uploadResult) =>
+        # upload success callback - returns a FileUploadResult obj
+        # properties: bytesSent, responseCode, response
+
+        console.log "upload complete #{JSON.stringify(uploadResult)}"
+        @parseUploadErrors context, responseData, JSON.parse(uploadResult.response), itemId
+
+      ), ( (error) =>
+        # upload error callback - returns a FileTransferError obj
+        # code
+        App.execute "survey:files:destroy"
+        console.log 'survey upload error'
+        # assume all error callbacks here are network relate
+        App.vent.trigger "loading:hide"
+        switch error.code
+          when FileTransferError.CONNECTION_ERR
+            App.vent.trigger "#{context}:upload:failure:network", responseData, "Connection Issue", itemId
+          when FileTransferError.FILE_NOT_FOUND_ERR
+            App.vent.trigger "#{context}:upload:failure:response", responseData, "Response file not found", itemId
+          when FileTransferError.INVALID_URL_ERR
+            App.vent.trigger "#{context}:upload:failure:network", responseData, "Server could not be reached", itemId
+          when FileTransferError.ABORT_ERR
+            App.vent.trigger "#{context}:upload:failure:abort", responseData, "Try again?", itemId
+
+      ), options
+
     videoParams: (responseObj) ->
       params = {}
       _.each responseObj, (value, key) ->
