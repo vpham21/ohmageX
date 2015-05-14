@@ -461,6 +461,16 @@
     gatherResponses: (surveyId, stepId) =>
       response = @model.get('currentValue')
       @trigger "response:submit", response, surveyId, stepId
+
+    serializeData: ->
+      data = {}
+      myVideo = @model.get('currentValue')
+      data.videoName = ""
+
+      if myVideo then data.videoName = myVideo.videoName
+
+      data.showSingleButton = !App.device.isNative
+      data
   class Prompts.Unsupported extends Prompts.Base
     className: "text-container"
     template: "prompts/unsupported"
