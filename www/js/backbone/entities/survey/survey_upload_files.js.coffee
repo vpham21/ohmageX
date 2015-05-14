@@ -13,7 +13,6 @@
       currentFiles[responseValue.UUID] = responseValue.fileObj
     getFilesHash: ->
       console.log 'currentFiles', currentFiles
-      if !currentFiles then throw new Error "Files hash is empty"
       currentFiles
 
   App.commands.setHandler "survey:file:add", (responseValue) ->
