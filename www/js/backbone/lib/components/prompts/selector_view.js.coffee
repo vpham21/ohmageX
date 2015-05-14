@@ -453,6 +453,11 @@
 
   class Prompts.Video extends Prompts.Base
     template: "prompts/video"
+    initialize: ->
+      super
+      @listenTo @, "record:video", @recordVideo
+      @listenTo @, "from:library", @fromLibrary
+      @listenTo @model, "change:currentValue", @render
   class Prompts.Unsupported extends Prompts.Base
     className: "text-container"
     template: "prompts/unsupported"
