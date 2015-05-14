@@ -80,6 +80,24 @@
       xhr.send myData
       ###
 
+      myData = @xhrFormData _.extend(myAuth, responseData, App.request("survey:files"))
+
+      $.ajax
+        url: "#{App.request("serverpath:current")}/app/survey/upload"
+        data: myData
+        cache: false
+        contentType: false
+        processData: false
+        type: "POST"
+        success: (response) =>
+          @parseUploadErrors context, responseData, response, itemId
+        error: (xhr, ajaxOptions, thrownError) =>
+          App.execute "survey:files:destroy"
+          console.log 'survey upload error'
+          # assume all error callbacks here are network relate
+          App.vent.trigger "loading:hide"
+          App.vent.trigger "#{context}:upload:failure:network", responseData, xhr.status, itemId
+
     xhrFormData: (responseObj) ->
       console.log 'xhrFormData responseObj', responseObj
 
