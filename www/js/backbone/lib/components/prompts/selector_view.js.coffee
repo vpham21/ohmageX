@@ -458,6 +458,41 @@
       @listenTo @, "record:video", @recordVideo
       @listenTo @, "from:library", @fromLibrary
       @listenTo @model, "change:currentValue", @render
+
+    recordVideo: ->
+      navigator.device.capture.captureVideo ( (mediaFiles) =>
+        # capture success
+        # returns an array of media files
+        # mediaFile properties: name, fullPath, type, lastModifiedDate, size (bytes)
+        mediaFile = mediaFiles[0]
+
+        @model.set 'currentValue',
+          source: "capture"
+          fileObj: mediaFile
+          videoName: mediaFile.name
+          UUID: _.guid()
+
+      ),( (error) =>
+        # capture error
+        message = switch error.code
+          when navigator.device.capture.CaptureError.CAPTURE_INTERNAL_ERR
+            "Camera failed to capture video."
+          when navigator.device.capture.CaptureError.CAPTURE_APPLICATION_BUSY
+            "Camera is busy with another application."
+          when navigator.device.capture.CaptureError.CAPTURE_INVALID_ARGUMENT
+            "Camera API Error."
+          when navigator.device.capture.CaptureError.CAPTURE_NO_MEDIA_FILES
+            "No video captured."
+          when navigator.device.capture.CaptureError.CAPTURE_NOT_SUPPORTED
+            "Video capture is not supported."
+
+        App.execute "dialog:alert", "Unable to capture: #{message}"
+        @model.set 'currentValue', false
+
+      ),
+        limit: 1,
+        duration: 600 # 10 minute capture length
+
     gatherResponses: (surveyId, stepId) =>
       response = @model.get('currentValue')
       @trigger "response:submit", response, surveyId, stepId
