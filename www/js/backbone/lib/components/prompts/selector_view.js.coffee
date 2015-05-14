@@ -458,6 +458,9 @@
       @listenTo @, "record:video", @recordVideo
       @listenTo @, "from:library", @fromLibrary
       @listenTo @model, "change:currentValue", @render
+    gatherResponses: (surveyId, stepId) =>
+      response = @model.get('currentValue')
+      @trigger "response:submit", response, surveyId, stepId
   class Prompts.Unsupported extends Prompts.Base
     className: "text-container"
     template: "prompts/unsupported"
