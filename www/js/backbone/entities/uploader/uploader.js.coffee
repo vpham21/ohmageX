@@ -55,6 +55,7 @@
       myAuth = App.request 'credentials:upload:params'
       throw new Error "Authentication credentials not set in uploader" if myAuth is false
 
+      ###
       xhr = new XMLHttpRequest()
       xhr.upload.addEventListener 'progress',( (ev) =>
         App.vent.trigger "loading:show", "Uploading #{Math.round(ev.loaded / ev.total * 100)}%..."
@@ -77,6 +78,7 @@
       xhr.responseType = "json"
       xhr.setRequestHeader "Content-Type","multipart/form-data"
       xhr.send myData
+      ###
 
     xhrFormData: (responseObj) ->
       console.log 'xhrFormData responseObj', responseObj
