@@ -143,6 +143,10 @@
       console.log "file upload options: #{JSON.stringify(options)}"
 
       ft = new FileTransfer()
+      ft.onprogress = (progressEvent) =>
+        if progressEvent.lengthComputable
+          App.vent.trigger "loading:show", "Uploading #{Math.round(progressEvent.loaded / progressEvent.total * 100)}%..."
+
       ft.upload firstFile.localURL, uri, ( (uploadResult) =>
         # upload success callback - returns a FileUploadResult obj
         # properties: bytesSent, responseCode, response
