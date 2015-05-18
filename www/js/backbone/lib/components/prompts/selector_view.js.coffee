@@ -423,6 +423,7 @@
           fileObj: myInput
           fileName: myInput.name
           UUID: _.guid()
+          fileSize: myInput.size
       else
         @model.set 'currentValue', false
 

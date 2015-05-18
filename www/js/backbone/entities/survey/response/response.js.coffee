@@ -47,10 +47,18 @@
         timestampISO: 'timestampISO'
       super attrs, options, myRulesMap
 
+  class Entities.FileResponse extends Entities.ResponseValidated
+    validate: (attrs, options) ->
+      if !attrs.properties.maxFilesize? then attrs.properties.maxFilesize = false
+      myRulesMap =
+        maxSize: 'maxFilesize'
+      super attrs, options, myRulesMap
+
   class Entities.ResponseCollection extends Entities.Collection
     initialize: (options) ->
       if options.properties? then @set 'properties', new Entities.ResponseProperty options.properties
     model: (attrs, options) ->
+
       switch attrs.type
         when "text"
           new Entities.TextResponse attrs, options
@@ -58,6 +66,8 @@
           new Entities.NumberResponse attrs, options
         when "timestamp"
           new Entities.TimestampResponse attrs, options
+        when "document"
+          new Entities.FileResponse attrs, options
         else
           new Entities.Response attrs, options
 

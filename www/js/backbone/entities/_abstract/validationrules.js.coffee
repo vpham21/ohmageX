@@ -135,6 +135,17 @@
             if now.diff(value) > 0 then @errors = ["Timestamp needs to be in the future."]
           catch
             @errors = ['Timestamp needs to be in the future.']
+      maxSize:
+        validate: (options) ->
+          console.log 'maxSize validator'
+          {value, rulesMap} = options
+          if rulesMap.maxSize isnt false
+            # if a maxFileSize isnt set, skip validation
+            # value is the custom response file object
+            sizeNum = parseInt(value.fileSize)
+            maxSize = parseInt(rulesMap.maxSize)
+            if sizeNum > maxSize
+              @errors.push "File is too large at #{value.fileSize} bytes, must be less than #{maxSize} bytes."
       httpHost:
         validate: (options) ->
           # rulesMap is not used here, no custom property XML.
