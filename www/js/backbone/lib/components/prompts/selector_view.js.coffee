@@ -514,6 +514,7 @@
               fileObj: file
               videoName: fileURI.split('/').pop()
               UUID: _.guid()
+              fileSize: file.size
 
         ),( (error) =>
           # error callback when reading the generated fileURI
