@@ -495,7 +495,7 @@
 
       ),
         limit: 1,
-        duration: 600 # 10 minute capture length
+        duration: myDuration
 
     fromLibrary: ->
       navigator.camera.getPicture ( (fileURI) =>
