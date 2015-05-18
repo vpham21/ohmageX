@@ -89,6 +89,14 @@
         contentType: false
         processData: false
         type: "POST"
+        xhr: =>
+          # customize XMLHttpRequest
+          myXhr = $.ajaxSettings.xhr()
+          if myXhr.upload
+            myXhr.upload.addEventListener 'progress',( (ev) =>
+              App.vent.trigger "loading:show", "Uploading #{Math.round(ev.loaded / ev.total * 100)}%..."
+            ), false
+          myXhr
         success: (response) =>
           @parseUploadErrors context, responseData, response, itemId
         error: (xhr, ajaxOptions, thrownError) =>
