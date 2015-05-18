@@ -89,6 +89,14 @@
         contentType: false
         processData: false
         type: "POST"
+        xhr: =>
+          # customize XMLHttpRequest
+          myXhr = $.ajaxSettings.xhr()
+          if myXhr.upload
+            myXhr.upload.addEventListener 'progress',( (ev) =>
+              App.vent.trigger "loading:show", "Uploading #{Math.round(ev.loaded / ev.total * 100)}%..."
+            ), false
+          myXhr
         success: (response) =>
           @parseUploadErrors context, responseData, response, itemId
         error: (xhr, ajaxOptions, thrownError) =>
@@ -135,6 +143,10 @@
       console.log "file upload options: #{JSON.stringify(options)}"
 
       ft = new FileTransfer()
+      ft.onprogress = (progressEvent) =>
+        if progressEvent.lengthComputable
+          App.vent.trigger "loading:show", "Uploading #{Math.round(progressEvent.loaded / progressEvent.total * 100)}%..."
+
       ft.upload firstFile.localURL, uri, ( (uploadResult) =>
         # upload success callback - returns a FileUploadResult obj
         # properties: bytesSent, responseCode, response
