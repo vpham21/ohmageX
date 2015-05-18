@@ -11,7 +11,7 @@
       <% else: %>
       <div class="input-activate">
         <h3 class="file-header">Select a Document File</h3>
-        <input name="<%= @id %>" type="file" multiple="multiple" accept=".pdf,application/pdf,.txt,text/plain,.doc,.dot,.docx,application/msword,.rtf,application/rtf,.xla,.xlc,.xlm,.xls,.xlsx,.xlt,.xlw,application/vnd.ms-excel,.pot,.pps,.ppt,application/ms-powerpoint"/>
+        <input name="<%= @id %>" type="file" multiple="multiple" />
       </div>
       <% end %>
     </div>
