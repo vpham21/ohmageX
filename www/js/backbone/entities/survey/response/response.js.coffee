@@ -66,6 +66,8 @@
           new Entities.NumberResponse attrs, options
         when "timestamp"
           new Entities.TimestampResponse attrs, options
+        when "document"
+          new Entities.FileResponse attrs, options
         else
           new Entities.Response attrs, options
 
