@@ -87,6 +87,8 @@
           new Entities.TimestampResponse attrs, options
         when "document"
           new Entities.FileResponse attrs, options
+        when "video"
+          new Entities.VideoResponse attrs, options
         else
           new Entities.Response attrs, options
 
