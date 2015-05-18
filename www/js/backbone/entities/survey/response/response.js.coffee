@@ -54,6 +54,25 @@
         maxSize: 'maxFilesize'
       super attrs, options, myRulesMap
 
+  class Entities.VideoResponse extends Entities.ResponseValidated
+    validate: (attrs, options) ->
+      # default to 10 minutes.
+      if !attrs.properties.max_seconds? then attrs.properties.max_seconds = 600
+
+      console.log "source is #{attrs.response.source}"
+
+      if attrs.response.source is "library"
+        # we don't have the duration, calculate a file size based on seconds.
+        # assuming video capture rate is 20 mb / minute
+        attrs.properties.maxFilesize = 333334 * attrs.properties.max_seconds
+        myRulesMap =
+          maxSize: 'maxFilesize'
+      else
+        # the native Video capture checks duration on record. No need to validate here.
+        myRulesMap = {}
+      super attrs, options, myRulesMap
+
+
   class Entities.ResponseCollection extends Entities.Collection
     initialize: (options) ->
       if options.properties? then @set 'properties', new Entities.ResponseProperty options.properties
@@ -68,6 +87,8 @@
           new Entities.TimestampResponse attrs, options
         when "document"
           new Entities.FileResponse attrs, options
+        when "video"
+          new Entities.VideoResponse attrs, options
         else
           new Entities.Response attrs, options
 

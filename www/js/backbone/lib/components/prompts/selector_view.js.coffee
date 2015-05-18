@@ -461,6 +461,9 @@
       @listenTo @model, "change:currentValue", @render
 
     recordVideo: ->
+      # default to 10 minute capture length
+      myDuration = if @model.get('properties').get('max_seconds') isnt undefined then @model.get('properties').get('max_seconds') else 600
+
       navigator.device.capture.captureVideo ( (mediaFiles) =>
         # capture success
         # returns an array of media files
@@ -492,7 +495,7 @@
 
       ),
         limit: 1,
-        duration: 600 # 10 minute capture length
+        duration: myDuration
 
     fromLibrary: ->
       navigator.camera.getPicture ( (fileURI) =>
@@ -511,6 +514,7 @@
               fileObj: file
               videoName: fileURI.split('/').pop()
               UUID: _.guid()
+              fileSize: file.size
 
         ),( (error) =>
           # error callback when reading the generated fileURI
