@@ -7,3 +7,5 @@ Logged in as <strong><%= @username %></strong>
   </div>
 </div>
 <% end %>
+<br />
+<small>Connected to server <strong><%= @serverPath %></strong></small>
