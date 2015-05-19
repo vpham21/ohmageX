@@ -120,7 +120,7 @@
       myInput = fileDOM.files[0]
       _URL = window.URL || window.webkitURL
       maxDimension = @model.get('properties').get('maxDimension')
-      if !!!maxDimension then maxDimension = 800
+      if !!!maxDimension then maxDimension = App.custom.prompt_defaults.photo.max_pixels
       img = new Image()
       imgCanvas = @$el.find('canvas')[0]
 
@@ -153,8 +153,10 @@
       # Device camera plugin, get picture and retrieve image as base64-encoded string
       console.log 'getMobileImage method'
       maxDimension = @model.get('properties').get('maxDimension')
+      if !!!maxDimension then maxDimension = App.custom.prompt_defaults.photo.max_pixels
+
       # on some devices a max dimension larger than 1200 may cause memory errors.
-      if !!maxDimension and maxDimension > 1200 then maxDimension = 1200
+      if maxDimension > 1200 then maxDimension = 1200
 
       navigator.camera.getPicture ((img64) =>
         # success callback
@@ -171,8 +173,8 @@
         allowEdit: false
         destinationType: navigator.camera.DestinationType.DATA_URL
         sourceType: source
-        targetWidth: if !!!maxDimension then 1200 else maxDimension
-        targetHeight: if !!!maxDimension then 1200 else maxDimension
+        targetWidth: maxDimension
+        targetHeight: maxDimension
 
     recordImage: (img64) ->
       @model.set('currentValue', img64)
