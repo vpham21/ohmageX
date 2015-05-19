@@ -136,7 +136,7 @@
       currentCampaignsUser.reset sync
       @saveLocalCampaigns currentCampaignsUser
     syncCampaigns: ->
-      App.vent.trigger 'loading:show', 'Syncing Campaigns...'
+      App.vent.trigger 'loading:show', "Syncing #{App.dictionary('pages','campaign').capitalizeFirstLetter()}..."
       myData = 
         client: App.client_string
         output_format: 'short'
@@ -192,7 +192,7 @@
       myCampaign = currentCampaignsUser.get id
       switch myCampaign.get('status')
         when 'available'
-          throw new Error "Invalid attempt to remove an available campaign: #{id}"
+          throw new Error "Invalid attempt to remove an available #{App.dictionary('page','campaign')}: #{id}"
         when 'saved'
           myCampaign.set('status', 'available')
         else
