@@ -26,7 +26,9 @@
       _remove.apply @, args
 
     templateHelpers: ->
-
+      dictionary: (group, name) ->
+        # pass through the dictionary method so it's universal to all templates
+        App.dictionary group, name
       linkTo: (name, url, options = {}) ->
         _.defaults options,
           external: false
