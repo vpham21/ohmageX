@@ -49,22 +49,21 @@
 
   class Entities.FileResponse extends Entities.ResponseValidated
     validate: (attrs, options) ->
-      if !attrs.properties.maxFilesize? then attrs.properties.maxFilesize = false
+      if !attrs.properties.maxFilesize? then attrs.properties.maxFilesize = App.custom.prompt_defaults.doc.max_bytes
       myRulesMap =
         maxSize: 'maxFilesize'
       super attrs, options, myRulesMap
 
   class Entities.VideoResponse extends Entities.ResponseValidated
     validate: (attrs, options) ->
-      # default to 10 minutes.
-      if !attrs.properties.max_seconds? then attrs.properties.max_seconds = 600
+      if !attrs.properties.max_seconds? then attrs.properties.max_seconds = App.custom.prompt_defaults.video.max_seconds
 
       console.log "source is #{attrs.response.source}"
 
       if attrs.response.source is "library"
         # we don't have the duration, calculate a file size based on seconds.
-        # assuming video capture rate is 20 mb / minute
-        attrs.properties.maxFilesize = 333334 * attrs.properties.max_seconds
+        bytes_per_second = App.custom.prompt_defaults.video.assumed_mb_per_minute * 1000000 / 60
+        attrs.properties.maxFilesize = bytes_per_second * attrs.properties.max_seconds
         myRulesMap =
           maxSize: 'maxFilesize'
       else
