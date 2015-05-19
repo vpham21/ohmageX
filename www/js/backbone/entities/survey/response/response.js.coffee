@@ -146,7 +146,7 @@
       responses = @getResponses()
       fileResponseTypes = ["document"]
       result = responses.find (response) ->
-        response.get('type') in fileResponseTypes
+        response.get('type') in fileResponseTypes and response.get('response') isnt false
       console.log 'containsFile result', result
       typeof result isnt "undefined"
     containsVideo: ->
