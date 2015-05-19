@@ -39,7 +39,9 @@
     }
   },
   "menu_items_disabled": {
-    "native": [],
+    "native": [
+      "reminder"
+    ],
     "browser": [
       "reminder",
       "logout"
