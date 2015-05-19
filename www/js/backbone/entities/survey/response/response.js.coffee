@@ -56,8 +56,7 @@
 
   class Entities.VideoResponse extends Entities.ResponseValidated
     validate: (attrs, options) ->
-      # default to 10 minutes.
-      if !attrs.properties.max_seconds? then attrs.properties.max_seconds = 600
+      if !attrs.properties.max_seconds? then attrs.properties.max_seconds = App.custom.prompt_defaults.video.max_seconds
 
       console.log "source is #{attrs.response.source}"
 
