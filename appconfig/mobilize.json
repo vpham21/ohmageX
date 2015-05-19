@@ -61,5 +61,18 @@
   },
   "functionality": {
     "reminders_disabled": false
+  },
+  "prompt_defaults": {
+    "doc": {
+      "max_bytes": 1000000000 // 1 GB
+    },
+    "photo": {
+      "max_pixels": 800
+    },
+    "video": {
+      "max_seconds": 180,
+      "caution_threshold_bytes": 300000000, // 300 MB
+      "assumed_mb_per_minute": 20
+    }
   }
 }
