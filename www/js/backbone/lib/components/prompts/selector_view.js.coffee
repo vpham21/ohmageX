@@ -138,7 +138,7 @@
             imgCanvas.width = img.width
             imgCanvas.height = img.height
             context.drawImage img, 0, 0, img.width, img.height
-            @recordImage imgCanvas.toDataURL('image/jpeg',.5)
+            @recordImage imgCanvas.toDataURL('image/jpeg',.45)
 
           img.src = _URL.createObjectURL myInput
         else
