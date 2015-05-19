@@ -1,1 +1,1 @@
-There are no saved surveys.
+There are no saved <%= @dictionary('pages','survey') %>.
