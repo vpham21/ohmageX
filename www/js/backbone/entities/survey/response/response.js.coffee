@@ -49,7 +49,7 @@
 
   class Entities.FileResponse extends Entities.ResponseValidated
     validate: (attrs, options) ->
-      if !attrs.properties.maxFilesize? then attrs.properties.maxFilesize = false
+      if !attrs.properties.maxFilesize? then attrs.properties.maxFilesize = App.custom.prompt_defaults.doc.max_bytes
       myRulesMap =
         maxSize: 'maxFilesize'
       super attrs, options, myRulesMap
