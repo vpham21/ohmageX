@@ -13,7 +13,7 @@
     "page": {
       "login": "login",
       "campaign": "portfolio",
-      "survey": "artifacts",
+      "survey": "artifact",
       "queue": "upload queue",
       "reminder": "reminder",
       "profile": "profile",
