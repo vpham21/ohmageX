@@ -12,8 +12,8 @@
   "dictionary": {
     "page": {
       "login": "login",
-      "campaign": "campaign",
-      "survey": "survey",
+      "campaign": "portfolio",
+      "survey": "artifacts",
       "queue": "upload queue",
       "reminder": "reminder",
       "profile": "profile",
@@ -21,8 +21,8 @@
     },
     "pages": {
       "login": "login",
-      "campaign": "campaigns",
-      "survey": "surveys",
+      "campaign": "portfolio",
+      "survey": "artifacts",
       "queue": "upload queue",
       "reminder": "reminders",
       "profile": "profile",
@@ -30,8 +30,8 @@
     },
     "menu": {
       "login": "Login",
-      "campaign": "Campaigns",
-      "survey": "Surveys",
+      "campaign": "Portfolio",
+      "survey": "Artifacts",
       "queue": "Upload Queue",
       "reminder": "Reminders",
       "profile": "Profile",
