@@ -62,8 +62,8 @@
 
       if attrs.response.source is "library"
         # we don't have the duration, calculate a file size based on seconds.
-        # assuming video capture rate is 20 mb / minute
-        attrs.properties.maxFilesize = 333334 * attrs.properties.max_seconds
+        bytes_per_second = App.custom.prompt_defaults.video.assumed_mb_per_minute * 1000000 / 60
+        attrs.properties.maxFilesize = bytes_per_second * attrs.properties.max_seconds
         myRulesMap =
           maxSize: 'maxFilesize'
       else
