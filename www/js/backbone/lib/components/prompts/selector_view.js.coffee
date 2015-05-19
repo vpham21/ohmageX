@@ -464,7 +464,7 @@
 
     recordVideo: ->
       # default to 10 minute capture length
-      myDuration = if @model.get('properties').get('max_seconds') isnt undefined then @model.get('properties').get('max_seconds') else 600
+      myDuration = if typeof @model.get('properties').get('max_seconds') isnt "undefined" then @model.get('properties').get('max_seconds') else App.custom.prompt_defaults.video.max_seconds
 
       navigator.device.capture.captureVideo ( (mediaFiles) =>
         # capture success
@@ -481,15 +481,15 @@
       ),( (error) =>
         # capture error
         message = switch error.code
-          when navigator.device.capture.CaptureError.CAPTURE_INTERNAL_ERR
+          when CaptureError.CAPTURE_INTERNAL_ERR
             "Camera failed to capture video."
-          when navigator.device.capture.CaptureError.CAPTURE_APPLICATION_BUSY
+          when CaptureError.CAPTURE_APPLICATION_BUSY
             "Camera is busy with another application."
-          when navigator.device.capture.CaptureError.CAPTURE_INVALID_ARGUMENT
+          when CaptureError.CAPTURE_INVALID_ARGUMENT
             "Camera API Error."
-          when navigator.device.capture.CaptureError.CAPTURE_NO_MEDIA_FILES
+          when CaptureError.CAPTURE_NO_MEDIA_FILES
             "No video captured."
-          when navigator.device.capture.CaptureError.CAPTURE_NOT_SUPPORTED
+          when CaptureError.CAPTURE_NOT_SUPPORTED
             "Video capture is not supported."
 
         App.execute "dialog:alert", "Unable to capture: #{message}"
