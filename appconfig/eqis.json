@@ -39,7 +39,9 @@
     }
   },
   "menu_items_disabled": {
-    "native": [],
+    "native": [
+      "reminder"
+    ],
     "browser": [
       "reminder",
       "logout"
@@ -57,5 +59,8 @@
     "servers": [
       "https://test.mobilizingcs.org"
     ]
+  },
+  "functionality": {
+    "reminders_disabled": true
   }
 }
