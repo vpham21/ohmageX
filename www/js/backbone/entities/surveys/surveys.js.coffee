@@ -51,7 +51,7 @@
 
     getSurveys: (campaign_urn) ->
       console.log campaign_urn
-      App.vent.trigger "loading:show", "Saving campaign..."
+      App.vent.trigger "loading:show", "Saving #{App.dictionary('page','campaign')}..."
       myData =
         client: App.client_string
         output_format: 'long'
