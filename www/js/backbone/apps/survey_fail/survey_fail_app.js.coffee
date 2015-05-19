@@ -9,7 +9,7 @@
 
       App.execute "notice:show",
         data:
-          title: "Survey Upload Error"
+          title: "#{App.dictionary('page','survey').capitalizeFirstLetter()} Upload Error"
           description: "#{errorPrefix} #{errorText}"
           showCancel: true
           cancelLabel: "Ok"
@@ -42,7 +42,7 @@
 
   App.vent.on "survey:upload:failure:abort", (responseData, errorText, surveyId) ->
     # placeholder for server errors handler.
-    API.uploadFailureGeneral responseData, "#{App.dictionary('page','survey')} upload aborted:", errorText, surveyId
+    API.uploadFailureGeneral responseData, "#{App.dictionary('page','survey').capitalizeFirstLetter()} upload aborted:", errorText, surveyId
 
   App.vent.on "survey:upload:failure:auth", (responseData, errorText, surveyId) ->
     # placeholder for auth errors handler.
