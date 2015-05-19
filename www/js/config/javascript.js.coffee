@@ -11,3 +11,6 @@
   # method taken from Mozilla's mini cookie reader/writer at Web API document.cookie docs
   if (!sKey) then return null
   return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null
+
+String.prototype.capitalizeFirstLetter = ->
+  @ && @[0].toUpperCase() + @slice(1)
