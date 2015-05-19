@@ -188,7 +188,7 @@
     # in a 'survey' context, this is a reference to the surveyId.
     # in an 'uploadqueue' context, this is a reference to the queue item's
     # model id.
-    App.vent.trigger "loading:show", "Submitting Survey..."
+    App.vent.trigger "loading:show", "Submitting #{App.dictionary('page','survey').capitalizeFirstLetter()}..."
 
     if App.request("responses:contains:video") and App.request('survey:files')
       API.videoUploader context, responseData, itemId
