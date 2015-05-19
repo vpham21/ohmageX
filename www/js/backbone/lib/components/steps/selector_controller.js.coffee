@@ -37,7 +37,7 @@
             model: entity
         when "afterSurveySubmit"
 
-          if !App.custom.build.debug and !App.device.isNative
+          if App.custom.functionality.reminders_disabled or (!App.custom.build.debug and !App.device.isNative)
             # no debugging and no native, just show the base exit summary.
             return new Steps.AfterSubmission
               model: entity
