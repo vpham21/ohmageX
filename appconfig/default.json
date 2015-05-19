@@ -58,5 +58,8 @@
       "https://pilots.mobilizelabs.org",
       "https://sandbox.mobilizingcs.org"
     ]
+  },
+  "functionality": {
+    "reminders_disabled": false
   }
 }
