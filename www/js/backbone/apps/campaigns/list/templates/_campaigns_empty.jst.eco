@@ -1,1 +1,1 @@
-There are no campaigns.
+There are no <%= @dictionary('pages','campaign') %>.
