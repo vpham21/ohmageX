@@ -266,3 +266,7 @@ Includes the following functionality:
 > The name "Dragon Well" comes from a variety of Chinese green tea (龍井茶).
 
 - Set up Cordova, Backbone + Marionette, and vendor libraries
+
+## License
+
+The ohmageX project is **open-source** and licensed under the AFFERO GENERAL PUBLIC LICENSE. The full text of the license may be found in the `LICENSE` file.
