@@ -63,6 +63,10 @@
       "blur input[name=username]": "errors:reset"
       "blur input[name=pass]": "errors:reset"
     onRender: ->
+      if App.custom.build.debug is true
+        # prepopulate a debug login for the login form when debugging
+        @$el.find('input[name=username]').val(App.custom.build.debug_settings.username)
+        @$el.find('input[name=pass]').val(App.custom.build.debug_settings.password)
       @$el.find('input.pass').hideShowPassword
         innerToggle: true
         toggle:
