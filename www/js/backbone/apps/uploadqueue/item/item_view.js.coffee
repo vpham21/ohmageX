@@ -15,6 +15,8 @@
           'camera-retro'
         when 'document'
           'file-code-o'
+        when 'video'
+          'play-circle'
         when 'single_choice','single_choice_custom'
           'list'
         when 'text'
