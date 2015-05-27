@@ -80,7 +80,13 @@
       xhr.send myData
       ###
 
-      myData = @xhrFormData _.extend(myAuth, responseData, App.request("survey:files"))
+      if context is 'survey'
+        surveyFiles = App.request("survey:files")
+      else
+        surveyFiles = App.request "uploadqueue:item:surveyfiles", itemId
+      console.log 'surveyFiles', surveyFiles
+
+      myData = @xhrFormData _.extend(myAuth, responseData, surveyFiles)
 
       $.ajax
         url: "#{App.request("serverpath:current")}/app/survey/upload"
