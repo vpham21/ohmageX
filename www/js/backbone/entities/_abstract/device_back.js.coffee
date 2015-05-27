@@ -18,8 +18,8 @@
             # there is no current survey active,
             # the hamburger menu is not open,
             # and the loader / blocker isn't showing.
-            # By default, just go back
-            App.historyBack()
+            # Execute the default handler
+            @defaultBackAction()
         else
           App.vent.trigger "device:back:button"
 
@@ -36,6 +36,14 @@
         App.vent.trigger 'external:survey:prev:navigate'
         App.vent.trigger 'external:hamburgermenu:close'
 
+    defaultBackAction: ->
+      console.log 'defaultBackAction'
+      if App.navs.getSelectedName() is App.custom.build.homepage or App.navs.getSelectedName() is "login"
+        # we're on the homepage or login screen
+        console.log 'on the homepage or login screen'
+        App.execute "dialog:confirm", "Exit the app?", (=>
+          navigator.app.exitApp()
+        )
     enableOverwrite: ->
       console.log 'overwrite enabled'
       backOverwrite = true
