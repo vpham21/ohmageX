@@ -7,6 +7,7 @@
     "app_name": "e-QIS",
     "bundle_id": "org.ohmage.x.eqis",
     "image_folder": "default",
+    "homepage": "campaign",
     "debug": false
   },
   "dictionary": {

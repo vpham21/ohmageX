@@ -7,6 +7,7 @@
     "app_name": "UCLA MobilizingCS",
     "bundle_id": "org.mobilizingcs",
     "image_folder": "mobilize",
+    "homepage": "campaign",
     "debug": false
   },
   "dictionary": {

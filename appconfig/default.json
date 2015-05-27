@@ -7,6 +7,7 @@
     "app_name": "ohmageX",
     "bundle_id": "org.ohmage.x.ohmage",
     "image_folder": "default",
+    "homepage": "campaign",
     "debug": false
   },
   "dictionary": {
