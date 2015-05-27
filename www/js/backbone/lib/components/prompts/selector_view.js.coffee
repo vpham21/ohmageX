@@ -108,7 +108,7 @@
       @listenTo @, "take:picture", @takePicture
       @listenTo @, "from:library", @fromLibrary
     serializeData: ->
-      data = {}
+      data = @model.toJSON()
       # only show a single button in the browser, or on iPad
       # (iPad shows a popover that allows the user to select a picture)
       data.showSingleButton = !App.device.isNative or 
