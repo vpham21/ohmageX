@@ -190,9 +190,17 @@
     # model id.
     App.vent.trigger "loading:show", "Submitting #{App.dictionary('page','survey').capitalizeFirstLetter()}..."
 
-    if App.request("responses:contains:video") and App.request('survey:files')
-      API.videoUploader context, responseData, itemId
-    else if App.request("responses:contains:file")
-      API.documentUploader context, responseData, itemId
+    if context is 'survey'
+      uploadType = App.request "responses:uploadtype"
     else
-      API.ajaxUploader context, responseData, itemId
+      uploadType = App.request 'uploadqueue:item:uploadtype', itemId
+
+    console.log 'uploadType', uploadType
+
+    switch uploadType
+      when 'video'
+        API.videoUploader context, responseData, itemId
+      when 'file'
+        API.documentUploader context, responseData, itemId
+      else
+        API.ajaxUploader context, responseData, itemId
