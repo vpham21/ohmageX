@@ -79,6 +79,13 @@
       data = super
       console.log "data #{JSON.stringify(data)}"
       data
+
+  class Item.ResponseVideo extends Item.ResponseBase
+    template: "uploadqueue/item/response_video"
+    serializeData: ->
+      data = super
+      console.log "data #{JSON.stringify(data)}"
+      data.response.fileName = data.response.videoName
       data
 
   class Item.ResponseUnsupported extends Item.ResponseBase
@@ -97,6 +104,8 @@
           Item.ResponsePhoto
         when 'document'
           Item.ResponseDocument
+        when 'video'
+          Item.ResponseVideo
         when 'text','number','timestamp','single_choice_custom'
           Item.ResponseString
         else
