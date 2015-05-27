@@ -77,8 +77,8 @@
     template: "uploadqueue/item/response_document"
     serializeData: ->
       data = super
-      # TODO: Replace placeholder with a file reference of some kind.
-      data.response = "Selected Document Placeholder"
+      console.log "data #{JSON.stringify(data)}"
+      data
       data
 
   class Item.ResponseUnsupported extends Item.ResponseBase
