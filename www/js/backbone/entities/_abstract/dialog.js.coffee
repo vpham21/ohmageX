@@ -5,11 +5,10 @@
       if App.device.isNative
         App.vent.trigger 'device:dialog:confirm:show'
         navigator.notification.confirm message, ((buttonIndex) ->
+          App.vent.trigger 'device:dialog:confirm:close'
           if buttonIndex is 2
-            App.vent.trigger 'device:dialog:confirm:close'
             activateCallback()
           else if cancelCallback isnt false
-            App.vent.trigger 'device:dialog:confirm:close'
             cancelCallback()
         ), App.package_info.app_name, ['Cancel', 'OK']
       else
