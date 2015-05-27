@@ -44,6 +44,10 @@
         App.execute "dialog:confirm", "Exit the app?", (=>
           navigator.app.exitApp()
         )
+      else if App.navs.getSelectedName() is "queue" and App.getCurrentRoute() isnt null and App.getCurrentRoute().indexOf('/') isnt -1
+        # we're in an upload queue item, navigate back to the upload queue list
+        console.log "we're in an upload queue item, navigate back to the upload queue list"
+        App.navigate App.navs.getUrlByName('queue'), trigger: true
     enableOverwrite: ->
       console.log 'overwrite enabled'
       backOverwrite = true
