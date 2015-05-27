@@ -48,6 +48,11 @@
         # we're in an upload queue item, navigate back to the upload queue list
         console.log "we're in an upload queue item, navigate back to the upload queue list"
         App.navigate App.navs.getUrlByName('queue'), trigger: true
+      else
+        # just go to the homepage
+        console.log 'go to homepage'
+        App.navigate App.navs.getUrlByName(App.custom.build.homepage), trigger: true
+
     enableOverwrite: ->
       console.log 'overwrite enabled'
       backOverwrite = true
