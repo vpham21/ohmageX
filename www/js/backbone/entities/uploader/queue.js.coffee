@@ -42,6 +42,7 @@
         id: _.guid()
         errorText: errorText
         responses: responses
+        uploadType: App.request 'responses:uploadtype'
 
       if surveyObj[0].location_status is "valid"
         _.extend(result, location: surveyObj[0].location)
@@ -66,6 +67,10 @@
     updateLocal: (callback) ->
       # update localStorage index upload_queue with the current version of campaignsSaved entity
       App.execute "storage:save", 'upload_queue', currentQueue.toJSON(), callback
+    getUploadType: (id) ->
+      queueItem = currentQueue.get id
+      console.log 'queueItem', queueItem.toJSON()
+      queueItem.get 'uploadType'
     clear: ->
       currentQueue = new Entities.UploadQueue
 
@@ -83,6 +88,8 @@
   App.commands.setHandler "uploadqueue:item:remove", (id) ->
     API.removeItem id
 
+  App.reqres.setHandler 'uploadqueue:item:uploadtype', (id) ->
+    API.getUploadType id
   App.commands.setHandler "uploadqueue:item:error:set", (id, errorText) ->
     API.changeError id, errorText
 
