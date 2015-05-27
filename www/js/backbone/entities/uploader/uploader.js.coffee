@@ -94,7 +94,8 @@
           myXhr = $.ajaxSettings.xhr()
           if myXhr.upload
             myXhr.upload.addEventListener 'progress',( (ev) =>
-              App.vent.trigger "loading:show", "Uploading #{Math.round(ev.loaded / ev.total * 100)}%..."
+              if ev.lengthComputable
+                App.vent.trigger "loading:show", "Uploading #{Math.round(ev.loaded / ev.total * 100)}%..."
             ), false
           myXhr
         success: (response) =>
