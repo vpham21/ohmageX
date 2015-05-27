@@ -155,6 +155,13 @@
         response.get('type') in fileResponseTypes and response.get('response') isnt false
       console.log 'containsFile result', result
       typeof result isnt "undefined"
+    getUploadType: ->
+      if @containsVideo() and App.request('survey:files')
+        return 'video'
+      else if @containsFile()
+        return 'file'
+      else
+        return 'default'
 
     getResponses: ->
       throw new Error "responses not initialized, use 'responses:init' to create new Responses" unless currentResponses isnt false
@@ -177,12 +184,8 @@
   App.reqres.setHandler "responses:current:valid", ->
     API.getValidResponses()
 
-  App.reqres.setHandler "responses:contains:file", ->
-    API.containsFile()
-
-  App.reqres.setHandler "responses:contains:video", ->
-    API.containsVideo()
-
+  App.reqres.setHandler "responses:uploadtype", ->
+    API.getUploadType()
 
   App.reqres.setHandler "response:get", (id) ->
     currentResponses = API.getResponses()

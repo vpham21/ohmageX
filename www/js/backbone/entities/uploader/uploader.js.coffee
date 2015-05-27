@@ -80,7 +80,13 @@
       xhr.send myData
       ###
 
-      myData = @xhrFormData _.extend(myAuth, responseData, App.request("survey:files"))
+      if context is 'survey'
+        surveyFiles = App.request("survey:files")
+      else
+        surveyFiles = App.request "uploadqueue:item:surveyfiles", itemId
+      console.log 'surveyFiles', surveyFiles
+
+      myData = @xhrFormData _.extend(myAuth, responseData, surveyFiles)
 
       $.ajax
         url: "#{App.request("serverpath:current")}/app/survey/upload"
@@ -94,13 +100,13 @@
           myXhr = $.ajaxSettings.xhr()
           if myXhr.upload
             myXhr.upload.addEventListener 'progress',( (ev) =>
-              App.vent.trigger "loading:show", "Uploading #{Math.round(ev.loaded / ev.total * 100)}%..."
+              if ev.lengthComputable
+                App.vent.trigger "loading:show", "Uploading #{Math.round(ev.loaded / ev.total * 100)}%..."
             ), false
           myXhr
         success: (response) =>
           @parseUploadErrors context, responseData, response, itemId
         error: (xhr, ajaxOptions, thrownError) =>
-          App.execute "survey:files:destroy"
           console.log 'survey upload error'
           # assume all error callbacks here are network relate
           App.vent.trigger "loading:hide"
@@ -133,11 +139,18 @@
       uri = encodeURI("#{App.request("serverpath:current")}/app/survey/upload")
       options = new FileUploadOptions()
 
-      firstFile = App.request("survey:files:first:file")
+      if context is 'survey'
+        firstFile = App.request("survey:files:first:file")
+        firstUUID = App.request("survey:files:first:uuid")
+      else
+        firstFile = App.request "uploadqueue:item:firstfile", itemId
+        firstUUID = App.request "uploadqueue:item:firstuuid", itemId
+        App.vent.trigger "loading:show", "Uploading..."
+
       console.log "firstFile #{JSON.stringify(firstFile)}"
       options.fileName = firstFile.name
       options.mimeType = firstFile.type
-      options.fileKey = App.request("survey:files:first:uuid")
+      options.fileKey = firstUUID
       options.params = @videoParams _.extend(myAuth, responseData)
 
       console.log "file upload options: #{JSON.stringify(options)}"
@@ -157,7 +170,6 @@
       ), ( (error) =>
         # upload error callback - returns a FileTransferError obj
         # code
-        App.execute "survey:files:destroy"
         console.log 'survey upload error'
         # assume all error callbacks here are network relate
         App.vent.trigger "loading:hide"
@@ -190,9 +202,17 @@
     # model id.
     App.vent.trigger "loading:show", "Submitting #{App.dictionary('page','survey').capitalizeFirstLetter()}..."
 
-    if App.request("responses:contains:video") and App.request('survey:files')
-      API.videoUploader context, responseData, itemId
-    else if App.request("responses:contains:file")
-      API.documentUploader context, responseData, itemId
+    if context is 'survey'
+      uploadType = App.request "responses:uploadtype"
     else
-      API.ajaxUploader context, responseData, itemId
+      uploadType = App.request 'uploadqueue:item:uploadtype', itemId
+
+    console.log 'uploadType', uploadType
+
+    switch uploadType
+      when 'video'
+        API.videoUploader context, responseData, itemId
+      when 'file'
+        API.documentUploader context, responseData, itemId
+      else
+        API.ajaxUploader context, responseData, itemId
