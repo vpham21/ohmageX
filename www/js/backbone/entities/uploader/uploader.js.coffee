@@ -157,7 +157,6 @@
       ), ( (error) =>
         # upload error callback - returns a FileTransferError obj
         # code
-        App.execute "survey:files:destroy"
         console.log 'survey upload error'
         # assume all error callbacks here are network relate
         App.vent.trigger "loading:hide"
