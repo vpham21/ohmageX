@@ -60,7 +60,7 @@
     ]
   },
   "functionality": {
-    "reminders_disabled": false
+    "post_survey_reminders_disabled": false
   },
   "prompt_defaults": {
     "doc": {
