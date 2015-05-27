@@ -2,5 +2,5 @@
   <h5><%= @question %></h5>
   <i class="fa fa-<%= @icon %>"></i>
 </header>
-<p>File name: <%= @response.fileName %></p>
+<p>Video file name: <%= @response.videoName %></p>
 <p>UUID: <%= @response.UUID %></p>
