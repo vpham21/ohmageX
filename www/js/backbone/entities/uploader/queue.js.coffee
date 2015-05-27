@@ -47,6 +47,13 @@
       if surveyObj[0].location_status is "valid"
         _.extend(result, location: surveyObj[0].location)
 
+      if result.uploadType is 'video' or result.uploadType is 'file'
+        _.extend result,
+          fileMeta:
+            firstFile: App.request "survey:files:first:file"
+            firstUUID: App.request "survey:files:first:uuid"
+            surveyFiles: App.request "survey:files"
+
       currentQueue.add result
       @updateLocal( =>
         App.vent.trigger 'uploadqueue:add:success', result
