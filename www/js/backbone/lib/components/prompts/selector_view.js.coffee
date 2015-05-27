@@ -540,7 +540,7 @@
       @trigger "response:submit", response, surveyId, stepId
 
     serializeData: ->
-      data = {}
+      data = @model.toJSON()
       myVideo = @model.get('currentValue')
       data.videoName = ""
 
