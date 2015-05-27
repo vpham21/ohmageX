@@ -139,11 +139,18 @@
       uri = encodeURI("#{App.request("serverpath:current")}/app/survey/upload")
       options = new FileUploadOptions()
 
-      firstFile = App.request("survey:files:first:file")
+      if context is 'survey'
+        firstFile = App.request("survey:files:first:file")
+        firstUUID = App.request("survey:files:first:uuid")
+      else
+        firstFile = App.request "uploadqueue:item:firstfile", itemId
+        firstUUID = App.request "uploadqueue:item:firstuuid", itemId
+        App.vent.trigger "loading:show", "Uploading..."
+
       console.log "firstFile #{JSON.stringify(firstFile)}"
       options.fileName = firstFile.name
       options.mimeType = firstFile.type
-      options.fileKey = App.request("survey:files:first:uuid")
+      options.fileKey = firstUUID
       options.params = @videoParams _.extend(myAuth, responseData)
 
       console.log "file upload options: #{JSON.stringify(options)}"
