@@ -78,6 +78,9 @@
       queueItem = currentQueue.get id
       console.log 'queueItem', queueItem.toJSON()
       queueItem.get 'uploadType'
+    getFileMeta: (id) ->
+      queueItem = currentQueue.get id
+      queueItem.get 'fileMeta'
     clear: ->
       currentQueue = new Entities.UploadQueue
 
@@ -97,6 +100,19 @@
 
   App.reqres.setHandler 'uploadqueue:item:uploadtype', (id) ->
     API.getUploadType id
+
+  App.reqres.setHandler "uploadqueue:item:surveyfiles", (id) ->
+    files = API.getFileMeta id
+    files.surveyFiles
+
+  App.reqres.setHandler "uploadqueue:item:firstfile", (id) ->
+    files = API.getFileMeta id
+    files.firstFile
+
+  App.reqres.setHandler "uploadqueue:item:firstuuid", (id) ->
+    files = API.getFileMeta id
+    files.firstUUID
+
   App.commands.setHandler "uploadqueue:item:error:set", (id, errorText) ->
     API.changeError id, errorText
 
