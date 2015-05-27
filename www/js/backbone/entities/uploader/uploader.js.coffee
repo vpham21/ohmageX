@@ -107,7 +107,6 @@
         success: (response) =>
           @parseUploadErrors context, responseData, response, itemId
         error: (xhr, ajaxOptions, thrownError) =>
-          App.execute "survey:files:destroy"
           console.log 'survey upload error'
           # assume all error callbacks here are network relate
           App.vent.trigger "loading:hide"
