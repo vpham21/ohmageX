@@ -5,7 +5,7 @@
   },
   "build": {
     "app_name": "UCLA MobilizingCS",
-    "bundle_id": "org.mobilizingcs",
+    "bundle_id": "org.mobilizingcs.mobilize",
     "image_folder": "mobilize",
     "debug": false
   },
