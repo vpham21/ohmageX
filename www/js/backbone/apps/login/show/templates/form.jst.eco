@@ -1,5 +1,5 @@
 <form class="login">
-  <h1 style="background-image: url('/img/logo-header/<%= @header_image %>');"><%= @app_name %></h1>
+  <h1 style="background-image: url('img/logo-header/<%= @header_image %>');"><%= @app_name %></h1>
   <p class="error"></p>
   <div class="server-selector"></div>
   <label for="username">Username</label>
