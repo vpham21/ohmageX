@@ -11,7 +11,7 @@ form.login {
     text-indent: -999px;
     overflow: hidden;
     border: 0;
-    background-image: url('../img/app-logo-header.png');
+    // Background image is defined in the template inline so it can be replaced
     background-position: center center;
     background-size: contain;
     background-repeat: no-repeat;
