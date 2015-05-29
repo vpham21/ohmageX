@@ -29,8 +29,8 @@
       else if statusA isnt 'saved' and statusB is 'saved' then return 1
       else if statusA is 'saved' and statusB isnt 'saved' then return -1
       else
-        if nameA.capitalizeFirstLetter() > nameB.capitalizeFirstLetter() then return -1
-        if nameA.capitalizeFirstLetter() < nameB.capitalizeFirstLetter() then return 1
+        if nameA.capitalizeFirstLetter() > nameB.capitalizeFirstLetter() then return 1
+        if nameA.capitalizeFirstLetter() < nameB.capitalizeFirstLetter() then return -1
         return 0
 
     parse: (response, options) ->
