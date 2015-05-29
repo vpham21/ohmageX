@@ -104,6 +104,22 @@ The `mobile_firstrun` task executes in the root folder without issues, and avoid
 
 ## Version Notes
 
+### 3.0.1 - Mobilize Android Fixes (partial release)
+
+- Document Prompt
+  - Add support for document prompt
+
+- Video Prompt
+  - Add support for video prompt
+  - Assumes 1 video per survey
+
+- File Upload
+  - Add upload progress indicator for video and file uploads
+  - Assumes standard upload, video upload, or file upload are separate survey upload types - no mixing types currently allowed
+
+- Native back button
+  - Add general support for handling the device back button
+
 ### 3.0.0 - iOS Release
 
 > Change project name to "ohmageX"
