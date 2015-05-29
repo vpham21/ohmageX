@@ -1,4 +1,4 @@
-# ohmageX v3.0.0
+# ohmageX v3.0.2
 
 [ohmage](http://ohmage.org/) is an open-source, mobile to web platform that records, analyzes, and visualizes data from both prompted experience samples entered by the user, as well as continuous streams of data passively collected from sensors or applications onboard the mobile device. 
 
@@ -103,6 +103,34 @@ The `mobile_firstrun` task executes in the root folder without issues, and avoid
 - [Development Workflow (wiki)](https://github.com/ucla/ohmage-mwf-dw/wiki/Development-Workflow)
 
 ## Version Notes
+
+### 3.0.2 - Mobilize iOS Release
+
+- Config
+  - Multiple config
+    - Supports multiple configuration via sending a new `--deployment` param with the name of a JSON file located in `/appconfig`
+  - Add post survey reminders disabled config
+  - add configurable prompt defaults
+
+- Dictionary
+  - Add dictionary to missing view elements, alerts and dialogs
+
+- Development
+  - clean up development build tasks
+  - Add debug username and password params to auto-populate login form on debug mobile builds
+
+- Reminder Fixes
+  - Refactor to use new version of local notifications plugin, more streamlined
+  - Fix reminder turn off and turn on
+  - Fix reminder suppression
+  - Fix reminder scheduling with repeating
+  - Fix reminder survey trigger events
+
+- Photo prompt
+  - add native photo picker, take photo and choose from library
+  - add width and height constraints
+
+- Add global app state tracking entity - tracks loading state, etc.
 
 ### 3.0.1 - Mobilize Android Fixes (partial release)
 
