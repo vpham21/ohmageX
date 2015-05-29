@@ -8,6 +8,7 @@
     "bundle_id": "org.ohmage.x.eqis",
     "image_folder": "default",
     "homepage": "campaign",
+    "login_header_image": "ohmageX.png",
     "debug": false
   },
   "dictionary": {
