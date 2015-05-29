@@ -4,6 +4,10 @@
     initialize: ->
       @listenTo @, 'search:update', @updateSearch
       @listenTo @collection, 'filter:search:clear', @clearSearch
+    toggleSearch: ->
+      if @$el.find('input').attr('data-visible') isnt "true"
+        @clearSearch()
+        @updateSearch()
     clearSearch: ->
       @$el.find('input').val('')
     updateSearch: ->
