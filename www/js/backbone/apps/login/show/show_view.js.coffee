@@ -74,6 +74,7 @@
     serializeData: ->
       data = {}
       data.app_name = App.custom.build.app_name
+      data.header_image = App.custom.build.login_header_image
       data
 
   class Show.Layout extends App.Views.Layout
