@@ -17,7 +17,22 @@
     model: Entities.CampaignUser
     url: ->
       "#{App.request("serverpath:current")}/app/campaign/read"
-    comparator: "name"
+    comparator: (itemA, itemB) ->
+      statusA = itemA.get('status')
+      statusB = itemB.get('status')
+      nameA = itemA.get('name')
+      nameB = itemB.get('name')
+      if statusA is 'saved' and statusB is 'saved'
+        if nameA.capitalizeFirstLetter() > nameB.capitalizeFirstLetter() then return 1
+        if nameA.capitalizeFirstLetter() < nameB.capitalizeFirstLetter() then return -1
+        return 0
+      else if statusA isnt 'saved' and statusB is 'saved' then return 1
+      else if statusA is 'saved' and statusB isnt 'saved' then return -1
+      else
+        if nameA.capitalizeFirstLetter() > nameB.capitalizeFirstLetter() then return -1
+        if nameA.capitalizeFirstLetter() < nameB.capitalizeFirstLetter() then return 1
+        return 0
+
     parse: (response, options) ->
       # parse the response data into values ready to be added
       # to the Collection of User Campaigns.
