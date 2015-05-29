@@ -63,6 +63,10 @@
       "blur input[name=username]": "errors:reset"
       "blur input[name=pass]": "errors:reset"
     onRender: ->
+      if App.custom.build.debug is true
+        # prepopulate a debug login for the login form when debugging
+        @$el.find('input[name=username]').val(App.custom.build.debug_settings.username)
+        @$el.find('input[name=pass]').val(App.custom.build.debug_settings.password)
       @$el.find('input.pass').hideShowPassword
         innerToggle: true
         toggle:
@@ -70,6 +74,7 @@
     serializeData: ->
       data = {}
       data.app_name = App.custom.build.app_name
+      data.header_image = App.custom.build.login_header_image
       data
 
   class Show.Layout extends App.Views.Layout

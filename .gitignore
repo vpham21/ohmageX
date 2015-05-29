@@ -58,6 +58,10 @@ www-mobile
 /www/js/vendor/modernizr*.min.js
 /www/index.html
 
+# debug and development files #
+###############################
+/appconfig/*-dev.json
+
 
 # editor and local reference files #
 ####################################

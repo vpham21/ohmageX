@@ -2,7 +2,7 @@
   <input type="button" class="submit-disabler" value="Send" onclick="form.submit();" />
   <h3 class="hide-accessible"><%= @displayLabel %></h3>
   <fieldset>
-    <legend class="inset-block"><%= @promptText %></legend>
+    <label for="<%= @id %>" class="inset-block"><%= @promptText %></label>
     <div class="number-control">
       <button type="button" class="increment">
         <span class="hide-accessible">Increment</span>

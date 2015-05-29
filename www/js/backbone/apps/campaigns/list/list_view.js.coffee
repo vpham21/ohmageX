@@ -3,7 +3,12 @@
   class List.Search extends App.Views.ItemView
     initialize: ->
       @listenTo @, 'search:update', @updateSearch
+      @listenTo @, 'search:toggle', @toggleSearch
       @listenTo @collection, 'filter:search:clear', @clearSearch
+    toggleSearch: ->
+      if @$el.find('input').attr('data-visible') isnt "true"
+        @clearSearch()
+        @updateSearch()
     clearSearch: ->
       @$el.find('input').val('')
     updateSearch: ->
@@ -18,6 +23,11 @@
     template: "campaigns/list/search"
     triggers:
       "keyup input": "search:update"
+      "click .icon.search":
+        event: "search:toggle"
+        preventDefault: false
+        stopPropagation: false
+
     onRender: ->
       @menu = new VisibilityToggleComponent('input', @$el)
       @menu.toggleOn('click', '.icon.search', @$el)

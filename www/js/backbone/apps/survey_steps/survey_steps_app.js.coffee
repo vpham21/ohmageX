@@ -71,8 +71,8 @@
     # and will fire survey:upload:success.
     App.commands.execute "survey:upload", surveyId
 
-  App.vent.on "survey:upload:success", (response, surveyId) ->
-    # Go to the next step if the submit succeeds
+  App.vent.on "survey:upload:success survey:upload:failure:ok", (response, surveyId) ->
+    # Go to the next step if the submit succeeds or if they click the OK button on the modal
     server_id = App.request("survey:saved:server_id", surveyId)
     API.goNext surveyId, "#{server_id}beforeSurveySubmit"
 
@@ -82,7 +82,7 @@
   App.vent.on "reminders:survey:new", (surveyId) ->
     App.vent.trigger "survey:reset", surveyId
 
-  App.vent.on "reminders:survey:suppress", (surveyId, reminderIds) ->
+  App.vent.on "survey:notifications:suppress", (surveyId, notificationIds) ->
     App.vent.trigger "survey:exit", surveyId
 
   App.vent.on "response:set:success", (response, surveyId, stepId) ->

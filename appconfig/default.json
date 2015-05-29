@@ -7,6 +7,8 @@
     "app_name": "ohmageX",
     "bundle_id": "org.ohmage.x.ohmage",
     "image_folder": "default",
+    "homepage": "campaign",
+    "login_header_image": "ohmageX.png",
     "debug": false
   },
   "dictionary": {
@@ -58,5 +60,21 @@
       "https://pilots.mobilizelabs.org",
       "https://sandbox.mobilizingcs.org"
     ]
+  },
+  "functionality": {
+    "post_survey_reminders_disabled": false
+  },
+  "prompt_defaults": {
+    "doc": {
+      "max_bytes": 1000000000
+    },
+    "photo": {
+      "max_pixels": 800
+    },
+    "video": {
+      "max_seconds": 180,
+      "caution_threshold_bytes": 300000000,
+      "assumed_mb_per_minute": 90
+    }
   }
 }

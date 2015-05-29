@@ -19,6 +19,13 @@
 
     getLocation: (surveyId) ->
       @surveyId = surveyId
+
+      if App.device.isNative and device.platform is "Android" and navigator.connection.type == Connection.NONE
+        # if using Android with no network connection, fetching location may never time out,
+        # so fail it immediately.
+        @fetchError()
+        return false
+
       navigator.geolocation.getCurrentPosition( _.bind(@fetchSuccess, @), _.bind(@fetchError, @) )
 
   App.reqres.setHandler "geolocation:get", ->

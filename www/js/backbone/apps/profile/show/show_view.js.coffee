@@ -8,6 +8,7 @@
     serializeData: ->
       data = @model.toJSON()
       data.showPassword = App.request "credentials:ispassword"
+      data.serverPath = App.request "serverpath:current"
       data
 
   class Show.Layout extends App.Views.Layout

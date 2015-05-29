@@ -261,7 +261,7 @@
     }
   }
 
-  .photo-control {
+  .photo-control, .video-control {
     .container {
       position: relative;
       min-height: 200px;
@@ -311,11 +311,26 @@
         // Needed for Firefox
         width: 100%;
       }
+      &.two-buttons {
+        bottom: $global-form-control-padding*6;
+      }
+      &.two-buttons button {
+        padding: $global-form-control-padding*1.5 0;
+        background-size: $list-icon-size*.75;
+        font-size: $global-form-control-font-size*.85;
+      }
 
     }
 
     .preview-image {
       width: 100%;
+    }
+    .video-name {
+      text-align: center;
+      font-size: $global-form-control-font-size*.85;
+      &:empty {
+        display: none;
+      }
     }
   }
 

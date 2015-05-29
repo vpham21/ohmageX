@@ -28,9 +28,6 @@
     API.list
       surveyId: surveyId
 
-  App.vent.on "reminders:survey:suppress", (surveyId, reminderIds) ->
-    App.execute "reminders:suppress", reminderIds
-
   App.vent.on "reminders:reminder:submit", (model, response) ->
     App.execute "reminder:validate", model, response
 

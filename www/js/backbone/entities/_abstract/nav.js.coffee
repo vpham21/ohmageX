@@ -24,6 +24,12 @@
     chooseByName: (nav) ->
       @choose (@findWhere(name: nav) or @first())
 
+    getSelectedName: ->
+      @findWhere(chosen: true).get('name')
+
+    getUrlByName: (myName) ->
+      @findWhere(name: myName).get('url')
+
   API =
     reveal: (isLoggedIn) ->
       console.log 'reveal isLoggedIn', isLoggedIn

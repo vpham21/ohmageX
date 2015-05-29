@@ -3,9 +3,13 @@
   API =
     confirm: (message, activateCallback, cancelCallback) ->
       if App.device.isNative
+        App.vent.trigger 'device:dialog:confirm:show'
         navigator.notification.confirm message, ((buttonIndex) ->
-          if buttonIndex is 2 then activateCallback()
-          else if cancelCallback isnt false then cancelCallback()
+          App.vent.trigger 'device:dialog:confirm:close'
+          if buttonIndex is 2
+            activateCallback()
+          else if cancelCallback isnt false
+            cancelCallback()
         ), App.package_info.app_name, ['Cancel', 'OK']
       else
         if confirm(message)
@@ -14,7 +18,10 @@
           cancelCallback()
     alert: (message) ->
       if App.device.isNative
-        navigator.notification.alert message, (->), App.package_info.app_name
+        App.vent.trigger 'device:dialog:alert:show'
+        navigator.notification.alert message, (=>
+          App.vent.trigger 'device:dialog:alert:close'
+        ), App.package_info.app_name
       else
         alert(message)
 

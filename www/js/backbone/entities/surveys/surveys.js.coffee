@@ -20,6 +20,8 @@
         campaignXML = response.data[urn].xml
         $surveys = @getSurveyXML campaignXML
         @parseSurveysXML $surveys, urn, campaignXML
+    comparator: (item) ->
+      item.get('title').capitalizeFirstLetter()
     getSurveyXML: (rawXML) ->
       $XML = $( $.parseXML(rawXML) )
       $XML.find 'survey'
@@ -51,7 +53,7 @@
 
     getSurveys: (campaign_urn) ->
       console.log campaign_urn
-      App.vent.trigger "loading:show", "Saving campaign..."
+      App.vent.trigger "loading:show", "Saving #{App.dictionary('page','campaign')}..."
       myData =
         client: App.client_string
         output_format: 'long'

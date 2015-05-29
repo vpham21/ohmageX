@@ -1,0 +1,80 @@
+{
+  "api": {
+    "client_base_string": "mobilizex-",
+    "token_redirect": "../web/#login"
+  },
+  "build": {
+    "app_name": "UCLA MobilizingCS",
+    "bundle_id": "org.mobilizingcs.mobilize",
+    "image_folder": "mobilize",
+    "homepage": "campaign",
+    "login_header_image": "mobilize.png",
+    "debug": false
+  },
+  "dictionary": {
+    "page": {
+      "login": "login",
+      "campaign": "campaign",
+      "survey": "survey",
+      "queue": "upload queue",
+      "reminder": "reminder",
+      "profile": "profile",
+      "logout": "logout"
+    },
+    "pages": {
+      "login": "login",
+      "campaign": "campaigns",
+      "survey": "surveys",
+      "queue": "upload queue",
+      "reminder": "reminders",
+      "profile": "profile",
+      "logout": "logout"
+    },
+    "menu": {
+      "login": "Login",
+      "campaign": "Campaigns",
+      "survey": "Surveys",
+      "queue": "Upload Queue",
+      "reminder": "Reminders",
+      "profile": "Profile",
+      "logout": "Logout"
+    }
+  },
+  "menu_items_disabled": {
+    "native": [],
+    "browser": [
+      "reminder",
+      "logout"
+    ],
+    "footer": [
+      "campaign",
+      "survey",
+      "queue",
+      "reminder",
+      "logout"
+    ]
+  },
+  "server_list": {
+    "custom": false,
+    "servers": [
+      "https://lausd.mobilizingcs.org",
+      "https://sandbox.mobilizingcs.org"
+    ]
+  },
+  "functionality": {
+    "post_survey_reminders_disabled": false
+  },
+  "prompt_defaults": {
+    "doc": {
+      "max_bytes": 1000000000
+    },
+    "photo": {
+      "max_pixels": 800
+    },
+    "video": {
+      "max_seconds": 180,
+      "caution_threshold_bytes": 300000000,
+      "assumed_mb_per_minute": 90
+    }
+  }
+}

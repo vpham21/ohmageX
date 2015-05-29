@@ -7,7 +7,7 @@
     prepResponseUpload: (currentResponses, currentFlow) ->
       currentResponses.map( (response) =>
         myId = response.get 'id'
-        myResponse = App.request "response:value:parsed", { stepId: myId, addImageUUID: true }
+        myResponse = App.request "response:value:parsed", { stepId: myId, addUploadUUIDs: true }
         {
           prompt_id: myId
           value: myResponse
@@ -41,7 +41,7 @@
       campaign_urn = App.request "survey:saved:urn", surveyId
       myCampaign = App.request "campaign:entity", campaign_urn
 
-      completeSubmit = 
+      completeSubmit =
         client: App.client_string
         images: App.request "survey:images:string"
         surveys: JSON.stringify([submitSurveys])

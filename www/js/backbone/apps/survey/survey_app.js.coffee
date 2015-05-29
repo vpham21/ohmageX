@@ -24,7 +24,7 @@
         # someone navigates backwards via hitting the Back Button.
         # this cleans up and exits the survey properly.
         console.log Error
-        App.execute "dialog:confirm", "Do you want to exit the #{App.dictionary('page','survey')}?", (=>
+        App.execute "dialog:confirm", "Data from your current #{App.dictionary('page','survey')} response will be lost. Do you want to exit the #{App.dictionary('page','survey')}?", (=>
           App.vent.trigger "survey:exit", id
         ),(=>
           App.historyPrevious()

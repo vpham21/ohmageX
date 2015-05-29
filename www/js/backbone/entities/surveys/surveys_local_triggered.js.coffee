@@ -77,7 +77,7 @@
   App.commands.setHandler "surveys:local:triggered:add", (surveyId) ->
     API.addTriggered surveyId
 
-  App.vent.on "survey:start", (surveyId) ->
+  App.vent.on "survey:start survey:exit", (surveyId) ->
     if currentTriggered then API.removeTriggered(surveyId)
 
   App.vent.on "reminder:delete:success", (reminder) ->

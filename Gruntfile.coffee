@@ -1,7 +1,8 @@
 module.exports = (grunt) ->
+  deployment = grunt.option('deployment') || 'default'
   grunt.initConfig
     pkg: grunt.file.readJSON("package.json")
-    appConfig: grunt.file.readJSON('appconfig/default.json')
+    appConfig: grunt.file.readJSON('appconfig/' + deployment + '.json')
     cordova_project_folder: "cordova-build"
     web_root_folder: "www"
     hybrid_build_folder: "www-mobile"
@@ -192,8 +193,10 @@ module.exports = (grunt) ->
             "inappbrowser",
             "media",
             "media-capture",
+            "network-information",
             "splashscreen",
-            "https://github.com/katzer/cordova-plugin-local-notifications.git#a364be1364fe63f556029c604e6d5f5270a848bc"
+            "org.apache.cordova.file-transfer",
+            "https://github.com/ucla/cordova-plugin-local-notifications.git"
           ]
 
       build_ios:
@@ -240,10 +243,15 @@ module.exports = (grunt) ->
       ios_init:
         cmd: "grunt cordova_ios_init"
         cwd: "<%= cordova_project_folder %>"
-      mobile_build:
+      ios_build:
         cmd: "grunt cordova_build_ios"
         cwd: "<%= cordova_project_folder %>"
-
+      android_build:
+        cmd: "adb uninstall <%= appConfig.build.bundle_id %>;cordova run android"
+        cwd: "<%= cordova_project_folder %>"
+      android_theme_fix:
+        cmd: "sed -i '' 's|android:theme=\"@android:style/Theme.Black.NoTitleBar\"||g' AndroidManifest.xml"
+        cwd: "<%= cordova_project_folder %>/platforms/android"
 
   grunt.loadNpmTasks "grunt-contrib-clean"
   grunt.loadNpmTasks "grunt-contrib-coffee"
@@ -322,6 +330,7 @@ module.exports = (grunt) ->
     "exec:mobile_init" # must pass it through a custom exec to change cwd
     "clean:cordova_ios_splash"
     "copy:cordova_ios_splash"
+    "exec:android_theme_fix"
   ]
 
   grunt.registerTask "ios_firstrun", [
@@ -340,12 +349,21 @@ module.exports = (grunt) ->
     "copy:cordova_ios_splash"
   ]
 
-  grunt.registerTask "mobile_www_build", [
+  grunt.registerTask "ios_www_build", [
     "dev"
     "clean:hybrid_build"
     "copy:hybrid_build"
     "clean:cordova_www"
     "copy:cordova_www"
-    "exec:mobile_build" # must pass it through a custom exec to change cwd
+    "exec:ios_build" # must pass it through a custom exec to change cwd
+  ]
+
+  grunt.registerTask "android_www_build", [
+    "dev"
+    "clean:hybrid_build"
+    "copy:hybrid_build"
+    "clean:cordova_www"
+    "copy:cordova_www"
+    "exec:android_build" # must pass it through a custom exec to change cwd
   ]
 

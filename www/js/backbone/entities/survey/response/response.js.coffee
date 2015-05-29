@@ -47,10 +47,36 @@
         timestampISO: 'timestampISO'
       super attrs, options, myRulesMap
 
+  class Entities.FileResponse extends Entities.ResponseValidated
+    validate: (attrs, options) ->
+      if !attrs.properties.maxFilesize? then attrs.properties.maxFilesize = App.custom.prompt_defaults.doc.max_bytes
+      myRulesMap =
+        maxSize: 'maxFilesize'
+      super attrs, options, myRulesMap
+
+  class Entities.VideoResponse extends Entities.ResponseValidated
+    validate: (attrs, options) ->
+      if !attrs.properties.max_seconds? then attrs.properties.max_seconds = App.custom.prompt_defaults.video.max_seconds
+
+      console.log "source is #{attrs.response.source}"
+
+      if attrs.response.source is "library"
+        # we don't have the duration, calculate a file size based on seconds.
+        bytes_per_second = App.custom.prompt_defaults.video.assumed_mb_per_minute * 1000000 / 60
+        attrs.properties.maxFilesize = bytes_per_second * attrs.properties.max_seconds
+        myRulesMap =
+          maxSize: 'maxFilesize'
+      else
+        # the native Video capture checks duration on record. No need to validate here.
+        myRulesMap = {}
+      super attrs, options, myRulesMap
+
+
   class Entities.ResponseCollection extends Entities.Collection
     initialize: (options) ->
       if options.properties? then @set 'properties', new Entities.ResponseProperty options.properties
     model: (attrs, options) ->
+
       switch attrs.type
         when "text"
           new Entities.TextResponse attrs, options
@@ -58,6 +84,10 @@
           new Entities.NumberResponse attrs, options
         when "timestamp"
           new Entities.TimestampResponse attrs, options
+        when "document"
+          new Entities.FileResponse attrs, options
+        when "video"
+          new Entities.VideoResponse attrs, options
         else
           new Entities.Response attrs, options
 
@@ -111,6 +141,28 @@
         else
           return false
       ).filter((result) -> !!result).value()
+    containsFile: ->
+      responses = @getResponses()
+      fileResponseTypes = ["document"]
+      result = responses.find (response) ->
+        response.get('type') in fileResponseTypes and response.get('response') isnt false
+      console.log 'containsFile result', result
+      typeof result isnt "undefined"
+    containsVideo: ->
+      responses = @getResponses()
+      fileResponseTypes = ["video"]
+      result = responses.find (response) ->
+        response.get('type') in fileResponseTypes and response.get('response') isnt false
+      console.log 'containsFile result', result
+      typeof result isnt "undefined"
+    getUploadType: ->
+      if @containsVideo() and App.request('survey:files')
+        return 'video'
+      else if @containsFile()
+        return 'file'
+      else
+        return 'default'
+
     getResponses: ->
       throw new Error "responses not initialized, use 'responses:init' to create new Responses" unless currentResponses isnt false
       currentResponses
@@ -131,6 +183,9 @@
 
   App.reqres.setHandler "responses:current:valid", ->
     API.getValidResponses()
+
+  App.reqres.setHandler "responses:uploadtype", ->
+    API.getUploadType()
 
   App.reqres.setHandler "response:get", (id) ->
     currentResponses = API.getResponses()
