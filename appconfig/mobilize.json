@@ -8,6 +8,7 @@
     "bundle_id": "org.mobilizingcs",
     "image_folder": "mobilize",
     "homepage": "campaign",
+    "login_header_image": "mobilize.png",
     "debug": false
   },
   "dictionary": {
