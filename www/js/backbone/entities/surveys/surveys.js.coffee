@@ -20,6 +20,8 @@
         campaignXML = response.data[urn].xml
         $surveys = @getSurveyXML campaignXML
         @parseSurveysXML $surveys, urn, campaignXML
+    comparator: (item) ->
+      item.get('title').capitalizeFirstLetter()
     getSurveyXML: (rawXML) ->
       $XML = $( $.parseXML(rawXML) )
       $XML.find 'survey'
