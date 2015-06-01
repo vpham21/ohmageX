@@ -22,7 +22,7 @@
       responses.each((response) =>
         myId = response.get 'id'
 
-        if response isnt false and @isArrayResponse(response)
+        if response.get('response') isnt false and @isArrayResponse(response)
           myResponse = @stringsToArrays(response.get 'response')
         else
           myResponse = App.request "response:value:parsed", { stepId: myId, addUploadUUIDs: false }
