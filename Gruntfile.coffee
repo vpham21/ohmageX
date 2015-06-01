@@ -158,13 +158,13 @@ module.exports = (grunt) ->
           plugins: [ "device", "dialogs" ]
           path: "<%= cordova_project_folder %>"
           id: "<%= appConfig.build.bundle_id %>"
-          name: "<%= pkg.name %>"
+          name: "<%= appConfig.build.app_name %>"
 
       create:
         options:
           command: "create"
           id: "<%= appConfig.build.bundle_id %>"
-          name: "<%= pkg.name %>"
+          name: "<%= appConfig.build.app_name %>"
 
       add_platforms:
         options:
