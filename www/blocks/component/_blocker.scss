@@ -130,5 +130,7 @@ body > #ui-blocker  {
     color: $global-form-control-text-color;
     font-size: $global-form-control-font-size*0.75;
   }
-
+  .hideShowPassword-wrapper {
+    display: block !important; // required to overwrite hideShowPassword
+  }
 }
