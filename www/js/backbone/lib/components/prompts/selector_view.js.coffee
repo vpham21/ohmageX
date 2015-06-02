@@ -114,13 +114,18 @@
       data.showSingleButton = !App.device.isNative or 
         (device.platform is "iOS" and device.model.indexOf('iPad') isnt -1)
       data
+    constrainMaxDimension: ->
+      maxDimension = @model.get('properties').get('maxDimension')
+      if App.device.isNative
+        # on some devices a max dimension larger than 1200 may cause memory errors.
+        if maxDimension > 1200 then maxDimension = 1200
 
     processFile: ->
       fileDOM = @$el.find('input[type=file]')[0]
       myInput = fileDOM.files[0]
       _URL = window.URL || window.webkitURL
-      maxDimension = @model.get('properties').get('maxDimension')
-      if !!!maxDimension then maxDimension = App.custom.prompt_defaults.photo.max_pixels
+      maxDimension = @constrainMaxDimension()
+
       img = new Image()
       imgCanvas = @$el.find('canvas')[0]
 
@@ -152,11 +157,7 @@
     getPicture: (source) ->
       # Device camera plugin, get picture and retrieve image as base64-encoded string
       console.log 'getMobileImage method'
-      maxDimension = @model.get('properties').get('maxDimension')
-      if !!!maxDimension then maxDimension = App.custom.prompt_defaults.photo.max_pixels
-
-      # on some devices a max dimension larger than 1200 may cause memory errors.
-      if maxDimension > 1200 then maxDimension = 1200
+      maxDimension = @constrainMaxDimension()
 
       navigator.camera.getPicture ((img64) =>
         # success callback
