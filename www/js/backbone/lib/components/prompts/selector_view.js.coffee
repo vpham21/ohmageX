@@ -116,6 +116,12 @@
       data
     constrainMaxDimension: ->
       maxDimension = @model.get('properties').get('maxDimension')
+      if "#{maxDimension}" is "0"
+        # When maxDimension is 0, assume there is no max dimension
+        maxDimension = 99999
+      else
+        if !!!maxDimension then maxDimension = App.custom.prompt_defaults.photo.max_pixels
+
       if App.device.isNative
         # on some devices a max dimension larger than 1200 may cause memory errors.
         if maxDimension > 1200 then maxDimension = 1200
