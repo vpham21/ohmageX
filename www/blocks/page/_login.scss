@@ -41,6 +41,7 @@ form.login {
       border: 0;
       border-radius: 0;
       text-transform: uppercase;
+      background: $modal-activate-background-color;
       background: $modal-activate-background;
       color: $modal-activate-font-color;
       border-color: $global-form-control-border-color-dark;

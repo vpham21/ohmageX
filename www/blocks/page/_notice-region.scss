@@ -43,6 +43,7 @@
       }
     }
     .button-close {
+      background: $modal-close-background-color;
       background: $modal-close-background-color url(../img/icon/menu-close.svg) center center no-repeat;
       width: $modal-close-icon-size;
       height: $modal-close-icon-size;
@@ -78,6 +79,7 @@
       }
       > :first-child {
         button {
+          background: $modal-close-background-color;
           background: $modal-close-background;
           color: $modal-close-font-color;
         }
@@ -85,6 +87,7 @@
       }
       > :last-child {
         button {
+          background: $modal-close-background-color;
           background: $modal-activate-background;
           color: $modal-activate-font-color;
         }
@@ -93,6 +96,7 @@
     }
     .button-single {
       button {
+        background: $modal-activate-background-color;
         background: $modal-activate-background;
         color: $modal-activate-font-color;
       }
