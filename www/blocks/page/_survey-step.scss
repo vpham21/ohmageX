@@ -241,6 +241,7 @@
       font-size: 1.5rem;
       padding: 1rem;
     }
+    input[type=number]::-webkit-outer-spin-button { margin: 0; }
     button:first-child {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
