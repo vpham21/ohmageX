@@ -1,6 +1,7 @@
 #app-menu {
 
   > header {
+    background: $app-header-menu-header-background-flat;
     background: $app-header-menu-header-background;
     border-bottom: 1px solid $app-header-menu-header-border-color;
     overflow: auto;
