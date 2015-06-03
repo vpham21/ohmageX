@@ -43,6 +43,7 @@
   "menu_items_disabled": {
     "native": [],
     "browser": [
+      "profile",
       "reminder",
       "logout"
     ],
