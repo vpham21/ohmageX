@@ -32,7 +32,8 @@
 
       console.log 'oldParserResponses', oldParserResponses
 
-      trimCondition = rawCondition.replace(/\s*(or|and|==|!=|<=|=>|>|<)\s*/i, " $1 ")
+      trimCondition = rawCondition.replace(/\)\s*(and|or)\s*\(/i, ") $1 (")
+      trimCondition = trimCondition.replace(/\s*(==|!=|<=|=>|>|<)\s*/i, " $1 ")
       ConditionalParser.parse trimCondition, oldParserResponses
 
   App.reqres.setHandler "oldcondition:evaluate", (rawCondition, responses) ->
