@@ -126,6 +126,7 @@
         # on some devices a max dimension larger than 800 may cause memory errors.
         if maxDimension > 800 then maxDimension = 800
 
+      maxDimension
     processFile: ->
       fileDOM = @$el.find('input[type=file]')[0]
       myInput = fileDOM.files[0]
