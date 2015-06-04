@@ -26,6 +26,25 @@ textarea {
   }
 }
 
+@-moz-document url-prefix() {
+  button,
+  input[type="button"],
+  input[type="date"],
+  input[type="email"],
+  input[type="number"],
+  input[type="password"],
+  input[type="reset"],
+  input[type="search"],
+  input[type="submit"],
+  input[type="tel"],
+  input[type="text"],
+  input[type="time"],
+  input[type="url"],
+  textarea {
+    line-height: normal;
+  }
+}
+
 input[type="date"],
 input[type="email"],
 input[type="number"],
