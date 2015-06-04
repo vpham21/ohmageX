@@ -28,6 +28,7 @@
       width: 100%;
     }
     #search-box {
+      width: 90%;
       width: calc(100% - #{((3/2) * $global-form-control-font-size + 4 * $global-form-control-padding)});
     }
   }
