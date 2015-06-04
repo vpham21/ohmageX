@@ -123,8 +123,8 @@
         if !!!maxDimension then maxDimension = App.custom.prompt_defaults.photo.max_pixels
 
       if App.device.isNative
-        # on some devices a max dimension larger than 1200 may cause memory errors.
-        if maxDimension > 1200 then maxDimension = 1200
+        # on some devices a max dimension larger than 800 may cause memory errors.
+        if maxDimension > 800 then maxDimension = 800
 
     processFile: ->
       fileDOM = @$el.find('input[type=file]')[0]
