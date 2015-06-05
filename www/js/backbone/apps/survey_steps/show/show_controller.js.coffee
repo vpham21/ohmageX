@@ -20,6 +20,7 @@
         @skipButtonRegion()
         @prevButtonRegion()
         @nextButtonRegion()
+        $('body').scrollTop(0)
 
       if App.request "flow:type:is:prompt", @stepId
         # add special event listeners for a prompt,
