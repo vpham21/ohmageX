@@ -26,7 +26,12 @@
         @fetchError()
         return false
 
-      navigator.geolocation.getCurrentPosition( _.bind(@fetchSuccess, @), _.bind(@fetchError, @) )
+      options =
+        enableHighAccuracy: false
+        timeout: 10000 # 10 seconds
+        maximumAge: 300000 # 5 minutes
+
+      navigator.geolocation.getCurrentPosition( _.bind(@fetchSuccess, @), _.bind(@fetchError, @), options)
 
   App.reqres.setHandler "geolocation:get", ->
     currentLocation

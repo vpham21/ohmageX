@@ -118,6 +118,8 @@ The `mobile_firstrun` task executes in the root folder without issues, and avoid
   - Firefox UI fixes
   - Android 4.1 stock browser UI fixes
 
+- hotfix v3.0.31 - add timeout and options for GPS location
+
 ### 3.0.2 - Mobilize iOS Release
 
 - Config
