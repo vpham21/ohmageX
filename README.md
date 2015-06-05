@@ -1,4 +1,4 @@
-# ohmageX v3.0.2
+# ohmageX v3.0.3
 
 [ohmage](http://ohmage.org/) is an open-source, mobile to web platform that records, analyzes, and visualizes data from both prompted experience samples entered by the user, as well as continuous streams of data passively collected from sensors or applications onboard the mobile device. 
 
@@ -103,6 +103,20 @@ The `mobile_firstrun` task executes in the root folder without issues, and avoid
 - [Development Workflow (wiki)](https://github.com/ucla/ohmage-mwf-dw/wiki/Development-Workflow)
 
 ## Version Notes
+
+### 3.0.3 - Mobilize Android Release
+
+- Prompt Conditional Parser
+  - Fix space parsing and values for skipped choice prompts
+
+- Photo Prompt Fixes
+  - Fix max dimension property handlers
+  - allow 0 value max dimension to be evaluated as boundless
+  - constrain to 800 pixels on native (prevent memory issues)
+
+- UI Rendering Fixes
+  - Firefox UI fixes
+  - Android 4.1 stock browser UI fixes
 
 ### 3.0.2 - Mobilize iOS Release
 
