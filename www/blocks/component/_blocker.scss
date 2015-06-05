@@ -92,6 +92,7 @@ body > #ui-blocker  {
     }
     > :first-child {
       button {
+        background: $modal-close-background-color;
         background: $modal-close-background;
         color: $modal-close-font-color;
       }
@@ -99,6 +100,7 @@ body > #ui-blocker  {
     }
     > :last-child {
       button {
+        background: $modal-activate-background-color;
         background: $modal-activate-background;
         color: $modal-activate-font-color;
       }
@@ -130,5 +132,7 @@ body > #ui-blocker  {
     color: $global-form-control-text-color;
     font-size: $global-form-control-font-size*0.75;
   }
-
+  .hideShowPassword-wrapper {
+    display: block !important; // required to overwrite hideShowPassword
+  }
 }

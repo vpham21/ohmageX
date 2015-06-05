@@ -10,223 +10,238 @@
       @initNotificationEvents()
 
     initNotificationEvents: ->
-      window.plugin.notification.local.on "click", (notification) =>
+      document.addEventListener 'pause', (=>
+        App.vent.trigger "notification:blocker:close"
+      )
+
+      document.addEventListener 'resume', (=>
+
+        if device.platform is "iOS"
+          # iOS needs to fire the surveys trigger event on resume,
+          # because the trigger event does not fire in the background there.
+          cordova.plugins.notification.local.getTriggered (notifications) =>
+            _.each notifications, (notification) =>
+              result = JSON.parse notification.data
+              App.execute "surveys:local:triggered:add", result.surveyId
+            cordova.plugins.notification.local.clearAll =>
+              console.log 'triggered surveys noted, cleared all from notification center'
+        else
+          cordova.plugins.notification.local.clearAll =>
+            console.log 'triggered surveys noted, cleared all from notification center'
+      )
+
+      cordova.plugins.notification.local.on "click", (notification) =>
         console.log "notification onclick event"
         result = JSON.parse notification.data
         console.log "survey/#{result.surveyId}"
         App.navigate "survey/#{result.surveyId}", trigger: true
 
-        # Suppress this reminder now that it's been activated.
-        App.execute "reminders:suppress", [result.id]
+        # clear the notification from the notification center now
+        # that it has been activated.
+        cordova.plugins.notification.local.clear notification.id, ->
+          console.log 'Notification cleared'
 
-      # this is only needed on iOS, since currently the notification does not appear
-      # in the iOS notification banner while the app is open.
-      window.plugin.notification.local.on "trigger", (notification) =>
-        # this seems to only activate when the app is in the foreground.
+      cordova.plugins.notification.local.on "cancel", (notification) =>
+        console.log 'canceled notification', notification.id
+
+      cordova.plugins.notification.local.on "schedule", (notification) =>
+        console.log 'scheduled notification', notification.id
+
+      cordova.plugins.notification.local.on "trigger", (notification, state) =>
         console.log 'trigger event'
         console.log 'JSON', notification.data
         result = JSON.parse notification.data
-        if device.platform is "iOS"
-          App.execute "dialog:confirm", "Reminder to take the survey #{result.surveyTitle}. Go to the survey?", (=>
-            App.navigate "survey/#{result.surveyId}", trigger: true
 
-            # Suppress this reminder now that it's been activated.
-            App.execute "reminders:suppress", [result.id]
-          ), (=>
-            console.log 'dialog canceled'
-          )
+        if device.platform is "iOS" and state is "foreground"
+          # The notification doesn't show up in the banner on iOS if the app is in the foreground.
+          cordova.plugins.notification.local.clear notification.id, ->
+            console.log 'Notification cleared'
+
+          App.request 'reminders:current' # request current reminders to cleanup any expired reminders
+
+          # We must compare the notification ID to the "oldId", an id that is stored
+          # outside of this callback and is updated when different. Why do this? The plugin has
+          # an iOS bug that causes repeating notifications in certain circumstances to fire the
+          # `trigger` event multiple times for a single notification.
+          if App.request "system:notifications:oldid:compare", notification.id
+            App.execute "dialog:confirm", "Reminder to take the survey #{result.surveyTitle}. Go to the survey?", (=>
+              App.navigate "survey/#{result.surveyId}", trigger: true
+              setTimeout (=>
+                # add a 2 second buffer after this dialog box is closed
+                # that resets the oldId back to false, in case this
+                # notification would be the next notification
+                # to trigger in the future, and no other notifications
+                # are fired to clear out the oldId.
+                # The time buffer is for the possibility where the user closes
+                # the dialog box immediately, and one of the superfluous 
+                # trigger events hasn't fired yet.
+                App.request "system:notifications:oldid:reset"
+              ), 2000
+            ), (=>
+              console.log 'dialog canceled'
+              setTimeout (=>
+                App.request "system:notifications:oldid:reset"
+              ), 2000
+            )
+
+        # This event fires in the `background` state successfully on Android,
+        # but it doesn't fire on iOS. The document `resume` event handler
+        # above deals with this on iOS.
         App.execute "surveys:local:triggered:add", result.surveyId
 
-    generateId: ->
-      # generate a numeric id (not a guid). Local notifications plugin
-      # fails if the id is not an Android-valid integer (Max for 32 bits is 2147483647)
-
-      myId = "9xxxxxxxx".replace /[xy]/g, (c) ->
-        r = Math.random() * 9 | 0
-        v = (if c is "x" then r else (r & 0x3 | 0x8))
-        v.toString 10
-      myId
-
-    nextDayofWeek: (myMoment, weekday) ->
-      # myMoment is a JS moment
-      # weekday is the zero indexed day of week (0 - 6)
-      myInput = moment(myMoment)
-      myTodayHourMinute = moment().hour(myInput.hour()).minute(myInput.minute())
-      myOutput = myTodayHourMinute.clone().startOf('week').day(weekday).hour(myInput.hour()).minute(myInput.minute()).second(myInput.second())
-
-      if myOutput > myTodayHourMinute then myOutput else myOutput.add(1, 'weeks')
-
-    nextHourMinuteSecond: (myMoment, interval) ->
-      # gets the next occurrence of a moment's hours, minutes, and seconds.
-      # Ignores the month, day and year.
-      # it jumps ahead by the given 'interval' for the next occurrence.
-      # expected - Moment.js intervals like 'days' or 'weeks'
-
-      input = moment(myMoment)
-
-      hour = input.hour()
-      minute = input.minute()
-      second = input.second()
-      output = moment().startOf('day').hour(hour).minute(minute).second(second)
-
-      if output > moment() then output else output.add(1, interval)
-
-    addNotifications: (reminder) ->
-      if App.device.isNative
-        # Delete any of the reminder's system notifications
-        API.deleteNotifications reminder
-
+    turnOn: (reminder) ->
+      # turn the reminder off before you turn it on, in case a currently active (or ON)
+      # reminder was saved, meaning two turnOn events would happen in sequence.
+      @turnOff reminder
       myIds = []
       if !reminder.get('repeat')
-        # reminder is non-repeating.
-        myId = @generateId()
-        @createReminderNotification 
-          notificationId: myId
-          reminder: reminder
-          frequency: ''
-          activationDate: reminder.get('activationDate').toDate()
-
-        App.vent.trigger "notifications:update:complete"
+        # schedule a one-time notification using the full activationDate.
+        myId = App.request "system:notifications:id:generate", reminder.get('repeat')
         myIds.push myId
+
+
+        @scheduleNotification
+          notificationId: myId
+          surveyId: reminder.get('surveyId')
+          reminderId: reminder.get('id')
+          firstAt: reminder.get('activationDate').toDate()
+          surveyTitle: reminder.get('surveyTitle')
+
       else
+
         if reminder.get('repeatDays').length is 7
-          # create one daily notification since it's repeating every day.
-          myId = @generateId()
-
-          activationDate = @nextHourMinuteSecond reminder.get('activationDate'), 'days'
-
-          @createReminderNotification
-            notificationId: myId
-            reminder: reminder
-            frequency: 'daily'
-            activationDate: activationDate.toDate()
-
-          App.vent.trigger "notifications:update:complete"
+          # schedule a daily notification using the activation date's hour:minute
+          myId = App.request "system:notifications:id:generate", reminder.get('repeat')
           myIds.push myId
-        else
-          # send a copy of repeatDays to recursive @generateMultipleNotifications
-          # so the original isn't sliced to nothing.
-          repeatDays = reminder.get('repeatDays').slice(0)
 
-          @generateMultipleNotifications repeatDays, reminder, myIds
+          targetHour = reminder.get('activationDate').hour()
+          targetMinute = reminder.get('activationDate').minute()
+
+
+          newDate = reminder.newBumpedWeekdayHourMinuteDate
+            weekday: moment().day()
+            hour: targetHour
+            minute: targetMinute
+            pastBumpInterval: 'days'
+
+          # set the new activationDate to the next occurrence of the daily reminder
+          App.execute "reminder:date:set", reminder, newDate
+
+          @scheduleNotification
+            notificationId: myId
+            surveyId: reminder.get('surveyId')
+            every: 'day'
+            firstAt: newDate.toDate()
+            surveyTitle: reminder.get('surveyTitle')
+
+        else
+          # schedule multiple non-consecutive weekly notifications
+          # using the activation date's hour:minute
+          @scheduleNotifications reminder, myIds
 
       App.execute "reminder:notifications:set", reminder, myIds
 
 
-    generateMultipleNotifications: (repeatDays, reminder, myIds) ->
-      # Generates multiple notifications recursively, each iteration
-      # completes when the plugin notification creation callback fires.
-      # Required because creating multiple system notifications in rapid
-      # succession may fail.
+    scheduleNotification: (options) ->
 
-      myId = @generateId()
-      myIds.push myId
+      { notificationId, surveyId, every, firstAt, surveyTitle } = options
+      console.log 'scheduleNotification'
+      console.log JSON.stringify(options)
+      if App.device.isNative
+        result =
+          id: notificationId
+          title: "#{surveyTitle}"
+          text: "Take survey #{surveyTitle}"
+          firstAt: firstAt
+          data:
+            surveyId: surveyId
+            surveyTitle: surveyTitle
 
-      activationDayofWeek = moment().day()
-      repeatDay = repeatDays[0]
+        # In the plugin schedule method:
+        # `every` property must either be NOT included at all or set to a pre-defined interval string.
+        # Even though the plugin documentation says the default value is 0, setting
+        # it to `0` or `false` crashes the app.
 
-      if "#{activationDayofWeek}" is repeatDay
+        result = if every isnt false then _.extend(result, every: every) else result
 
-        # if the day of week is the same as the current day,
-        # we get the NEXT occurrence of that hour:minute:second
-        activationDate = @nextHourMinuteSecond reminder.get('activationDate'), 'weeks'
-      else
-        activationDate = @nextDayofWeek(reminder.get('activationDate'), repeatDay)
+        cordova.plugins.notification.local.schedule result
 
-      if repeatDays.length is 1
-        # base condition
-        callback = (=>
-          console.log 'final of many notification created, activationDate', activationDate.format("dddd, MMMM Do YYYY, h:mm:ss a")
-          App.vent.trigger "notifications:update:complete"
-        )
-      else
-        callback = (=>
-          console.log 'one of many notifications created, activationDate', activationDate.format("dddd, MMMM Do YYYY, h:mm:ss a")
-          # shrink repeatDays from the front, ensuring that repeatDays[0]
-          # will always be a valid value for repeatDay in the recursive loop
-          repeatDays.shift()
-          @generateMultipleNotifications repeatDays, reminder, myIds
-        )
+      App.vent.trigger "notifications:update:complete"
 
-      @createReminderNotification
-        notificationId: myId
-        reminder: reminder
-        frequency: 'weekly'
-        activationDate: activationDate.toDate()
-        callback: callback
+    scheduleNotifications: (reminder, myIds) ->
 
+      result = []
 
-    createReminderNotification: (options) ->
-      _.defaults options,
-        callback: (=>
-          console.log 'notification creation default callback'
-        )
+      repeatDays = reminder.get('repeatDays')
+      targetHour = reminder.get('activationDate').hour()
+      targetMinute = reminder.get('activationDate').minute()
 
-      { notificationId, reminder, frequency, activationDate, callback } = options
+      nextOccurrence = false
+      occurrenceFutureInterval = false
 
-      metadata = JSON.stringify reminder.toJSON()
+      _.each repeatDays, (repeatDay) =>
+        myId = App.request "system:notifications:id:generate", reminder.get('repeat'), repeatDay
+        myIds.push myId
+
+        newDate = reminder.newBumpedWeekdayHourMinuteDate
+          weekday: parseInt(repeatDay) # type conversion required for day comparison
+          hour: targetHour
+          minute: targetMinute
+          pastBumpInterval: 'weeks'
+
+        if occurrenceFutureInterval is false or newDate.diff(moment()) < occurrenceFutureInterval
+          # get the date with the smallest interval after the present.
+          nextOccurrence = newDate
+          occurrenceFutureInterval = newDate.diff(moment())
+
+        result.push
+          id: myId
+          title: "#{reminder.get('surveyTitle')}"
+          text: "Take survey #{reminder.get('surveyTitle')}"
+          every: 'week'
+          firstAt: newDate.toDate()
+          data:
+            surveyId: reminder.get('surveyId')
+            surveyTitle: reminder.get('surveyTitle')
+
+      # set the new activationDate to the next occurrence of
+      # the non-consecutive repeating reminder
+      App.execute "reminder:date:set", reminder, nextOccurrence
 
       if App.device.isNative
-        window.plugin.notification.local.schedule
-          id: notificationId
-          title: "#{reminder.get('surveyTitle')}"
-          message: "Take survey #{reminder.get('surveyTitle')}"
-          repeat: frequency
-          date: activationDate
-          autoCancel: !reminder.get('repeat') # autoCancel NON-repeating reminders
-          json: metadata
-        , callback, @
-      else
-        callback.call(@)
+        # Multiple notifications can be sent to the plugin `schedule` method
+        # as an array of JSON objects and be scheduled simultaneously.
 
-    deleteNotifications: (reminder) ->
+        cordova.plugins.notification.local.schedule result
+
+      App.vent.trigger "notifications:update:complete"
+
+
+    turnOff: (reminder) ->
       ids = reminder.get('notificationIds')
       if ids.length > 0
         # ensure this is only executed when ids are present.
         if App.device.isNative
-          window.plugin.notification.local.getScheduledIds((scheduledIds) ->
-            console.log 'Ids to delete', JSON.stringify ids
-            console.log 'scheduled Ids', JSON.stringify scheduledIds
-            _.each ids, (id) =>
-              # ensures we only attempt to remove a scheduled notification.
-              if id in scheduledIds then window.plugin.notification.local.cancel(id)
-          )
+          cordova.plugins.notification.local.cancel ids
         # clear out the reminder's notification IDs immediately, they now reference nothing
         App.execute "reminder:notifications:set", reminder, []
         App.vent.trigger "notifications:update:complete"
 
-    suppressNotifications: (reminder) ->
-      if reminder.get('repeat')
-        newDate = moment(reminder.get('activationDate'))
-
-        # shift the activation date for the reminder's notifications 24 hours in the future.
-        App.execute "reminder:date:set", reminder, newDate.add(1, 'days')
-
-        # Generate new notifications (and IDs) for the repeating reminder.
-        # Whether the reminders repeat daily or weekly, `addNotifications` will set
-        # the activation dates appropriately.
-        API.addNotifications reminder
-      else
-        # non-repeating reminder, just delete it
-        App.execute "reminder:delete", reminder
 
     clear: ->
-      window.plugin.notification.local.cancelAll ->
+      cordova.plugins.notification.local.cancelAll ->
         console.log 'All system notifications canceled'
 
   App.vent.on "surveys:saved:load:complete", ->
     if App.device.isNative
       API.init()
 
-  App.commands.setHandler "system:notifications:delete", (reminderId) ->
-    API.deleteNotifications App.request('reminders:current').get(reminderId)
+  App.commands.setHandler "system:notifications:turn:off", (reminder) ->
+    API.turnOff reminder
 
-  App.commands.setHandler "system:notifications:add", (reminder) ->
-    console.log "system:notifications:add", reminder
-    API.addNotifications reminder
-
-  App.commands.setHandler "system:notifications:suppress", (reminder) ->
-    API.suppressNotifications reminder
+  App.commands.setHandler "system:notifications:turn:on", (reminder) ->
+    console.log "system:notifications:turn:on", reminder
+    API.turnOn reminder
 
   App.vent.on "credentials:cleared", ->
     if App.device.isNative

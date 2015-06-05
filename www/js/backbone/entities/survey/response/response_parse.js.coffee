@@ -24,7 +24,7 @@
           throw new Error "false response for step #{stepId} with invalid flow status: #{myStatus}"
 
     parseValueByType: (options) ->
-      { responseValue, type, addImageUUID } = options
+      { responseValue, type, addUploadUUIDs } = options
       switch type
         when 'timestamp'
           # because timestamp responses are raw strings,
@@ -40,15 +40,43 @@
 
           # we only want to add and create Image UUIDs in special
           # circumstances, such as survey upload.
-          if !addImageUUID then return responseValue
+          if !addUploadUUIDs then return responseValue
 
           App.execute "survey:images:add", responseValue
           return App.request "survey:images:uuid:last"
+        when 'document'
+          # document prompts must return different values,
+          # depending on whether the document was generated in a
+          # native context or a browser context.
+
+          # The value of a file is its UUID before uploading.
+          # these will later get attached to the response object as separate properties.
+
+          # we only want to add and create File UUIDs in special
+          # circumstances, such as survey upload.
+          if !addUploadUUIDs then return responseValue.fileName
+
+          App.execute "survey:file:add", responseValue
+          return responseValue.UUID
+        when 'video'
+          # video prompts must return different values,
+          # depending on the video's source type.
+
+          # The value of a file is its UUID before uploading.
+          # these will later get attached to the response object as separate properties.
+
+          # we only want to add and create File UUIDs in special
+          # circumstances, such as survey upload.
+          if !addUploadUUIDs then return responseValue.videoName
+
+          App.execute "survey:file:add", responseValue
+          return responseValue.UUID
+
         else
           return responseValue
 
     parseValue: (options) ->
-      { stepId, myResponse, addImageUUID } = options
+      { stepId, myResponse, addUploadUUIDs } = options
 
       if myResponse.get('response') is false
         return @parseFalseToValue App.request("flow:status", stepId), options.stepId
@@ -56,7 +84,7 @@
         return @parseValueByType
           responseValue: myResponse.get 'response'
           type: myResponse.get 'type'
-          addImageUUID: addImageUUID
+          addUploadUUIDs: addUploadUUIDs
 
   App.reqres.setHandler "response:value:parsed", (options) ->
     options.myResponse = App.request "response:get", options.stepId

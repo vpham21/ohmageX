@@ -17,7 +17,22 @@
     model: Entities.CampaignUser
     url: ->
       "#{App.request("serverpath:current")}/app/campaign/read"
-    comparator: "name"
+    comparator: (itemA, itemB) ->
+      statusA = itemA.get('status')
+      statusB = itemB.get('status')
+      nameA = itemA.get('name')
+      nameB = itemB.get('name')
+      if statusA is 'saved' and statusB is 'saved'
+        if nameA.capitalizeFirstLetter() > nameB.capitalizeFirstLetter() then return 1
+        if nameA.capitalizeFirstLetter() < nameB.capitalizeFirstLetter() then return -1
+        return 0
+      else if statusA isnt 'saved' and statusB is 'saved' then return 1
+      else if statusA is 'saved' and statusB isnt 'saved' then return -1
+      else
+        if nameA.capitalizeFirstLetter() > nameB.capitalizeFirstLetter() then return 1
+        if nameA.capitalizeFirstLetter() < nameB.capitalizeFirstLetter() then return -1
+        return 0
+
     parse: (response, options) ->
       # parse the response data into values ready to be added
       # to the Collection of User Campaigns.
@@ -136,7 +151,7 @@
       currentCampaignsUser.reset sync
       @saveLocalCampaigns currentCampaignsUser
     syncCampaigns: ->
-      App.vent.trigger 'loading:show', 'Syncing Campaigns...'
+      App.vent.trigger 'loading:show', "Syncing #{App.dictionary('pages','campaign').capitalizeFirstLetter()}..."
       myData = 
         client: App.client_string
         output_format: 'short'
@@ -192,7 +207,7 @@
       myCampaign = currentCampaignsUser.get id
       switch myCampaign.get('status')
         when 'available'
-          throw new Error "Invalid attempt to remove an available campaign: #{id}"
+          throw new Error "Invalid attempt to remove an available #{App.dictionary('page','campaign')}: #{id}"
         when 'saved'
           myCampaign.set('status', 'available')
         else

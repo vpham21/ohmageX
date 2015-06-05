@@ -4,4 +4,13 @@
 <td class="content">
     <label for="choice-<%= @key %>"><%= @label %></label>
 </td>
-<td class="right"><% if @custom: %><button type="button" class="delete icon">Delete</button><% end %></td>
+<td class="right"><% if @custom: %><button type="button" class="delete icon">Delete</button><% else: %><!-- 
+  # this placeholder label ensures:
+  # - it's a label, so clicking on the label element triggers
+  #   the correct interaction with its related input
+  # - the right-side buttons still render for lists that contain 
+  #   a mix of custom and non-custom choices
+  # - The css renders this with text-indent + overflow hack
+  #   usually used for image replacement, so the text can be
+  #   be invisible yet interactive
+--><label for="choice-<%= @key %>" class="placeholder"><%= @label %></label><% end %></td>

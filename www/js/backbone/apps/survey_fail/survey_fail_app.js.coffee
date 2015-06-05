@@ -9,7 +9,7 @@
 
       App.execute "notice:show",
         data:
-          title: "Survey Upload Error"
+          title: "#{App.dictionary('page','survey').capitalizeFirstLetter()} Upload Error"
           description: "#{errorPrefix} #{errorText}"
           showCancel: true
           cancelLabel: "Ok"
@@ -19,8 +19,9 @@
           console.log 'responseData in cancelListener', responseData
           App.execute "uploadqueue:item:add", responseData, "#{errorPrefix} #{errorText}", surveyId
           # After Notice Center: Notify the user that the item was put into their upload queue.
-          # Exit the survey.
-          App.vent.trigger "survey:exit", surveyId
+
+          # Broadcast that the user selected OK after the failure happened.
+          App.vent.trigger "survey:upload:failure:ok", responseData, surveyId
           App.execute "dialog:alert", "Your response has been added to the Upload Queue."
         okListener: =>
           App.execute 'credentials:preflight:check', =>
@@ -28,16 +29,20 @@
 
   App.vent.on "survey:upload:failure:campaign", (responseData, errorText, surveyId) ->
     console.log responseData
-    API.uploadFailureGeneral responseData, "Problem with Survey Campaign:", errorText, surveyId
+    API.uploadFailureGeneral responseData, "Problem with #{App.dictionary('page','survey')} #{App.dictionary('page','campaign')}:", errorText, surveyId
 
   App.vent.on "survey:upload:failure:response", (responseData, errorText, surveyId) ->
     # placeholder for response errors handler.
     console.log responseData
-    API.uploadFailureGeneral responseData, "Problem with Survey Response:", errorText, surveyId
+    API.uploadFailureGeneral responseData, "Problem with #{App.dictionary('page','survey')} Response:", errorText, surveyId
 
   App.vent.on "survey:upload:failure:server", (responseData, errorText, surveyId) ->
     # placeholder for server errors handler.
     API.uploadFailureGeneral responseData, "Problem with Server:", errorText, surveyId
+
+  App.vent.on "survey:upload:failure:abort", (responseData, errorText, surveyId) ->
+    # placeholder for server errors handler.
+    API.uploadFailureGeneral responseData, "#{App.dictionary('page','survey').capitalizeFirstLetter()} upload aborted:", errorText, surveyId
 
   App.vent.on "survey:upload:failure:auth", (responseData, errorText, surveyId) ->
     # placeholder for auth errors handler.

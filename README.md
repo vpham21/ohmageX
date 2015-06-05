@@ -1,4 +1,4 @@
-# ohmageX v3.0.0
+# ohmageX v3.0.3
 
 [ohmage](http://ohmage.org/) is an open-source, mobile to web platform that records, analyzes, and visualizes data from both prompted experience samples entered by the user, as well as continuous streams of data passively collected from sensors or applications onboard the mobile device. 
 
@@ -103,6 +103,64 @@ The `mobile_firstrun` task executes in the root folder without issues, and avoid
 - [Development Workflow (wiki)](https://github.com/ucla/ohmage-mwf-dw/wiki/Development-Workflow)
 
 ## Version Notes
+
+### 3.0.3 - Mobilize Android Release
+
+- Prompt Conditional Parser
+  - Fix space parsing and values for skipped choice prompts
+
+- Photo Prompt Fixes
+  - Fix max dimension property handlers
+  - allow 0 value max dimension to be evaluated as boundless
+  - constrain to 800 pixels on native (prevent memory issues)
+
+- UI Rendering Fixes
+  - Firefox UI fixes
+  - Android 4.1 stock browser UI fixes
+
+### 3.0.2 - Mobilize iOS Release
+
+- Config
+  - Multiple config
+    - Supports multiple configuration via sending a new `--deployment` param with the name of a JSON file located in `/appconfig`
+  - Add post survey reminders disabled config
+  - add configurable prompt defaults
+
+- Dictionary
+  - Add dictionary to missing view elements, alerts and dialogs
+
+- Development
+  - clean up development build tasks
+  - Add debug username and password params to auto-populate login form on debug mobile builds
+
+- Reminder Fixes
+  - Refactor to use new version of local notifications plugin, more streamlined
+  - Fix reminder turn off and turn on
+  - Fix reminder suppression
+  - Fix reminder scheduling with repeating
+  - Fix reminder survey trigger events
+
+- Photo prompt
+  - add native photo picker, take photo and choose from library
+  - add width and height constraints
+
+- Add global app state tracking entity - tracks loading state, etc.
+
+### 3.0.1 - Mobilize Android Fixes (partial release)
+
+- Document Prompt
+  - Add support for document prompt
+
+- Video Prompt
+  - Add support for video prompt
+  - Assumes 1 video per survey
+
+- File Upload
+  - Add upload progress indicator for video and file uploads
+  - Assumes standard upload, video upload, or file upload are separate survey upload types - no mixing types currently allowed
+
+- Native back button
+  - Add general support for handling the device back button
 
 ### 3.0.0 - iOS Release
 

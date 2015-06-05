@@ -52,6 +52,9 @@
             # Hiding it here would hide the loading spinner before the campaigns are
             # finished fetching.
 
+            # only hide the loading spinner if the homepage is NOT the campaigns page.
+            if App.custom.build.homepage? and App.custom.build.homepage isnt "campaign" then App.vent.trigger "loading:hide"
+
             App.credentials = new Entities.Credentials
               username: username
               password: response.hashed_password

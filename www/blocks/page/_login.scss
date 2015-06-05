@@ -11,7 +11,7 @@ form.login {
     text-indent: -999px;
     overflow: hidden;
     border: 0;
-    background-image: url('../img/app-logo-header.png');
+    // Background image is defined in the template inline so it can be replaced
     background-position: center center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -41,6 +41,7 @@ form.login {
       border: 0;
       border-radius: 0;
       text-transform: uppercase;
+      background: $modal-activate-background-color;
       background: $modal-activate-background;
       color: $modal-activate-font-color;
       border-color: $global-form-control-border-color-dark;
@@ -61,5 +62,8 @@ form.login {
       margin-bottom: $app-main-footer-padding/4;
       width: 100%;
     }
+  }
+  .hideShowPassword-wrapper {
+    width: 100%;
   }
 }

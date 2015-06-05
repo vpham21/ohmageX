@@ -1,0 +1,19 @@
+<form>
+  <h3 class="hide-accessible"><%= @displayLabel %></h3>
+  <div class="file-control">
+    <label for="<%= @id %>" class="inset-block"><%= @promptText %></label>
+    <div class="container">
+      <% if @nativeFilePicker: %>
+      <div class="input-activate">
+        <h3 class="file-header"><%= @fileName %></h3>
+        <button class="get-file" type="button">Select a Document File</button>
+      </div>
+      <% else: %>
+      <div class="input-activate">
+        <h3 class="file-header">Select a Document File</h3>
+        <input name="<%= @id %>" type="file" multiple="multiple" />
+      </div>
+      <% end %>
+    </div>
+  </div>
+</form>

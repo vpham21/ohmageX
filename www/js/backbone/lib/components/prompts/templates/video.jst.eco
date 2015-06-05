@@ -1,0 +1,22 @@
+<form>
+  <h3 class="hide-accessible"><%= @displayLabel %></h3>
+  <div class="video-control">
+    <label for="<%= @id %>" class="inset-block"><%= @promptText %></label>
+    <div class="container">
+      <h3 class="video-name"><%= @videoName %></h3>
+      <% if @showSingleButton: %>
+      <div class="input-activate">
+        <button class="get-video" type="button">Get Video</button>
+        <input name="<%= @id %>" type="file" accept="image/*" capture />
+      </div>
+      <% else: %>
+      <div class="input-activate two-buttons">
+        <button class="record-video" type="button">Record a Video</button>
+        <button class="from-library" type="button">Select from Library</button>
+      </div>
+      <% end %>
+      <img src="" style="display:none" class="preview-image" />
+      <canvas style="display:none"></canvas>
+    </div>
+  </div>
+</form>

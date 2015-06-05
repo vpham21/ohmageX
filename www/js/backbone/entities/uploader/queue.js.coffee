@@ -42,9 +42,17 @@
         id: _.guid()
         errorText: errorText
         responses: responses
+        uploadType: App.request 'responses:uploadtype'
 
       if surveyObj[0].location_status is "valid"
         _.extend(result, location: surveyObj[0].location)
+
+      if result.uploadType is 'video' or result.uploadType is 'file'
+        _.extend result,
+          fileMeta:
+            firstFile: App.request "survey:files:first:file"
+            firstUUID: App.request "survey:files:first:uuid"
+            surveyFiles: App.request "survey:files"
 
       currentQueue.add result
       @updateLocal( =>
@@ -66,6 +74,13 @@
     updateLocal: (callback) ->
       # update localStorage index upload_queue with the current version of campaignsSaved entity
       App.execute "storage:save", 'upload_queue', currentQueue.toJSON(), callback
+    getUploadType: (id) ->
+      queueItem = currentQueue.get id
+      console.log 'queueItem', queueItem.toJSON()
+      queueItem.get 'uploadType'
+    getFileMeta: (id) ->
+      queueItem = currentQueue.get id
+      queueItem.get 'fileMeta'
     clear: ->
       currentQueue = new Entities.UploadQueue
 
@@ -82,6 +97,21 @@
 
   App.commands.setHandler "uploadqueue:item:remove", (id) ->
     API.removeItem id
+
+  App.reqres.setHandler 'uploadqueue:item:uploadtype', (id) ->
+    API.getUploadType id
+
+  App.reqres.setHandler "uploadqueue:item:surveyfiles", (id) ->
+    files = API.getFileMeta id
+    files.surveyFiles
+
+  App.reqres.setHandler "uploadqueue:item:firstfile", (id) ->
+    files = API.getFileMeta id
+    files.firstFile
+
+  App.reqres.setHandler "uploadqueue:item:firstuuid", (id) ->
+    files = API.getFileMeta id
+    files.firstUUID
 
   App.commands.setHandler "uploadqueue:item:error:set", (id, errorText) ->
     API.changeError id, errorText

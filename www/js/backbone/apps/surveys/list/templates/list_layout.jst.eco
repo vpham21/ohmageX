@@ -3,5 +3,5 @@
   <div id="selector-region" class="select-block"></div>
   <div id="infobutton-region"></div>
 </header>
-<h3 class="hide-accessible"><%= @name %> Saved Surveys</h3>
+<h3 class="hide-accessible"><%= @name %> Saved <%= @dictionary('pages','survey') %></h3>
 <div id="list-region"></div>

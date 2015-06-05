@@ -14,6 +14,10 @@
     App.loading = App.request "loading:entities"
     App.package_info = options.package_info
 
+    # overwrite base config with custom build options
+    defaultUrl = App.navs.getUrlByName App.custom.build.homepage
+    Routes.dashboard_route = -> defaultUrl
+
   App.addRegions
     loadingRegion: "body > #loading-spinner"
     blockerRegion: "body > #ui-blocker"

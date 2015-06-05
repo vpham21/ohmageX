@@ -20,6 +20,12 @@
   <footer role="contentinfo"></footer>
   <script src="<%= js_jquery_path %>"></script>
   <script src="<%= js_path %>"></script>
+  <%
+    configObj = JSON.parse(app_config);
+    if (configObj.build.debug) {
+      print('<script src="' + configObj.build.debug_settings.debug_script + '"></script>\n');
+    }
+  %>
   <script type="text/javascript">
   $(function() {
     var myConfig = {

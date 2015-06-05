@@ -20,6 +20,7 @@
       border: 0;
       border-radius: 0;
       text-transform: uppercase;
+      background: $modal-close-background-color;
       background: $modal-activate-background;
       color: $modal-activate-font-color;
       padding: $global-form-control-padding*1.5;

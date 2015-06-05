@@ -94,6 +94,11 @@
           @$el.addClass model.get('icon')
       @listenTo @collection, "chosen:canceled", ->
         @menu.close()
+
+      @listenTo App.vent, "external:hamburgermenu:close", ->
+        if $('body').attr('slideout-state') is 'active'
+          @menu.close()
+
     template: "header/list/layout"
     attributes: ->
       if App.device.isiOS7 then { class: "ios7" }

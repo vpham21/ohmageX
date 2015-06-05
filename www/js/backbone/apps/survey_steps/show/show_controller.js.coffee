@@ -20,6 +20,7 @@
         @skipButtonRegion()
         @prevButtonRegion()
         @nextButtonRegion()
+        $('body').scrollTop(0)
 
       if App.request "flow:type:is:prompt", @stepId
         # add special event listeners for a prompt,
@@ -71,6 +72,10 @@
       prevView = @getPrevButtonView prevEntity
 
       @listenTo prevView, "prev:clicked", =>
+        App.vent.trigger "survey:step:prev:clicked", @surveyId, @stepId
+
+      @listenTo App.vent, 'external:survey:prev:navigate', =>
+        # Add external hook for navigating backwards in a survey
         App.vent.trigger "survey:step:prev:clicked", @surveyId, @stepId
 
       @show prevView, region: @layout.prevButtonRegion

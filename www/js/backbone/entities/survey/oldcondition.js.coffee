@@ -22,17 +22,19 @@
       responses.each((response) =>
         myId = response.get 'id'
 
-        if @isArrayResponse response
+        if response.get('response') isnt false and @isArrayResponse(response)
           myResponse = @stringsToArrays(response.get 'response')
         else
-          myResponse = App.request "response:value:parsed", { stepId: myId, addImageUUID: false }
+          myResponse = App.request "response:value:parsed", { stepId: myId, addUploadUUIDs: false }
         oldParserResponses[myId] = myResponse
         oldParserResponses
       )
 
       console.log 'oldParserResponses', oldParserResponses
 
-      ConditionalParser.parse rawCondition, oldParserResponses
+      trimCondition = rawCondition.replace(/\)\s*(and|or)\s*\(/i, ") $1 (")
+      trimCondition = trimCondition.replace(/\s*(==|!=|<=|=>|>|<)\s*/i, " $1 ")
+      ConditionalParser.parse trimCondition, oldParserResponses
 
   App.reqres.setHandler "oldcondition:evaluate", (rawCondition, responses) ->
     API.prepParser rawCondition, responses

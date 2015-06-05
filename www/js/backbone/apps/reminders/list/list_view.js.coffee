@@ -57,7 +57,11 @@
       dateString = "#{@$el.find('input[type=date]').val()}T#{@$el.find('input[type=time]').val()}#{moment().format('Z')}"
       moment(dateString).second(0)
     showFutureDate: ->
-      @$el.find('input[type=date]').val @model.get('activationDate').format('YYYY-MM-DD')
+      if typeof @model isnt 'undefined'
+        # this event gets fired in the even the switch is changed and the update
+        # blocker has never been initialized. So only activate it if the model is
+        # defined first.
+        @$el.find('input[type=date]').val @model.get('activationDate').format('YYYY-MM-DD')
     revertAll: (surveys) ->
       @model.set('activationDate', @oldDate)
       if @oldSurveyId
@@ -159,6 +163,9 @@
       @listenTo @, "active:toggle", @setSwitch
       @listenTo @model, 'change', @render
       @listenTo @, 'check:enabled', @checkEnabled
+      @listenTo @model, "date:future:shift", @render
+      @listenTo App.vent, "notifications:update:complete", @render
+
     template: "reminders/list/_item_summary"
     tagName: 'li'
     attributes:

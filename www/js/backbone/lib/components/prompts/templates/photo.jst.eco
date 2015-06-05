@@ -3,10 +3,17 @@
   <div class="photo-control">
     <label for="<%= @id %>" class="inset-block"><%= @promptText %></label>
     <div class="container">
+      <% if @showSingleButton: %>
       <div class="input-activate">
-        <button type="button">Get Photo</button>      
+        <button class="get-photo" type="button">Get Photo</button>
         <input name="<%= @id %>" type="file" accept="image/*" capture />
       </div>
+      <% else: %>
+      <div class="input-activate two-buttons">
+        <button class="take-picture" type="button">Take a Photo</button>
+        <button class="from-library" type="button">Select from Library</button>
+      </div>
+      <% end %>
       <img src="" style="display:none" class="preview-image" />
       <canvas style="display:none"></canvas>
     </div>

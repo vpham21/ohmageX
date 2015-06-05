@@ -105,12 +105,34 @@
     initialize: ->
       super
       @listenTo @, "file:changed", @processFile
+      @listenTo @, "take:picture", @takePicture
+      @listenTo @, "from:library", @fromLibrary
+    serializeData: ->
+      data = @model.toJSON()
+      # only show a single button in the browser, or on iPad
+      # (iPad shows a popover that allows the user to select a picture)
+      data.showSingleButton = !App.device.isNative or 
+        (device.platform is "iOS" and device.model.indexOf('iPad') isnt -1)
+      data
+    constrainMaxDimension: ->
+      maxDimension = @model.get('properties').get('maxDimension')
+      if "#{maxDimension}" is "0"
+        # When maxDimension is 0, assume there is no max dimension
+        maxDimension = 99999
+      else
+        if !!!maxDimension then maxDimension = App.custom.prompt_defaults.photo.max_pixels
+
+      if App.device.isNative
+        # on some devices a max dimension larger than 800 may cause memory errors.
+        if maxDimension > 800 then maxDimension = 800
+
+      maxDimension
     processFile: ->
       fileDOM = @$el.find('input[type=file]')[0]
       myInput = fileDOM.files[0]
       _URL = window.URL || window.webkitURL
-      maxDimension = @model.get('properties').get('maxDimension')
-      if !!!maxDimension then maxDimension = 800
+      maxDimension = @constrainMaxDimension()
+
       img = new Image()
       imgCanvas = @$el.find('canvas')[0]
 
@@ -128,19 +150,52 @@
             imgCanvas.width = img.width
             imgCanvas.height = img.height
             context.drawImage img, 0, 0, img.width, img.height
-            @recordImage imgCanvas.toDataURL('image/jpeg',.5)
+            @recordImage imgCanvas.toDataURL('image/jpeg', 0.45)
+            _URL.revokeObjectURL(img.src)
 
           img.src = _URL.createObjectURL myInput
         else
           console.log 'Please upload an image in jpeg or png format.'
       else
         console.log 'Please select an image.'
+    takePicture: ->
+      @getPicture navigator.camera.PictureSourceType.CAMERA
+    fromLibrary: ->
+      @getPicture navigator.camera.PictureSourceType.PHOTOLIBRARY
+    getPicture: (source) ->
+      # Device camera plugin, get picture and retrieve image as base64-encoded string
+      console.log 'getMobileImage method'
+      maxDimension = @constrainMaxDimension()
+
+      navigator.camera.getPicture ((img64) =>
+        # success callback
+        @recordImage "data:image/jpeg;base64,#{img64}"
+
+      ),((message) =>
+        # error callback
+        window.setTimeout (=>
+          # setTimeout hack required to display alerts properly in iOS camera callbacks
+          App.execute "dialog:alert", "Failed to get image: #{message}"
+        ), 0
+      ),
+        quality: 45
+        allowEdit: false
+        destinationType: navigator.camera.DestinationType.DATA_URL
+        sourceType: source
+        targetWidth: maxDimension
+        targetHeight: maxDimension
+
     recordImage: (img64) ->
       @model.set('currentValue', img64)
       @renderImageThumb img64
     onRender: ->
       savedImage = @model.get('currentValue')
       if savedImage then @renderImageThumb(savedImage)
+      if App.device.isNative
+        # hide the input button on native so the "Get Photo"
+        # button beneath it can activate
+        @$el.find('.input-activate input').hide()
+
     renderImageThumb: (img64) ->
       # display the image in the preview
       $img = @$el.find '.preview-image'
@@ -150,8 +205,15 @@
       response = @model.get('currentValue')
       @trigger "response:submit", response, surveyId, stepId
 
-    triggers:
-      'change input[type=file]': "file:changed"
+    triggers: ->
+      if App.device.isNative
+        return {
+          'click .input-activate .get-photo': "take:picture"
+          'click .input-activate .take-picture': "take:picture"
+          'click .input-activate .from-library': "from:library"
+        }
+      else
+        return 'change input[type=file]': "file:changed"
 
   class Prompts.SingleChoiceItem extends App.Views.ItemView
     tagName: 'tr'
@@ -354,6 +416,154 @@
       # <li><input type=checkbox ... /><label>labelText</label></li>
       $responses = @$el.find('input[type=checkbox]').filter(':checked')
       @trigger "response:submit", @extractJSONString($responses), surveyId, stepId
+
+  class Prompts.Document extends Prompts.Base
+    initialize: ->
+      super
+      @listenTo @, 'get:native:file', @getNativeFile
+      @listenTo @, 'file:changed', @processFile
+    template: "prompts/document"
+    getNativeFile: ->
+      console.log 'get Native File'
+    processFile: ->
+      fileDOM = @$el.find('input[type=file]')[0]
+      myInput = fileDOM.files[0]
+
+      if myInput
+        @model.set 'currentValue',
+          fileObj: myInput
+          fileName: myInput.name
+          UUID: _.guid()
+          fileSize: myInput.size
+      else
+        @model.set 'currentValue', false
+
+    gatherResponses: (surveyId, stepId) =>
+      response = @model.get('currentValue')
+      @trigger "response:submit", response, surveyId, stepId
+
+    serializeData: ->
+      data = @model.toJSON()
+      console.log 'serializeData data', data
+
+      # data.nativeFilePicker = App.device.isNative and device.platform is ""
+      data.nativeFilePicker = false
+
+      if !data.currentValue
+        data.fileName= 'No File Selected'
+      else
+        data.fileName = data.currentValue.fileName
+
+      data
+
+    triggers: ->
+      # if App.device.isNative
+      #   return 'click .input-activate .get-file': "get:native:file"
+      # else
+      return 'change input[type=file]': "file:changed"
+
+
+  class Prompts.Video extends Prompts.Base
+    template: "prompts/video"
+    initialize: ->
+      super
+      @listenTo @, "record:video", @recordVideo
+      @listenTo @, "from:library", @fromLibrary
+      @listenTo @model, "change:currentValue", @render
+
+    recordVideo: ->
+      # default to 10 minute capture length
+      myDuration = if typeof @model.get('properties').get('max_seconds') isnt "undefined" then @model.get('properties').get('max_seconds') else App.custom.prompt_defaults.video.max_seconds
+
+      navigator.device.capture.captureVideo ( (mediaFiles) =>
+        # capture success
+        # returns an array of media files
+        # mediaFile properties: name, fullPath, type, lastModifiedDate, size (bytes)
+        mediaFile = mediaFiles[0]
+
+        @model.set 'currentValue',
+          source: "capture"
+          fileObj: mediaFile
+          videoName: mediaFile.name
+          UUID: _.guid()
+
+      ),( (error) =>
+        # capture error
+        message = switch error.code
+          when CaptureError.CAPTURE_INTERNAL_ERR
+            "Camera failed to capture video."
+          when CaptureError.CAPTURE_APPLICATION_BUSY
+            "Camera is busy with another application."
+          when CaptureError.CAPTURE_INVALID_ARGUMENT
+            "Camera API Error."
+          when CaptureError.CAPTURE_NO_MEDIA_FILES
+            "No video captured."
+          when CaptureError.CAPTURE_NOT_SUPPORTED
+            "Video capture is not supported."
+
+        App.execute "dialog:alert", "Unable to capture: #{message}"
+        @model.set 'currentValue', false
+
+      ),
+        limit: 1,
+        duration: myDuration
+
+    fromLibrary: ->
+      navigator.camera.getPicture ( (fileURI) =>
+        # success callback
+
+        window.resolveLocalFileSystemURL fileURI, ( (fileEntry) =>
+          # success callback to convert the retrieved fileURI
+          # into an actual useful File object rather than a string
+
+          fileEntry.file (file) =>
+
+            console.log 'file entry success'
+
+            @model.set 'currentValue',
+              source: "library"
+              fileObj: file
+              videoName: fileURI.split('/').pop()
+              UUID: _.guid()
+              fileSize: file.size
+
+        ),( (error) =>
+          # error callback when reading the generated fileURI
+          console.log 'file entry error'
+          App.execute "dialog:alert", "Unable to read captured video file. #{JSON.stringify(error)}"
+        )
+
+      ),( (message) =>
+        # error callback
+        window.setTimeout (=>
+          # setTimeout hack required to display alerts properly in iOS camera callbacks
+          App.execute "dialog:alert", "Failed to get video from library: #{message}"
+        ), 0
+      ),
+        destinationType: navigator.camera.DestinationType.FILE_URI
+        mediaType: navigator.camera.MediaType.VIDEO
+        sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+
+    gatherResponses: (surveyId, stepId) =>
+      response = @model.get('currentValue')
+      @trigger "response:submit", response, surveyId, stepId
+
+    serializeData: ->
+      data = @model.toJSON()
+      myVideo = @model.get('currentValue')
+      data.videoName = ""
+
+      if myVideo then data.videoName = myVideo.videoName
+
+      data.showSingleButton = !App.device.isNative
+      data
+
+    triggers: ->
+      if App.device.isNative
+        return {
+          'click .input-activate .record-video': "record:video"
+          'click .input-activate .from-library': "from:library"
+        }
 
   class Prompts.Unsupported extends Prompts.Base
     className: "text-container"
