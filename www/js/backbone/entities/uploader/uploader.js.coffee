@@ -130,6 +130,7 @@
 
     videoUploader: (context, responseData, itemId) ->
       # we're currently assuming there is only one video file per upload at this time.
+      App.vent.trigger "loading:show", "Uploading ..."
 
       # add auth credentials to the response before saving.
       # may later move this to the model's custom "sync" method.
