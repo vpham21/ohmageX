@@ -12,12 +12,13 @@
         App.vent.trigger "loading:hide"
         App.vent.trigger "#{context}:upload:success", response, itemId
       else
-        console.log 'response.errors[0].code', response.errors[0].code
+        console.log "response.errors[0].code #{response.errors[0].code}"
         type = switch response.errors[0].code
           when '0710','0703','0617','0700' then "campaign"
           when '0100' then "server"
           when '0600','0307','0302','0304' then "response"
           when '0200','0201','0202' then "auth"
+          else "server"
         console.log 'type', type
         App.vent.trigger "loading:hide"
         App.vent.trigger "#{context}:upload:failure:#{type}", responseData, response.errors[0].text, itemId
