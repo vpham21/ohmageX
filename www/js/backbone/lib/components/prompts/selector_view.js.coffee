@@ -481,6 +481,9 @@
         # mediaFile properties: name, fullPath, type, lastModifiedDate, size (bytes)
         mediaFile = mediaFiles[0]
 
+        if mediaFile.size > App.custom.prompt_defaults.video.caution_threshold_bytes
+          App.execute "dialog:alert", "Caution: the recorded video is large, and may take a long time to upload to the server."
+
         @model.set 'currentValue',
           source: "capture"
           fileObj: mediaFile
@@ -519,6 +522,8 @@
           fileEntry.file (file) =>
 
             console.log 'file entry success'
+            if file.size > App.custom.prompt_defaults.video.caution_threshold_bytes
+              App.execute "dialog:alert", "Caution: the selected video is large, and may take a long time to upload to the server."
 
             @model.set 'currentValue',
               source: "library"
