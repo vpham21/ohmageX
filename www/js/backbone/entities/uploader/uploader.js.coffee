@@ -150,6 +150,10 @@
       console.log "firstFile #{JSON.stringify(firstFile)}"
       options.fileName = firstFile.name
       options.mimeType = firstFile.type
+      # iOS returns null for video file type.
+      # Set the MIME type to mp4 so the server accepts the upload,
+      # since it's assumed that all iOS videos will be of this type.
+      if firstFile.type is null then options.mimeType = "video/mp4"
       options.fileKey = firstUUID
       options.params = @videoParams _.extend(myAuth, responseData)
 
