@@ -47,13 +47,15 @@
             else
               # it's a prompt
 
-              # Condition check also sets the status of the prompt to either "displaying"
-              # or "not_displayed"
-              isPassed = App.request "flow:condition:check", currentStep.get('id')
-              if isPassed
-                currentStep.set 'page', currentPage
-                if App.request("flow:condition:invalid:future:reference", currentStep.get('condition'))
-                  loopThroughSteps = false
+              if App.request("flow:condition:invalid:future:reference", currentStep.get('condition'))
+                # stop, we've hit something that has an invalid reference.
+                loopThroughSteps = false
+              else
+                # Condition check also sets the status of the prompt to either "displaying"
+                # or "not_displayed"
+                isPassed = App.request "flow:condition:check", currentStep.get('id')
+                if isPassed 
+                  currentStep.set 'page', currentPage
 
         myStepIndex++
 
