@@ -16,6 +16,7 @@
       skippable: false # Step can't be skipped
       skiplabel: false # Skip label is empty
       status: "pending" # Step hasn't been processed
+      page: false # no page assigned to this step
 
   class Entities.StepCollection extends Entities.Collection
     model: Entities.Step
