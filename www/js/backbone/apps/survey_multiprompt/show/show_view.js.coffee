@@ -21,6 +21,14 @@
     triggers:
       "click": "next:clicked"
 
+
+  class Show.StepLayout extends App.Views.Layout
+    template: "survey_multiprompt/show/_step_layout"
+    regions:
+      errorRegion: '.inline-error-region'
+      skipButtonRegion: '.skip-button-region'
+      stepBodyRegion: '.step-body-region'
+
   class Show.Steps extends App.Views.CollectionView
     childView: Show.StepLayout
 
