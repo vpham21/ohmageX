@@ -71,11 +71,19 @@
       if result is undefined then throw new Error "Page #{page} does not exist in flow"
       result
 
+    getPageSteps: (flow, page) ->
+      console.log 'getPageSteps'
+      resultArr = flow.where(page: "#{page}")
+      new Entities.Collection resultArr
+
   App.vent.on "surveytracker:page:new", (page) ->
     API.assignNewPage App.request('flow:current'), page
 
   App.vent.on "surveytracker:page:old", (oldPage) ->
     API.clearOldPage App.request('flow:current'), oldPage
+
+  App.reqres.setHandler "flow:page:steps", (page) ->
+    API.getPageSteps App.request('flow:current'), page
 
   App.reqres.setHandler "flow:page:step:first", (page) ->
     API.getPageFirstStep App.request('flow:current'), page
