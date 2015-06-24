@@ -16,6 +16,16 @@
 
       @layout = @getLayoutView()
 
+      @listenTo @layout, "show", =>
+        @noticeRegion()
+        @progressRegion()
+        @stepsLayoutRegion()
+        @prevButtonRegion()
+        @nextButtonRegion()
+        $('body').scrollTop(0)
+
+      @show @layout
+
     noticeRegion: ->
       App.execute "notice:region:set", @layout.noticeRegion
 
