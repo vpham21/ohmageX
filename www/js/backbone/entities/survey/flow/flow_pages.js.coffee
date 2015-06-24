@@ -24,7 +24,12 @@
         return myIndex
 
     assignNewPage: (flow, currentPage) ->
+      loopThroughSteps = true
       myStepIndex = @getStartingStepIndex flow, currentPage
+
+      while loopThroughSteps and myStepIndex <= flow.length
+        currentStep = flow.at myStepIndex
+        myStepIndex++
 
     clearOldPage: (flow, oldPage) ->
       flow.each (step) =>
