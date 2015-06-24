@@ -15,3 +15,7 @@
       @firstStep = App.request "flow:page:step:first", @page
 
       @layout = @getLayoutView()
+
+    noticeRegion: ->
+      App.execute "notice:region:set", @layout.noticeRegion
+
