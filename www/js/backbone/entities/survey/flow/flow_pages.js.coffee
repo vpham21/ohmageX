@@ -44,6 +44,14 @@
             when "afterSurveySubmit"
               currentStep.set 'page', currentPage+2
               loopThroughSteps = false
+            else
+              # it's a prompt
+
+              # Condition check also sets the status of the prompt to either "displaying"
+              # or "not_displayed"
+              isPassed = App.request "flow:condition:check", currentStep.get('id')
+              if isPassed
+                currentStep.set 'page', currentPage
         myStepIndex++
 
     clearOldPage: (flow, oldPage) ->
