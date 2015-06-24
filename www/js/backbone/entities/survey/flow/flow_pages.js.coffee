@@ -65,8 +65,17 @@
           step.set 'page', false
           App.vent.trigger "flow:step:reset", step.get('id')
 
+    getPageFirstStep: (flow, page) ->
+      console.log 'getPageFirstStep'
+      result = flow.findWhere(page: "#{page}")
+      if result is undefined then throw new Error "Page #{page} does not exist in flow"
+      result
+
   App.vent.on "surveytracker:page:new", (page) ->
     API.assignNewPage App.request('flow:current'), page
 
   App.vent.on "surveytracker:page:old", (oldPage) ->
     API.clearOldPage App.request('flow:current'), oldPage
+
+  App.reqres.setHandler "flow:page:step:first", (page) ->
+    API.getPageFirstStep App.request('flow:current'), page
