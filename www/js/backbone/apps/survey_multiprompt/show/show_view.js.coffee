@@ -21,6 +21,8 @@
     triggers:
       "click": "next:clicked"
 
+  class Show.Steps extends App.Views.CollectionView
+    childView: Show.StepLayout
 
   class Show.Layout extends App.Views.Layout
     className: 'survey-step'
