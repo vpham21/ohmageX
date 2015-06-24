@@ -39,6 +39,11 @@
                 currentStep.set 'page', 1
                 # the intro step gets a page all to itself, if displayed
                 loopThroughSteps = false
+            when "beforeSurveySubmit"
+              currentStep.set 'page', currentPage+1
+            when "afterSurveySubmit"
+              currentStep.set 'page', currentPage+2
+              loopThroughSteps = false
         myStepIndex++
 
     clearOldPage: (flow, oldPage) ->
