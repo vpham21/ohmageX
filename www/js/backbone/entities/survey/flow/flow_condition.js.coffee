@@ -32,6 +32,20 @@
       console.log "oldcondition:evaluate", result
       result
 
+    checkFutureReference: (flow, condition) ->
+      stepIds = flow.pluck 'id'
+      result = _.find stepIds, (stepId, index) =>
+        if condition.indexOf(stepId) isnt -1
+          # the condition contains a reference to a stepId.
+          myStep = flow.at(index)
+          # the step referenced is either currently displaying or pending,
+          # meaning it's a future reference.
+          if myStep.get('status') is 'displaying' or myStep.get('status') is 'pending' then return true
+
   App.reqres.setHandler "flow:condition:check", (id) ->
     currentFlow = App.request "flow:current"
     API.checkCondition currentFlow, id
+
+  App.reqres.setHandler "flow:condition:invalid:future:reference", (condition) ->
+    currentFlow = App.request "flow:current"
+    API.checkFutureReference currentFlow, condition
