@@ -6,3 +6,12 @@
   # it is the ONLY step on that page. Any other assumption will break this layout.
   # This assumption is enforced in the flow_pages entity as well.
 
+  class Show.Controller extends App.Controllers.Application
+    initialize: (options) ->
+      console.log "SurveyMultipromptApp Show.Controller"
+      { surveyId, page } = options
+      @surveyId = surveyId
+      @page = page
+      @firstStep = App.request "flow:page:step:first", @page
+
+      @layout = @getLayoutView()
