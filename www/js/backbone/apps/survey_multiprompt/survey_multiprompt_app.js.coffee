@@ -29,6 +29,22 @@
         page: page
         surveyId: surveyId
 
+    goPrev: (surveyId) ->
+      try
+        prevPage = App.request "surveytracker:page:previous"
+        # surveytracker:page:previous throws an exception if there is no previous page.
+
+        # This needs to be triggered on each displaying step when navigating backwards
+        # and the validation succeeds.
+        # App.vent.trigger "survey:step:goback", surveyId, stepId
+
+        App.navigate "surveymulti/#{surveyId}/page/#{prevPage}", { trigger: true }
+
+      catch e
+        # There is no previous page.
+        App.execute "dialog:confirm", "Do you want to exit the #{App.dictionary('page','survey')}?", =>
+          App.vent.trigger "survey:exit", surveyId
+
     goNext: (surveyId) ->
       nextPage = App.request "surveytracker:page:next", page
       # call the Router method without updating the URL
