@@ -53,3 +53,9 @@
   App.addInitializer ->
     new SurveyMultipromptApp.Router
       controller: API
+
+  App.on "before:start", ->
+
+    if App.custom.functionality.multi_question_survey_flow is true
+      console.log 'set app listeners here'
+
