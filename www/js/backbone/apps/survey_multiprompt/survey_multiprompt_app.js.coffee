@@ -23,7 +23,8 @@
 
     showPage: (surveyId, page) ->
       # update URL without triggering the Router
-      App.navigate "survey/#{surveyId}/page/#{page}"
+      App.navigate "surveymulti/#{surveyId}/page/#{page}"
+      console.log "updated flow with page numbers", App.request('flow:current').toJSON()
       new SurveyMultipromptApp.Show.Controller
         page: page
         surveyId: surveyId
