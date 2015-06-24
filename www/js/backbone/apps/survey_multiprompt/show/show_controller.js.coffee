@@ -19,3 +19,10 @@
     noticeRegion: ->
       App.execute "notice:region:set", @layout.noticeRegion
 
+    progressRegion: ->
+      # progress is based on the index of the current page's first step within the flow.
+      progress = App.request 'flow:progress', @firstStep.get('id')
+      progressView = @getProgressView progress
+
+      @show progressView, region: @layout.progressRegion
+
