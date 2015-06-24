@@ -24,6 +24,8 @@
   class Show.StepError extends App.Views.ItemView
     template: "survey_multiprompt/show/_step_error"
 
+  class Show.StepSkip extends App.Views.ItemView
+    template: "survey_multiprompt/show/_step_skip"
 
   class Show.StepLayout extends App.Views.Layout
     template: "survey_multiprompt/show/_step_layout"
