@@ -10,3 +10,8 @@
   class Show.BaseButton extends App.Views.ItemView
     attributes: ->
       if @model.get('disabled') then { class: "disabled" }
+
+  class Show.PrevButton extends Show.BaseButton
+    template: "survey_multiprompt/show/prevbutton"
+    triggers:
+      "click": "prev:clicked"
