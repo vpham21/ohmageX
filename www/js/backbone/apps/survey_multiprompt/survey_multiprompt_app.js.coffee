@@ -29,6 +29,11 @@
         page: page
         surveyId: surveyId
 
+    goNext: (surveyId) ->
+      nextPage = App.request "surveytracker:page:next", page
+      # call the Router method without updating the URL
+      @checkPage surveyId, nextPage
+
   App.addInitializer ->
     new SurveyMultipromptApp.Router
       controller: API
