@@ -15,3 +15,9 @@
     template: "survey_multiprompt/show/prevbutton"
     triggers:
       "click": "prev:clicked"
+
+  class Show.NextButton extends Show.BaseButton
+    template: "survey_multiprompt/show/nextbutton"
+    triggers:
+      "click": "next:clicked"
+
