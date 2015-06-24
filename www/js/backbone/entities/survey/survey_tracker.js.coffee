@@ -21,6 +21,12 @@
   App.reqres.setHandler "surveytracker:active", ->
     currentStatus
 
+  App.reqres.setHandler "surveytracker:page", ->
+    currentPage
+
+  App.commands.setHandler "surveytracker:page:set", (page) ->
+    currentPage = page
+
   App.vent.on "survey:start", (surveyId) ->
     API.setActive()
     API.startPages()
