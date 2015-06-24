@@ -73,3 +73,5 @@
       new Show.NextButton
         model: nextStep
 
+    getLayoutView: ->
+      new Show.Layout
