@@ -41,11 +41,35 @@
 
       @show prevView, region: @layout.prevButtonRegion
 
+    nextButtonRegion: ->
+
+      nextEntity = App.request "stepbutton:next:entity", @firstStep.get('id')
+      nextView = @getNextButtonView nextEntity
+
+      @listenTo nextView, "next:clicked", =>
+        console.log 'nextview listento next:clicked'
+
+        switch @firstStep.get('type')
+          when "intro"
+            App.vent.trigger "survey:intro:next:clicked", @surveyId, @page
+          when "beforeSurveySubmit"
+            App.vent.trigger "survey:beforesubmit:next:clicked", @surveyId, @page
+          when "afterSurveySubmit"
+            App.vent.trigger "survey:aftersubmit:next:clicked", @surveyId, @page
+          else
+            App.vent.trigger "survey:page:responses:get", @surveyId, @page
+
+      @show nextView, region: @layout.nextButtonRegion
+
     getProgressView: (progress) ->
       new Show.Progress
         model: progress
 
-
     getPrevButtonView: (prevStep) ->
       new Show.PrevButton
         model: prevStep
+
+    getNextButtonView: (nextStep) ->
+      new Show.NextButton
+        model: nextStep
+
