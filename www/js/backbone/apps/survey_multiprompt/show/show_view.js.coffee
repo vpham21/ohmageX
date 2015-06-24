@@ -21,3 +21,13 @@
     triggers:
       "click": "next:clicked"
 
+
+  class Show.Layout extends App.Views.Layout
+    className: 'survey-step'
+    template: "survey_multiprompt/show/show_layout"
+    regions:
+      noticeRegion: '#notice-region'
+      progressRegion: '#progress'
+      stepsLayoutRegion: '#step-body'
+      prevButtonRegion: '#prev-button'
+      nextButtonRegion: '#next-button'
