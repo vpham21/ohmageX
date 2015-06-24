@@ -32,7 +32,7 @@
       console.log "oldcondition:evaluate", result
       result
 
-    checkFutureReference: (flow, condition) ->
+    containsInvalidFutureReference: (flow, condition) ->
       stepIds = flow.pluck 'id'
       console.log 'condition', condition
       if typeof condition is "string"
@@ -44,10 +44,10 @@
             # the step referenced is either currently displaying or pending,
             # meaning it's a future reference.
             if myStep.get('status') is 'displaying' or myStep.get('status') is 'pending' then return true
-        # there were no matches, meaning there's no future reference in the condition
-        return typeof result is undefined
+        # if there were matches, that means there's a future reference in the condition
+        return typeof result isnt undefined
       else
-        return true
+        return false
 
   App.reqres.setHandler "flow:condition:check", (id) ->
     currentFlow = App.request "flow:current"
@@ -55,4 +55,4 @@
 
   App.reqres.setHandler "flow:condition:invalid:future:reference", (condition) ->
     currentFlow = App.request "flow:current"
-    API.checkFutureReference currentFlow, condition
+    API.containsInvalidFutureReference currentFlow, condition
