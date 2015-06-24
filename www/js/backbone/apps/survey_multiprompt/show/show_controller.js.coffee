@@ -26,7 +26,26 @@
 
       @show progressView, region: @layout.progressRegion
 
+
+    prevButtonRegion: ->
+
+      prevEntity = App.request "stepbutton:prev:entity", @firstStep.get('id')
+      prevView = @getPrevButtonView prevEntity
+
+      @listenTo prevView, "prev:clicked", =>
+        App.vent.trigger "survey:step:prev:clicked", @surveyId, @page
+
+      @listenTo App.vent, 'external:survey:prev:navigate', =>
+        # Add external hook for navigating backwards in a survey
+        App.vent.trigger "survey:step:prev:clicked", @surveyId, @page
+
+      @show prevView, region: @layout.prevButtonRegion
+
     getProgressView: (progress) ->
       new Show.Progress
         model: progress
 
+
+    getPrevButtonView: (prevStep) ->
+      new Show.PrevButton
+        model: prevStep
