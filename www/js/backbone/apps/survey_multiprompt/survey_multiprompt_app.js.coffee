@@ -18,3 +18,12 @@
         return false
 
       App.execute "surveytracker:page:set", page
+
+      @showPage surveyId, page
+
+    showPage: (surveyId, page) ->
+      # update URL without triggering the Router
+      App.navigate "survey/#{surveyId}/page/#{page}"
+      new SurveyMultipromptApp.Show.Controller
+        page: page
+        surveyId: surveyId
