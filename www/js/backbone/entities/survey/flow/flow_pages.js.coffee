@@ -33,6 +33,12 @@
         if currentStep.get('page') is false
           # a page hasn't been assigned to this step yet.
 
+          switch currentStep.get('type')
+            when "intro"
+              if currentStep.get('status') is "displayed"
+                currentStep.set 'page', 1
+                # the intro step gets a page all to itself, if displayed
+                loopThroughSteps = false
         myStepIndex++
 
     clearOldPage: (flow, oldPage) ->
