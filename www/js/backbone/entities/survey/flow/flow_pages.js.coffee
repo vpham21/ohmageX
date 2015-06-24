@@ -52,6 +52,9 @@
               isPassed = App.request "flow:condition:check", currentStep.get('id')
               if isPassed
                 currentStep.set 'page', currentPage
+                if App.request("flow:condition:invalid:future:reference", currentStep.get('condition'))
+                  loopThroughSteps = false
+
         myStepIndex++
 
     clearOldPage: (flow, oldPage) ->
