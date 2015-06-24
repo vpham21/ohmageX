@@ -26,6 +26,25 @@
 
       @show progressView, region: @layout.progressRegion
 
+    stepsLayoutRegion: ->
+
+      switch @firstStep.get('type')
+        when 'intro'
+          # show the intro layout
+          # TODO: Make this a special View, instead of just inserting the prompt in this region
+          App.execute "steps:view:insert", @layout.stepsLayoutRegion, @surveyId, @firstStep.get('id')
+        when 'beforeSurveySubmit'
+          # show the beforeSurveySubmit layout
+          # TODO: Make this a special View, instead of just inserting the prompt in this region
+          App.execute "steps:view:insert", @layout.stepsLayoutRegion, @surveyId, @firstStep.get('id')
+        when 'afterSurveySubmit'
+          # show the afterSurveySubmit layout
+          # TODO: Make this a special View, instead of just inserting the prompt in this region
+          App.execute "steps:view:insert", @layout.stepsLayoutRegion, @surveyId, @firstStep.get('id')
+        else
+          console.log 'show a layout containing all prompts for this page'
+          console.log 'set response validation listeners for this page'
+
 
     prevButtonRegion: ->
 
