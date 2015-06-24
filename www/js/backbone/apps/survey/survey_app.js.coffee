@@ -33,9 +33,15 @@
 
       App.vent.trigger "survey:start", id
 
-      firstId = App.request "flow:id:first"
+      if App.custom.functionality.multi_question_survey_flow is true
+        # navigate to the multi-question flow instead
+        console.log 'navigate to the multi-question flow instead'
+        App.navigate "surveymulti/#{id}/page/1", trigger: true
 
-      App.navigate "survey/#{id}/step/#{firstId}", trigger: true
+      else
+        firstId = App.request "flow:id:first"
+
+        App.navigate "survey/#{id}/step/#{firstId}", trigger: true
 
   App.addInitializer ->
     new SurveyApp.Router

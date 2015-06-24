@@ -131,3 +131,8 @@
 
   App.vent.on "credentials:cleared", ->
     API.clear()
+
+  App.vent.on "survey:upload:failure:auth", (responseData, errorText, surveyId) ->
+    if !App.request("credentials:ispassword")
+      # dump to queue and save survey
+      App.execute "uploadqueue:item:add", responseData, "#{errorPrefix} #{errorText}", surveyId
