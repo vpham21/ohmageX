@@ -29,6 +29,10 @@
 
       while loopThroughSteps and myStepIndex <= flow.length
         currentStep = flow.at myStepIndex
+
+        if currentStep.get('page') is false
+          # a page hasn't been assigned to this step yet.
+
         myStepIndex++
 
     clearOldPage: (flow, oldPage) ->
