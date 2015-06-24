@@ -27,6 +27,12 @@
   App.commands.setHandler "surveytracker:page:set", (page) ->
     currentPage = page
 
+  App.reqres.setHandler "surveytracker:page:previous", ->
+    if currentPage is 1 then throw new Error "Attempting to go to previous page when currentPage is already 1"
+    currentPage-1
+  App.reqres.setHandler "surveytracker:page:next", ->
+    currentPage+1
+
   App.vent.on "survey:start", (surveyId) ->
     API.setActive()
     API.startPages()
