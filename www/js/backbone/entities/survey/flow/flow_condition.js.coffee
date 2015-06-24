@@ -34,13 +34,20 @@
 
     checkFutureReference: (flow, condition) ->
       stepIds = flow.pluck 'id'
-      result = _.find stepIds, (stepId, index) =>
-        if condition.indexOf(stepId) isnt -1
-          # the condition contains a reference to a stepId.
-          myStep = flow.at(index)
-          # the step referenced is either currently displaying or pending,
-          # meaning it's a future reference.
-          if myStep.get('status') is 'displaying' or myStep.get('status') is 'pending' then return true
+      console.log 'condition', condition
+      if typeof condition is "string"
+        # only check string-based conditions, boolean conditions won't contain any references
+        result = _.find stepIds, (stepId, index) =>
+          if condition.indexOf(stepId) isnt -1
+            # the condition contains a reference to a stepId.
+            myStep = flow.at(index)
+            # the step referenced is either currently displaying or pending,
+            # meaning it's a future reference.
+            if myStep.get('status') is 'displaying' or myStep.get('status') is 'pending' then return true
+        # there were no matches, meaning there's no future reference in the condition
+        return typeof result is undefined
+      else
+        return true
 
   App.reqres.setHandler "flow:condition:check", (id) ->
     currentFlow = App.request "flow:current"
