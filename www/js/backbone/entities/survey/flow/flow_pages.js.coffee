@@ -52,5 +52,8 @@
           step.set 'page', false
           App.vent.trigger "flow:step:reset", step.get('id')
 
+  App.vent.on "surveytracker:page:new", (page) ->
+    API.assignNewPage App.request('flow:current'), page
+
   App.vent.on "surveytracker:page:old", (oldPage) ->
     API.clearOldPage App.request('flow:current'), oldPage
