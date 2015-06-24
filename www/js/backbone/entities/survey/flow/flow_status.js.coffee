@@ -34,6 +34,10 @@
     currentStep = App.request "flow:step", stepId
     API.updateStatus currentStep, "pending"
 
+  App.vent.on "flow:step:reset", (stepId) ->
+    currentStep = App.request "flow:step", stepId
+    API.updateStatus currentStep, "pending"
+
   App.vent.on "survey:step:skipped", (stepId) ->
     currentStep = App.request "flow:step", stepId
     API.updateStatus currentStep, "skipped"
