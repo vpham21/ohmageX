@@ -26,3 +26,7 @@
 
       @show progressView, region: @layout.progressRegion
 
+    getProgressView: (progress) ->
+      new Show.Progress
+        model: progress
+
