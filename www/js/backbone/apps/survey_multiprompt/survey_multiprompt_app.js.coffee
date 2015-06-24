@@ -28,3 +28,7 @@
       new SurveyMultipromptApp.Show.Controller
         page: page
         surveyId: surveyId
+
+  App.addInitializer ->
+    new SurveyMultipromptApp.Router
+      controller: API
