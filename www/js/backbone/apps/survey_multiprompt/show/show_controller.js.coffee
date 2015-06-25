@@ -106,6 +106,9 @@
       new Show.StepError
         model: error
 
+    getStepSkipView: (skip) ->
+      new Show.StepSkip
+        model: skip
 
     getStepsView: (steps) ->
       new Show.Steps
