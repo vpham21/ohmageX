@@ -72,6 +72,9 @@
 
               childView.skipButtonRegion.show mySkipView
 
+            # insert the prompt stepBody view
+            App.execute "steps:view:insert", childView.stepBodyRegion, @surveyId, childView.model.get('id')
+
           console.log 'set response validation listeners for this page'
 
           @show stepsView, region: @layout.stepsLayoutRegion
