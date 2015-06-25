@@ -53,7 +53,12 @@
           App.execute "steps:view:insert", @layout.stepsLayoutRegion, @surveyId, @firstStep.get('id')
         else
           console.log 'show a layout containing all prompts for this page'
+
+          stepsView = @getStepsView App.request('flow:page:steps', @page)
+
           console.log 'set response validation listeners for this page'
+
+          @show stepsView, region: @layout.stepsLayoutRegion
 
 
     prevButtonRegion: ->
