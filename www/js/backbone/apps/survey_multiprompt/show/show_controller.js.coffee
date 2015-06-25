@@ -102,5 +102,10 @@
       new Show.NextButton
         model: nextStep
 
+
+    getStepsView: (steps) ->
+      new Show.Steps
+        collection: steps
+
     getLayoutView: ->
       new Show.Layout
