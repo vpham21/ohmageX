@@ -102,6 +102,10 @@
       new Show.NextButton
         model: nextStep
 
+    getStepErrorView: (error) ->
+      new Show.StepError
+        model: error
+
 
     getStepsView: (steps) ->
       new Show.Steps
