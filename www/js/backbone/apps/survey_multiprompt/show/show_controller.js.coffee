@@ -56,6 +56,10 @@
 
           stepsView = @getStepsView App.request('flow:page:steps', @page)
 
+          @listenTo stepsView, 'childview:render', (childView) =>
+            childView.errorRegion.show @getStepErrorView(childView.model)
+            # errorRegion - listens for global response:set:error that matches the stepId, updates itself if so
+            # also should erase itself when the next button is pressed.
           console.log 'set response validation listeners for this page'
 
           @show stepsView, region: @layout.stepsLayoutRegion
