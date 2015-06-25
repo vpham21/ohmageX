@@ -60,6 +60,13 @@
             childView.errorRegion.show @getStepErrorView(childView.model)
             # errorRegion - listens for global response:set:error that matches the stepId, updates itself if so
             # also should erase itself when the next button is pressed.
+
+            if childView.model.get('skippable') is true
+              # insert the step's skip view
+              mySkipView = @getStepSkipView childView.model
+
+              childView.skipButtonRegion.show mySkipView
+
           console.log 'set response validation listeners for this page'
 
           @show stepsView, region: @layout.stepsLayoutRegion
