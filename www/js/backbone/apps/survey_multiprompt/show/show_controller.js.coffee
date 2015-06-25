@@ -53,7 +53,31 @@
           App.execute "steps:view:insert", @layout.stepsLayoutRegion, @surveyId, @firstStep.get('id')
         else
           console.log 'show a layout containing all prompts for this page'
+
+          stepsView = @getStepsView App.request('flow:page:steps', @page)
+
+          @listenTo stepsView, 'childview:render', (childView) =>
+            childView.errorRegion.show @getStepErrorView(childView.model)
+            # errorRegion - listens for global response:set:error that matches the stepId, updates itself if so
+            # also should erase itself when the next button is pressed.
+
+            if childView.model.get('skippable') is true
+              # insert the step's skip view
+              mySkipView = @getStepSkipView childView.model
+
+              @listenTo mySkipView, "skip:toggle", (value) =>
+                # the skipButton region - skip activated events. It broadcasts those at app level.
+                console.log 'if toggle value is enabled, broadcast "skip:activated" event with step ID'
+                console.log 'if toggle value is disabled, broadcast "skip:activated" event with step ID'
+
+              childView.skipButtonRegion.show mySkipView
+
+            # insert the prompt stepBody view
+            App.execute "steps:view:insert", childView.stepBodyRegion, @surveyId, childView.model.get('id')
+
           console.log 'set response validation listeners for this page'
+
+          @show stepsView, region: @layout.stepsLayoutRegion
 
 
     prevButtonRegion: ->
@@ -101,6 +125,18 @@
     getNextButtonView: (nextStep) ->
       new Show.NextButton
         model: nextStep
+
+    getStepErrorView: (error) ->
+      new Show.StepError
+        model: error
+
+    getStepSkipView: (skip) ->
+      new Show.StepSkip
+        model: skip
+
+    getStepsView: (steps) ->
+      new Show.Steps
+        collection: steps
 
     getLayoutView: ->
       new Show.Layout
