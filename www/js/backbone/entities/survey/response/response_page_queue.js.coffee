@@ -17,3 +17,11 @@
       myIndex = currentIndices.indexOf(itemId)
       currentDeferred[myIndex].resolve()
 
+  App.on "before:start", ->
+
+    if App.custom.functionality.multi_question_survey_flow is true
+      App.vent.on "response:set:error", (error, surveyId, stepId) ->
+        API.itemError stepId
+
+      App.vent.on "response:set:success", (response, surveyId, stepId) ->
+        API.itemSuccess stepId
