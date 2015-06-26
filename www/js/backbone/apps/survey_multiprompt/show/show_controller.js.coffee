@@ -24,12 +24,21 @@
         @nextButtonRegion()
         $('body').scrollTop(0)
 
+      if App.request "flow:type:is:prompt", @firstStep.get('id')
+        @addMultiResponseListeners()
+
       @listenTo App.vent, "survey:page:responses:error", (surveyId, errorCount) ->
         $('body').scrollTop(0)
 
 
       @show @layout
 
+    addMultiResponseListeners: ->
+      mySteps = App.request "flow:page:steps", @page
+      mySteps.each (step) =>
+        # add listeners that trigger response:set:error and response:set:success
+        # for all steps on this page.
+        @addSingleResponseListeners(App.request "response:get", step.get('id'))
 
     addSingleResponseListeners: (myResponse) ->
       @listenTo myResponse, "invalid", (responseModel) =>
