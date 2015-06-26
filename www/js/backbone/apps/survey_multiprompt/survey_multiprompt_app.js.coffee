@@ -92,3 +92,11 @@
         # Now we can display the single step flow's afterSubmit page.
         App.navigate "surveymulti/#{surveyId}/aftersubmit", trigger: true
 
+      App.vent.on "survey:aftersubmit:next:clicked", (surveyId, stepId) ->
+        App.vent.trigger "survey:exit", surveyId
+
+      App.vent.on "reminders:survey:new", (surveyId) ->
+        App.vent.trigger "survey:reset", surveyId
+
+      App.vent.on "survey:notifications:suppress", (surveyId, notificationIds) ->
+        App.vent.trigger "survey:exit", surveyId
