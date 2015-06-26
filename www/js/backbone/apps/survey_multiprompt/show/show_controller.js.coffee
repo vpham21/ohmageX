@@ -101,6 +101,10 @@
     prevButtonAction: ->
       if @page is 1
         App.vent.trigger "survey:direct:prev:clicked", @surveyId, @page
+      else
+        switch @firstStep.get('type')
+          when "intro", "beforeSurveySubmit", "afterSurveySubmit"
+            App.vent.trigger "survey:direct:prev:clicked", @surveyId, @page
     nextButtonRegion: ->
 
       nextEntity = App.request "stepbutton:next:entity", @firstStep.get('id')
