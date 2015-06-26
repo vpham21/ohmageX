@@ -30,6 +30,12 @@
         if stepId is @model.get('id')
           @model.set('customerror', '')
 
+      @listenTo App.vent, "response:set:error", (errorText, surveyId, stepId) =>
+        console.log ' stepError response:set:error listener'
+
+        if stepId is @model.get('id')
+          @model.set('customerror', errorText)
+
     template: "survey_multiprompt/show/_step_error"
 
   class Show.StepSkip extends App.Views.ItemView
