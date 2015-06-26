@@ -24,6 +24,10 @@
         @nextButtonRegion()
         $('body').scrollTop(0)
 
+      @listenTo App.vent, "survey:page:responses:error", (surveyId, errorCount) ->
+        $('body').scrollTop(0)
+
+
       @show @layout
 
     noticeRegion: ->
