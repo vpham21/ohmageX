@@ -73,6 +73,7 @@
           # because we need to clear the page that's about to be rendered too.
           step.set 'page', false
           App.vent.trigger "flow:step:reset", step.get('id')
+
     getAftersubmitPage: (flow) ->
       console.log 'getAftersubmitPage'
       result = flow.find (step) -> step.get('id').endsWith('afterSurveySubmit')
