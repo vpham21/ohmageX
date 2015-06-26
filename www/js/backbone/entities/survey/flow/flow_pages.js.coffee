@@ -25,6 +25,15 @@
       loopThroughSteps = true
       myStepIndex = @getStartingStepIndex flow, currentPage
 
+      # This assumes that beforeSurveySubmit is always followed by afterSurveySubmit.
+      # In the situation where a beforeSurveySubmit flow step is evaluated with a "false" page,
+      # and yet, it's the first step on the new page, its page should be set to the
+      # currentPage. However, if it wasn't the first step evaluated on the current page,
+      # that means we should bump it to the next page. This bump starts at 0.
+      # When a prompt is displayed on the current step, the bump is set to 1 to ensure
+      # the beforeSurveySubmit and afterSurveySubmit steps are bumped to separate pages.
+      lastPageBump = 0
+
       while loopThroughSteps and myStepIndex < flow.length
         currentStep = flow.at myStepIndex
 
@@ -38,10 +47,9 @@
                 # the intro step gets a page all to itself, if displayed
                 loopThroughSteps = false
             when "beforeSurveySubmit"
-              currentStep.set 'page', currentPage+1
+              currentStep.set 'page', currentPage + lastPageBump
             when "afterSurveySubmit"
-              currentStep.set 'page', currentPage+2
-              loopThroughSteps = false
+              currentStep.set 'page', currentPage + 1 + lastPageBump
             else
               # it's a prompt
 
@@ -54,6 +62,7 @@
                 isPassed = App.request "flow:condition:check", currentStep.get('id')
                 if isPassed 
                   currentStep.set 'page', currentPage
+                  lastPageBump = 1
 
         myStepIndex++
 
