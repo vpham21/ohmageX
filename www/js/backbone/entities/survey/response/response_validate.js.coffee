@@ -20,7 +20,7 @@
           when "photo" then "Please take an image to submit."
           when "document" then "Please select a document."
           else "Please enter a response."
-        App.vent.trigger "response:set:error", message
+        App.vent.trigger "response:set:error", message, surveyId, stepId
         return false
 
       if response is App.request('response:get', stepId).get('response')

@@ -25,7 +25,7 @@
     currentPage
 
   App.commands.setHandler "surveytracker:page:set", (page) ->
-    currentPage = page
+    currentPage = parseInt(page)
 
     App.vent.trigger "surveytracker:page:new", currentPage
 

@@ -24,7 +24,33 @@
         @nextButtonRegion()
         $('body').scrollTop(0)
 
+      if App.request "flow:type:is:prompt", @firstStep.get('id')
+        @addMultiResponseListeners()
+
+      @listenTo App.vent, "survey:page:responses:error", (surveyId, errorCount) ->
+        $('body').scrollTop(0)
+
+
       @show @layout
+
+    addMultiResponseListeners: ->
+      mySteps = App.request "flow:page:steps", @page
+      mySteps.each (step) =>
+        # add listeners that trigger response:set:error and response:set:success
+        # for all steps on this page.
+        @addSingleResponseListeners(App.request "response:get", step.get('id'))
+
+    addSingleResponseListeners: (myResponse) ->
+      @listenTo myResponse, "invalid", (responseModel) =>
+        # response validation failed
+        console.log "response invalid, errors are", responseModel.validationError
+        App.vent.trigger "response:set:error", responseModel.validationError, @surveyId, responseModel.get('id')
+      @listenTo myResponse, "change:response", (responseModel) =>
+        # response validation succeeded
+        if responseModel.get('response') isnt false
+          # only trigger the response success event if the response isn't false.
+          console.log "response correct, arg is", responseModel.get 'response'
+          App.vent.trigger "response:set:success", responseModel.get('response'), @surveyId, responseModel.get('id')
 
     noticeRegion: ->
       App.execute "notice:region:set", @layout.noticeRegion
@@ -57,9 +83,9 @@
           stepsView = @getStepsView App.request('flow:page:steps', @page)
 
           @listenTo stepsView, 'childview:render', (childView) =>
-            childView.errorRegion.show @getStepErrorView(childView.model)
             # errorRegion - listens for global response:set:error that matches the stepId, updates itself if so
-            # also should erase itself when the next button is pressed.
+            # erases itself when the next button is pressed.
+            childView.errorRegion.show @getStepErrorView(childView.model)
 
             if childView.model.get('skippable') is true
               # insert the step's skip view
@@ -79,20 +105,38 @@
 
           @show stepsView, region: @layout.stepsLayoutRegion
 
-
     prevButtonRegion: ->
 
       prevEntity = App.request "stepbutton:prev:entity", @firstStep.get('id')
       prevView = @getPrevButtonView prevEntity
 
       @listenTo prevView, "prev:clicked", =>
-        App.vent.trigger "survey:step:prev:clicked", @surveyId, @page
+        @prevButtonAction()
 
       @listenTo App.vent, 'external:survey:prev:navigate', =>
         # Add external hook for navigating backwards in a survey
-        App.vent.trigger "survey:step:prev:clicked", @surveyId, @page
+        @prevButtonAction()
 
       @show prevView, region: @layout.prevButtonRegion
+
+    prevButtonAction: ->
+      if @page is 1
+        App.vent.trigger "survey:direct:prev:clicked", @surveyId, @page
+      else
+        switch @firstStep.get('type')
+          when "intro", "beforeSurveySubmit", "afterSurveySubmit"
+            App.vent.trigger "survey:direct:prev:clicked", @surveyId, @page
+          else
+            App.vent.trigger "survey:page:responses:get", @surveyId, @page, ( =>
+              # success callback
+              App.vent.trigger "survey:direct:prev:clicked", @surveyId, @page
+            ),( (errorCount) =>
+              # error callback
+              myMessage = if errorCount is 1 then "This page contains an invalid response. Go back and lose this invalid response?" else "This page contains #{errorCount} invalid responses. Go back and lose these invalid responses?"
+              App.execute "dialog:confirm", myMessage, (=>
+                App.vent.trigger "survey:direct:prev:clicked", @surveyId, @page
+              )
+            )
 
     nextButtonRegion: ->
 
@@ -110,7 +154,19 @@
           when "afterSurveySubmit"
             App.vent.trigger "survey:aftersubmit:next:clicked", @surveyId, @page
           else
-            App.vent.trigger "survey:page:responses:get", @surveyId, @page
+            App.vent.trigger "survey:page:responses:get", @surveyId, @page, ( =>
+              # success callback
+              App.vent.trigger "survey:prompts:next:clicked", @surveyId, @page
+            ),( (errorCount) =>
+              # error callback
+              myDescription = if errorCount is 1 then "This page contains an invalid response. Please resolve before continuing." else "There are #{errorCount} invalid responses on this page. Please resolve before continuing."
+
+              App.execute "notice:show",
+                data:
+                  title: "Validation Error"
+                  description: myDescription
+                  showCancel: false
+            )
 
       @show nextView, region: @layout.nextButtonRegion
 

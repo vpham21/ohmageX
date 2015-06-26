@@ -7,9 +7,11 @@
         return false
     appRoutes:
       "surveymulti/:surveyId/page/:page": "checkPage"
+      "surveymulti/:surveyId/aftersubmit": 'afterSubmit'
+
   API =
     checkPage: (surveyId, page) ->
-      console.log "checkPage #{page}"
+      console.log "checkPage", page
 
       # Redirect to the start of the survey
       # if survey isn't initialized before proceeding.
@@ -24,10 +26,20 @@
     showPage: (surveyId, page) ->
       # update URL without triggering the Router
       App.navigate "surveymulti/#{surveyId}/page/#{page}"
-      console.log "updated flow with page numbers", App.request('flow:current').map (step) -> "id: #{step.get('id')}, page: #{step.get('page')}, condition: #{step.get('condition')}"
+      console.log "updated flow with page numbers", App.request('flow:current').map (step) -> "\nid: #{step.get('id')}, page: #{step.get('page')}, condition: #{step.get('condition')}, status: #{step.get('status')}"
+
       new SurveyMultipromptApp.Show.Controller
-        page: page
+        page: parseInt(page)
         surveyId: surveyId
+
+    afterSubmit: (surveyId) ->
+      # get the current flow's afterSubmit page number
+      try
+        @checkPage surveyId, App.request("flow:page:aftersubmit:page")
+      catch
+        # Redirect to the start of the survey
+        # if attempting to get the aftersubmit page number throws an error
+        App.navigate "survey/#{surveyId}", trigger: true
 
     goPrev: (surveyId) ->
       try
@@ -45,7 +57,7 @@
         App.execute "dialog:confirm", "Do you want to exit the #{App.dictionary('page','survey')}?", =>
           App.vent.trigger "survey:exit", surveyId
 
-    goNext: (surveyId) ->
+    goNext: (surveyId, page) ->
       nextPage = App.request "surveytracker:page:next", page
       # call the Router method without updating the URL
       @checkPage surveyId, nextPage
@@ -59,3 +71,32 @@
     if App.custom.functionality.multi_question_survey_flow is true
       console.log 'set app listeners here'
 
+
+      App.vent.on "survey:direct:prev:clicked", (surveyId, page) ->
+        # the direct event simply navigates back immediately, nothing to save or validate.
+        console.log "survey:direct:prev:clicked"
+        API.goPrev surveyId, page
+
+      App.vent.on "survey:intro:next:clicked survey:prompts:next:clicked", (surveyId, page) ->
+        console.log "survey:prompts:next:clicked"
+        API.goNext surveyId, page
+
+      App.vent.on "survey:beforesubmit:next:clicked", (surveyId) ->
+        # survey:upload gathers and submits all data
+        # and will fire survey:upload:success.
+        App.commands.execute "survey:upload", surveyId
+
+      App.vent.on "survey:upload:success survey:upload:failure:ok", (response, surveyId) ->
+        # Go to the next step if the submit succeeds or if they click the OK button on the modal
+
+        # Now we can display the single step flow's afterSubmit page.
+        App.navigate "surveymulti/#{surveyId}/aftersubmit", trigger: true
+
+      App.vent.on "survey:aftersubmit:next:clicked", (surveyId, stepId) ->
+        App.vent.trigger "survey:exit", surveyId
+
+      App.vent.on "reminders:survey:new", (surveyId) ->
+        App.vent.trigger "survey:reset", surveyId
+
+      App.vent.on "survey:notifications:suppress", (surveyId, notificationIds) ->
+        App.vent.trigger "survey:exit", surveyId
