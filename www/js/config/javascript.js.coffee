@@ -14,3 +14,7 @@
 
 String.prototype.capitalizeFirstLetter = ->
   @ && @[0].toUpperCase() + @slice(1)
+
+if typeof String.prototype.endsWith isnt 'function'
+  String.prototype.endsWith = (suffix) ->
+    @indexOf(suffix, @length - suffix.length) isnt -1
