@@ -105,6 +105,18 @@
         switch @firstStep.get('type')
           when "intro", "beforeSurveySubmit", "afterSurveySubmit"
             App.vent.trigger "survey:direct:prev:clicked", @surveyId, @page
+          else
+            App.vent.trigger "survey:page:responses:get", @surveyId, @page, ( =>
+              # success callback
+              App.vent.trigger "survey:direct:prev:clicked", @surveyId, @page
+            ),( (errorCount) =>
+              # error callback
+              myMessage = if errorCount is 1 then "This page contains an invalid response. Go back and lose this invalid response?" else "This page contains #{errorCount} invalid responses. Go back and lose these invalid responses?"
+              App.execute "dialog:confirm", myMessage, (=>
+                App.vent.trigger "survey:direct:prev:clicked", @surveyId, @page
+              )
+            )
+
     nextButtonRegion: ->
 
       nextEntity = App.request "stepbutton:next:entity", @firstStep.get('id')
