@@ -90,14 +90,17 @@
       prevView = @getPrevButtonView prevEntity
 
       @listenTo prevView, "prev:clicked", =>
-        App.vent.trigger "survey:step:prev:clicked", @surveyId, @page
+        @prevButtonAction()
 
       @listenTo App.vent, 'external:survey:prev:navigate', =>
         # Add external hook for navigating backwards in a survey
-        App.vent.trigger "survey:step:prev:clicked", @surveyId, @page
+        @prevButtonAction()
 
       @show prevView, region: @layout.prevButtonRegion
 
+    prevButtonAction: ->
+      if @page is 1
+        App.vent.trigger "survey:direct:prev:clicked", @surveyId, @page
     nextButtonRegion: ->
 
       nextEntity = App.request "stepbutton:next:entity", @firstStep.get('id')
