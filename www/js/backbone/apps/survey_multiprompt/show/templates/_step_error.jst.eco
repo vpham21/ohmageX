@@ -1,1 +1,1 @@
-Error view placeholder
+<%= @customerror %>
