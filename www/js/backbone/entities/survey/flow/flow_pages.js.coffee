@@ -73,6 +73,11 @@
           # because we need to clear the page that's about to be rendered too.
           step.set 'page', false
           App.vent.trigger "flow:step:reset", step.get('id')
+    getAftersubmitPage: (flow) ->
+      console.log 'getAftersubmitPage'
+      result = flow.find (step) -> step.get('id').endsWith('afterSurveySubmit')
+      if result is undefined or result.get('page') is false then throw new Error "current flow aftersubmit invalid or no page assigned"
+      result.get('page')
 
     getPageFirstStep: (flow, page) ->
       console.log 'getPageFirstStep'
@@ -90,6 +95,9 @@
 
   App.vent.on "surveytracker:page:old", (oldPage) ->
     API.clearOldPage App.request('flow:current'), oldPage
+
+  App.reqres.setHandler "flow:page:aftersubmit:page", ->
+    API.getAftersubmitPage App.request('flow:current')
 
   App.reqres.setHandler "flow:page:steps", (page) ->
     API.getPageSteps App.request('flow:current'), page
