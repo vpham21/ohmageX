@@ -83,7 +83,6 @@
 
           @show stepsView, region: @layout.stepsLayoutRegion
 
-
     prevButtonRegion: ->
 
       prevEntity = App.request "stepbutton:prev:entity", @firstStep.get('id')
@@ -133,7 +132,19 @@
           when "afterSurveySubmit"
             App.vent.trigger "survey:aftersubmit:next:clicked", @surveyId, @page
           else
-            App.vent.trigger "survey:page:responses:get", @surveyId, @page
+            App.vent.trigger "survey:page:responses:get", @surveyId, @page, ( =>
+              # success callback
+              App.vent.trigger "survey:prompts:next:clicked", @surveyId, @page
+            ),( (errorCount) =>
+              # error callback
+              myDescription = if errorCount is 1 then "This page contains an invalid response. Please resolve before continuing." else "There are #{errorCount} invalid responses on this page. Please resolve before continuing."
+
+              App.execute "notice:show",
+                data:
+                  title: "Validation Error"
+                  description: myDescription
+                  showCancel: false
+            )
 
       @show nextView, region: @layout.nextButtonRegion
 
