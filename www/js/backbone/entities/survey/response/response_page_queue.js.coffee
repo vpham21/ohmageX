@@ -19,6 +19,13 @@
         return new $.Deferred()
       )
 
+      # tracking indices in a separate array.
+      # Required if using Coffeescript splats to pass
+      # arguments to Deferred (which map to .apply())
+      # can't use an "associative" array
+      $.when( currentDeferred... ).done =>
+        @whenComplete surveyId, successCallback, errorCallback
+
     itemError: (itemId) ->
       errorCount++
       myIndex = currentIndices.indexOf(itemId)
