@@ -30,6 +30,19 @@
 
       @show @layout
 
+
+    addSingleResponseListeners: (myResponse) ->
+      @listenTo myResponse, "invalid", (responseModel) =>
+        # response validation failed
+        console.log "response invalid, errors are", responseModel.validationError
+        App.vent.trigger "response:set:error", responseModel.validationError, @surveyId, responseModel.get('id')
+      @listenTo myResponse, "change:response", (responseModel) =>
+        # response validation succeeded
+        if responseModel.get('response') isnt false
+          # only trigger the response success event if the response isn't false.
+          console.log "response correct, arg is", responseModel.get 'response'
+          App.vent.trigger "response:set:success", responseModel.get('response'), @surveyId, responseModel.get('id')
+
     noticeRegion: ->
       App.execute "notice:region:set", @layout.noticeRegion
 
