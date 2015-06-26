@@ -7,6 +7,13 @@
   errorCount = 0
 
   API =
+    validateAll: (queue, surveyId, successCallback, errorCallback) ->
+      console.log 'response page queue validateAll'
+
+      currentDeferred = []
+      currentIndices = []
+      errorCount = 0
+
 
     itemError: (itemId) ->
       errorCount++
@@ -16,6 +23,9 @@
     itemSuccess: (itemId) ->
       myIndex = currentIndices.indexOf(itemId)
       currentDeferred[myIndex].resolve()
+
+  App.vent.on "survey:page:responses:get", (surveyId, page, successCallback, errorCallback) ->
+    API.validateAll App.request('flow:page:steps', page), surveyId, successCallback, errorCallback
 
   App.on "before:start", ->
 
