@@ -26,6 +26,11 @@
       $.when( currentDeferred... ).done =>
         @whenComplete surveyId, successCallback, errorCallback
 
+      # Fire a validation event for ALL of the responses in the queue.
+      queue.each( (item) =>
+        App.vent.trigger "survey:response:get", surveyId, item.get('id')
+      )
+
     itemError: (itemId) ->
       errorCount++
       myIndex = currentIndices.indexOf(itemId)
