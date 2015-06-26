@@ -11,7 +11,7 @@
 
   API =
     checkPage: (surveyId, page) ->
-      console.log "checkPage #{page}"
+      console.log "checkPage", page
 
       # Redirect to the start of the survey
       # if survey isn't initialized before proceeding.
