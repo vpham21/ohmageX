@@ -68,7 +68,9 @@
 
     clearOldPage: (flow, oldPage) ->
       flow.each (step) =>
-        if step.get('page') >= oldPage
+        if step.get('page') >= oldPage-1
+          # why oldPage-1 and not just the oldPage?
+          # because we need to clear the page that's about to be rendered too.
           step.set 'page', false
           App.vent.trigger "flow:step:reset", step.get('id')
 
