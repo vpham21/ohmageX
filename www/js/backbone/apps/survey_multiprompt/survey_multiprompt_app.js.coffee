@@ -56,7 +56,7 @@
         App.execute "dialog:confirm", "Do you want to exit the #{App.dictionary('page','survey')}?", =>
           App.vent.trigger "survey:exit", surveyId
 
-    goNext: (surveyId) ->
+    goNext: (surveyId, page) ->
       nextPage = App.request "surveytracker:page:next", page
       # call the Router method without updating the URL
       @checkPage surveyId, nextPage
