@@ -81,3 +81,8 @@
         console.log "survey:prompts:next:clicked"
         API.goNext surveyId, page
 
+      App.vent.on "survey:beforesubmit:next:clicked", (surveyId) ->
+        # survey:upload gathers and submits all data
+        # and will fire survey:upload:success.
+        App.commands.execute "survey:upload", surveyId
+
