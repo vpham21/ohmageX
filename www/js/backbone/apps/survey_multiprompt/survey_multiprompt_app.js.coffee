@@ -71,3 +71,8 @@
     if App.custom.functionality.multi_question_survey_flow is true
       console.log 'set app listeners here'
 
+
+      App.vent.on "survey:direct:prev:clicked", (surveyId, page) ->
+        # the direct event simply navigates back immediately, nothing to save or validate.
+        console.log "survey:direct:prev:clicked"
+        API.goPrev surveyId, page
