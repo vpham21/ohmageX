@@ -11,11 +11,9 @@
     itemError: (itemId) ->
       errorCount++
       myIndex = currentIndices.indexOf(itemId)
-      console.log 'itemError itemId', itemId
       currentDeferred[myIndex].resolve()
 
     itemSuccess: (itemId) ->
       myIndex = currentIndices.indexOf(itemId)
-      console.log 'itemSuccess itemId', itemId
       currentDeferred[myIndex].resolve()
 
