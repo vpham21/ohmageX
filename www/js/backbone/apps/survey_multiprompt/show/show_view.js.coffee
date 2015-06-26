@@ -22,6 +22,9 @@
       "click": "next:clicked"
 
   class Show.StepError extends App.Views.ItemView
+    initialize: ->
+      @model.set('customerror', '')
+
     template: "survey_multiprompt/show/_step_error"
 
   class Show.StepSkip extends App.Views.ItemView
