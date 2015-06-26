@@ -33,19 +33,23 @@
       result
 
     containsInvalidFutureReference: (flow, condition) ->
+      console.log 'containsInvalidFutureReference'
       stepIds = flow.pluck 'id'
       console.log 'condition', condition
       if typeof condition is "string"
         # only check string-based conditions, boolean conditions won't contain any references
         result = _.find stepIds, (stepId, index) =>
-          if condition.indexOf(stepId) isnt -1
+          if condition.indexOf(stepId) is -1
+            return false
+          else
             # the condition contains a reference to a stepId.
             myStep = flow.at(index)
+
             # the step referenced is either currently displaying or pending,
             # meaning it's a future reference.
-            if myStep.get('status') is 'displaying' or myStep.get('status') is 'pending' then return true
+            return myStep.get('status') is 'displaying' or myStep.get('status') is 'pending'
         # if there were matches, that means there's a future reference in the condition
-        return typeof result isnt undefined
+        return typeof result isnt "undefined"
       else
         return false
 
