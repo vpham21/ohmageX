@@ -14,6 +14,10 @@
       currentIndices = []
       errorCount = 0
 
+      currentDeferred = queue.map( (item, key) ->
+        currentIndices.push(item.get 'id')
+        return new $.Deferred()
+      )
 
     itemError: (itemId) ->
       errorCount++
