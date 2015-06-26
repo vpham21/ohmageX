@@ -61,9 +61,9 @@
           stepsView = @getStepsView App.request('flow:page:steps', @page)
 
           @listenTo stepsView, 'childview:render', (childView) =>
-            childView.errorRegion.show @getStepErrorView(childView.model)
             # errorRegion - listens for global response:set:error that matches the stepId, updates itself if so
-            # also should erase itself when the next button is pressed.
+            # erases itself when the next button is pressed.
+            childView.errorRegion.show @getStepErrorView(childView.model)
 
             if childView.model.get('skippable') is true
               # insert the step's skip view
