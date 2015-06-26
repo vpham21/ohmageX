@@ -73,6 +73,7 @@
           # because we need to clear the page that's about to be rendered too.
           step.set 'page', false
           App.vent.trigger "flow:step:reset", step.get('id')
+      console.log 'currentResponses', App.request('responses:current').map (response) -> "id: #{response.get('id')}, response: #{response.get('response')}"
 
     getAftersubmitPage: (flow) ->
       console.log 'getAftersubmitPage'
