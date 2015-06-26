@@ -76,3 +76,8 @@
         # the direct event simply navigates back immediately, nothing to save or validate.
         console.log "survey:direct:prev:clicked"
         API.goPrev surveyId, page
+
+      App.vent.on "survey:intro:next:clicked survey:prompts:next:clicked", (surveyId, page) ->
+        console.log "survey:prompts:next:clicked"
+        API.goNext surveyId, page
+
