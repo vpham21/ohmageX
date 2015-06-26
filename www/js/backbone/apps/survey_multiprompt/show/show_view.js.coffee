@@ -25,6 +25,11 @@
     initialize: ->
       @model.set('customerror', '')
 
+      @listenTo App.vent, "response:set:success", (errorText, surveyId, stepId) =>
+        # clear errors on validation success
+        if stepId is @model.get('id')
+          @model.set('customerror', '')
+
     template: "survey_multiprompt/show/_step_error"
 
   class Show.StepSkip extends App.Views.ItemView
