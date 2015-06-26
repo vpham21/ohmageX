@@ -25,7 +25,7 @@
       loopThroughSteps = true
       myStepIndex = @getStartingStepIndex flow, currentPage
 
-      while loopThroughSteps and myStepIndex <= flow.length
+      while loopThroughSteps and myStepIndex < flow.length
         currentStep = flow.at myStepIndex
 
         if currentStep.get('page') is false
