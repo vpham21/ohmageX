@@ -7,6 +7,8 @@
         return false
     appRoutes:
       "surveymulti/:surveyId/page/:page": "checkPage"
+      "surveymulti/:surveyId/aftersubmit": 'afterSubmit'
+
   API =
     checkPage: (surveyId, page) ->
       console.log "checkPage #{page}"
@@ -28,6 +30,15 @@
       new SurveyMultipromptApp.Show.Controller
         page: page
         surveyId: surveyId
+
+    afterSubmit: (surveyId) ->
+      # get the current flow's afterSubmit page number
+      try
+        @checkPage surveyId, App.request("flow:page:aftersubmit:page")
+      catch
+        # Redirect to the start of the survey
+        # if attempting to get the aftersubmit page number throws an error
+        App.navigate "survey/#{surveyId}", trigger: true
 
     goPrev: (surveyId) ->
       try
