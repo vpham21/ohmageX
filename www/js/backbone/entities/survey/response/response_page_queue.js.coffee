@@ -31,6 +31,19 @@
         App.vent.trigger "survey:response:get", surveyId, item.get('id')
       )
 
+
+    whenComplete: (surveyId, successCallback, errorCallback) ->
+      console.log 'errorCount', errorCount
+      App.vent.trigger "survey:page:responses:complete", errorCount
+
+      if errorCount is 0
+        App.vent.trigger "survey:page:responses:success", surveyId
+        successCallback()
+      else
+        # some responses contained errors
+        App.vent.trigger "survey:page:responses:error", surveyId, errorCount
+        errorCallback errorCount
+
     itemError: (itemId) ->
       errorCount++
       myIndex = currentIndices.indexOf(itemId)
