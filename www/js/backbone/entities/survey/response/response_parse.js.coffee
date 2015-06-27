@@ -16,6 +16,8 @@
       switch myStatus
         when 'pending'
           return false
+        when 'displaying'
+          return false
         when 'skipped'
           return 'SKIPPED'
         when 'not_displayed'
