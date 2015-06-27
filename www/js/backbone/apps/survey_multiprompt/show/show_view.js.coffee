@@ -42,6 +42,11 @@
 
   class Show.StepSkip extends App.Views.ItemView
     template: "survey_multiprompt/show/_step_skip"
+    triggers:
+      "click":
+        event: "toggle:skip"
+        preventDefault: false
+        stopPropagation: false
 
   class Show.StepLayout extends App.Views.Layout
     template: "survey_multiprompt/show/_step_layout"
