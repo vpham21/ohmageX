@@ -9,10 +9,11 @@
   # via the interface "responses:current"
 
   API = 
-    parseFalseToValue: (myStatus, stepId) ->
-      # convert false responses (aka invalid)
+    parseInvalidToValue: (myStatus, stepId) ->
+      # convert invalid responses (such as false or incomplete)
       # into equivalents required by the server,
       # based on the flow status of the step.
+
       switch myStatus
         when 'pending'
           return false
@@ -23,7 +24,7 @@
         when 'not_displayed'
           return 'NOT_DISPLAYED'
         else
-          throw new Error "false response for step #{stepId} with invalid flow status: #{myStatus}"
+          throw new Error "invalid response for step #{stepId} with invalid flow status: #{myStatus}"
 
     parseValueByType: (options) ->
       { responseValue, type, addUploadUUIDs } = options
