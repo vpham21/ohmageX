@@ -67,6 +67,9 @@
                   if stepWasSkipped
                     # trigger skipped if the condition passed, so it saves the fact that the step was skipped.
                     App.vent.trigger("survey:step:skipped", currentStep.get('id'))
+                    # also insert a page break, because there's no way to evaluate any subsequent step's conditions
+                    # since they could possibly skip or unskip this prompt.
+                    loopThroughSteps = false
 
         myStepIndex++
 
