@@ -41,6 +41,8 @@
     template: "survey_multiprompt/show/_step_error"
 
   class Show.StepSkip extends App.Views.ItemView
+    onRender: ->
+      if @model.get('status') is "skipped" then @$el.find('input').prop('checked', true)
     template: "survey_multiprompt/show/_step_skip"
     triggers:
       "click":
