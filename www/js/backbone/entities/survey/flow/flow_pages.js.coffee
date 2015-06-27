@@ -64,6 +64,9 @@
                 if isPassed
                   currentStep.set 'page', currentPage
                   lastPageBump = 1
+                  if stepWasSkipped
+                    # trigger skipped if the condition passed, so it saves the fact that the step was skipped.
+                    App.vent.trigger("survey:step:skipped", currentStep.get('id'))
 
         myStepIndex++
 
