@@ -61,7 +61,7 @@
                 # Condition check also sets the status of the prompt to either "displaying"
                 # or "not_displayed"
                 isPassed = App.request "flow:condition:check", currentStep.get('id')
-                if isPassed 
+                if isPassed
                   currentStep.set 'page', currentPage
                   lastPageBump = 1
 
