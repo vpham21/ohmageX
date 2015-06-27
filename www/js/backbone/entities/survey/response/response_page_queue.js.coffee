@@ -28,7 +28,11 @@
 
       # Fire a validation event for ALL of the responses in the queue.
       queue.each( (item) =>
-        App.vent.trigger "survey:response:get", surveyId, item.get('id')
+        if item.get('status') is 'skipped'
+          # don't validate skipped items, just assume success
+          @itemSuccess(item.get('id'))
+        else
+          App.vent.trigger "survey:response:get", surveyId, item.get('id')
       )
 
 

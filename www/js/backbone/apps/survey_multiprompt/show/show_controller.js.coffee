@@ -91,10 +91,11 @@
               # insert the step's skip view
               mySkipView = @getStepSkipView childView.model
 
-              @listenTo mySkipView, "skip:toggle", (value) =>
-                # the skipButton region - skip activated events. It broadcasts those at app level.
-                console.log 'if toggle value is enabled, broadcast "skip:activated" event with step ID'
-                console.log 'if toggle value is disabled, broadcast "skip:activated" event with step ID'
+              @listenTo mySkipView, "skipped", (stepId) =>
+                App.vent.trigger "survey:step:skipped", stepId 
+
+              @listenTo mySkipView, "unskipped", (stepId) =>
+                App.vent.trigger "survey:step:unskipped", stepId
 
               childView.skipButtonRegion.show mySkipView
 

@@ -1,1 +1,1 @@
-Skip View placeholder
+<input type="checkbox" name="skip<%= @id %>" id="skip<%= @id %>"><label for="skip<%= @id %>"><%= @skiplabel %></label>

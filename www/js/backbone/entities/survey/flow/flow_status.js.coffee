@@ -41,6 +41,12 @@
   App.vent.on "survey:step:skipped", (stepId) ->
     currentStep = App.request "flow:step", stepId
     API.updateStatus currentStep, "skipped"
+    console.log "survey step skipped flow", App.request("flow:current").toJSON()
+
+  App.vent.on "survey:step:unskipped", (stepId) ->
+    # this event is assumed to only happen during multi-step flow.
+    currentStep = App.request "flow:step", stepId
+    API.updateStatus currentStep, "displaying"
 
   App.vent.on "response:set:success", (response, surveyId, stepId) ->
     console.log 'response:set:success'
