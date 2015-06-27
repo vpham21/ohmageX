@@ -81,13 +81,13 @@
     parseValue: (options) ->
       { stepId, myResponse, addUploadUUIDs } = options
 
-      if myResponse.get('response') is false
-        return @parseFalseToValue App.request("flow:status", stepId), options.stepId
-      else
+      if App.request("flow:status", stepId) is 'complete'
         return @parseValueByType
           responseValue: myResponse.get 'response'
           type: myResponse.get 'type'
           addUploadUUIDs: addUploadUUIDs
+      else
+        return @parseInvalidToValue App.request("flow:status", stepId), options.stepId
 
   App.reqres.setHandler "response:value:parsed", (options) ->
     options.myResponse = App.request "response:get", options.stepId
