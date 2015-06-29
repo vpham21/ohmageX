@@ -377,7 +377,7 @@
       # into a JSON string
       return false unless $responses.length > 0
       result = _.map($responses, (response) ->
-        $(response).parent().parent().find('label').text()
+        $(response).parent().parent().find('label.canonical').text()
       )
       JSON.stringify result
     selectCurrentValues: (currentValues) ->
