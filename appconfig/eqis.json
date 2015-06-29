@@ -63,7 +63,7 @@
   },
   "functionality": {
     "post_survey_reminders_disabled": true,
-    "multi_question_survey_flow": false
+    "multi_question_survey_flow": true
   },
   "prompt_defaults": {
     "doc": {
