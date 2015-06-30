@@ -11,7 +11,7 @@
 
   API =
     validateResponse: (options) ->
-      { response, entity, type, surveyId, stepId } = options
+      { response, type, surveyId, stepId } = options
 
       # false if the response is empty
       if !!!response
@@ -33,7 +33,6 @@
   App.commands.setHandler "response:validate", (response, surveyId, stepId) ->
     API.validateResponse
       response: response
-      entity: App.request "flow:entity", stepId
       type: App.request "flow:type", stepId
       surveyId: surveyId
       stepId: stepId
