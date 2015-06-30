@@ -452,7 +452,7 @@
       data.nativeFilePicker = false
 
       if !data.currentValue
-        data.fileName= 'No File Selected'
+        data.fileName= 'Select a Document File'
       else
         data.fileName = data.currentValue.fileName
 
