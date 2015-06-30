@@ -10,7 +10,7 @@
       </div>
       <% else: %>
       <div class="input-activate">
-        <h3 class="file-header">Select a Document File</h3>
+        <h3 class="file-header"><%= @fileName %></h3>
         <input name="<%= @id %>" type="file" multiple="multiple" />
       </div>
       <% end %>
