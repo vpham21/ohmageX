@@ -26,7 +26,7 @@
     showPage: (surveyId, page) ->
       # update URL without triggering the Router
       App.navigate "surveymulti/#{surveyId}/page/#{page}"
-      console.log "updated flow with page numbers", App.request('flow:current').map (step) -> "\nid: #{step.get('id')}, page: #{step.get('page')}, condition: #{step.get('condition')}, status: #{step.get('status')}"
+      # console.log "updated flow with page numbers", App.request('flow:current').map (step) -> "\nid: #{step.get('id')}, page: #{step.get('page')}, condition: #{step.get('condition')}, status: #{step.get('status')}"
 
       new SurveyMultipromptApp.Show.Controller
         page: parseInt(page)

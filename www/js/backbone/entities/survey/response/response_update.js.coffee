@@ -17,7 +17,7 @@
       # if newValue is false, leave
       # the response value alone.
 
-      console.log 'myResponse', myResponse.toJSON()
+      # console.log 'myResponse', myResponse.toJSON()
 
   App.commands.setHandler "response:set", (newValue, stepId) ->
     API.updateResponse

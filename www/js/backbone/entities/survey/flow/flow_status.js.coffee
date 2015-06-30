@@ -17,7 +17,6 @@
   API =
     updateStatus: (currentStep, status) ->
       currentStep.set 'status', status
-      console.log 'currentStep status', status
 
     getStatus: (currentStep) ->
       currentStep.get 'status'
