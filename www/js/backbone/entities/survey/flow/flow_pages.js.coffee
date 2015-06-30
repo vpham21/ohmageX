@@ -72,7 +72,6 @@
           # why oldPage-1 and not just the oldPage?
           # because we need to clear the page that's about to be rendered too.
           step.set 'page', false
-      console.log 'currentResponses', App.request('responses:current').map (response) -> "id: #{response.get('id')}, response: #{response.get('response')}"
 
     getAftersubmitPage: (flow) ->
       console.log 'getAftersubmitPage'

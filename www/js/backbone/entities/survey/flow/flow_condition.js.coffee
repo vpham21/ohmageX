@@ -35,7 +35,6 @@
     containsInvalidFutureReference: (flow, condition) ->
       console.log 'containsInvalidFutureReference'
       stepIds = flow.pluck 'id'
-      console.log 'condition', condition
       if typeof condition is "string"
         # only check string-based conditions, boolean conditions won't contain any references
         result = _.find stepIds, (stepId, index) =>
