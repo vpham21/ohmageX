@@ -437,4 +437,45 @@
       }
     }
   }
+  .inline-skip {
+    padding: $global-form-control-padding;
+    font-size: $global-form-control-font-size;
+    .my-checkbox, .my-label, .my-label label {
+      display: inline-block;
+    }
+    .my-checkbox {
+      margin-right: $global-form-control-padding;
+    }
+    .my-label, .my-label label {
+      width: 75%;
+    }
+  }
+  .step-body-region {
+    position: relative;
+    &.skipped {
+      > div:after {
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 10;
+        position: absolute;
+        background: $survey-step-skip-button-background-color;
+        background: linear-gradient(to bottom, adjust-color($survey-step-skip-button-background-color, $lightness: 5%, $saturation: -5%) 0%, adjust-color($survey-step-skip-button-background-color, $lightness: -5%, $saturation: 5%) 100%);    
+        border-radius: 0;
+        border: 1px solid adjust-color($survey-step-skip-button-background-color, $lightness: -5%, $saturation: 5%);
+        color: $survey-step-skip-button-font-color;
+
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=85)";
+        filter: alpha(opacity=85);
+        opacity: 0.85;
+        text-transform: uppercase;
+        content: 'Skipped';
+        padding-top: $global-form-control-padding;
+        padding-left: $global-form-control-padding;
+        text-align: left;
+        font-size: $global-form-control-font-size*1.1;
+      }
+    }
+  }
 }

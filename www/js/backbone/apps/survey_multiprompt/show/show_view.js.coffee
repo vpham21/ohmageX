@@ -32,6 +32,11 @@
         if stepId is @model.get('id')
           @model.set('customerror', '')
 
+      @listenTo App.vent, "survey:step:skipped", (stepId) ->
+        # clear errors when a step is skipped
+        if stepId is @model.get('id')
+          @model.set('customerror', '')
+
       @listenTo App.vent, "response:set:error", (errorText, surveyId, stepId) =>
         console.log ' stepError response:set:error listener'
 
@@ -45,6 +50,8 @@
   class Show.StepSkip extends App.Views.ItemView
     initialize: ->
       @listenTo @, "toggle:skip", @toggleSkip
+    attributes:
+      "class": "inline-skip"
     toggleSkip: ->
       if @$el.find('input').prop('checked')
         @trigger "skipped", @model.get('id')
@@ -60,6 +67,15 @@
         stopPropagation: false
 
   class Show.StepLayout extends App.Views.Layout
+    initialize: ->
+      @listenTo App.vent, "survey:step:skipped", (stepId) ->
+        if @model.get('id') is stepId
+          @$el.find('.step-body-region').addClass('skipped')
+
+      @listenTo App.vent, "survey:step:unskipped", (stepId) ->
+        if @model.get('id') is stepId
+          @$el.find('.step-body-region').removeClass('skipped')
+
     template: "survey_multiprompt/show/_step_layout"
     regions:
       errorRegion: '.inline-error-region'
