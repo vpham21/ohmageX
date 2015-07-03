@@ -7,6 +7,18 @@
     }
   }
 
+  .inline-error {
+    font-size: $global-form-control-font-size*0.95;
+    background-color: #FFDDEE;
+    color: #B01;
+    padding: $global-form-control-padding;
+    margin: 0;
+    &:empty {
+      display: none;
+    }
+  }
+
+
   fieldset { // used for semantic reasons only
     border: none;
     margin: 0;
