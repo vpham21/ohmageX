@@ -67,6 +67,15 @@
         stopPropagation: false
 
   class Show.StepLayout extends App.Views.Layout
+    initialize: ->
+      @listenTo App.vent, "survey:step:skipped", (stepId) ->
+        if @model.get('id') is stepId
+          @$el.find('.step-body-region').addClass('skipped')
+
+      @listenTo App.vent, "survey:step:unskipped", (stepId) ->
+        if @model.get('id') is stepId
+          @$el.find('.step-body-region').removeClass('skipped')
+
     template: "survey_multiprompt/show/_step_layout"
     regions:
       errorRegion: '.inline-error-region'
