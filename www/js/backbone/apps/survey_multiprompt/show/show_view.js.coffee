@@ -50,6 +50,8 @@
   class Show.StepSkip extends App.Views.ItemView
     initialize: ->
       @listenTo @, "toggle:skip", @toggleSkip
+    attributes:
+      "class": "inline-skip"
     toggleSkip: ->
       if @$el.find('input').prop('checked')
         @trigger "skipped", @model.get('id')
