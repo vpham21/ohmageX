@@ -437,4 +437,17 @@
       }
     }
   }
+  .inline-skip {
+    padding: $global-form-control-padding;
+    font-size: $global-form-control-font-size;
+    .my-checkbox, .my-label, .my-label label {
+      display: inline-block;
+    }
+    .my-checkbox {
+      margin-right: $global-form-control-padding;
+    }
+    .my-label, .my-label label {
+      width: 75%;
+    }
+  }
 }
