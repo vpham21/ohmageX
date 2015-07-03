@@ -22,6 +22,8 @@
       "click": "next:clicked"
 
   class Show.StepError extends App.Views.ItemView
+    attributes:
+      "class": "inline-error"
     initialize: ->
       @model.set('customerror', '')
 
