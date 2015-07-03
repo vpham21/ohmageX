@@ -32,6 +32,11 @@
         if stepId is @model.get('id')
           @model.set('customerror', '')
 
+      @listenTo App.vent, "survey:step:skipped", (stepId) ->
+        # clear errors when a step is skipped
+        if stepId is @model.get('id')
+          @model.set('customerror', '')
+
       @listenTo App.vent, "response:set:error", (errorText, surveyId, stepId) =>
         console.log ' stepError response:set:error listener'
 
