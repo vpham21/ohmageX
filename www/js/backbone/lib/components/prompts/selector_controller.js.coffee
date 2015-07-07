@@ -83,7 +83,7 @@
             model: entity
         else
           return new Prompts.Unsupported
-            model: App.request('prompt:unsupported:entity', type)
+            model: App.request('prompt:unsupported:entity', type, entity.get('id'))
 
   App.reqres.setHandler "prompts:view", (surveyId, stepId, entity, type) ->
     selector = new Prompts.SelectorController
