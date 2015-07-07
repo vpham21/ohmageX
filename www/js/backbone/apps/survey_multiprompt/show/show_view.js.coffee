@@ -68,7 +68,7 @@
 
   class Show.StepLayout extends App.Views.Layout
     initialize: ->
-      @listenTo App.vent, "survey:step:skipped", (stepId) ->
+      @listenTo App.vent, "survey:step:skipped_displaying", (stepId) ->
         if @model.get('id') is stepId
           @$el.find('.step-body-region').addClass('skipped')
 
