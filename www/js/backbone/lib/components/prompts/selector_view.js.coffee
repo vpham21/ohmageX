@@ -7,7 +7,7 @@
       # response:get handler, activated when the prompt
       # needs to be validated.
       App.vent.on "survey:response:get", (surveyId, stepId) =>
-        if stepId is @model.get('id') then @gatherResponses surveyId, stepId
+        if stepId is @model.get('id') then @gatherResponses(surveyId, stepId)
 
   class Prompts.BaseComposite extends App.Views.CompositeView
     initialize: ->
