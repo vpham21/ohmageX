@@ -13,6 +13,7 @@
   # not_displayed  - not displayed because its condition evaluated to false
   # complete       - has been displayed, and the user has submitted a valid value
   # skipped        - the user intentionally skipped this Step
+  # skipped_displaying - both skipped AND displaying, required for multi-step flow
 
   API =
     updateStatus: (currentStep, status) ->
