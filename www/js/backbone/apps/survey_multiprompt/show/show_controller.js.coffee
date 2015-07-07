@@ -92,7 +92,7 @@
               mySkipView = @getStepSkipView childView.model
 
               @listenTo mySkipView, "skipped", (stepId) =>
-                App.vent.trigger "survey:step:skipped", stepId 
+                App.vent.trigger "survey:step:skipped_displaying", stepId
 
               @listenTo mySkipView, "unskipped", (stepId) =>
                 App.vent.trigger "survey:step:unskipped", stepId

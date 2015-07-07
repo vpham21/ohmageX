@@ -13,6 +13,7 @@
   # not_displayed  - not displayed because its condition evaluated to false
   # complete       - has been displayed, and the user has submitted a valid value
   # skipped        - the user intentionally skipped this Step
+  # skipped_displaying - both skipped AND displaying, required for multi-step flow
 
   API =
     updateStatus: (currentStep, status) ->
@@ -20,6 +21,10 @@
 
     getStatus: (currentStep) ->
       currentStep.get 'status'
+
+    setSkippedDisplayingToSkipped: (flow) ->
+      flowSkippedDisplaying = flow.where(status: 'skipped_displaying')
+      _.each(flowSkippedDisplaying, (step) -> step.set 'status', 'skipped')
 
   App.reqres.setHandler "flow:status", (id) ->
     currentStep = App.request "flow:step", id
@@ -40,7 +45,10 @@
   App.vent.on "survey:step:skipped", (stepId) ->
     currentStep = App.request "flow:step", stepId
     API.updateStatus currentStep, "skipped"
-    console.log "survey step skipped flow", App.request("flow:current").toJSON()
+
+  App.vent.on "survey:step:skipped_displaying", (stepId) ->
+    currentStep = App.request "flow:step", stepId
+    API.updateStatus currentStep, "skipped_displaying"
 
   App.vent.on "survey:step:unskipped", (stepId) ->
     # this event is assumed to only happen during multi-step flow.
@@ -59,3 +67,7 @@
   App.vent.on "flow:condition:success", (stepId) ->
     currentStep = App.request "flow:step", stepId
     API.updateStatus currentStep, "displaying"
+
+  App.vent.on "survey:page:responses:success", (surveyId) ->
+    currentFlow = App.request "flow:current"
+    API.setSkippedDisplayingToSkipped currentFlow

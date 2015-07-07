@@ -57,21 +57,29 @@
                 # stop, we've hit something that has an invalid reference.
                 loopThroughSteps = false
               else
+                stepWasSkipped = currentStep.get('status') is "skipped"
                 # Condition check also sets the status of the prompt to either "displaying"
                 # or "not_displayed"
                 isPassed = App.request "flow:condition:check", currentStep.get('id')
                 if isPassed
                   currentStep.set 'page', currentPage
                   lastPageBump = 1
+                  if stepWasSkipped
+                    App.vent.trigger("survey:step:skipped_displaying", currentStep.get('id'))
 
         myStepIndex++
 
     clearOldPage: (flow, oldPage) ->
       flow.each (step) =>
-        if step.get('page') >= oldPage-1
+        currentStepPage = step.get('page')
+        if currentStepPage >= oldPage-1
           # why oldPage-1 and not just the oldPage?
           # because we need to clear the page that's about to be rendered too.
           step.set 'page', false
+          # when clearing out the current page, don't reset the status
+          # of `skipped` steps to `pending` so they can be converted to `skipped_displaying`
+          if !(currentStepPage is oldPage-1 and step.get('status') is 'skipped')
+            App.vent.trigger "flow:step:reset", step.get('id')
 
     getAftersubmitPage: (flow) ->
       console.log 'getAftersubmitPage'

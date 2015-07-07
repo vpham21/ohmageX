@@ -58,7 +58,7 @@
       else
         @trigger "unskipped", @model.get('id')
     onRender: ->
-      if @model.get('status') is "skipped" then @$el.find('input').prop('checked', true)
+      if @model.get('status') is "skipped_displaying" then @$el.find('input').prop('checked', true)
     template: "survey_multiprompt/show/_step_skip"
     triggers:
       "click":
@@ -68,14 +68,15 @@
 
   class Show.StepLayout extends App.Views.Layout
     initialize: ->
-      @listenTo App.vent, "survey:step:skipped", (stepId) ->
+      @listenTo App.vent, "survey:step:skipped_displaying", (stepId) ->
         if @model.get('id') is stepId
           @$el.find('.step-body-region').addClass('skipped')
 
       @listenTo App.vent, "survey:step:unskipped", (stepId) ->
         if @model.get('id') is stepId
           @$el.find('.step-body-region').removeClass('skipped')
-
+    onRender: ->
+      if @model.get('status') is "skipped_displaying" then @$el.find('.step-body-region').addClass('skipped')
     template: "survey_multiprompt/show/_step_layout"
     regions:
       errorRegion: '.inline-error-region'
