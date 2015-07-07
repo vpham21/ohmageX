@@ -75,7 +75,8 @@
       @listenTo App.vent, "survey:step:unskipped", (stepId) ->
         if @model.get('id') is stepId
           @$el.find('.step-body-region').removeClass('skipped')
-
+    onRender: ->
+      if @model.get('status') is "skipped_displaying" then @$el.find('.step-body-region').addClass('skipped')
     template: "survey_multiprompt/show/_step_layout"
     regions:
       errorRegion: '.inline-error-region'
