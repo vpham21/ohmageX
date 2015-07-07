@@ -57,12 +57,15 @@
                 # stop, we've hit something that has an invalid reference.
                 loopThroughSteps = false
               else
+                stepWasSkipped = currentStep.get('status') is "skipped"
                 # Condition check also sets the status of the prompt to either "displaying"
                 # or "not_displayed"
                 isPassed = App.request "flow:condition:check", currentStep.get('id')
                 if isPassed
                   currentStep.set 'page', currentPage
                   lastPageBump = 1
+                  if stepWasSkipped
+                    App.vent.trigger("survey:step:skipped_displaying", currentStep.get('id'))
 
         myStepIndex++
 
