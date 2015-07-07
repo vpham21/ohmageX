@@ -46,7 +46,7 @@
 
             # the step referenced is either currently displaying or pending,
             # meaning it's a future reference.
-            return myStep.get('status') is 'displaying' or myStep.get('status') is 'pending'
+            return myStep.get('status') in ['pending','displaying','skipped_displaying']
         # if there were matches, that means there's a future reference in the condition
         return typeof result isnt "undefined"
       else
