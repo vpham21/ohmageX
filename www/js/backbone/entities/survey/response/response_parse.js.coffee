@@ -15,9 +15,7 @@
       # based on the flow status of the step.
 
       switch myStatus
-        when 'pending'
-          return false
-        when 'displaying'
+        when 'pending','displaying','skipped_displaying'
           return false
         when 'skipped'
           return 'SKIPPED'
