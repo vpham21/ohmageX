@@ -58,7 +58,7 @@
       else
         @trigger "unskipped", @model.get('id')
     onRender: ->
-      if @model.get('status') is "skipped" then @$el.find('input').prop('checked', true)
+      if @model.get('status') is "skipped_displaying" then @$el.find('input').prop('checked', true)
     template: "survey_multiprompt/show/_step_skip"
     triggers:
       "click":
