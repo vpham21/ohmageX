@@ -22,6 +22,10 @@
     getStatus: (currentStep) ->
       currentStep.get 'status'
 
+    setSkippedDisplayingToSkipped: (flow) ->
+      flowSkippedDisplaying = flow.where(status: 'skipped_displaying')
+      _.each(flowSkippedDisplaying, (step) -> step.set 'status', 'skipped')
+
   App.reqres.setHandler "flow:status", (id) ->
     currentStep = App.request "flow:step", id
     API.getStatus currentStep
@@ -63,3 +67,7 @@
   App.vent.on "flow:condition:success", (stepId) ->
     currentStep = App.request "flow:step", stepId
     API.updateStatus currentStep, "displaying"
+
+  App.vent.on "survey:page:responses:success", (surveyId) ->
+    currentFlow = App.request "flow:current"
+    API.setSkippedDisplayingToSkipped currentFlow
