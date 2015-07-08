@@ -85,15 +85,7 @@
       else
         @$el.find("input[value='#{valueParsed}']").prop('checked', true)
 
-
-    extractJSONString: ($responses) ->
-      # extract responses from the selected options
-      # into a JSON string
-      return false unless $responses.length > 0
-      result = _.map($responses, (response) ->
-        parseInt $(response).val()
       )
-      JSON.stringify result
 
     getResponseMeta: ->
       # extracts response metadata from keys.
