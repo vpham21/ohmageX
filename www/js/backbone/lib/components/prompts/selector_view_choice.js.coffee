@@ -61,29 +61,21 @@
     template: "prompts/multi_choice"
     childView: Prompts.MultiChoiceItem
     childViewContainer: ".prompt-list"
-    selectCurrentValues: (currentValues) ->
 
-      if currentValues.indexOf(',') isnt -1 and currentValues.indexOf('[') is -1
+    defaultStringToParsed: (defaultString) ->
+      if defaultString.indexOf(',') isnt -1 and defaultString.indexOf('[') is -1
         # Check for values that contain a comma-separated list of
         # numbers with NO brackets (multi_choice default allows this)
         # which isn't a proper JSON format to convert to an array.
         # Add the missing brackets.
-        currentValues = "[#{currentValues}]"
-
+        defaultString = "[#{defaultString}]"
       try
-        valueParsed = JSON.parse(currentValues)
+        defaultParsed = JSON.parse(defaultString)
       catch Error
-        console.log "Error, saved response string #{currentValues} failed to convert to array. ", Error
+        console.log "Error, saved response string #{defaultString} failed to convert to array. ", Error
         return false
+      defaultParsed
 
-      if Array.isArray valueParsed
-        # set all the array values
-        _.each(valueParsed, (currentValue) =>
-          console.log 'currentValue', currentValue
-          @$el.find("input[value='#{currentValue}']").prop('checked', true)
-        )
-      else
-        @$el.find("input[value='#{valueParsed}']").prop('checked', true)
 
       )
 
