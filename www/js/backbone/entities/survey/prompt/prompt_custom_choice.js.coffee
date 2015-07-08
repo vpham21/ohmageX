@@ -23,7 +23,7 @@
     addChoice: (surveyId, stepId, value, key) ->
       # expects campaign to be a Model or JSON format.
 
-      if !currentChoices then currentChoices = new Entities.CustomChoices
+      if currentChoices is false then currentChoices = new Entities.CustomChoices
 
       currentChoices.add
         campaign_urn: App.request "survey:saved:urn", surveyId
@@ -69,20 +69,24 @@
     getMergedChoices: (surveyId, stepId, original) ->
 
       # map currentChoices to an array that matches the format of ChoiceCollection Models.
-      customArr = currentChoices.chain().filter( (choice) ->
-        return choice.get('surveyId') is surveyId and choice.get('stepId') is stepId
-      ).map( (choice) ->
-        id: choice.get 'key'
-        key: choice.get 'key'
-        label: choice.get 'value'
-        parentId: stepId
-        custom: true
-      ).value()
+      customArr = []
+      if currentChoices isnt false
+        customArr = currentChoices.chain().filter( (choice) ->
+          return choice.get('surveyId') is surveyId and choice.get('stepId') is stepId
+        ).map( (choice) ->
+          id: choice.get 'key'
+          key: choice.get 'key'
+          label: choice.get 'value'
+          parentId: stepId
+          custom: true
+        ).value()
 
-      mergedColl = new Entities.ChoiceCollection 
+      mergedColl = new Entities.ChoiceCollection
       mergedColl.add original.toJSON()
-      mergedColl.set customArr, 
-        remove: false
+
+      if customArr.length > 0
+        mergedColl.set customArr,
+          remove: false
 
       mergedColl
 
@@ -100,7 +104,6 @@
     currentChoices
 
   App.reqres.setHandler "prompt:customchoices:merged", (surveyId, stepId, choiceCollection) ->
-    if !currentChoices then return choiceCollection
     API.getMergedChoices surveyId, stepId, choiceCollection
 
   App.commands.setHandler "prompt:customchoice:add", (surveyId, stepId, value, key) ->
@@ -110,10 +113,10 @@
     API.removeChoice surveyId, stepId, value
 
   App.reqres.setHandler "prompt:customchoice:campaign", (campaign_urn) ->
-    if !!currentChoices then API.getCampaignChoices(campaign_urn) else false
+    if currentChoices is false then API.getCampaignChoices(campaign_urn) else false
 
   App.vent.on "campaign:saved:remove", (campaign_urn) ->
-    if currentChoices then API.removeCampaignChoices(campaign_urn)
+    if currentChoices isnt false then API.removeCampaignChoices(campaign_urn)
 
   App.vent.on "credentials:cleared", ->
     API.clear()
