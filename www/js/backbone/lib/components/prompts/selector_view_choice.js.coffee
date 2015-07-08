@@ -85,9 +85,6 @@
       else
         @$el.find("input[value='#{valueParsed}']").prop('checked', true)
 
-    onRender: ->
-      currentValue = @model.get('currentValue')
-      if currentValue then @selectCurrentValues currentValue
 
     extractJSONString: ($responses) ->
       # extract responses from the selected options
