@@ -6,16 +6,6 @@
   # for the data sent to the old library.
 
   API =
-    stringsToArrays: (rawString) ->
-      try
-        resultArr = JSON.parse(rawString)
-      catch Error
-        console.log "Error, response #{rawString} failed to convert to string. ", Error
-        return rawString
-      resultArr
-    isArrayResponse: (response) ->
-      myType = response.get 'type'
-      myType is 'multi_choice' or myType is 'multi_choice_custom'
 
     prepParser: (rawCondition, responses) ->
       oldParserResponses = {}
