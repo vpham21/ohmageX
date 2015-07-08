@@ -23,7 +23,7 @@
     addChoice: (surveyId, stepId, value, key) ->
       # expects campaign to be a Model or JSON format.
 
-      if !currentChoices then currentChoices = new Entities.CustomChoices
+      if currentChoices is false then currentChoices = new Entities.CustomChoices
 
       currentChoices.add
         campaign_urn: App.request "survey:saved:urn", surveyId
@@ -110,10 +110,10 @@
     API.removeChoice surveyId, stepId, value
 
   App.reqres.setHandler "prompt:customchoice:campaign", (campaign_urn) ->
-    if !!currentChoices then API.getCampaignChoices(campaign_urn) else false
+    if currentChoices is false then API.getCampaignChoices(campaign_urn) else false
 
   App.vent.on "campaign:saved:remove", (campaign_urn) ->
-    if currentChoices then API.removeCampaignChoices(campaign_urn)
+    if currentChoices isnt false then API.removeCampaignChoices(campaign_urn)
 
   App.vent.on "credentials:cleared", ->
     API.clear()
