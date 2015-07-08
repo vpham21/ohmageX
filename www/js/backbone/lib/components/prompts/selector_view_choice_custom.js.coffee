@@ -55,16 +55,18 @@
           # the custom choice already exists
           @trigger "customchoice:add:exists"
           return false
+        myKey = _.guid()
 
         args.collection.add([{
-          "key": _.uniqueId()
+          "id": myKey
+          "key": myKey
           "label": myVal
           "parentId": args.model.get('id')
           "custom": true
         }])
 
         # clear the input on successful submit.
-        @trigger "customchoice:add:success", myVal
+        @trigger "customchoice:add:success", myVal, myKey
         $addForm.find(".add-value").val('')
 
 
