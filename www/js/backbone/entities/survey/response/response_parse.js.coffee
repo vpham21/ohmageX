@@ -35,6 +35,8 @@
       switch type
         when 'single_choice'
           return responseValue.key
+        when 'single_choice_custom'
+          return responseValue.label
         when 'timestamp'
           # because timestamp responses are raw strings,
           # even though they have been tested with the validator, they
