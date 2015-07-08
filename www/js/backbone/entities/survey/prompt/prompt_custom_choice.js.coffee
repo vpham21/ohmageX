@@ -31,6 +31,7 @@
         stepId: stepId
         value: value
         key: key
+        id: key
 
       @updateLocal( =>
         console.log "custom_choices entity saved in localStorage"
