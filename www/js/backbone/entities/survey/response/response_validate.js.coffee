@@ -10,6 +10,12 @@
   # via the interface "responses:current"
 
   API =
+    responseIsIdentical: (type, newResponse, oldResponse) ->
+      if typeof newResponse is "object" and typeof oldResponse is "object"
+        return _.isEqual newResponse, oldResponse
+
+      newResponse is oldResponse
+
     validateResponse: (options) ->
       { response, type, surveyId, stepId } = options
 
@@ -23,7 +29,7 @@
         App.vent.trigger "response:set:error", message, surveyId, stepId
         return false
 
-      if response is App.request('response:get', stepId).get('response')
+      if @responseIsIdentical type, response, App.request('response:get', stepId).get('response')
         # the response is identical, skip validation
         App.vent.trigger "response:set:success", response, surveyId, stepId
       else
