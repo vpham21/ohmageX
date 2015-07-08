@@ -95,6 +95,21 @@
       )
       JSON.stringify result
 
-    gatherResponses: (surveyId, stepId) =>
+    getResponseMeta: ->
+      # extracts response metadata from keys.
+
       $responses = @$el.find('input[type=checkbox]').filter(':checked')
-      @trigger "response:submit", @extractJSONString($responses), surveyId, stepId
+
+      if !!!$responses.length then return false
+
+      keys = []
+      labels = []
+      _.each( $responses, (response) ->
+        myKey = $(response).val()
+        keys.push( if isNaN(myKey) then myKey else parseInt(myKey) )
+        labels.push $(response).parent().parent().find('label.canonical').text()
+      )
+      return {
+        keys: keys
+        labels: labels
+      }
