@@ -36,7 +36,10 @@
         when 'single_choice'
           return responseValue.key
         when 'single_choice_custom'
-          return responseValue.label
+          if conditionValue
+            return responseValue.key
+          else
+            return responseValue.label
         when 'multi_choice'
           if conditionValue
             return responseValue.keys
