@@ -1,16 +1,15 @@
 @Ohmage.module "Components.Prompts", (Prompts, App, Backbone, Marionette, $, _) ->
 
-  # Prompt Single Choice Custom
-  class Prompts.SingleChoiceCustom extends Prompts.BaseComposite
+  class Prompts.BaseChoiceCustom extends Prompts.BaseComposite
     template: "prompts/choice_custom"
-    childView: Prompts.SingleChoiceItem
-    childViewContainer: ".prompt-list"
     triggers:
       "click button.my-add": "customchoice:toggle"
       "click .add-form .add-submit": "customchoice:add"
       "click .add-form .add-cancel": "customchoice:cancel"
+
     initialize: ->
       super
+
       @listenTo @, 'customchoice:toggle', @toggleChoice
       @listenTo @, 'customchoice:add', @addChoice
       @listenTo @, 'customchoice:cancel', @cancelChoice
@@ -69,7 +68,7 @@
         $addForm.find(".add-value").val('')
 
 
-  class Prompts.MultiChoiceCustom extends Prompts.SingleChoiceCustom
-    childView: Prompts.MultiChoiceItem
+  class Prompts.SingleChoiceCustom extends mixOf Prompts.SingleChoice, Prompts.BaseChoiceCustom
 
 
+  class Prompts.MultiChoiceCustom extends mixOf Prompts.MultiChoice, Prompts.BaseChoiceCustom
