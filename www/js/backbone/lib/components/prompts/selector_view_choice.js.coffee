@@ -18,13 +18,39 @@
     childView: Prompts.SingleChoiceItem
     childViewContainer: ".prompt-list"
 
+    selectChosen: (currentValue) ->
+      # activate a choice selection based on the currentValueType.
+      myChosenValue = switch @model.get('currentValueType')
+        when 'response'
+          # Saved responses are formatted as an object.
+          # Reference the key property.
+          currentValue.key
+        when 'default'
+          # Default responses are formatted as an individual key.
+          # Just use the raw value.
+          currentValue
+
+      @$el.find("input[value='#{myChosenValue}']").prop('checked', true)
+
     onRender: ->
       currentValue = @model.get('currentValue')
-      if currentValue then @$el.find("input[value='#{currentValue}']").prop('checked', true)
+      if currentValue then @selectChosen currentValue
+
+    getResponseMeta: ->
+
+      $checkedInput = @$el.find('input[type=radio]').filter(':checked')
+
+      if !!!$checkedInput.length then return false
+
+      myKey = $checkedInput.val()
+
+      return {
+        key: if isNaN(myKey) then myKey else parseInt(myKey)
+        label: $checkedInput.parent().parent().find('label.canonical').text()
+      }
 
     gatherResponses: (surveyId, stepId) =>
-      response = @$el.find('input[type=radio]').filter(':checked').val()
-      @trigger "response:submit", response, surveyId, stepId
+      @trigger "response:submit", @getResponseMeta(), surveyId, stepId
 
 
   class Prompts.MultiChoiceItem extends Prompts.SingleChoiceItem
@@ -35,43 +61,59 @@
     template: "prompts/multi_choice"
     childView: Prompts.MultiChoiceItem
     childViewContainer: ".prompt-list"
-    selectCurrentValues: (currentValues) ->
 
-      if currentValues.indexOf(',') isnt -1 and currentValues.indexOf('[') is -1
+    defaultStringToParsed: (defaultString) ->
+      if defaultString.indexOf(',') isnt -1 and defaultString.indexOf('[') is -1
         # Check for values that contain a comma-separated list of
         # numbers with NO brackets (multi_choice default allows this)
         # which isn't a proper JSON format to convert to an array.
         # Add the missing brackets.
-        currentValues = "[#{currentValues}]"
-
+        defaultString = "[#{defaultString}]"
       try
-        valueParsed = JSON.parse(currentValues)
+        defaultParsed = JSON.parse(defaultString)
       catch Error
-        console.log "Error, saved response string #{currentValues} failed to convert to array. ", Error
+        console.log "Error, saved response string #{defaultString} failed to convert to array. ", Error
         return false
+      defaultParsed
 
-      if Array.isArray valueParsed
-        # set all the array values
-        _.each(valueParsed, (currentValue) =>
-          console.log 'currentValue', currentValue
-          @$el.find("input[value='#{currentValue}']").prop('checked', true)
-        )
-      else
-        @$el.find("input[value='#{valueParsed}']").prop('checked', true)
+    selectChosen: (currentValue) ->
+      chosenArr = switch @model.get('currentValueType')
+        when 'default'
+          valueParsed = @defaultStringToParsed currentValue
+          result = []
+          if !Array.isArray(valueParsed)
+            # It's not an array, it's a single value.
+            # Just set the value immediately.
+            @$el.find("input[value='#{valueParsed}']").prop('checked', true)
+            # We're done here! leave result as an empty array so we
+            # don't iterate over it later.
+          else
+            result = valueParsed
+          result
+        when 'response'
+          # just extract the keys meta property from the response.
+          currentValue.keys
 
-    onRender: ->
-      currentValue = @model.get('currentValue')
-      if currentValue then @selectCurrentValues currentValue
-
-    extractJSONString: ($responses) ->
-      # extract responses from the selected options
-      # into a JSON string
-      return false unless $responses.length > 0
-      result = _.map($responses, (response) ->
-        parseInt $(response).val()
+      _.each(chosenArr, (chosenValue) =>
+        console.log 'chosenValue', chosenValue
+        @$el.find("input[value='#{chosenValue}']").prop('checked', true)
       )
-      JSON.stringify result
 
-    gatherResponses: (surveyId, stepId) =>
+    getResponseMeta: ->
+      # extracts response metadata from keys.
+
       $responses = @$el.find('input[type=checkbox]').filter(':checked')
-      @trigger "response:submit", @extractJSONString($responses), surveyId, stepId
+
+      if !!!$responses.length then return false
+
+      keys = []
+      labels = []
+      _.each( $responses, (response) ->
+        myKey = $(response).val()
+        keys.push( if isNaN(myKey) then myKey else parseInt(myKey) )
+        labels.push $(response).parent().parent().find('label.canonical').text()
+      )
+      return {
+        keys: keys
+        labels: labels
+      }
