@@ -42,6 +42,11 @@
             return responseValue.keys
           else
             return JSON.stringify responseValue.keys
+        when 'multi_choice_custom'
+          if conditionValue
+            return responseValue.keys
+          else
+            return JSON.stringify responseValue.labels
         when 'timestamp'
           # because timestamp responses are raw strings,
           # even though they have been tested with the validator, they
