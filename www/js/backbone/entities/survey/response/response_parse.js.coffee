@@ -25,8 +25,28 @@
           throw new Error "invalid response for step #{stepId} with invalid flow status: #{myStatus}"
 
     parseValueByType: (options) ->
-      { responseValue, type, addUploadUUIDs } = options
+      _.defaults options,
+        conditionValue: false
+        # condition value returns a value optimized for conditional parsing
+        # instead of the survey upload value.
+
+      { responseValue, type, addUploadUUIDs, conditionValue } = options
+
       switch type
+        when 'single_choice'
+          return responseValue.key
+        when 'single_choice_custom'
+          return responseValue.label
+        when 'multi_choice'
+          if conditionValue
+            return responseValue.keys
+          else
+            return JSON.stringify responseValue.keys
+        when 'multi_choice_custom'
+          if conditionValue
+            return responseValue.keys
+          else
+            return JSON.stringify responseValue.labels
         when 'timestamp'
           # because timestamp responses are raw strings,
           # even though they have been tested with the validator, they
@@ -77,13 +97,14 @@
           return responseValue
 
     parseValue: (options) ->
-      { stepId, myResponse, addUploadUUIDs } = options
+      { stepId, myResponse, addUploadUUIDs, conditionValue } = options
 
       if App.request("flow:status", stepId) is 'complete'
         return @parseValueByType
           responseValue: myResponse.get 'response'
           type: myResponse.get 'type'
           addUploadUUIDs: addUploadUUIDs
+          conditionValue: conditionValue
       else
         return @parseInvalidToValue App.request("flow:status", stepId), options.stepId
 
