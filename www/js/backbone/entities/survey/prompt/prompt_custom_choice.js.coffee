@@ -20,7 +20,7 @@
         console.log 'custom choices not retrieved from storage'
         currentChoices = false
 
-    addChoice: (surveyId, stepId, value) ->
+    addChoice: (surveyId, stepId, value, key) ->
       # expects campaign to be a Model or JSON format.
 
       if !currentChoices then currentChoices = new Entities.CustomChoices
@@ -30,6 +30,7 @@
         surveyId: surveyId
         stepId: stepId
         value: value
+        key: key
 
       @updateLocal( =>
         console.log "custom_choices entity saved in localStorage"
@@ -70,7 +71,7 @@
       customArr = currentChoices.chain().filter( (choice) ->
         return choice.get('surveyId') is surveyId and choice.get('stepId') is stepId
       ).map( (choice) ->
-        key: _.guid()
+        key: choice.get 'key'
         label: choice.get 'value'
         parentId: stepId
         custom: true
@@ -102,8 +103,8 @@
     if !currentChoices then return choiceCollection
     API.getMergedChoices surveyId, stepId, choiceCollection
 
-  App.commands.setHandler "prompt:customchoice:add", (surveyId, stepId, value) ->
-    API.addChoice surveyId, stepId, value
+  App.commands.setHandler "prompt:customchoice:add", (surveyId, stepId, value, key) ->
+    API.addChoice surveyId, stepId, value, key
 
   App.commands.setHandler "prompt:customchoice:remove", (surveyId, stepId, value) ->
     API.removeChoice surveyId, stepId, value
