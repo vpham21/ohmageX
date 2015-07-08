@@ -34,7 +34,7 @@
 
     onRender: ->
       currentValue = @model.get('currentValue')
-      if currentValue then @$el.find("input[value='#{currentValue}']").prop('checked', true)
+      if currentValue then @selectChosen currentValue
 
     gatherResponses: (surveyId, stepId) =>
       response = @$el.find('input[type=radio]').filter(':checked').val()
