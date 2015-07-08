@@ -12,9 +12,9 @@
 
       @myView = @selectView entity, type
 
-      @listenTo @myView, "customchoice:add:success", (myVal) =>
-        console.log "customchoice:add:success handler", myVal
-        App.execute "prompt:customchoice:add", @surveyId, @stepId, myVal
+      @listenTo @myView, "customchoice:add:success", (myVal, myKey) =>
+        console.log "customchoice:add:success handler", myVal, myKey
+        App.execute "prompt:customchoice:add", @surveyId, @stepId, myVal, myKey
 
       @listenTo @myView, "customchoice:remove", (myVal) =>
         console.log "customchoice:remove handler", myVal
