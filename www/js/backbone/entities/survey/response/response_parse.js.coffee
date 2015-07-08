@@ -33,6 +33,8 @@
       { responseValue, type, addUploadUUIDs, conditionValue } = options
 
       switch type
+        when 'single_choice'
+          return responseValue.key
         when 'timestamp'
           # because timestamp responses are raw strings,
           # even though they have been tested with the validator, they
