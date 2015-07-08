@@ -20,16 +20,6 @@
       @listenTo @, 'customchoice:add:invalid', (-> App.execute "dialog:alert", 'invalid custom choice, please try again.')
       @listenTo @, 'customchoice:add:exists', (-> App.execute "dialog:alert", 'Custom choice exists, please try again.')
 
-    chooseValue: (currentValue) ->
-      # activate a choice selection based on the currentValueType.
-      switch @model.get('currentValueType')
-        when 'response'
-          # Saved responses use the label, not the key.
-          matchingValue = @$el.find("label:containsExact('#{currentValue}')").parent().parent().find('input').prop('checked', true)
-        when 'default'
-          # Default responses match keys instead of labels.
-          # Select based on value.
-          @$el.find("input[value='#{currentValue}']").prop('checked', true)
 
     removeChoice: (args) ->
       value = args.model.get 'label'
@@ -75,19 +65,6 @@
         # clear the input on successful submit.
         @trigger "customchoice:add:success", myVal
         $addForm.find(".add-value").val('')
-
-    onRender: ->
-      currentValue = @model.get('currentValue')
-      if currentValue then @chooseValue currentValue
-
-    gatherResponses: (surveyId, stepId) =>
-      # reset the add custom form, if it's open
-      @trigger "customchoice:cancel"
-      # this expects the radio buttons to be in the format:
-      # <li><input type=radio ... /><label>labelText</label></li>
-      $checkedInput = @$el.find('input[type=radio]').filter(':checked')
-      response = if !!!$checkedInput.length then false else $checkedInput.parent().parent().find('label.canonical').text()
-      @trigger "response:submit", response, surveyId, stepId
 
 
   class Prompts.MultiChoiceCustom extends Prompts.SingleChoiceCustom
