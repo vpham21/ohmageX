@@ -36,9 +36,21 @@
       currentValue = @model.get('currentValue')
       if currentValue then @selectChosen currentValue
 
+    getResponseMeta: ->
+
+      $checkedInput = @$el.find('input[type=radio]').filter(':checked')
+
+      if !!!$checkedInput.length then return false
+
+      myKey = $checkedInput.val()
+
+      return {
+        key: if isNaN(myKey) then myKey else parseInt(myKey)
+        label: $checkedInput.parent().parent().find('label.canonical').text()
+      }
+
     gatherResponses: (surveyId, stepId) =>
-      response = @$el.find('input[type=radio]').filter(':checked').val()
-      @trigger "response:submit", response, surveyId, stepId
+      @trigger "response:submit", @getResponseMeta(), surveyId, stepId
 
 
   class Prompts.MultiChoiceItem extends Prompts.SingleChoiceItem
