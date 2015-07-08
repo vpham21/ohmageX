@@ -67,25 +67,24 @@
       if choices.length is 0 then false else choices
 
     getMergedChoices: (surveyId, stepId, original) ->
-      
+
       # map currentChoices to an array that matches the format of ChoiceCollection Models.
       customArr = currentChoices.chain().filter( (choice) ->
         return choice.get('surveyId') is surveyId and choice.get('stepId') is stepId
       ).map( (choice) ->
+        id: choice.get 'key'
         key: choice.get 'key'
         label: choice.get 'value'
         parentId: stepId
         custom: true
       ).value()
-      console.log 'getMergedChoices surveyId, stepId, customArr', surveyId, stepId, customArr
 
-      # merge the currentChoices formatted array with the original ChoiceCollection
-      # into a new collection for output. 
-      result = new Entities.ChoiceCollection _.union(original.toJSON(), customArr)
+      mergedColl = new Entities.ChoiceCollection 
+      mergedColl.add original.toJSON()
+      mergedColl.set customArr, 
+        remove: false
 
-      # saving the merged collection to a variable before returning it prevents the 
-      # "duplicate custom choice" error that may happen when re-displaying a custom choice
-      result
+      mergedColl
 
     updateLocal: (callback) ->
       # update localStorage index custom_choices with the current version of campaignsSaved entity
