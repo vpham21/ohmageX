@@ -12,10 +12,11 @@
       responses.each((response) =>
         myId = response.get 'id'
 
-        if response.get('response') isnt false and @isArrayResponse(response)
-          myResponse = @stringsToArrays(response.get 'response')
-        else
-          myResponse = App.request "response:value:parsed", { stepId: myId, addUploadUUIDs: false }
+        myResponse = App.request "response:value:parsed", 
+          conditionValue: true
+          stepId: myId
+          addUploadUUIDs: false
+
         oldParserResponses[myId] = myResponse
         oldParserResponses
       )
