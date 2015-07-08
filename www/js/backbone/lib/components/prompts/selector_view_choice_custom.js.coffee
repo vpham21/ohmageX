@@ -20,6 +20,8 @@
       @listenTo @, 'customchoice:add:invalid', (-> App.execute "dialog:alert", 'invalid custom choice, please try again.')
       @listenTo @, 'customchoice:add:exists', (-> App.execute "dialog:alert", 'Custom choice exists, please try again.')
 
+      @listenTo @, 'response:submit', =>
+        @trigger "customchoice:cancel"
 
     removeChoice: (args) ->
       value = args.model.get 'label'
