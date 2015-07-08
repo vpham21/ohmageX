@@ -76,7 +76,27 @@
         return false
       defaultParsed
 
+    selectChosen: (currentValue) ->
+      chosenArr = switch @model.get('currentValueType')
+        when 'default'
+          valueParsed = @defaultStringToParsed currentValue
+          result = []
+          if !Array.isArray(valueParsed)
+            # It's not an array, it's a single value.
+            # Just set the value immediately.
+            @$el.find("input[value='#{valueParsed}']").prop('checked', true)
+            # We're done here! leave result as an empty array so we
+            # don't iterate over it later.
+          else
+            result = valueParsed
+          result
+        when 'response'
+          # just extract the keys meta property from the response.
+          currentValue.keys
 
+      _.each(chosenArr, (chosenValue) =>
+        console.log 'chosenValue', chosenValue
+        @$el.find("input[value='#{chosenValue}']").prop('checked', true)
       )
 
     getResponseMeta: ->
