@@ -113,7 +113,7 @@
     API.removeChoice surveyId, stepId, value
 
   App.reqres.setHandler "prompt:customchoice:campaign", (campaign_urn) ->
-    if currentChoices is false then API.getCampaignChoices(campaign_urn) else false
+    if currentChoices isnt false then API.getCampaignChoices(campaign_urn) else false
 
   App.vent.on "campaign:saved:remove", (campaign_urn) ->
     if currentChoices isnt false then API.removeCampaignChoices(campaign_urn)
