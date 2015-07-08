@@ -12,8 +12,9 @@
   if (!sKey) then return null
   return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null
 
-String.prototype.capitalizeFirstLetter = ->
-  @ && @[0].toUpperCase() + @slice(1)
+if typeof String.prototype.capitalizeFirstLetter isnt 'function'
+  String.prototype.capitalizeFirstLetter = ->
+    @ && @[0].toUpperCase() + @slice(1)
 
 if typeof String.prototype.endsWith isnt 'function'
   String.prototype.endsWith = (suffix) ->
