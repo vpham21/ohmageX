@@ -12,6 +12,26 @@
   if (!sKey) then return null
   return decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(sKey).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null
 
+@mixOf = (base, mixins ...) ->
+  # method to add mixins to a class extension in Coffeescript
+  # from: https://github.com/jashkenas/coffeescript/issues/452#issuecomment-17012372
+  # usage: 
+  #
+  # class A extends mixOf Foo, Bar
+  #
+  # Implementation notes:
+  # - Includes "super" from A methods
+  # - There is no python-style method-resolution-order magic from "super" in Bar methods (that would be multiple inheritance, not mixins)
+  # - Does not include methods that Bar inherits from a superclass (technically, mixins should have this; but pragmatically, it's good that this doesn't, because it discourages mixins as anything but simple one-offs.)
+  # - Changes to mixin are not reflected in A (again, technically bad but pragmatically good)
+
+  class Mixed extends base
+  for mixin in mixins by -1
+    for name, method of mixin::
+      Mixed::[name] = method
+  Mixed
+
+
 if typeof String.prototype.capitalizeFirstLetter isnt 'function'
   String.prototype.capitalizeFirstLetter = ->
     @ && @[0].toUpperCase() + @slice(1)
