@@ -18,6 +18,20 @@
     childView: Prompts.SingleChoiceItem
     childViewContainer: ".prompt-list"
 
+    selectChosen: (currentValue) ->
+      # activate a choice selection based on the currentValueType.
+      myChosenValue = switch @model.get('currentValueType')
+        when 'response'
+          # Saved responses are formatted as an object.
+          # Reference the key property.
+          currentValue.key
+        when 'default'
+          # Default responses are formatted as an individual key.
+          # Just use the raw value.
+          currentValue
+
+      @$el.find("input[value='#{myChosenValue}']").prop('checked', true)
+
     onRender: ->
       currentValue = @model.get('currentValue')
       if currentValue then @$el.find("input[value='#{currentValue}']").prop('checked', true)
