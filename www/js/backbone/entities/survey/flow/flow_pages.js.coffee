@@ -119,3 +119,8 @@
 
   App.reqres.setHandler "flow:page:step:first", (page) ->
     API.getPageFirstStep App.request('flow:current'), page
+
+  App.vent.on "survey:direct:prev:clicked survey:prompts:next:clicked", (surveyId) ->
+    # when successfully navigating backwards and forwards, set all page's
+    # skipped_displaying steps to skipped
+    API.changeAllPageStatus App.request('flow:current'), App.request("surveytracker:page"), 'skipped_displaying', 'skipped'
