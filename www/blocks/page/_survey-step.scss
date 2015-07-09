@@ -353,6 +353,12 @@
     }
   }
 
+  .file-control {
+    .input-activate button {
+      background-image: none;
+    }
+  }
+
   .button-pair {
     padding: 8px 0;
     overflow: auto;
