@@ -99,6 +99,12 @@
       resultArr = flow.where(page: page)
       new Entities.Collection resultArr
 
+    changeAllPageStatus: (flow, page, oldStatus, newStatus) ->
+      targetPageSteps = flow.where
+        status: oldStatus
+        page: page
+      _.each(targetPageSteps, (step) -> step.set 'status', newStatus)
+
   App.vent.on "surveytracker:page:new", (page) ->
     API.assignNewPage App.request('flow:current'), page
 
