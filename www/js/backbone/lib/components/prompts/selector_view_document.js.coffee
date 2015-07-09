@@ -30,7 +30,7 @@
       if !data.currentValue
         data.fileName= 'Select a Document File'
       else
-        data.fileName = data.currentValue.fileName
+        data.fileName = "Selected File: #{data.currentValue.fileName}"
 
       data
 
