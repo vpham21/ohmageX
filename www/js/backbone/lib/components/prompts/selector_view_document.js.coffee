@@ -2,15 +2,12 @@
 
   class Prompts.Document extends Prompts.Base
     template: "prompts/document"
+    triggers:
+      'change input[type=file]': "file:changed"
+
     initialize: ->
       super
       @listenTo @, 'file:changed', @processFile
-    triggers: ->
-      # if App.device.isNative
-      #   return 'click .input-activate .get-file': "get:native:file"
-      # else
-      return 'change input[type=file]': "file:changed"
-
 
     processFile: ->
       fileDOM = @$el.find('input[type=file]')[0]
