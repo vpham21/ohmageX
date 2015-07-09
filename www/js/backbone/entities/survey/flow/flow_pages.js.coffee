@@ -71,15 +71,13 @@
 
     clearOldPage: (flow, oldPage) ->
       flow.each (step) =>
-        currentStepPage = step.get('page')
-        if currentStepPage >= oldPage-1
+        if step.get('page') >= oldPage-1
           # why oldPage-1 and not just the oldPage?
           # because we need to clear the page that's about to be rendered too.
           step.set 'page', false
-          # when clearing out the current page, don't reset the status
-          # of `skipped` steps to `pending` so they can be converted to `skipped_displaying`
-          if !(currentStepPage is oldPage-1 and step.get('status') is 'skipped')
-            App.vent.trigger "flow:step:reset", step.get('id')
+
+          # leave skipped steps alone when clearing.
+          if step.get('status') isnt 'skipped' then App.vent.trigger("flow:step:reset", step.get('id'))
 
     getAftersubmitPage: (flow) ->
       console.log 'getAftersubmitPage'
