@@ -8,6 +8,7 @@
     initialize: ->
       super
       @listenTo @, 'file:changed', @processFile
+      @listenTo @model, 'change:currentValue', @render
 
     processFile: ->
       fileDOM = @$el.find('input[type=file]')[0]
