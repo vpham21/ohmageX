@@ -3,7 +3,6 @@
   class Prompts.Document extends Prompts.Base
     initialize: ->
       super
-      @listenTo @, 'get:native:file', @getNativeFile
       @listenTo @, 'file:changed', @processFile
     template: "prompts/document"
     triggers: ->
@@ -12,8 +11,6 @@
       # else
       return 'change input[type=file]': "file:changed"
 
-    getNativeFile: ->
-      console.log 'get Native File'
 
     processFile: ->
       fileDOM = @$el.find('input[type=file]')[0]
@@ -31,9 +28,6 @@
     serializeData: ->
       data = @model.toJSON()
       console.log 'serializeData data', data
-
-      # data.nativeFilePicker = App.device.isNative and device.platform is ""
-      data.nativeFilePicker = false
 
       if !data.currentValue
         data.fileName= 'Select a Document File'
