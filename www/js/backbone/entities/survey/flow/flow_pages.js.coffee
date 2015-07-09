@@ -57,29 +57,30 @@
                 # stop, we've hit something that has an invalid reference.
                 loopThroughSteps = false
               else
+                # "skipped_displaying" steps are never encountered here,
+                # because they are all converted immediately to "skipped"
+                # when navigating between pages.
                 stepWasSkipped = currentStep.get('status') is "skipped"
+
                 # Condition check also sets the status of the prompt to either "displaying"
                 # or "not_displayed"
                 isPassed = App.request "flow:condition:check", currentStep.get('id')
                 if isPassed
                   currentStep.set 'page', currentPage
                   lastPageBump = 1
-                  if stepWasSkipped
-                    App.vent.trigger("survey:step:skipped_displaying", currentStep.get('id'))
+                  if stepWasSkipped then App.vent.trigger("survey:step:skipped_displaying", currentStep.get('id'))
 
         myStepIndex++
 
     clearOldPage: (flow, oldPage) ->
       flow.each (step) =>
-        currentStepPage = step.get('page')
-        if currentStepPage >= oldPage-1
+        if step.get('page') >= oldPage-1
           # why oldPage-1 and not just the oldPage?
           # because we need to clear the page that's about to be rendered too.
           step.set 'page', false
-          # when clearing out the current page, don't reset the status
-          # of `skipped` steps to `pending` so they can be converted to `skipped_displaying`
-          if !(currentStepPage is oldPage-1 and step.get('status') is 'skipped')
-            App.vent.trigger "flow:step:reset", step.get('id')
+
+          # leave skipped steps alone when clearing.
+          if step.get('status') isnt 'skipped' then App.vent.trigger("flow:step:reset", step.get('id'))
 
     getAftersubmitPage: (flow) ->
       console.log 'getAftersubmitPage'
@@ -98,6 +99,12 @@
       resultArr = flow.where(page: page)
       new Entities.Collection resultArr
 
+    changeAllPageStatus: (flow, page, oldStatus, newStatus) ->
+      targetPageSteps = flow.where
+        status: oldStatus
+        page: page
+      _.each(targetPageSteps, (step) -> step.set 'status', newStatus)
+
   App.vent.on "surveytracker:page:new", (page) ->
     API.assignNewPage App.request('flow:current'), page
 
@@ -112,3 +119,8 @@
 
   App.reqres.setHandler "flow:page:step:first", (page) ->
     API.getPageFirstStep App.request('flow:current'), page
+
+  App.vent.on "survey:direct:prev:clicked survey:prompts:next:clicked", (surveyId) ->
+    # when successfully navigating backwards and forwards, set all page's
+    # skipped_displaying steps to skipped
+    API.changeAllPageStatus App.request('flow:current'), App.request("surveytracker:page"), 'skipped_displaying', 'skipped'
