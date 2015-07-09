@@ -354,6 +354,10 @@
   }
 
   .file-control {
+    .file-header {
+      padding: $global-form-control-padding;
+      font-size: $global-form-control-font-size;
+    }
     .input-activate button {
       background-image: none;
     }
