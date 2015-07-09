@@ -1,10 +1,10 @@
 @Ohmage.module "Components.Prompts", (Prompts, App, Backbone, Marionette, $, _) ->
 
   class Prompts.Document extends Prompts.Base
+    template: "prompts/document"
     initialize: ->
       super
       @listenTo @, 'file:changed', @processFile
-    template: "prompts/document"
     triggers: ->
       # if App.device.isNative
       #   return 'click .input-activate .get-file': "get:native:file"
