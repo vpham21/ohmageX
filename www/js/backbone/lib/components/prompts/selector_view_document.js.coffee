@@ -1,19 +1,14 @@
 @Ohmage.module "Components.Prompts", (Prompts, App, Backbone, Marionette, $, _) ->
 
   class Prompts.Document extends Prompts.Base
+    template: "prompts/document"
+    triggers:
+      'change input[type=file]': "file:changed"
+
     initialize: ->
       super
-      @listenTo @, 'get:native:file', @getNativeFile
       @listenTo @, 'file:changed', @processFile
-    template: "prompts/document"
-    triggers: ->
-      # if App.device.isNative
-      #   return 'click .input-activate .get-file': "get:native:file"
-      # else
-      return 'change input[type=file]': "file:changed"
-
-    getNativeFile: ->
-      console.log 'get Native File'
+      @listenTo @model, 'change:currentValue', @render
 
     processFile: ->
       fileDOM = @$el.find('input[type=file]')[0]
@@ -32,13 +27,10 @@
       data = @model.toJSON()
       console.log 'serializeData data', data
 
-      # data.nativeFilePicker = App.device.isNative and device.platform is ""
-      data.nativeFilePicker = false
-
       if !data.currentValue
         data.fileName= 'Select a Document File'
       else
-        data.fileName = data.currentValue.fileName
+        data.fileName = "Selected File: #{data.currentValue.fileName}"
 
       data
 
