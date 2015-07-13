@@ -19,7 +19,14 @@
   class Show.NextButton extends Show.BaseButton
     template: "survey_multiprompt/show/nextbutton"
     triggers:
-      "click": "next:clicked"
+      "click": "next:raw:clicked"
+
+    initialize: ->
+      @activateNext = _.debounce(@activateNext, 2000, true)
+      @listenTo @, "next:raw:clicked", @activateNext
+
+    activateNext: ->
+      @trigger "next:clicked"
 
   class Show.StepError extends App.Views.ItemView
     attributes:
