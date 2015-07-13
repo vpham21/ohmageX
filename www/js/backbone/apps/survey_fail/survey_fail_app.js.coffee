@@ -24,8 +24,7 @@
           App.vent.trigger "survey:upload:failure:ok", responseData, surveyId
           App.execute "dialog:alert", "Your response has been added to the Upload Queue."
         okListener: =>
-          App.execute 'credentials:preflight:check', =>
-            App.execute "survey:upload", surveyId
+          App.execute "survey:upload", surveyId
 
   App.vent.on "survey:upload:failure:campaign", (responseData, errorText, surveyId) ->
     console.log responseData
