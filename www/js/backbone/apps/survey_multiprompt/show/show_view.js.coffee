@@ -74,6 +74,8 @@
         stopPropagation: false
 
   class Show.StepLayout extends App.Views.Layout
+    className: 'survey-step-item'
+
     initialize: ->
       @listenTo App.vent, "survey:step:skipped_displaying", (stepId) ->
         if @model.get('id') is stepId
