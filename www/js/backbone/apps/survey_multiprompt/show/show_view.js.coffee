@@ -106,7 +106,7 @@
     childView: Show.StepLayout
 
   class Show.Layout extends App.Views.Layout
-    className: 'survey-step'
+    className: 'survey-step survey-step-multi'
     template: "survey_multiprompt/show/show_layout"
     regions:
       noticeRegion: '#notice-region'
