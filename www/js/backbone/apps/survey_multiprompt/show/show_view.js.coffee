@@ -74,14 +74,26 @@
         stopPropagation: false
 
   class Show.StepLayout extends App.Views.Layout
+    className: 'survey-step-item'
+
     initialize: ->
       @listenTo App.vent, "survey:step:skipped_displaying", (stepId) ->
         if @model.get('id') is stepId
           @$el.find('.step-body-region').addClass('skipped')
+          @$el.removeClass('error')
 
       @listenTo App.vent, "survey:step:unskipped", (stepId) ->
         if @model.get('id') is stepId
           @$el.find('.step-body-region').removeClass('skipped')
+
+      @listenTo App.vent, "response:set:error", (errorText, surveyId, stepId) =>
+        if @model.get('id') is stepId
+          @$el.addClass('error')
+
+      @listenTo App.vent, "response:set:success", (errorText, surveyId, stepId) =>
+        if @model.get('id') is stepId
+          @$el.removeClass('error')
+
     onRender: ->
       if @model.get('status') is "skipped_displaying" then @$el.find('.step-body-region').addClass('skipped')
     template: "survey_multiprompt/show/_step_layout"
@@ -94,7 +106,7 @@
     childView: Show.StepLayout
 
   class Show.Layout extends App.Views.Layout
-    className: 'survey-step'
+    className: 'survey-step survey-step-multi'
     template: "survey_multiprompt/show/show_layout"
     regions:
       noticeRegion: '#notice-region'

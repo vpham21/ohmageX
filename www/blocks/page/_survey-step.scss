@@ -53,6 +53,8 @@
 
   .control-container {
     margin: $app-main-footer-padding;
+    margin-bottom: 0;
+    padding-bottom: $app-main-footer-padding;
   }
 
   .prompt-list {
@@ -87,7 +89,7 @@
       background-color: $app-background;
     }
 
-    td.content {
+    td.content,td.right {
       background-color: #fff;
     }
     label {
