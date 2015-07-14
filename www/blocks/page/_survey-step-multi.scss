@@ -1,0 +1,5 @@
+.survey-step.survey-step-multi #step-body > div {
+  // primary container with all of the main items.
+  background-color: darken($survey-step-inset-block-background-color, 10%);
+
+}
