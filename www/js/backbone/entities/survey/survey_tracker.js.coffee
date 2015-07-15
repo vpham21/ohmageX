@@ -41,6 +41,6 @@
     API.setActive()
     API.startPages()
 
-  App.vent.on "survey:exit survey:reset", (surveyId) ->
+  App.vent.on "survey:exit survey:reset credentials:cleared", (surveyId) ->
     API.setInactive()
     API.endPages()
