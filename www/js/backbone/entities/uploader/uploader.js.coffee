@@ -134,7 +134,7 @@
 
     videoUploader: (context, responseData, itemId) ->
       # we're currently assuming there is only one video file per upload at this time.
-      App.vent.trigger "loading:show", "Uploading ..."
+      App.vent.trigger "loading:show", "Uploading ...", instant: true
 
       # add auth credentials to the response before saving.
       # may later move this to the model's custom "sync" method.
@@ -151,7 +151,6 @@
       else
         firstFile = App.request "uploadqueue:item:firstfile", itemId
         firstUUID = App.request "uploadqueue:item:firstuuid", itemId
-        App.vent.trigger "loading:show", "Uploading..."
 
       console.log "firstFile #{JSON.stringify(firstFile)}"
       options.fileName = firstFile.name
