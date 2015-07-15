@@ -182,7 +182,9 @@
         # code
         console.log 'survey upload error'
         # assume all error callbacks here are network relate
+        if context isnt 'uqall' then App.vent.trigger("uploadtracker:complete")
         App.vent.trigger "loading:hide"
+
         switch error.code
           when FileTransferError.CONNECTION_ERR
             App.vent.trigger "#{context}:upload:failure:network", responseData, "Connection Issue", itemId
