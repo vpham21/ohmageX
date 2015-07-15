@@ -10,6 +10,7 @@
       if response.result is "success"
         console.log 'Uploader Success!'
         App.vent.trigger "loading:hide"
+        if context is 'uploadqueue' then App.vent.trigger("uploadtracker:complete")
         App.vent.trigger "#{context}:upload:success", response, itemId
       else
         console.log "response.errors[0].code #{response.errors[0].code}"
