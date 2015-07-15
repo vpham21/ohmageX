@@ -12,6 +12,7 @@
 
         if !backOverwrite and 
           !App.request("surveytracker:active") and 
+          !App.request("uploadtracker:uploading") and 
           !App.request("appstate:hamburgermenu:active") and 
           !App.request("appstate:loading:active")
             # Event hasn't been overwritten,
