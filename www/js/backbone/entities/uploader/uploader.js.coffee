@@ -218,6 +218,7 @@
       uploadType = App.request 'uploadqueue:item:uploadtype', itemId
 
     console.log 'uploadType', uploadType
+    App.vent.trigger "uploadtracker:active"
 
     switch uploadType
       when 'video'
