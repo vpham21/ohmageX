@@ -21,6 +21,7 @@
           when '0200','0201','0202' then "auth"
           else "server"
         console.log 'type', type
+        if context isnt 'uqall' then App.vent.trigger("uploadtracker:complete")
         App.vent.trigger "loading:hide"
         App.vent.trigger "#{context}:upload:failure:#{type}", responseData, response.errors[0].text, itemId
 
@@ -47,6 +48,7 @@
         error: (xhr, ajaxOptions, thrownError) =>
           console.log 'survey upload error'
           # assume all error callbacks here are network relate
+          if context isnt 'uqall' then App.vent.trigger("uploadtracker:complete")
           App.vent.trigger "loading:hide"
           App.vent.trigger "#{context}:upload:failure:network", responseData, xhr.status, itemId
 
@@ -112,6 +114,7 @@
           console.log 'survey upload error'
           # assume all error callbacks here are network relate
           App.vent.trigger "loading:hide"
+          if context isnt 'uqall' then App.vent.trigger("uploadtracker:complete")
           App.vent.trigger "#{context}:upload:failure:network", responseData, xhr.status, itemId
 
     xhrFormData: (responseObj) ->
