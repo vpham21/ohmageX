@@ -53,6 +53,7 @@
           App.vent.trigger "#{context}:upload:failure:network", responseData, xhr.status, itemId
 
     documentUploader: (context, responseData, itemId) ->
+      App.vent.trigger "loading:show", "Uploading ...", instant: true
 
       # add auth credentials to the response before saving.
       # may later move this to the model's custom "sync" method.
