@@ -12,6 +12,7 @@
 
         if !backOverwrite and 
           !App.request("surveytracker:active") and 
+          !App.request("uploadtracker:uploading") and 
           !App.request("appstate:hamburgermenu:active") and 
           !App.request("appstate:loading:active")
             # Event hasn't been overwritten,
@@ -33,7 +34,8 @@
 
       App.vent.on 'device:back:button', ->
         App.vent.trigger 'external:blocker:cancel'
-        App.vent.trigger 'external:survey:prev:navigate'
+        if !App.request("uploadtracker:uploading")
+          App.vent.trigger 'external:survey:prev:navigate'
         App.vent.trigger 'external:hamburgermenu:close'
 
     defaultBackAction: ->

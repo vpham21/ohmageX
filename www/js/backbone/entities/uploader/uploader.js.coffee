@@ -10,6 +10,7 @@
       if response.result is "success"
         console.log 'Uploader Success!'
         App.vent.trigger "loading:hide"
+        if context is 'uploadqueue' then App.vent.trigger("uploadtracker:complete")
         App.vent.trigger "#{context}:upload:success", response, itemId
       else
         console.log "response.errors[0].code #{response.errors[0].code}"
@@ -20,6 +21,7 @@
           when '0200','0201','0202' then "auth"
           else "server"
         console.log 'type', type
+        if context isnt 'uqall' then App.vent.trigger("uploadtracker:complete")
         App.vent.trigger "loading:hide"
         App.vent.trigger "#{context}:upload:failure:#{type}", responseData, response.errors[0].text, itemId
 
@@ -46,6 +48,7 @@
         error: (xhr, ajaxOptions, thrownError) =>
           console.log 'survey upload error'
           # assume all error callbacks here are network relate
+          if context isnt 'uqall' then App.vent.trigger("uploadtracker:complete")
           App.vent.trigger "loading:hide"
           App.vent.trigger "#{context}:upload:failure:network", responseData, xhr.status, itemId
 
@@ -111,6 +114,7 @@
           console.log 'survey upload error'
           # assume all error callbacks here are network relate
           App.vent.trigger "loading:hide"
+          if context isnt 'uqall' then App.vent.trigger("uploadtracker:complete")
           App.vent.trigger "#{context}:upload:failure:network", responseData, xhr.status, itemId
 
     xhrFormData: (responseObj) ->
@@ -178,7 +182,9 @@
         # code
         console.log 'survey upload error'
         # assume all error callbacks here are network relate
+        if context isnt 'uqall' then App.vent.trigger("uploadtracker:complete")
         App.vent.trigger "loading:hide"
+
         switch error.code
           when FileTransferError.CONNECTION_ERR
             App.vent.trigger "#{context}:upload:failure:network", responseData, "Connection Issue", itemId
@@ -214,6 +220,7 @@
       uploadType = App.request 'uploadqueue:item:uploadtype', itemId
 
     console.log 'uploadType', uploadType
+    App.vent.trigger "uploadtracker:active"
 
     switch uploadType
       when 'video'

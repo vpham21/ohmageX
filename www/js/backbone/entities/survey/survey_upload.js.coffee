@@ -63,6 +63,9 @@
         App.execute("survey:geolocation:fetch", surveyId)
 
   App.commands.setHandler "survey:upload", (surveyId) ->
+    # Other requests happen before the survey upload
+    # request, but they are all part of the upload process.
+    App.vent.trigger "uploadtracker:active"
     responses = App.request "responses:current"
 
     App.execute 'credentials:preflight:check', =>
