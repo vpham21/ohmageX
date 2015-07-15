@@ -34,7 +34,8 @@
 
       App.vent.on 'device:back:button', ->
         App.vent.trigger 'external:blocker:cancel'
-        App.vent.trigger 'external:survey:prev:navigate'
+        if !App.request("uploadtracker:uploading")
+          App.vent.trigger 'external:survey:prev:navigate'
         App.vent.trigger 'external:hamburgermenu:close'
 
     defaultBackAction: ->
