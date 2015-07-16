@@ -52,9 +52,9 @@
     ],
     "footer": [
       "campaign",
-      "history",
       "survey",
       "queue",
+      "history",
       "reminder",
       "logout"
     ]
