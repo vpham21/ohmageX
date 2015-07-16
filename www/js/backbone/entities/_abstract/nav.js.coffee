@@ -36,6 +36,7 @@
       if isLoggedIn
         loginItems = [
           "campaign"
+          "history"
           "survey"
           "queue"
           "reminder"
@@ -66,6 +67,7 @@
         { name: "campaign", url: "#campaigns", icon: "campaign", visible: false }
         { name: "survey", url: "#surveys", icon: "survey", visible: false }
         { name: "queue", url: "#uploadqueue", icon: "upload", visible: false }
+        { name: "history", url: "#history", icon: "history", visible: false }
         { name: "reminder", url: "#reminders", icon: "reminder", visible: false }
         { name: "profile", url: "#profile", icon: "profile", visible: false }
         { name: "logout", url: "#logout", icon: "logout", visible: false }
