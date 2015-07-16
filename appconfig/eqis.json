@@ -17,6 +17,7 @@
       "campaign": "portfolio",
       "survey": "artifact",
       "queue": "upload queue",
+      "history": "history",
       "reminder": "reminder",
       "profile": "profile",
       "logout": "logout"
@@ -26,6 +27,7 @@
       "campaign": "portfolio",
       "survey": "artifacts",
       "queue": "upload queue",
+      "history": "history",
       "reminder": "reminders",
       "profile": "profile",
       "logout": "logout"
@@ -35,6 +37,7 @@
       "campaign": "Portfolio",
       "survey": "Artifacts",
       "queue": "Upload Queue",
+      "history": "History",
       "reminder": "Reminders",
       "profile": "Profile",
       "logout": "Logout"
@@ -51,6 +54,7 @@
       "campaign",
       "survey",
       "queue",
+      "history",
       "reminder",
       "logout"
     ]
