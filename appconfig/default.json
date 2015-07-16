@@ -17,6 +17,7 @@
       "campaign": "campaign",
       "survey": "survey",
       "queue": "upload queue",
+      "history": "history",
       "reminder": "reminder",
       "profile": "profile",
       "logout": "logout"
@@ -26,6 +27,7 @@
       "campaign": "campaigns",
       "survey": "surveys",
       "queue": "upload queue",
+      "history": "history",
       "reminder": "reminders",
       "profile": "profile",
       "logout": "logout"
@@ -35,6 +37,7 @@
       "campaign": "Campaigns",
       "survey": "Surveys",
       "queue": "Upload Queue",
+      "history": "History",
       "reminder": "Reminders",
       "profile": "Profile",
       "logout": "Logout"
@@ -49,6 +52,7 @@
     ],
     "footer": [
       "campaign",
+      "history",
       "survey",
       "queue",
       "reminder",
