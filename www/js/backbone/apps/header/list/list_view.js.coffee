@@ -88,6 +88,7 @@
           # and remove all associated classnames
           @$el.removeClass 'profile'
           @$el.removeClass 'campaign'
+          @$el.removeClass 'history'
           @$el.removeClass 'survey'
           @$el.removeClass 'upload'
           @$el.removeClass 'reminder'
