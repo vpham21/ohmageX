@@ -326,3 +326,11 @@ Includes the following functionality:
 > The name "Dragon Well" comes from a variety of Chinese green tea (龍井茶).
 
 - Set up Cordova, Backbone + Marionette, and vendor libraries
+
+## License
+
+The ohmageX project is **open-source** and licensed under the AFFERO GENERAL PUBLIC LICENSE. The full text of the license may be found in the `LICENSE` file.
+
+### "Dual-licensing" note
+
+Due to known policies of Apple Inc. (described [here](https://www.fsf.org/blogs/licensing/more-about-the-app-store-gpl-enforcement)) limiting/revoking access to the store for projects with GPL-based licenses the project owner (UCLA's Educational and Collaborative Technology Group) are opting currently to release app store builds under a proprietary, non-AGPL license.  New contributors will be require to agree to these terms prior to the acceptance of pull requests.
