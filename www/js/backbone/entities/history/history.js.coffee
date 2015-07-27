@@ -17,6 +17,10 @@
   API =
     init: ->
       currentHistory = new Entities.UserHistoryResponses
+    fetchHistory: (campaign_urns) ->
+      App.vent.trigger 'loading:show', "Fetching Responses..."
+      campaignCollections = []
+      responseFetchSuccess = []
     getHistory: ->
       if currentHistory.length < 1
         # fetch all history from the server,
