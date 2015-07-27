@@ -73,6 +73,7 @@
         campaign_urns = App.request 'surveys:saved:campaign_urns'
         if campaign_urns.length is 0 then return false
 
+        @fetchHistory campaign_urns
       else
         # just return the collection
         currentHistory
