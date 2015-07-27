@@ -37,6 +37,21 @@
         myCampaign = new Entities.UserHistoryResponsesByCampaign
         campaignCollections.push myCampaign
 
+        myCampaign.fetch
+          reset: true
+          type: "POST"
+          data: myData
+          campaign_urn: campaign_urn
+          success: (collection, response, options) =>
+            if response.result isnt "failure"
+              responseFetchSuccess.push true
+            else
+              responseFetchSuccess.push false
+
+          error: (collection, response, options) =>
+            responseFetchSuccess.push false
+            App.execute "dialog:alert", "Network error fetching history."
+
       currentHistory._fetch = new $.Deferred()
     getHistory: ->
       if currentHistory.length < 1
