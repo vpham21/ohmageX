@@ -31,6 +31,12 @@
         output_format: "json-rows"
         user_list: App.request "credentials:username"
       myData = _.extend(myData, App.request("credentials:upload:params"))
+
+      _.each campaign_urns, (campaign_urn) ->
+        myData.campaign_urn = campaign_urn
+        myCampaign = new Entities.UserHistoryResponsesByCampaign
+        campaignCollections.push myCampaign
+
       currentHistory._fetch = new $.Deferred()
     getHistory: ->
       if currentHistory.length < 1
