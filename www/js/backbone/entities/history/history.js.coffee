@@ -55,6 +55,9 @@
       currentHistory._fetch = new $.Deferred()
 
       App.execute "when:fetched", campaignCollections, =>
+        if _.contains(responseFetchSuccess, false)
+          # there was an error while fetching one of the campaign's responses
+          App.vent.trigger "history:responses:fetch:error"
         # resolve the fetch handler.
         currentHistory._fetch.resolve()
 
