@@ -21,6 +21,16 @@
       App.vent.trigger 'loading:show', "Fetching Responses..."
       campaignCollections = []
       responseFetchSuccess = []
+
+      myData =
+        # add start date - 3 months ago
+        # if start date, end date is also required
+        client: App.client_string
+        column_list: "urn:ohmage:special:all"
+        prompt_id_list: "urn:ohmage:special:all"
+        output_format: "json-rows"
+        user_list: App.request "credentials:username"
+      myData = _.extend(myData, App.request("credentials:upload:params"))
     getHistory: ->
       if currentHistory.length < 1
         # fetch all history from the server,
