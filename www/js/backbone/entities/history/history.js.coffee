@@ -10,6 +10,8 @@
     model: Entities.UserHistoryResponse
     url: ->
       "#{App.request("serverpath:current")}/app/survey_response/read"
+    parse: (response, options) ->
+      # parse JSON into individual responses with campaign metadata
 
   class Entities.UserHistoryResponses extends Entities.Collection
     model: Entities.UserHistoryResponse
