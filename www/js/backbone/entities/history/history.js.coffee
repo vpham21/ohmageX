@@ -8,6 +8,8 @@
 
   class Entities.UserHistoryResponsesByCampaign extends Entities.Collection
     model: Entities.UserHistoryResponse
+    url: ->
+      "#{App.request("serverpath:current")}/app/survey_response/read"
 
   class Entities.UserHistoryResponses extends Entities.Collection
     model: Entities.UserHistoryResponse
