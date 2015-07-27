@@ -15,5 +15,19 @@
   API =
     init: ->
       currentHistory = new Entities.UserHistoryResponses
+    getHistory: ->
+      if currentHistory.length < 1
+        # fetch all history from the server,
+        # because our current version is empty
+        campaign_urns = App.request 'surveys:saved:campaign_urns'
+        if campaign_urns.length is 0 then return false
+
+      else
+        # just return the collection
+        currentHistory
+
+  App.reqres.on "history:responses", ->
+    API.getHistory()
+
   App.on "before:start", ->
     API.init()
