@@ -31,6 +31,7 @@
         output_format: "json-rows"
         user_list: App.request "credentials:username"
       myData = _.extend(myData, App.request("credentials:upload:params"))
+      currentHistory._fetch = new $.Deferred()
     getHistory: ->
       if currentHistory.length < 1
         # fetch all history from the server,
