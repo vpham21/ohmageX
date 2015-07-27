@@ -53,6 +53,11 @@
             App.execute "dialog:alert", "Network error fetching history."
 
       currentHistory._fetch = new $.Deferred()
+
+      App.execute "when:fetched", campaignCollections, =>
+        # resolve the fetch handler.
+        currentHistory._fetch.resolve()
+
     getHistory: ->
       if currentHistory.length < 1
         # fetch all history from the server,
