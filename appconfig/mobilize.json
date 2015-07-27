@@ -1,7 +1,7 @@
 {
   "api": {
     "client_base_string": "mobilizex-",
-    "token_redirect": "../web/#login"
+    "token_redirect": "/#login"
   },
   "build": {
     "app_name": "UCLA MobilizingCS",
