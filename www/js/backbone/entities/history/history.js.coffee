@@ -4,21 +4,22 @@
 
   currentHistory = false
 
-  class Entities.UserHistoryResponse extends Entities.Model
+  class Entities.UserHistoryEntry extends Entities.Model
 
-  class Entities.UserHistoryResponsesByCampaign extends Entities.Collection
-    model: Entities.UserHistoryResponse
+  class Entities.UserHistoryEntriesByCampaign extends Entities.Collection
+    model: Entities.UserHistoryEntry
     url: ->
       "#{App.request("serverpath:current")}/app/survey_response/read"
     parse: (response, options) ->
       # parse JSON into individual responses with campaign metadata
 
-  class Entities.UserHistoryResponses extends Entities.Collection
-    model: Entities.UserHistoryResponse
+
+  class Entities.UserHistoryEntries extends Entities.Collection
+    model: Entities.UserHistoryEntry
 
   API =
     init: ->
-      currentHistory = new Entities.UserHistoryResponses
+      currentHistory = new Entities.UserHistoryEntries
     fetchHistory: (campaign_urns) ->
       App.vent.trigger 'loading:show', "Fetching History..."
       campaignCollections = []
@@ -36,7 +37,7 @@
 
       _.each campaign_urns, (campaign_urn) ->
         myData.campaign_urn = campaign_urn
-        myCampaign = new Entities.UserHistoryResponsesByCampaign
+        myCampaign = new Entities.UserHistoryEntriesByCampaign
         campaignCollections.push myCampaign
 
         myCampaign.fetch
