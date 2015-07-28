@@ -4,6 +4,10 @@
     template: "history/list/notice"
     className: "notice-nopop"
 
+  class List.EntriesEmpty extends App.Views.ItemView
+    className: "empty-container"
+    template: "history/list/_entries_empty"
+
   class List.Layout extends App.Views.Layout
     template: "history/list/list_layout"
     regions:
