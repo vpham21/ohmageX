@@ -8,6 +8,15 @@
     className: "empty-container"
     template: "history/list/_entries_empty"
 
+  class List.Entry extends App.Views.ItemView
+    template: "history/list/entry"
+
+  class List.Entries extends App.Views.CollectionView
+    emptyView: List.EntriesEmpty
+    childView: List.Entry
+    initialize: ->
+      @listenTo @collection, 'reset', @render
+
   class List.Layout extends App.Views.Layout
     template: "history/list/list_layout"
     regions:
