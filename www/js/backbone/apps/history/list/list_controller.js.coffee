@@ -16,7 +16,7 @@
       if campaigns.length is 0
         loadConfig = false
       else
-        loadConfig = entities: App.request('history:responses')
+        loadConfig = entities: App.request('history:entries')
 
       @show @layout, loading: loadConfig
 

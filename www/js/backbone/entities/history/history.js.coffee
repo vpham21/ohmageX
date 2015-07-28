@@ -80,7 +80,7 @@
         # just return the collection
         currentHistory
 
-  App.reqres.on "history:responses", ->
+  App.reqres.setHandler "history:entries", ->
     API.getHistory()
 
   App.on "before:start", ->
