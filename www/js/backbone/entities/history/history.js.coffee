@@ -65,6 +65,9 @@
           # no errors, merge all of the fetched collections into the main history collection.
           _.each campaignCollections, (collection) =>
             currentHistory.add collection.toJSON()
+
+          # TODO: in the bucket entity, we generate new buckets based on this new currentHistory
+
           App.vent.trigger "history:entries:fetch:success", currentHistory
         # resolve the fetch handler.
         currentHistory._fetch.resolve()
