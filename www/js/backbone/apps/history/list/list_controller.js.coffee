@@ -5,15 +5,15 @@
   class List.Controller extends App.Controllers.Application
     initialize: ->
       @layout = @getLayoutView()
-      surveys = App.request 'surveys:saved'
+      campaigns = App.request "campaigns:saved:current"
 
       @listenTo @layout, "show", =>
-        if surveys.length is 0
-          @noticeRegion "No saved #{App.dictionary('pages','survey')}! You must have saved #{App.dictionary('pages','survey')} in order to view response history for them."
+        if campaigns.length is 0
+          @noticeRegion "No saved #{App.dictionary('pages','campaign')}! You must have saved #{App.dictionary('pages','campaign')} in order to view response history for them."
         else
           console.log "showing history layout"
 
-      if surveys.length is 0 
+      if campaigns.length is 0
         loadConfig = false
       else
         loadConfig = entities: App.request('history:responses')
