@@ -5,18 +5,19 @@
   class List.Controller extends App.Controllers.Application
     initialize: ->
       @layout = @getLayoutView()
-      surveys = App.request 'surveys:saved'
+      campaigns = App.request "campaigns:saved:current"
 
       @listenTo @layout, "show", =>
-        if surveys.length is 0
-          @noticeRegion "No saved #{App.dictionary('pages','survey')}! You must have saved #{App.dictionary('pages','survey')} in order to view response history for them."
+        if campaigns.length is 0
+          @noticeRegion "No saved #{App.dictionary('pages','campaign')}! You must have saved #{App.dictionary('pages','campaign')} in order to view response history for them."
         else
           console.log "showing history layout"
+          @listRegion App.request('history:entries:list')
 
-      if surveys.length is 0 
+      if campaigns.length is 0
         loadConfig = false
       else
-        loadConfig = entities: App.request('history:responses')
+        loadConfig = entities: App.request('history:entries')
 
       @show @layout, loading: loadConfig
 
@@ -26,5 +27,18 @@
 
       @show noticeView, region: @layout.noticeRegion
 
+    listRegion: (responses) ->
+      listView = @getListView responses
+
+      @show listView, region: @layout.listRegion
+
     getLayoutView: ->
       new List.Layout
+
+    getNoticeView: (notice)->
+      new List.Notice
+        model: notice
+
+    getListView: (entries) ->
+      new List.Entries
+        collection: entries
