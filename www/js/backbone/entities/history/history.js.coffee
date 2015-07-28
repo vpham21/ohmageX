@@ -72,7 +72,7 @@
       if currentHistory.length < 1
         # fetch all history from the server,
         # because our current version is empty
-        campaign_urns = App.request 'surveys:saved:campaign_urns'
+        campaign_urns = App.request 'campaigns:saved:urns'
         if campaign_urns.length is 0 then return false
 
         @fetchHistory campaign_urns
