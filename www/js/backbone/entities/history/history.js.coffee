@@ -64,7 +64,7 @@
         else
           # no errors, merge all of the fetched collections into the main history collection.
           _.each campaignCollections, (collection) =>
-            currentHistory.add collection
+            currentHistory.add collection.toJSON()
           App.vent.trigger "history:entries:fetch:success", currentHistory
         # resolve the fetch handler.
         currentHistory._fetch.resolve()
