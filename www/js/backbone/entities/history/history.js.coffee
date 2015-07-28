@@ -17,6 +17,39 @@
       # there are no responses for the campaign at all.
       if response.data.length is 0 then return []
 
+
+      # Only want to create a new Entry for a valid entry.
+      # The .map() creates a new array, each key is object or false.
+      # The .filter() removes the false keys.
+
+      campaignEntries = _.chain(response.data).map((value, key) =>
+        # possible TODO: add return false the entry is somehow invalid.
+        results = {
+          id: value.survey_key
+          date: value.date
+          timestamp: value.timestamp
+          utc_timestamp: value.utc_timestamp
+          timezone: value.timezone
+          campaign_urn: options.campaign.id
+          survey_id: value.survey_id
+          location:
+            location_status: value.location_status
+            location_timestamp: value.location_timestamp
+            location_timezone: value.location_timezone
+            latitude: value.latitude
+            longitude: value.longitude
+            provider: value.provider
+            accuracy: value.accuracy
+          campaign: options.campaign.toJSON()
+          survey:
+            title: value.survey_title
+            description: value.survey_description
+          responses: value.responses
+        }
+        return @addSorting(results)
+      ).filter((result) -> !!result).value()
+      campaignEntries
+
   class Entities.UserHistoryEntries extends Entities.Collection
     model: Entities.UserHistoryEntry
 
