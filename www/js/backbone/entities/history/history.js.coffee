@@ -10,6 +10,21 @@
     model: Entities.UserHistoryEntry
     url: ->
       "#{App.request("serverpath:current")}/app/survey_response/read"
+    addSorting: (results) ->
+      sortParams = {}
+      if App.custom.functionality.history_bucketby_first_prompt
+        for prop in responses
+          # get first response
+          firstResponse = responses[prop]
+          break
+        sortParams.bucket = firstResponse.prompt_response
+      else
+        sortParams.bucket = results.date
+
+      sortParams.sortIndex = "#{sortParams.bucket}:#{results.utc_timestamp}"
+
+      _.extend(results, sortParams)
+
     parse: (response, options) ->
       # parse JSON into individual responses with campaign metadata
 
