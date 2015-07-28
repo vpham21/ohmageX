@@ -17,3 +17,6 @@
   App.addInitializer ->
     new HistoryApp.Router
       controller: API
+
+  App.vent.on "history:entries:fetch:error history:entries:fetch:success", ->
+    App.vent.trigger "loading:hide"
