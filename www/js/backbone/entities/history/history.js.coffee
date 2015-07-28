@@ -67,6 +67,7 @@
 
   class Entities.UserHistoryEntries extends Entities.Collection
     model: Entities.UserHistoryEntry
+    comparator: "sortIndex"
 
   API =
     init: ->
