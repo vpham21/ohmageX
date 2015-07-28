@@ -28,3 +28,8 @@
 
     getLayoutView: ->
       new List.Layout
+
+    getNoticeView: (notice)->
+      new List.Notice
+        model: notice
+
