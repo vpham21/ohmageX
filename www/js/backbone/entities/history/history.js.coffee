@@ -14,6 +14,9 @@
       # parse JSON into individual responses with campaign metadata
 
 
+      # there are no responses for the campaign at all.
+      if response.data.length is 0 then return []
+
   class Entities.UserHistoryEntries extends Entities.Collection
     model: Entities.UserHistoryEntry
 
