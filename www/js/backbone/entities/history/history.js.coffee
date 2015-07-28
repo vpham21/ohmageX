@@ -139,5 +139,9 @@
   App.reqres.setHandler "history:entries", ->
     API.getHistory()
 
+  App.reqres.setHandler "history:entries:list", ->
+    # no fetching, just retrieve the history
+    currentHistory
+
   App.on "before:start", ->
     API.init()
