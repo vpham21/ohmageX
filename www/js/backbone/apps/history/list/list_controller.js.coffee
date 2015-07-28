@@ -12,6 +12,7 @@
           @noticeRegion "No saved #{App.dictionary('pages','campaign')}! You must have saved #{App.dictionary('pages','campaign')} in order to view response history for them."
         else
           console.log "showing history layout"
+          @listRegion App.request('history:entries:list')
 
       if campaigns.length is 0
         loadConfig = false
@@ -26,6 +27,11 @@
 
       @show noticeView, region: @layout.noticeRegion
 
+    listRegion: (responses) ->
+      listView = @getListView responses
+
+      @show listView, region: @layout.listRegion
+
     getLayoutView: ->
       new List.Layout
 
@@ -33,3 +39,6 @@
       new List.Notice
         model: notice
 
+    getListView: (entries) ->
+      new List.Entries
+        collection: entries
