@@ -20,7 +20,7 @@
     init: ->
       currentHistory = new Entities.UserHistoryResponses
     fetchHistory: (campaign_urns) ->
-      App.vent.trigger 'loading:show', "Fetching Responses..."
+      App.vent.trigger 'loading:show', "Fetching History..."
       campaignCollections = []
       responseFetchSuccess = []
 
