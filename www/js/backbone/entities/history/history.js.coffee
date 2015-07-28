@@ -59,13 +59,13 @@
 
       App.execute "when:fetched", campaignCollections, =>
         if _.contains(responseFetchSuccess, false)
-          # there was an error while fetching one of the campaign's responses
-          App.vent.trigger "history:responses:fetch:error"
+          # there was an error while fetching one of the campaign's history entries
+          App.vent.trigger "history:entries:fetch:error"
         else
           # no errors, merge all of the fetched collections into the main history collection.
           _.each campaignCollections, (collection) =>
             currentHistory.add collection
-          App.vent.trigger "history:responses:fetch:success", currentHistory
+          App.vent.trigger "history:entries:fetch:success", currentHistory
         # resolve the fetch handler.
         currentHistory._fetch.resolve()
 
