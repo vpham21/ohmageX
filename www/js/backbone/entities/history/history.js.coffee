@@ -44,7 +44,7 @@
           reset: true
           type: "POST"
           data: myData
-          campaign_urn: campaign_urn
+          campaign: App.request "campaign:entity", campaign_urn
           success: (collection, response, options) =>
             if response.result isnt "failure"
               responseFetchSuccess.push true
