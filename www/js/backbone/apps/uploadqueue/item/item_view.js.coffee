@@ -39,28 +39,11 @@
   class Item.ResponseSingleChoice extends Item.ResponseString
     serializeData: ->
       data = super
-      data.response = data.options[data.response]
+      data.response = data.response.label
       data
 
   class Item.ResponseMultiChoice extends Item.ResponseBase
     template: "uploadqueue/item/response_multi_choice"
-    serializeData: ->
-      data = super
-      # the response is a stringified array referencing options.
-      selectionsArr = JSON.parse data.response
-      # responses is an array that will be iterated over inside the view.
-      data.responses = _.map selectionsArr, (selection) ->
-        data.options[selection]
-      data
-
-  class Item.ResponseMultiChoiceCustom extends Item.ResponseMultiChoice
-    serializeData: ->
-      data = super
-      # the response is a stringified array referencing custom choice strings.
-      selectionsArr = JSON.parse data.response
-      # responses is an array that will be iterated over inside the view.
-      data.responses = selectionsArr
-      data
 
   class Item.ResponsePhoto extends Item.ResponseBase
     template: "uploadqueue/item/response_photo"
@@ -94,19 +77,17 @@
   class Item.Responses extends App.Views.CollectionView
     getChildView: (model) ->
       myView = switch model.get('type')
-        when 'single_choice'
+        when 'single_choice', 'single_choice_custom'
           Item.ResponseSingleChoice
-        when 'multi_choice'
+        when 'multi_choice', 'multi_choice_custom'
           Item.ResponseMultiChoice
-        when 'multi_choice_custom'
-          Item.ResponseMultiChoiceCustom
         when 'photo'
           Item.ResponsePhoto
         when 'document'
           Item.ResponseDocument
         when 'video'
           Item.ResponseVideo
-        when 'text','number','timestamp','single_choice_custom'
+        when 'text','number','timestamp'
           Item.ResponseString
         else
           Item.ResponseUnsupported
