@@ -32,6 +32,11 @@
       data.icon = @getIcon()
       data
 
+  class Entry.ResponseAlternate extends Entry.ResponseBase
+    # handles alternate responses, such as
+    # NOT_DISPLAYED and SKIPPED
+    template: "history/entry/response_alternate"
+
   class Entry.ResponseUnsupported extends Entry.ResponseBase
     template: "history/entry/response_unsupported"
 
