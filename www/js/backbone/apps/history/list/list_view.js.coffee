@@ -5,19 +5,25 @@
     className: "notice-nopop"
 
   class List.EntriesEmpty extends App.Views.ItemView
+    tagName: 'li'
     className: "empty-container"
     template: "history/list/_entries_empty"
 
   class List.Entry extends App.Views.ItemView
+    tagName: 'li'
     template: "history/list/entry"
+    triggers:
+      "click": "clicked"
 
   class List.Entries extends App.Views.CollectionView
+    tagName: 'ul'
     emptyView: List.EntriesEmpty
     childView: List.Entry
     initialize: ->
       @listenTo @collection, 'reset', @render
 
   class List.Layout extends App.Views.Layout
+    id: 'history-section'
     template: "history/list/list_layout"
     regions:
       noticeRegion: "#notice-region-nopop"
