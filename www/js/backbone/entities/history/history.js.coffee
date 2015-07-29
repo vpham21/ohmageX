@@ -135,6 +135,8 @@
       else
         # just return the collection
         currentHistory
+    removeByCampaign: (campaign_urn) ->
+      currentHistory.remove currentHistory.where(campaign_urn: campaign_urn)
     clear: ->
       currentHistory = false
 
@@ -154,6 +156,9 @@
     if campaign_urns.length is 0 then return false
 
     API.fetchHistory campaign_urns
+
+  App.vent.on "campaign:saved:remove", (campaign_urn) ->
+    API.removeByCampaign campaign_urn
 
   App.vent.on "credentials:cleared", ->
     API.clear()
