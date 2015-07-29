@@ -11,6 +11,18 @@
       if model.get('prompt_response') in ["NOT_DISPLAYED","SKIPPED"]
         return Entry.ResponseAlternate
 
+      myView = switch model.get('prompt_type')
+        when 'single_choice'
+          Entry.ResponseSingleChoice
+        when 'multi_choice'
+          Entry.ResponseMultiChoice
+        when 'multi_choice_custom'
+          Entry.ResponseMultiChoiceCustom
+        when 'text','number','timestamp', 'photo', 'document', 'video', 'single_choice_custom'
+          Entry.ResponseString
+        else
+          Entry.ResponseUnsupported
+      myView
     emptyView: Entry.ResponsesEmpty
 
   class Entry.Details extends App.Views.ItemView
