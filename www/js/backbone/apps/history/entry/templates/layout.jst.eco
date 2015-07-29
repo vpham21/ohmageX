@@ -1,0 +1,6 @@
+<div id="notice-region"></div>
+<div id="details-region"></div>
+<div id="responses-region">
+  <h3>Response Details</h3>
+  <div id="responses-list"></div>
+</div>

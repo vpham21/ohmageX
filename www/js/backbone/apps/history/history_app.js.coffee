@@ -7,12 +7,17 @@
         return false
     appRoutes:
       "history": "list"
+      "history/:id": "entry"
 
   API =
     list: ->
       App.vent.trigger "nav:choose", "history"
       console.log 'HistoryApp list'
       new HistoryApp.List.Controller
+    entry: (id) ->
+      App.vent.trigger "nav:choose", "history"
+      new HistoryApp.Entry.Controller
+        entry_id: id
 
   App.addInitializer ->
     new HistoryApp.Router
@@ -20,3 +25,12 @@
 
   App.vent.on "history:entries:fetch:error history:entries:fetch:success", ->
     App.vent.trigger "loading:hide"
+
+  App.vent.on "history:list:entry:clicked", (model) ->
+    myId = model.get 'id'
+    API.entry myId
+    App.navigate "history/#{myId}"
+
+  App.vent.on "history:entry:close:clicked", (model) ->
+    API.list()
+    App.navigate "history"

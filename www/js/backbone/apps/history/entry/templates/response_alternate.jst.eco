@@ -1,0 +1,10 @@
+<header>
+  <h5><%= @prompt_text %></h5>
+  <i class="fa fa-<%= @icon %>"></i>
+</header>
+<% if @prompt_response is "NOT_DISPLAYED": %>
+  <p><em>This prompt was not displayed.</em></p>
+<% end %>
+<% if @prompt_response is "SKIPPED": %>
+  <p><em>This prompt was skipped.</em></p>
+<% end %>
