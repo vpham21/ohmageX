@@ -9,7 +9,15 @@
       entry = App.request "history:entry", @entry_id
 
       @layout = @getLayoutView entry
+
+      @listenTo @layout, "show", =>
+        console.log "show entry layout"
+        @noticeRegion()
+
       @show @layout, loading: false
+
+    noticeRegion: ->
+      App.execute "notice:region:set", @layout.noticeRegion
 
 
     getLayoutView: (entry) ->
