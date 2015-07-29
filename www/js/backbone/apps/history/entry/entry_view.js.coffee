@@ -40,6 +40,13 @@
   class Entry.ResponseString extends Entry.ResponseBase
     template: "history/entry/response_string"
 
+  class Entry.ResponseSingleChoice extends Entry.ResponseString
+    serializeData: ->
+      data = super
+      mySelection = data.prompt_response
+      data.prompt_response = data.prompt_choice_glossary[mySelection].label
+      data
+
   class Entry.ResponseUnsupported extends Entry.ResponseBase
     template: "history/entry/response_unsupported"
 
