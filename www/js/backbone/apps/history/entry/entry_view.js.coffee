@@ -4,6 +4,15 @@
     className: "empty-container"
     template: "history/entry/_responses_empty"
 
+
+  class Entry.Responses extends App.Views.CollectionView
+    getChildView: (model) ->
+      console.log 'childview model', model
+      if model.get('prompt_response') in ["NOT_DISPLAYED","SKIPPED"]
+        return Entry.ResponseAlternate
+
+    emptyView: Entry.ResponsesEmpty
+
   class Entry.Details extends App.Views.ItemView
     template: "history/entry/details"
     triggers:
