@@ -40,6 +40,9 @@
       new Entry.Responses
         collection: responses
 
+    getDetailsView: (entry) ->
+      new Entry.Details
+        model: entry
 
     getLayoutView: (entry) ->
       new Entry.Layout
