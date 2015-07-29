@@ -77,19 +77,17 @@
   class Item.Responses extends App.Views.CollectionView
     getChildView: (model) ->
       myView = switch model.get('type')
-        when 'single_choice'
+        when 'single_choice', 'single_choice_custom'
           Item.ResponseSingleChoice
-        when 'multi_choice'
+        when 'multi_choice', 'multi_choice_custom'
           Item.ResponseMultiChoice
-        when 'multi_choice_custom'
-          Item.ResponseMultiChoiceCustom
         when 'photo'
           Item.ResponsePhoto
         when 'document'
           Item.ResponseDocument
         when 'video'
           Item.ResponseVideo
-        when 'text','number','timestamp','single_choice_custom'
+        when 'text','number','timestamp'
           Item.ResponseString
         else
           Item.ResponseUnsupported
