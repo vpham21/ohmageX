@@ -140,6 +140,9 @@
     clear: ->
       currentHistory = false
 
+  App.reqres.setHandler "history:entry", (id) ->
+    currentHistory.get id
+
 
   App.reqres.setHandler "history:entries", ->
     API.getHistory()
