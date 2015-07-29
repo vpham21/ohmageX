@@ -12,12 +12,18 @@
 
       @listenTo @layout, "show", =>
         console.log "show entry layout"
+        @detailsRegion entry
         @noticeRegion()
 
       @show @layout, loading: false
 
     noticeRegion: ->
       App.execute "notice:region:set", @layout.noticeRegion
+
+    detailsRegion: (entry) ->
+      detailsView = @getDetailsView entry
+
+      @show detailsView, region: @layout.detailsRegion
 
 
     getLayoutView: (entry) ->
