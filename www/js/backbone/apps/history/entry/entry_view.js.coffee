@@ -4,6 +4,8 @@
     className: "empty-container"
     template: "history/entry/_responses_empty"
 
+  class Entry.ResponseUnsupported extends Entry.ResponseBase
+    template: "history/entry/response_unsupported"
 
   class Entry.Responses extends App.Views.CollectionView
     getChildView: (model) ->
