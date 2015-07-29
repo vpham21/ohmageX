@@ -135,6 +135,9 @@
       else
         # just return the collection
         currentHistory
+    clear: ->
+      currentHistory = false
+
 
   App.reqres.setHandler "history:entries", ->
     API.getHistory()
@@ -152,3 +155,5 @@
 
     API.fetchHistory campaign_urns
 
+  App.vent.on "credentials:cleared", ->
+    API.clear()
