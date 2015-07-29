@@ -44,23 +44,6 @@
 
   class Item.ResponseMultiChoice extends Item.ResponseBase
     template: "uploadqueue/item/response_multi_choice"
-    serializeData: ->
-      data = super
-      # the response is a stringified array referencing options.
-      selectionsArr = JSON.parse data.response
-      # responses is an array that will be iterated over inside the view.
-      data.responses = _.map selectionsArr, (selection) ->
-        data.options[selection]
-      data
-
-  class Item.ResponseMultiChoiceCustom extends Item.ResponseMultiChoice
-    serializeData: ->
-      data = super
-      # the response is a stringified array referencing custom choice strings.
-      selectionsArr = JSON.parse data.response
-      # responses is an array that will be iterated over inside the view.
-      data.responses = selectionsArr
-      data
 
   class Item.ResponsePhoto extends Item.ResponseBase
     template: "uploadqueue/item/response_photo"
