@@ -135,6 +135,12 @@
       else
         # just return the collection
         currentHistory
+    getEntryResponses: (rawResponsesObj) ->
+      result = _.map rawResponsesObj, (response, key) ->
+        # flatten the raw object representation
+        # to a flattened array of objects.
+        _.extend(response, id: key)
+      new Entities.Collection result
     removeByCampaign: (campaign_urn) ->
       currentHistory.remove currentHistory.where(campaign_urn: campaign_urn)
     clear: ->
@@ -143,6 +149,8 @@
   App.reqres.setHandler "history:entry", (id) ->
     currentHistory.get id
 
+  App.reqres.setHandler "history:entry:responses", (id) ->
+    API.getEntryResponses currentHistory.get(id).get('responses')
 
   App.reqres.setHandler "history:entries", ->
     API.getHistory()
