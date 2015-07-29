@@ -39,7 +39,7 @@
   class Item.ResponseSingleChoice extends Item.ResponseString
     serializeData: ->
       data = super
-      data.response = data.options[data.response]
+      data.response = data.response.label
       data
 
   class Item.ResponseMultiChoice extends Item.ResponseBase
