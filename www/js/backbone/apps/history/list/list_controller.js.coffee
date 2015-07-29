@@ -30,6 +30,10 @@
     listRegion: (responses) ->
       listView = @getListView responses
 
+      @listenTo listView, "childview:clicked", (args) =>
+        console.log 'childview:entry:clicked', args.model
+        App.vent.trigger "history:list:entry:clicked", args.model
+
       @show listView, region: @layout.listRegion
 
     getLayoutView: ->
