@@ -6,6 +6,8 @@
     initialize: (options) ->
       { entry_id } = options
       @entry_id = entry_id
+      entry = App.request "history:entry", @entry_id
+
       @layout = @getLayoutView entry
       @show @layout, loading: false
 
