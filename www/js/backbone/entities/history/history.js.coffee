@@ -145,3 +145,10 @@
 
   App.on "before:start", ->
     API.init()
+
+  App.commands.setHandler "history:sync", ->
+    campaign_urns = App.request 'campaigns:saved:urns'
+    if campaign_urns.length is 0 then return false
+
+    API.fetchHistory campaign_urns
+
