@@ -7,12 +7,17 @@
         return false
     appRoutes:
       "history": "list"
+      "history/:id": "entry"
 
   API =
     list: ->
       App.vent.trigger "nav:choose", "history"
       console.log 'HistoryApp list'
       new HistoryApp.List.Controller
+    entry: (id) ->
+      App.vent.trigger "nav:choose", "history"
+      new HistoryApp.Entry.Controller
+        entry_id: id
 
   App.addInitializer ->
     new HistoryApp.Router
