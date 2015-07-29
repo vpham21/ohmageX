@@ -43,8 +43,8 @@
           id: value.survey_key
           date: value.date
           timestamp: value.timestamp
-          utc_timestamp: value.utc_timestamp
           timezone: value.timezone
+          utc_timestamp: value.utc_timestamp
           campaign_urn: options.campaign.id
           survey_id: value.survey_id
           location:
@@ -145,3 +145,10 @@
 
   App.on "before:start", ->
     API.init()
+
+  App.commands.setHandler "history:sync", ->
+    campaign_urns = App.request 'campaigns:saved:urns'
+    if campaign_urns.length is 0 then return false
+
+    API.fetchHistory campaign_urns
+
