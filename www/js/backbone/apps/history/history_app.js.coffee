@@ -9,7 +9,7 @@
       "history": "list"
 
   API =
-    list: (id) ->
+    list: ->
       App.vent.trigger "nav:choose", "history"
       console.log 'HistoryApp list'
       new HistoryApp.List.Controller
