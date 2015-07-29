@@ -37,6 +37,9 @@
     # NOT_DISPLAYED and SKIPPED
     template: "history/entry/response_alternate"
 
+  class Entry.ResponseString extends Entry.ResponseBase
+    template: "history/entry/response_string"
+
   class Entry.ResponseUnsupported extends Entry.ResponseBase
     template: "history/entry/response_unsupported"
 
