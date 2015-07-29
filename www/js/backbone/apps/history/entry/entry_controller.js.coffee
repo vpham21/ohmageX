@@ -13,6 +13,8 @@
       @listenTo @layout, "show", =>
         console.log "show entry layout"
         @detailsRegion entry
+        responses = App.request "history:entry:responses", @entry_id
+        @responsesRegion responses
         @noticeRegion()
 
       @show @layout, loading: false
@@ -28,6 +30,15 @@
         App.vent.trigger "history:entry:close:clicked", entry
 
       @show detailsView, region: @layout.detailsRegion
+
+    responsesRegion: (responses) ->
+      responsesView = @getResponsesView responses
+
+      @show responsesView, region: @layout.responsesRegion
+
+    getResponsesView: (responses) ->
+      new Entry.Responses
+        collection: responses
 
 
     getLayoutView: (entry) ->
