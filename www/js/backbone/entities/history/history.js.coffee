@@ -135,6 +135,11 @@
       else
         # just return the collection
         currentHistory
+    removeByCampaign: (campaign_urn) ->
+      currentHistory.remove currentHistory.where(campaign_urn: campaign_urn)
+    clear: ->
+      currentHistory = false
+
 
   App.reqres.setHandler "history:entries", ->
     API.getHistory()
@@ -152,3 +157,8 @@
 
     API.fetchHistory campaign_urns
 
+  App.vent.on "campaign:saved:remove", (campaign_urn) ->
+    API.removeByCampaign campaign_urn
+
+  App.vent.on "credentials:cleared", ->
+    API.clear()
