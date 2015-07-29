@@ -55,6 +55,13 @@
         data.prompt_choice_glossary[selectionIndex].label
       data
 
+  class Entry.ResponseMultiChoiceCustom extends Entry.ResponseBase
+    template: "history/entry/response_multi_choice"
+    serializeData: ->
+      data = super
+      data.responses = data.prompt_response
+      data
+
   class Entry.ResponseUnsupported extends Entry.ResponseBase
     template: "history/entry/response_unsupported"
 
