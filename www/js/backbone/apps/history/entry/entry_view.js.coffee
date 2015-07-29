@@ -1,5 +1,9 @@
 @Ohmage.module "HistoryApp.Entry", (Entry, App, Backbone, Marionette, $, _) ->
 
+  class Entry.ResponsesEmpty extends App.Views.ItemView
+    className: "empty-container"
+    template: "history/entry/_responses_empty"
+
   class Entry.Details extends App.Views.ItemView
     template: "history/entry/details"
     triggers:
