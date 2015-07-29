@@ -4,6 +4,34 @@
     className: "empty-container"
     template: "history/entry/_responses_empty"
 
+  class Entry.ResponseBase extends App.Views.ItemView
+    getIcon: ->
+      switch @model.get('prompt_type')
+        when 'multi_choice','multi_choice_custom'
+          'th'
+        when 'number'
+          'sort-numeric-asc'
+        when 'photo'
+          'camera-retro'
+        when 'document'
+          'file-code-o'
+        when 'video'
+          'play-circle'
+        when 'single_choice','single_choice_custom'
+          'list'
+        when 'text'
+          'align-left'
+        when 'timestamp'
+          'clock-o'
+        else
+          'question'
+    attributes:
+      "class": "item"
+    serializeData: ->
+      data = @model.toJSON()
+      data.icon = @getIcon()
+      data
+
   class Entry.ResponseUnsupported extends Entry.ResponseBase
     template: "history/entry/response_unsupported"
 
