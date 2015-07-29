@@ -43,8 +43,8 @@
           id: value.survey_key
           date: value.date
           timestamp: value.timestamp
-          utc_timestamp: value.utc_timestamp
           timezone: value.timezone
+          utc_timestamp: value.utc_timestamp
           campaign_urn: options.campaign.id
           survey_id: value.survey_id
           location:
