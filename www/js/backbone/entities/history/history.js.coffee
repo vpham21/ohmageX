@@ -115,6 +115,10 @@
           App.vent.trigger "history:entries:fetch:error"
         else
           # no errors, merge all of the fetched collections into the main history collection.
+
+          # clear our currentHistory before merging
+          currentHistory.reset()
+
           _.each campaignCollections, (collection) =>
             currentHistory.add collection.toJSON()
 
