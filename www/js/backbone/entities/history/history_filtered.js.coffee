@@ -15,3 +15,19 @@
       else
         @_meta[prop] = value
 
+    where: (criteria) ->
+      if criteria
+        if criteria.bucket?
+          items = @entries.filter (entry) ->
+            criteria.bucket is entry.get 'bucket'
+          @meta('bucketFilter', true)
+        else
+          @meta('bucketFilter', false)
+      else
+        @meta('bucketFilter', false)
+        items = @entries.models
+      console.log 'criteria', criteria
+      @_currentCriteria = criteria
+
+      @reset items
+
