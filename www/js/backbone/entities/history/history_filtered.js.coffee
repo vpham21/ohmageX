@@ -9,6 +9,9 @@
       @entries = options
       @_meta = {}
 
+      @listenTo @entries, "reset", ->
+        @where @_currentCriteria
+
     meta: (prop, value) ->
       if value is undefined
         return @_meta[prop]
