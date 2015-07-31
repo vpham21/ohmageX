@@ -123,6 +123,8 @@
         currentHistory._fetch.resolve()
         currentHistory.trigger "sync:stop", currentHistory
 
+      currentHistory
+
     getHistory: ->
       if currentHistory.length < 1
         # fetch all history from the server,
