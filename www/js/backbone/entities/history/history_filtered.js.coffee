@@ -12,6 +12,10 @@
       @listenTo @entries, "reset", ->
         @where @_currentCriteria
 
+      @listenTo @entries, "sync:stop", ->
+        @trigger "filter:bucket:clear"
+        @where()
+
     meta: (prop, value) ->
       if value is undefined
         return @_meta[prop]
