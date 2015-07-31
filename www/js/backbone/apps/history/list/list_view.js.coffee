@@ -15,12 +15,35 @@
     triggers:
       "click": "clicked"
 
+  class List.EntryWithHeader extends App.Views.ItemView
+    tagName: 'li'
+    template: "history/list/_entry_with_header"
+    triggers:
+      "click .active.item": "clicked"
+
   class List.Entries extends App.Views.CollectionView
     tagName: 'ul'
     emptyView: List.EntriesEmpty
-    childView: List.Entry
+    myBucket: false
+
     initialize: ->
       @listenTo @collection, 'reset', @render
+
+    getChildView: (model) ->
+      if @collection.at(0) is model or @myBucket isnt model.get('bucket')
+        # It is VERY weird that the first entry
+        # must be forced to include a header with
+        # `@collection.at(0) is model`
+        # When getChildView first runs myBucket is false.
+        # false is not equal to the first bucket!
+        # And this still happens even when adding an
+        # onRender that sets myBucket to false, in case
+        # a lingering value remained.
+        myView = List.EntryWithHeader
+        @myBucket = model.get('bucket')
+      else
+        myView = List.Entry
+      myView
 
   class List.Layout extends App.Views.Layout
     id: 'history-section'
