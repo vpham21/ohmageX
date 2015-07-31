@@ -15,6 +15,12 @@
     triggers:
       "click": "clicked"
 
+  class List.EntryWithHeader extends App.Views.ItemView
+    tagName: 'li'
+    template: "history/list/_entry_with_header"
+    triggers:
+      "click .active.item": "clicked"
+
   class List.Entries extends App.Views.CollectionView
     tagName: 'ul'
     emptyView: List.EntriesEmpty
