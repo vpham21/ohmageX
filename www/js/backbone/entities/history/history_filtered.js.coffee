@@ -9,3 +9,9 @@
       @entries = options
       @_meta = {}
 
+    meta: (prop, value) ->
+      if value is undefined
+        return @_meta[prop]
+      else
+        @_meta[prop] = value
+
