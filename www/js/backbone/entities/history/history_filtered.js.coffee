@@ -16,6 +16,9 @@
         @trigger "filter:bucket:clear"
         @where()
 
+      @listenTo @entries, "remove", ->
+        @remove model
+
     meta: (prop, value) ->
       if value is undefined
         return @_meta[prop]
