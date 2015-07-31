@@ -121,6 +121,7 @@
           App.vent.trigger "history:entries:fetch:success", currentHistory
         # resolve the fetch handler.
         currentHistory._fetch.resolve()
+        currentHistory.trigger "sync:stop", currentHistory
 
     getHistory: ->
       if currentHistory.length < 1
