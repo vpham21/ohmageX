@@ -108,7 +108,7 @@
 
       currentHistory._fetch = new $.Deferred()
 
-      App.execute "when:fetched", campaignCollections, =>
+      App.execute "when:fetched:always", campaignCollections, =>
         if _.contains(responseFetchSuccess, false)
           # there was an error while fetching one of the campaign's history entries
           App.execute "dialog:alert", "Network error fetching history."
