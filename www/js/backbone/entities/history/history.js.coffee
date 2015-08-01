@@ -116,17 +116,14 @@
         else
           # no errors, merge all of the fetched collections into the main history collection.
 
-          # clear our currentHistory before merging
-          currentHistory.reset()
-
-          _.each campaignCollections, (collection) =>
-            currentHistory.add collection.toJSON()
-
-          # TODO: in the bucket entity, we generate new buckets based on this new currentHistory
+          currentHistory.reset _.chain(campaignCollections).map((collection) -> collection.toJSON()).flatten().value()
 
           App.vent.trigger "history:entries:fetch:success", currentHistory
         # resolve the fetch handler.
         currentHistory._fetch.resolve()
+        currentHistory.trigger "sync:stop", currentHistory
+
+      currentHistory
 
     getHistory: ->
       if currentHistory.length < 1
@@ -158,10 +155,6 @@
 
   App.reqres.setHandler "history:entries", ->
     API.getHistory()
-
-  App.reqres.setHandler "history:entries:list", ->
-    # no fetching, just retrieve the history
-    currentHistory
 
   App.on "before:start", ->
     API.init()
