@@ -59,3 +59,7 @@
         # model.
         filtered.reset()
       filtered
+
+  App.reqres.setHandler "history:entries:filtered", (entries) ->
+    console.log 'history:filtered', entries
+    API.getFiltered entries
