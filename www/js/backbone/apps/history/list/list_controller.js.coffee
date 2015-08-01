@@ -7,17 +7,19 @@
       @layout = @getLayoutView()
       campaigns = App.request "campaigns:saved:current"
 
+      if campaigns.length isnt 0
+        entries = App.request('history:entries:filtered', App.request("history:entries"))
+
       @listenTo @layout, "show", =>
         if campaigns.length is 0
           @noticeRegion "No saved #{App.dictionary('pages','campaign')}! You must have saved #{App.dictionary('pages','campaign')} in order to view response history for them."
         else
           console.log "showing history layout"
-          @listRegion App.request('history:entries:list')
-
+          @listRegion entries
       if campaigns.length is 0
         loadConfig = false
       else
-        loadConfig = entities: App.request('history:entries')
+        loadConfig = entities: entries
 
       @show @layout, loading: loadConfig
 
