@@ -16,7 +16,7 @@
         @trigger "filter:bucket:clear"
         @where()
 
-      @listenTo @entries, "remove", ->
+      @listenTo @entries, "remove", (model) ->
         @remove model
 
     meta: (prop, value) ->
