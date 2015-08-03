@@ -4,3 +4,22 @@
 
   currentBuckets = false
 
+  class Entities.UserHistoryBucketsNav extends Entities.NavsCollection
+    parse: (entries) ->
+
+      # prepend default "All".
+      result = [
+            name: 'All'
+          ]
+
+      result
+
+  API =
+    init: ->
+      currentBuckets = new Entities.UserHistoryBucketsNav [], parse: true
+      currentBuckets.chooseByName 'All'
+  App.on "before:start", ->
+    # TODO: later need to add an event to populate this dropdown after
+    # history entries are retrieved from local storage.
+    API.init()
+
