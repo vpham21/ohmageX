@@ -40,6 +40,8 @@
       currentBuckets.chooseByName 'All'
     getBuckets: (entries) ->
       currentBuckets = new Entities.UserHistoryBucketsNav entries, parse: true
+      if entries.length is 0
+        currentBuckets.reset(null, parse: true)
       currentBuckets
 
   App.on "before:start", ->
