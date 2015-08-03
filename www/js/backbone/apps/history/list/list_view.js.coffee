@@ -16,6 +16,9 @@
   class List.BucketsSelector extends App.Views.CollectionView
     tagName: "select"
     childView: List.SelectorItem
+    triggers: ->
+      "change": "bucket:selected"
+
   class List.EntriesEmpty extends App.Views.ItemView
     tagName: 'li'
     className: "empty-container"
