@@ -13,6 +13,7 @@
       if @model.isChosen() then options['selected'] = 'selected'
       options
 
+  class List.BucketsSelector extends App.Views.CollectionView
   class List.EntriesEmpty extends App.Views.ItemView
     tagName: 'li'
     className: "empty-container"
