@@ -24,6 +24,16 @@
           # to the selector entity, so its view can update
           bucketSelector.trigger "filter:bucket:clear"
 
+        @listenTo bucketSelector, "change:chosen", (model) =>
+          # this event fires every time all instances of the
+          # `chosen` attribute within the model are changed.
+          # So only activate when our model is "chosen"
+          if model.isChosen()
+            if model.get('name') is 'All'
+              entries.where()
+            else
+              entries.where(bucket: model.get('name'))
+
       if campaigns.length is 0
         loadConfig = false
       else
