@@ -30,6 +30,11 @@
 
       @show noticeView, region: @layout.noticeRegion
 
+    bucketRegion: (buckets) ->
+      bucketView = @getBucketsView buckets
+
+      @show bucketView, region: @layout.bucketsControlRegion
+
     listRegion: (responses) ->
       listView = @getListView responses
 
