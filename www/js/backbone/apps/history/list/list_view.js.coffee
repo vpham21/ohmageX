@@ -50,5 +50,5 @@
     template: "history/list/list_layout"
     regions:
       noticeRegion: "#notice-region-nopop"
-      controlRegion: "#control-region"
+      bucketsControlRegion: "#buckets-control-region"
       listRegion: "#list-region"
