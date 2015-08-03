@@ -14,6 +14,11 @@
       options
 
   class List.BucketsSelector extends App.Views.CollectionView
+    initialize: ->
+      @listenTo @, "bucket:selected", @chooseItem
+    chooseItem: (options) ->
+      console.log 'chooseItem options', options
+      @collection.chooseByName @$el.val()
     tagName: "select"
     childView: List.SelectorItem
     triggers: ->
