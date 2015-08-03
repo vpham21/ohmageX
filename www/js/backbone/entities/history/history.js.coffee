@@ -4,6 +4,11 @@
 
   currentHistory = false
 
+  # This private variable exists so "history:entries" can be requested in
+  # multiple places on the same page without issue. If the history
+  # is already fetching, it doesn't try to fetch again.
+  currentlyFetching = false
+
   class Entities.UserHistoryEntry extends Entities.Model
 
   class Entities.UserHistoryEntriesByCampaign extends Entities.Collection
@@ -92,6 +97,7 @@
         myCampaign = new Entities.UserHistoryEntriesByCampaign
         campaignCollections.push myCampaign
 
+        currentlyFetching = true
         myCampaign.fetch
           reset: true
           type: "POST"
@@ -120,13 +126,14 @@
 
           App.vent.trigger "history:entries:fetch:success", currentHistory
         # resolve the fetch handler.
+        currentlyFetching = false
         currentHistory._fetch.resolve()
         currentHistory.trigger "sync:stop", currentHistory
 
       currentHistory
 
     getHistory: ->
-      if currentHistory.length < 1
+      if currentHistory.length < 1 and currentlyFetching is false
         # fetch all history from the server,
         # because our current version is empty
         campaign_urns = App.request 'campaigns:saved:urns'

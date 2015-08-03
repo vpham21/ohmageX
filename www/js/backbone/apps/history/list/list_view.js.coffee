@@ -4,6 +4,29 @@
     template: "history/list/notice"
     className: "notice-nopop"
 
+  class List.SelectorItem extends App.Views.ItemView
+    tagName: "option"
+    template: "history/list/_selector_item"
+    attributes: ->
+      options = {}
+      options['value'] = @model.get 'name'
+      if @model.isChosen() then options['selected'] = 'selected'
+      options
+
+  class List.BucketsSelector extends App.Views.CollectionView
+    initialize: ->
+      @listenTo @, "bucket:selected", @chooseItem
+      @listenTo @collection, 'filter:bucket:clear', @clearBucket
+    clearBucket: ->
+      @$el.val('All')
+    chooseItem: (options) ->
+      console.log 'chooseItem options', options
+      @collection.chooseByName @$el.val()
+    tagName: "select"
+    childView: List.SelectorItem
+    triggers: ->
+      "change": "bucket:selected"
+
   class List.EntriesEmpty extends App.Views.ItemView
     tagName: 'li'
     className: "empty-container"
@@ -50,5 +73,5 @@
     template: "history/list/list_layout"
     regions:
       noticeRegion: "#notice-region-nopop"
-      controlRegion: "#control-region"
+      bucketsControlRegion: "#buckets-control-region"
       listRegion: "#list-region"

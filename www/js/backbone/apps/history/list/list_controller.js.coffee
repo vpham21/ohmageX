@@ -9,13 +9,32 @@
 
       if campaigns.length isnt 0
         entries = App.request('history:entries:filtered', App.request("history:entries"))
+        bucketSelector = App.request "history:selector:buckets", App.request("history:entries")
 
       @listenTo @layout, "show", =>
         if campaigns.length is 0
           @noticeRegion "No saved #{App.dictionary('pages','campaign')}! You must have saved #{App.dictionary('pages','campaign')} in order to view response history for them."
         else
           console.log "showing history layout"
+          @bucketRegion bucketSelector
           @listRegion entries
+
+      if campaigns.length isnt 0
+        @listenTo entries, "filter:bucket:clear", =>
+          # pass the filter clearing in entries
+          # to the selector entity, so its view can update
+          bucketSelector.trigger "filter:bucket:clear"
+
+        @listenTo bucketSelector, "change:chosen", (model) =>
+          # this event fires every time all instances of the
+          # `chosen` attribute within the model are changed.
+          # So only activate when our model is "chosen"
+          if model.isChosen()
+            if model.get('name') is 'All'
+              entries.where()
+            else
+              entries.where(bucket: model.get('name'))
+
       if campaigns.length is 0
         loadConfig = false
       else
@@ -29,6 +48,11 @@
 
       @show noticeView, region: @layout.noticeRegion
 
+    bucketRegion: (buckets) ->
+      bucketView = @getBucketsView buckets
+
+      @show bucketView, region: @layout.bucketsControlRegion
+
     listRegion: (responses) ->
       listView = @getListView responses
 
@@ -41,9 +65,13 @@
     getLayoutView: ->
       new List.Layout
 
-    getNoticeView: (notice)->
+    getNoticeView: (notice) ->
       new List.Notice
         model: notice
+
+    getBucketsView: (buckets) ->
+      new List.BucketsSelector
+        collection: buckets
 
     getListView: (entries) ->
       new List.Entries
