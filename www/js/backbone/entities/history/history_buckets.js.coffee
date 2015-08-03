@@ -20,6 +20,15 @@
             name: 'All'
           ]
 
+      if @entries? and @entries.length > 0 and @entries instanceof Entities.UserHistoryEntries
+        # get an array that contains only unique buckets.
+        # pass `true` for isSorted param of `uniq` to speed it up.
+        uniqueBuckets = _.chain(entries.toJSON()).pluck('bucket').uniq(true).value()
+        result = result.concat uniqueBuckets.map (bucket) =>
+          return {
+            name: bucket
+          }
+
       result
 
     chosenName: ->
