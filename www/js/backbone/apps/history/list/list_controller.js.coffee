@@ -17,6 +17,13 @@
         else
           console.log "showing history layout"
           @listRegion entries
+
+      if campaigns.length isnt 0
+        @listenTo entries, "filter:bucket:clear", =>
+          # pass the filter clearing in entries
+          # to the selector entity, so its view can update
+          bucketSelector.trigger "filter:bucket:clear"
+
       if campaigns.length is 0
         loadConfig = false
       else
