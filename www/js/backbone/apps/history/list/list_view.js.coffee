@@ -16,6 +16,9 @@
   class List.BucketsSelector extends App.Views.CollectionView
     initialize: ->
       @listenTo @, "bucket:selected", @chooseItem
+      @listenTo @collection, 'filter:bucket:clear', @clearBucket
+    clearBucket: ->
+      @$el.val('All')
     chooseItem: (options) ->
       console.log 'chooseItem options', options
       @collection.chooseByName @$el.val()
