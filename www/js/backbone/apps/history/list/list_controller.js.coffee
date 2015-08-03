@@ -46,6 +46,10 @@
       new List.Notice
         model: notice
 
+    getBucketsView: (buckets) ->
+      new List.BucketsSelector
+        collection: buckets
+
     getListView: (entries) ->
       new List.Entries
         collection: entries
