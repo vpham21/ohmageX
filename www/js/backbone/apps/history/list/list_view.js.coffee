@@ -4,6 +4,15 @@
     template: "history/list/notice"
     className: "notice-nopop"
 
+  class List.SelectorItem extends App.Views.ItemView
+    tagName: "option"
+    template: "history/list/_selector_item"
+    attributes: ->
+      options = {}
+      options['value'] = @model.get 'name'
+      if @model.isChosen() then options['selected'] = 'selected'
+      options
+
   class List.EntriesEmpty extends App.Views.ItemView
     tagName: 'li'
     className: "empty-container"
