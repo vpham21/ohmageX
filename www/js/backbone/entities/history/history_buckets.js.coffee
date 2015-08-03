@@ -38,6 +38,10 @@
     init: ->
       currentBuckets = new Entities.UserHistoryBucketsNav [], parse: true
       currentBuckets.chooseByName 'All'
+    getBuckets: (entries) ->
+      currentBuckets = new Entities.UserHistoryBucketsNav entries, parse: true
+      currentBuckets
+
   App.on "before:start", ->
     # TODO: later need to add an event to populate this dropdown after
     # history entries are retrieved from local storage.
