@@ -41,7 +41,7 @@
     getLayoutView: ->
       new List.Layout
 
-    getNoticeView: (notice)->
+    getNoticeView: (notice) ->
       new List.Notice
         model: notice
 
