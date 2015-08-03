@@ -49,3 +49,5 @@
     # history entries are retrieved from local storage.
     API.init()
 
+  App.reqres.setHandler "history:selector:buckets", (entries) ->
+    API.getBuckets entries
