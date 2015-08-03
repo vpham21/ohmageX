@@ -14,6 +14,9 @@
 
       result
 
+    chosenName: ->
+      (@findWhere(chosen: true) or @first()).get('name')
+
   API =
     init: ->
       currentBuckets = new Entities.UserHistoryBucketsNav [], parse: true
