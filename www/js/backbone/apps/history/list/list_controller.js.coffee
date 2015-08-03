@@ -16,6 +16,7 @@
           @noticeRegion "No saved #{App.dictionary('pages','campaign')}! You must have saved #{App.dictionary('pages','campaign')} in order to view response history for them."
         else
           console.log "showing history layout"
+          @bucketRegion bucketSelector
           @listRegion entries
 
       if campaigns.length isnt 0
