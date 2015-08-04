@@ -7,7 +7,7 @@
         return false
     appRoutes:
       "history": "list"
-      "history/:id": "entry"
+      "history/entry/:id": "entry"
 
   API =
     list: ->
@@ -31,7 +31,7 @@
   App.vent.on "history:list:entry:clicked", (model) ->
     myId = model.get 'id'
     API.entry myId
-    App.navigate "history/#{myId}"
+    App.navigate "history/entry/#{myId}"
 
   App.vent.on "history:entry:close:clicked", (model) ->
     API.list()
