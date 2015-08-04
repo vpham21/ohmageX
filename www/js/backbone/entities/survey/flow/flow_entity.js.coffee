@@ -27,7 +27,10 @@
 
       if App.request "flow:type:is:prompt", id
         myResponse = App.request("response:get", id).get 'response'
-        myDefault = responseEntity.get 'default'
+        myDefault = if App.request("flow:prepop:get", id) isnt false
+          App.request("flow:prepop:get", id)
+        else
+          responseEntity.get('default') or false
         validResponse = !!myResponse
         validDefault = myDefault?
 
