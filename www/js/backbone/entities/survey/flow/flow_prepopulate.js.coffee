@@ -16,6 +16,11 @@
   API =
     clear: ->
       currentEntries = false
+    getPrepopulateEntry: (stepId) ->
+      entry = currentEntries.findWhere(id: stepId) or false
+      if entry is false then return false
+      entry.get 'value'
+
     addPrepopulateEntry: (stepId, value) ->
       if currentEntries is false then currentEntries = new Entities.PrepopulateEntries
 
@@ -25,6 +30,10 @@
 
   App.vent.on "survey:exit survey:reset", ->
     API.clear()
+
+  App.reqres.setHandler "flow:prepop:get", (stepId) ->
+    if currentEntries is false then return false
+    API.getPrepopulateEntry stepId
 
   App.commands.setHandler "flow:prepop:add", (stepId, value) ->
     API.addPrepopulateEntry stepId, value
