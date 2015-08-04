@@ -68,7 +68,12 @@
   "functionality": {
     "post_survey_reminders_disabled": true,
     "multi_question_survey_flow": true,
-    "history_bucketby_first_prompt": false
+    "history_eqis_bucketing": {
+      "firstresponse_surveyids": [
+        "2AssessmentArtifacts",
+        "3InstructionArtifacts"
+      ]
+    }
   },
   "prompt_defaults": {
     "doc": {
