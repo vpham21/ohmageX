@@ -14,6 +14,8 @@
       App.vent.trigger "nav:choose", "history"
       console.log 'HistoryApp list'
       new HistoryApp.List.Controller
+        bucket_filter: false
+
     entry: (id) ->
       App.vent.trigger "nav:choose", "history"
       new HistoryApp.Entry.Controller
