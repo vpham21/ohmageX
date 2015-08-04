@@ -15,6 +15,23 @@
     model: Entities.UserHistoryEntry
     url: ->
       "#{App.request("serverpath:current")}/app/survey_response/read"
+
+    getResponseFromObj: (response) ->
+      switch response.prompt_type
+        when 'single_choice'
+          selectionIndex = response.prompt_response
+          response.prompt_choice_glossary[selectionIndex].label
+        when 'multi_choice'
+          # returns a JSON string of all of the responses
+          result = _.map response.prompt_response, (selectionIndex) ->
+            response.prompt_choice_glossary[selectionIndex].label
+          JSON.stringify result
+        when 'multi_choice_custom'
+          # returns a JSON string of all of the responses
+          JSON.stringify response.prompt_response
+        else
+          response.prompt_response
+
     addSorting: (results) ->
       sortParams = {}
         for prop in responses
