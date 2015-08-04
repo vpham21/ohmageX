@@ -34,7 +34,7 @@
 
     onRender: ->
       currentValue = @model.get('currentValue')
-      if currentValue then @selectChosen currentValue
+      if currentValue isnt false then @selectChosen(currentValue)
 
     getResponseMeta: ->
 
