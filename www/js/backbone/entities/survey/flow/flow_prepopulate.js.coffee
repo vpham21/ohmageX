@@ -13,3 +13,9 @@
   class Entities.PrepopulateEntries extends Backbone.Collection
     model: Entities.PrepopulateEntry
 
+  API =
+    clear: ->
+      currentEntries = false
+  App.vent.on "survey:exit survey:reset", ->
+    API.clear()
+
