@@ -17,12 +17,12 @@
       "#{App.request("serverpath:current")}/app/survey_response/read"
     addSorting: (results) ->
       sortParams = {}
-      if App.custom.functionality.history_bucketby_first_prompt
         for prop in responses
           # get first response
           firstResponse = responses[prop]
           break
         sortParams.bucket = firstResponse.prompt_response
+      if App.custom.functionality.history_eqis_bucketing isnt false
       else
         sortParams.bucket = results.date
 
