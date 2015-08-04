@@ -3,7 +3,8 @@
   # History List renders the history List view.
 
   class List.Controller extends App.Controllers.Application
-    initialize: ->
+    initialize: (options) ->
+
       @layout = @getLayoutView()
       campaigns = App.request "campaigns:saved:current"
 
@@ -34,6 +35,9 @@
               entries.where()
             else
               entries.where(bucket: model.get('name'))
+
+        # set the bucket to the default after this change:chosen listener
+        if options.bucket_filter then bucketSelector.chooseByName options.bucket_filter
 
       if campaigns.length is 0
         loadConfig = false

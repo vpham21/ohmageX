@@ -7,13 +7,22 @@
         return false
     appRoutes:
       "history": "list"
-      "history/:id": "entry"
+      "history/group/:group": "bucket"
+      "history/entry/:id": "entry"
 
   API =
     list: ->
       App.vent.trigger "nav:choose", "history"
       console.log 'HistoryApp list'
       new HistoryApp.List.Controller
+        bucket_filter: false
+
+    bucket: (bucket) ->
+      App.vent.trigger "nav:choose", "history"
+      console.log 'HistoryApp bucket'
+      new HistoryApp.List.Controller
+        bucket_filter: bucket
+
     entry: (id) ->
       App.vent.trigger "nav:choose", "history"
       new HistoryApp.Entry.Controller
@@ -29,7 +38,7 @@
   App.vent.on "history:list:entry:clicked", (model) ->
     myId = model.get 'id'
     API.entry myId
-    App.navigate "history/#{myId}"
+    App.navigate "history/entry/#{myId}"
 
   App.vent.on "history:entry:close:clicked", (model) ->
     API.list()

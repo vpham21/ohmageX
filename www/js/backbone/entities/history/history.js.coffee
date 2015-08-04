@@ -15,14 +15,42 @@
     model: Entities.UserHistoryEntry
     url: ->
       "#{App.request("serverpath:current")}/app/survey_response/read"
+
+    getResponseFromObj: (response) ->
+      switch response.prompt_type
+        when 'single_choice'
+          selectionIndex = response.prompt_response
+          response.prompt_choice_glossary[selectionIndex].label
+        when 'multi_choice'
+          # returns a JSON string of all of the responses
+          result = _.map response.prompt_response, (selectionIndex) ->
+            response.prompt_choice_glossary[selectionIndex].label
+          JSON.stringify result
+        when 'multi_choice_custom'
+          # returns a JSON string of all of the responses
+          JSON.stringify response.prompt_response
+        else
+          response.prompt_response
+
     addSorting: (results) ->
       sortParams = {}
-      if App.custom.functionality.history_bucketby_first_prompt
-        for prop in responses
-          # get first response
-          firstResponse = responses[prop]
-          break
-        sortParams.bucket = firstResponse.prompt_response
+      if App.custom.functionality.history_eqis_bucketing isnt false
+        if results.survey_id in App.custom.functionality.history_eqis_bucketing.firstresponse_surveyids
+          # if it's a matching survey ID in the first response
+          # survey IDs config array, use the first prompt
+          # response as the bucket.
+          firstKey = false
+          _.find results.responses, (response, key) ->
+            if response.prompt_index is 0
+              firstKey = key
+              return true
+            else
+              return false
+          firstResponse = results.responses[firstKey]
+          sortParams.bucket = @getResponseFromObj firstResponse
+        else
+          # all other surveys just use the survey title as the bucket.
+          sortParams.bucket = results.survey.title
       else
         sortParams.bucket = results.date
 
