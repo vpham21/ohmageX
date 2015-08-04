@@ -69,7 +69,7 @@
   "functionality": {
     "post_survey_reminders_disabled": false,
     "multi_question_survey_flow": false,
-    "history_bucketby_first_prompt": false
+    "history_eqis_bucketing": false
   },
   "prompt_defaults": {
     "doc": {
