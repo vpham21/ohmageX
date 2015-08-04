@@ -32,7 +32,7 @@
         else
           responseEntity.get('default') or false
         validResponse = !!myResponse
-        validDefault = myDefault?
+        validDefault = myDefault isnt false
 
         if validResponse
           currentValue = myResponse
