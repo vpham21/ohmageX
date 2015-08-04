@@ -34,12 +34,20 @@
 
     addSorting: (results) ->
       sortParams = {}
-        for prop in responses
-          # get first response
-          firstResponse = responses[prop]
-          break
-        sortParams.bucket = firstResponse.prompt_response
       if App.custom.functionality.history_eqis_bucketing isnt false
+        if results.survey_id in App.custom.functionality.history_eqis_bucketing.firstresponse_surveyids
+          # if it's a matching survey ID in the first response
+          # survey IDs config array, use the first prompt
+          # response as the bucket.
+          firstKey = false
+          _.find results.responses, (response, key) ->
+            if response.prompt_index is 0
+              firstKey = key
+              return true
+            else
+              return false
+          firstResponse = results.responses[firstKey]
+          sortParams.bucket = @getResponseFromObj firstResponse
       else
         sortParams.bucket = results.date
 
