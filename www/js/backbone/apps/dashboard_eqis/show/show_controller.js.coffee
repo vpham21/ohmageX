@@ -2,5 +2,10 @@
 
   # DashboardeQISApp renders the e-QIS dashboard.
 
+  class Show.Controller extends App.Controllers.Application
+    initialize: ->
+      @layout = @getLayoutView()
+      @show @layout
+
     getLayoutView: ->
       new Show.Layout
