@@ -33,6 +33,8 @@
           surveyId: '1InitialReflection'
           secondSurveyId: false
           newPrepopIndex: false
+          newPrepopfirstSurveyStep: false
+          newPrepopSecondSurveyStep: false
           responseCount: responseCounts[0]
       ]
 
@@ -45,6 +47,8 @@
             surveyId: '2AssessmentArtifacts'
             secondSurveyId: '3InstructionArtifacts'
             newPrepopIndex: index-1
+            newPrepopfirstSurveyStep: "AssessmentArtifactDayFolder"
+            newPrepopSecondSurveyStep: "InstructionalArtifactDayFolder"
             responseCount: count
 
       results = results.concat days
@@ -56,6 +60,8 @@
         surveyId: '4ConcludingReflection'
         secondSurveyId: false
         newPrepopIndex: false
+        newPrepopfirstSurveyStep: false
+        newPrepopSecondSurveyStep: false
         responseCount: responseCounts[@numDays+1]
       ]
       console.log 'results', results
