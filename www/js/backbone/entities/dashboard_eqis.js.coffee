@@ -16,3 +16,9 @@
 
     numDays: 10 # number of days that the survey lasts.
 
+    parse: (entries) ->
+      # establish scaffolding for all entries.
+      if @entries? and @entries.length > 0 and @entries instanceof Entities.UserHistoryEntries
+        # update all of the response counts
+        responseCounts = @getResponseCounts @entries
+
