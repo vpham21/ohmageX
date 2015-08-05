@@ -14,6 +14,7 @@
   "dictionary": {
     "page": {
       "login": "login",
+      "dashboardeqis": "dashboard",
       "campaign": "campaign",
       "survey": "survey",
       "queue": "upload queue",
@@ -24,6 +25,7 @@
     },
     "pages": {
       "login": "login",
+      "dashboardeqis": "dashboard",
       "campaign": "campaigns",
       "survey": "surveys",
       "queue": "upload queue",
@@ -34,6 +36,7 @@
     },
     "menu": {
       "login": "Login",
+      "dashboardeqis": "Dashboard",
       "campaign": "Campaigns",
       "survey": "Surveys",
       "queue": "Upload Queue",
@@ -44,13 +47,17 @@
     }
   },
   "menu_items_disabled": {
-    "native": [],
+    "native": [
+      "dashboard_eqis"
+    ],
     "browser": [
+      "dashboard_eqis",
       "profile",
       "reminder",
       "logout"
     ],
     "footer": [
+      "dashboard_eqis",
       "campaign",
       "survey",
       "queue",

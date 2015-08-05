@@ -37,7 +37,7 @@
         when "queue"
           return new Navbutton.Upload
             collection: navs
-        when "history"
+        when "history", "dashboardeqis"
           return new Navbutton.History
             collection: navs
         when "reminder"

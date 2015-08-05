@@ -14,6 +14,7 @@
   "dictionary": {
     "page": {
       "login": "login",
+      "dashboardeqis": "dashboard",
       "campaign": "portfolio",
       "survey": "artifact",
       "queue": "upload queue",
@@ -24,6 +25,7 @@
     },
     "pages": {
       "login": "login",
+      "dashboardeqis": "dashboard",
       "campaign": "portfolio",
       "survey": "artifacts",
       "queue": "upload queue",
@@ -34,6 +36,7 @@
     },
     "menu": {
       "login": "Login",
+      "dashboardeqis": "Dashboard",
       "campaign": "Portfolio",
       "survey": "Artifacts",
       "queue": "Upload Queue",
