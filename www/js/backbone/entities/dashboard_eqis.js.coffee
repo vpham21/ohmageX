@@ -22,3 +22,7 @@
         # update all of the response counts
         responseCounts = @getResponseCounts @entries
 
+
+    getResponseCounts: (entries) ->
+      # get a pre-populated array of numbers from 1 - numDays
+      dayNumbers = _.range(1,@numDays+1,1)
