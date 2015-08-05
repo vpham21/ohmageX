@@ -36,6 +36,19 @@
           responseCount: responseCounts[0]
       ]
 
+      days = []
+      _.each responseCounts, (count, index) =>
+        if index > 0 and index < @numDays+1
+          days.push
+            rowLabel: "Day #{index}"
+            bucket: "Day #{index}"
+            surveyId: '2AssessmentArtifacts'
+            secondSurveyId: '3InstructionArtifacts'
+            newPrepopIndex: index-1
+            responseCount: count
+
+      results = results.concat days
+
 
     getResponseCounts: (entries) ->
       # get a pre-populated array of numbers from 1 - numDays
