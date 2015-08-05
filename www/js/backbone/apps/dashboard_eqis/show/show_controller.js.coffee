@@ -5,6 +5,12 @@
   class Show.Controller extends App.Controllers.Application
     initialize: ->
       @layout = @getLayoutView()
+
+      campaigns = App.request "campaigns:saved:current"
+
+      @listenTo @layout, "show", =>
+        if campaigns.length is 0
+          @noticeRegion "No saved #{App.dictionary('pages','campaign')}! You must have saved #{App.dictionary('pages','campaign')} in order to view your dashboard."
       @show @layout
 
     noticeRegion: (message) ->
