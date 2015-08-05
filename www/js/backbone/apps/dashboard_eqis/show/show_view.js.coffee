@@ -8,6 +8,10 @@
     tagName: "li"
     className: "text-container"
     template: "dashboard_eqis/show/artifact"
+    triggers:
+      "click button.first-survey": "newsurvey:first:clicked"
+      "click button.second-survey": "newsurvey:second:clicked"
+      "click button.response-count": "responsecount:clicked"
 
   class Show.Artifacts extends App.Views.CompositeView
     childView: Show.Artifact
