@@ -24,5 +24,9 @@
       new Show.Notice
         model: notice
 
+    getArtifactsView: (artifacts) ->
+      new Show.Artifacts
+        collection: artifacts
+
     getLayoutView: ->
       new Show.Layout
