@@ -18,3 +18,6 @@
     new DashboardeQISApp.Router
       controller: API
 
+  App.vent.on "dashboardeqis:responsecount:clicked", (bucket) ->
+    App.navigate "history/group/#{bucket}", trigger: true
+
