@@ -21,3 +21,7 @@
   App.vent.on "dashboardeqis:responsecount:clicked", (bucket) ->
     App.navigate "history/group/#{bucket}", trigger: true
 
+  App.vent.on "dashboardeqis:newsurvey:clicked", (surveyId, newPrepopIndex, newPrepopStep) ->
+    if newPrepopIndex isnt false
+      App.execute "flow:prepop:add", newPrepopStep, newPrepopIndex
+
