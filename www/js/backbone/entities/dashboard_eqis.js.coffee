@@ -17,6 +17,10 @@
     numDays: 10 # number of days that the survey lasts.
 
     parse: (entries) ->
+
+      # TODO: Decide where to put all of these survey and step IDs.
+      # Should they be moved to the config?
+
       # establish scaffolding for all entries.
       if @entries? and @entries.length > 0 and @entries instanceof Entities.UserHistoryEntries
         # update all of the response counts
