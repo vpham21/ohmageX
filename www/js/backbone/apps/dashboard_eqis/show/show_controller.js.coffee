@@ -28,6 +28,14 @@
     artifactsRegion: (artifacts) ->
       artifactsView = @getArtifactsView artifacts
 
+      @listenTo artifactsView, "childview:newsurvey:first:clicked", (child, args) ->
+        console.log "childview:newsurvey:first:clicked", args.model
+        App.vent.trigger "dashboardeqis:newsurvey:clicked", args.model.get 'surveyId', args.model.get 'newPrepopIndex'
+
+      @listenTo artifactsView, "childview:newsurvey:second:clicked", (child, args) ->
+        console.log "childview:newsurvey:second:clicked", args.model
+        App.vent.trigger "dashboardeqis:newsurvey:clicked", args.model.get 'secondSurveyId', args.model.get 'newPrepopIndex'
+
 
       @show artifactsView, region: @layout.artifactsRegion
 
