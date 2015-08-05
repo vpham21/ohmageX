@@ -7,7 +7,7 @@
     "app_name": "e-QIS",
     "bundle_id": "org.ohmage.x.eqis",
     "image_folder": "default",
-    "homepage": "campaign",
+    "homepage": "dashboardeqis",
     "login_header_image": "ohmageX.png",
     "debug": false
   },
