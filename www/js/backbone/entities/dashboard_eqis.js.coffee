@@ -14,3 +14,5 @@
         @listenTo @entries, "sync:stop reset", =>
           @reset @entries, parse: true
 
+    numDays: 10 # number of days that the survey lasts.
+
