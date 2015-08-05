@@ -11,6 +11,11 @@
       @listenTo @layout, "show", =>
         if campaigns.length is 0
           @noticeRegion "No saved #{App.dictionary('pages','campaign')}! You must have saved #{App.dictionary('pages','campaign')} in order to view your dashboard."
+        else
+          console.log "showing layout"
+          artifacts = App.request "dashboardeqis:artifacts"
+          @artifactsRegion artifacts
+
       @show @layout
 
     noticeRegion: (message) ->
