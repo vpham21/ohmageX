@@ -22,6 +22,11 @@
         # update all of the response counts
         responseCounts = @getResponseCounts @entries
 
+      else
+        # just prepoulate it with an array of @numDays+1 items all containing zero.
+        # we use @numDays+1 because there are two additional surveys.
+        responseCounts = _.range(0,@numDays+1,0)
+
 
     getResponseCounts: (entries) ->
       # get a pre-populated array of numbers from 1 - numDays
