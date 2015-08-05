@@ -86,3 +86,10 @@
       results[@numDays+1] = if "Concluding_Reflection" of bucketCountsObj then bucketCountsObj.Concluding_Reflection else 0
       results
 
+  API =
+    getArtifacts: (entries) ->
+      new Entities.eQISArtifacts entries, parse: true
+
+  App.reqres.setHandler "dashboardeqis:artifacts", ->
+    entries = App.request "history:entries"
+    API.getArtifacts entries
