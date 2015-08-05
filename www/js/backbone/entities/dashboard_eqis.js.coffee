@@ -29,3 +29,7 @@
       # get buckets, converting spaces into underscores
       # so they can be mapped to object properties
       bucketCountsObj = entries.countBy (entry) -> entry.get('bucket').replace(" ", "_")
+      # returns an object like:
+      # {bucket_1: 3, bucket_3: 4, ... }
+      results = []
+      results[0] = if "Initial_Reflection" of bucketCountsObj then bucketCountsObj.Initial_Reflection else 0
