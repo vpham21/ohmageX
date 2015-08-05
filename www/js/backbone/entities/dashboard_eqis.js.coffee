@@ -33,3 +33,15 @@
       # {bucket_1: 3, bucket_3: 4, ... }
       results = []
       results[0] = if "Initial_Reflection" of bucketCountsObj then bucketCountsObj.Initial_Reflection else 0
+      # returns an array of 10 items, with bucket count in sequence.
+      results = results.concat( _.map dayNumbers, (dayNumber) ->
+        # we mapped the spaces to underscores, include an underscore here!
+        targetBucket = "Day_#{dayNumber}"
+        if targetBucket of bucketCountsObj
+          # The key exists.
+          # return the value of this bucket's count.
+          return bucketCountsObj[targetBucket]
+        else
+          # key does not exist, its count is zero.
+          return 0
+      )
