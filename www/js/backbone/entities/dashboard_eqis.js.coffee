@@ -45,3 +45,6 @@
           # key does not exist, its count is zero.
           return 0
       )
+      results[@numDays+1] = if "Concluding_Reflection" of bucketCountsObj then bucketCountsObj.Concluding_Reflection else 0
+      results
+
