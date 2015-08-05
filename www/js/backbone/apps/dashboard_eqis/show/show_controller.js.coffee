@@ -20,6 +20,12 @@
       @show noticeView, region: @layout.noticeRegion
 
 
+    artifactsRegion: (artifacts) ->
+      artifactsView = @getArtifactsView artifacts
+
+
+      @show artifactsView, region: @layout.artifactsRegion
+
     getNoticeView: (notice) ->
       new Show.Notice
         model: notice
