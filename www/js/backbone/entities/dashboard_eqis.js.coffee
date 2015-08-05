@@ -49,6 +49,17 @@
 
       results = results.concat days
 
+      # add suffix results
+      results = results.concat [
+        rowLabel: "Concluding"
+        bucket: "Concluding Reflection"
+        surveyId: '4ConcludingReflection'
+        secondSurveyId: false
+        newPrepopIndex: false
+        responseCount: responseCounts[@numDays+1]
+      ]
+      console.log 'results', results
+      results
 
     getResponseCounts: (entries) ->
       # get a pre-populated array of numbers from 1 - numDays
