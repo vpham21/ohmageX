@@ -27,6 +27,15 @@
         # we use @numDays+1 because there are two additional surveys.
         responseCounts = _.range(0,@numDays+1,0)
 
+      results = [
+          rowLabel: "Initial"
+          bucket: "Initial Reflection"
+          surveyId: '1InitialReflection'
+          secondSurveyId: false
+          newPrepopIndex: false
+          responseCount: responseCounts[0]
+      ]
+
 
     getResponseCounts: (entries) ->
       # get a pre-populated array of numbers from 1 - numDays
