@@ -30,11 +30,11 @@
 
       @listenTo artifactsView, "childview:newsurvey:first:clicked", (child, args) ->
         console.log "childview:newsurvey:first:clicked", args.model
-        App.vent.trigger "dashboardeqis:newsurvey:clicked", args.model.get 'surveyId', args.model.get 'newPrepopIndex'
+        App.vent.trigger "dashboardeqis:newsurvey:clicked", args.model.get('surveyId'), args.model.get('newPrepopIndex'), args.model.get('newPrepopfirstSurveyStep')
 
       @listenTo artifactsView, "childview:newsurvey:second:clicked", (child, args) ->
         console.log "childview:newsurvey:second:clicked", args.model
-        App.vent.trigger "dashboardeqis:newsurvey:clicked", args.model.get 'secondSurveyId', args.model.get 'newPrepopIndex'
+        App.vent.trigger "dashboardeqis:newsurvey:clicked", args.model.get('secondSurveyId'), args.model.get('newPrepopIndex'), args.model.get('newPrepopSecondSurveyStep')
 
       @listenTo artifactsView, "childview:responsecount:clicked", (child, args) ->
         console.log "childview:responsecount:clicked", args.model
