@@ -6,3 +6,11 @@
 
   class Entities.eQISArtifacts extends Entities.Collection
     model: Entities.eQISArtifact
+    initialize: (models) ->
+      @entries = models
+
+      # only create this listener if entries is an actual Collection.
+      if @entries instanceof Entities.UserHistoryEntries
+        @listenTo @entries, "sync:stop reset", =>
+          @reset @entries, parse: true
+
