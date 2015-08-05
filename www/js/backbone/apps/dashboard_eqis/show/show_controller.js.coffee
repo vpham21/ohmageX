@@ -7,5 +7,16 @@
       @layout = @getLayoutView()
       @show @layout
 
+    noticeRegion: (message) ->
+      notice = new Backbone.Model message: message
+      noticeView = @getNoticeView notice
+
+      @show noticeView, region: @layout.noticeRegion
+
+
+    getNoticeView: (notice) ->
+      new Show.Notice
+        model: notice
+
     getLayoutView: ->
       new Show.Layout
