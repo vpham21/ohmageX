@@ -36,6 +36,12 @@
         console.log "childview:newsurvey:second:clicked", args.model
         App.vent.trigger "dashboardeqis:newsurvey:clicked", args.model.get 'secondSurveyId', args.model.get 'newPrepopIndex'
 
+      @listenTo artifactsView, "childview:responsecount:clicked", (child, args) ->
+        console.log "childview:responsecount:clicked", args.model
+        if args.model.get('responseCount') is 0
+          App.execute "dialog:alert", "There are no responses to show for this category."
+        else
+          App.vent.trigger "dashboardeqis:responsecount:clicked", args.model.get 'bucket'
 
       @show artifactsView, region: @layout.artifactsRegion
 
