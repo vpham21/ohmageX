@@ -13,3 +13,7 @@
       # to use to filter the unique contents of the dropdown.
       @filterType = options.filterType
 
+      @defaultLabel = options.defaultLabel
+
+      @entries = models
+
