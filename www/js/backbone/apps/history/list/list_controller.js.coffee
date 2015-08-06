@@ -48,6 +48,8 @@
           else
             entries.trigger "filter:set", 'bucket', model.get('name')
 
+      bucketsView = @getFilterSelectorView 'bucket', buckets
+
       @show bucketsView, region: @layout.bucketsControlRegion
 
 
