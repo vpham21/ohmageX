@@ -23,3 +23,5 @@
   App.on "before:start", ->
     API.init()
 
+  App.reqres.setHandler "history:selector:buckets", (entries) ->
+    API.getBuckets entries
