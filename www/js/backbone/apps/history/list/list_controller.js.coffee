@@ -58,6 +58,18 @@
     surveysRegion: (surveys, entries) ->
       surveysView = @getFilterSelectorView 'survey_id', surveys
 
+      @listenTo surveys, "change:chosen", (model) =>
+        console.log 'change:chosen listener'
+        # this listener must be in the controller,
+        # any references to @entries inside of the selector
+        # model are unable to trigger events or call methods
+        # on @entries
+        if model.isChosen()
+          if model.get('name') is surveys.defaultLabel
+            entries.trigger "filter:reset", 'survey_id'
+          else
+            entries.trigger "filter:set", 'survey_id', model.get('name')
+
       @show surveysView, region: @layout.surveysControlRegion
 
 
