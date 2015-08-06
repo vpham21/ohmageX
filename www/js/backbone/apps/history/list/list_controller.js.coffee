@@ -7,37 +7,20 @@
 
       @layout = @getLayoutView()
       campaigns = App.request "campaigns:saved:current"
-
       if campaigns.length isnt 0
         entries = App.request('history:entries:filtered', App.request("history:entries"))
-        bucketSelector = App.request "history:selector:buckets", App.request("history:entries")
+        bucketsSelector = App.request "history:selector:buckets", App.request("history:entries")
+        @buckets_filter = options.buckets_filter
+        surveysSelector = App.request "history:selector:surveys", App.request("history:entries")
 
       @listenTo @layout, "show", =>
         if campaigns.length is 0
           @noticeRegion "No saved #{App.dictionary('pages','campaign')}! You must have saved #{App.dictionary('pages','campaign')} in order to view response history for them."
         else
           console.log "showing history layout"
-          @bucketRegion bucketSelector
+          @bucketsRegion bucketsSelector, entries
+          @surveysRegion surveysSelector, entries
           @listRegion entries
-
-      if campaigns.length isnt 0
-        @listenTo entries, "filter:bucket:clear", =>
-          # pass the filter clearing in entries
-          # to the selector entity, so its view can update
-          bucketSelector.trigger "filter:bucket:clear"
-
-        @listenTo bucketSelector, "change:chosen", (model) =>
-          # this event fires every time all instances of the
-          # `chosen` attribute within the model are changed.
-          # So only activate when our model is "chosen"
-          if model.isChosen()
-            if model.get('name') is 'All'
-              entries.where()
-            else
-              entries.where(bucket: model.get('name'))
-
-        # set the bucket to the default after this change:chosen listener
-        if options.bucket_filter then bucketSelector.chooseByName options.bucket_filter
 
       if campaigns.length is 0
         loadConfig = false
@@ -52,10 +35,44 @@
 
       @show noticeView, region: @layout.noticeRegion
 
-    bucketRegion: (buckets) ->
-      bucketView = @getBucketsView buckets
+    bucketsRegion: (buckets, entries) ->
+      @listenTo buckets, "change:chosen", (model) =>
+        console.log 'change:chosen listener'
+        # this listener must be in the controller,
+        # any references to @entries inside of the selector
+        # model are unable to trigger events or call methods
+        # on @entries
+        if model.isChosen()
+          console.log 'model name to choose by', model.get('name')
 
-      @show bucketView, region: @layout.bucketsControlRegion
+          if model.get('name') is buckets.defaultLabel
+            entries.trigger "filter:reset", 'bucket'
+          else
+            entries.trigger "filter:set", 'bucket', model.get('name')
+
+      if @buckets_filter then buckets.chooseByName(@buckets_filter)
+
+      bucketsView = @getFilterSelectorView 'bucket', buckets
+
+      @show bucketsView, region: @layout.bucketsControlRegion
+
+    surveysRegion: (surveys, entries) ->
+      surveysView = @getFilterSelectorView 'survey_id', surveys
+
+      @listenTo surveys, "change:chosen", (model) =>
+        console.log 'change:chosen listener'
+        # this listener must be in the controller,
+        # any references to @entries inside of the selector
+        # model are unable to trigger events or call methods
+        # on @entries
+        if model.isChosen()
+          if model.get('name') is surveys.defaultLabel
+            entries.trigger "filter:reset", 'survey_id'
+          else
+            entries.trigger "filter:set", 'survey_id', model.get('name')
+
+      @show surveysView, region: @layout.surveysControlRegion
+
 
     listRegion: (responses) ->
       listView = @getListView responses
@@ -73,9 +90,10 @@
       new List.Notice
         model: notice
 
-    getBucketsView: (buckets) ->
-      new List.BucketsSelector
-        collection: buckets
+    getFilterSelectorView: (filterType, collection) ->
+      new List.FilterSelector
+        filterType: filterType
+        collection: collection
 
     getListView: (entries) ->
       new List.Entries

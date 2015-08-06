@@ -8,35 +8,32 @@
     initialize: (options) ->
       @entries = options
       @_meta = {}
+      @_currentCriteria = {}
 
       @listenTo @entries, "reset", ->
         @where @_currentCriteria
 
       @listenTo @entries, "sync:stop", ->
-        @trigger "filter:bucket:clear"
         @where()
 
       @listenTo @entries, "remove", (model) ->
         @remove model
 
-    meta: (prop, value) ->
-      if value is undefined
-        return @_meta[prop]
-      else
-        @_meta[prop] = value
+      @listenTo @, "filter:set", (filterType, value) =>
+        @_currentCriteria[filterType] = value
+        @where @_currentCriteria
+
+      @listenTo @, "filter:reset", (filterType) =>
+        delete @_currentCriteria[filterType]
+        @where @_currentCriteria
 
     where: (criteria) ->
-      if criteria
-        if criteria.bucket?
-          items = @entries.filter (entry) ->
-            criteria.bucket is entry.get 'bucket'
-          @meta('bucketFilter', true)
-        else
-          @meta('bucketFilter', false)
+      if criteria and !_.isEmpty criteria
+        items = @entries.where criteria
       else
-        @meta('bucketFilter', false)
+        criteria = {}
         items = @entries.models
-      console.log 'criteria', criteria
+
       @_currentCriteria = criteria
 
       @reset items

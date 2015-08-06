@@ -13,19 +13,20 @@
       if @model.isChosen() then options['selected'] = 'selected'
       options
 
-  class List.BucketsSelector extends App.Views.CollectionView
-    initialize: ->
-      @listenTo @, "bucket:selected", @chooseItem
-      @listenTo @collection, 'filter:bucket:clear', @clearBucket
-    clearBucket: ->
-      @$el.val('All')
+  class List.FilterSelector extends App.Views.CollectionView
+    initialize: (options) ->
+      @filterType = options.filterType
+      @listenTo @, "#{@filterType}:selected", @chooseItem
+      @listenTo @collection, "filter:clear", @clearFilter
+    clearFilter: ->
+      @$el.val @collection.defaultLabel
     chooseItem: (options) ->
       console.log 'chooseItem options', options
       @collection.chooseByName @$el.val()
     tagName: "select"
     childView: List.SelectorItem
     triggers: ->
-      "change": "bucket:selected"
+      "change": "#{@filterType}:selected"
 
   class List.EntriesEmpty extends App.Views.ItemView
     tagName: 'li'
@@ -74,4 +75,5 @@
     regions:
       noticeRegion: "#notice-region-nopop"
       bucketsControlRegion: "#buckets-control-region"
+      surveysControlRegion: "#surveys-control-region"
       listRegion: "#list-region"
