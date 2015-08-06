@@ -75,4 +75,5 @@
     regions:
       noticeRegion: "#notice-region-nopop"
       bucketsControlRegion: "#buckets-control-region"
+      surveysControlRegion: "#surveys-control-region"
       listRegion: "#list-region"
