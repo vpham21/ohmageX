@@ -27,9 +27,12 @@
         responseCounts = @getResponseCounts @entries
 
       else
-        # just prepoulate it with an array of @numDays+1 items all containing zero.
-        # we use @numDays+1 because there are two additional surveys.
-        responseCounts = _.range(0,@numDays+1,0)
+        # just prepoulate it with an array of @numDays+2 items all containing zero.
+        # we use @numDays+2 because there are two additional surveys.
+
+        # Note: Setting step in _.range() to zero does NOT make an array
+        # of identical zeros - the step value is ignored.
+        responseCounts = _.range(0,@numDays+2,0).map(_.constant(0))
 
       results = [
           rowLabel: "Initial"
