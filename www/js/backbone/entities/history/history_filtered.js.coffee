@@ -28,17 +28,12 @@
         @where @_currentCriteria
 
     where: (criteria) ->
-      if criteria
-        if criteria.bucket?
-          items = @entries.filter (entry) ->
-            criteria.bucket is entry.get 'bucket'
-          @meta('bucketFilter', true)
-        else
-          @meta('bucketFilter', false)
+      if criteria and !_.isEmpty criteria
+        items = @entries.where criteria
       else
-        @meta('bucketFilter', false)
+        criteria = {}
         items = @entries.models
-      console.log 'criteria', criteria
+
       @_currentCriteria = criteria
 
       @reset items
