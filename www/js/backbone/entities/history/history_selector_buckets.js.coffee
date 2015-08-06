@@ -20,3 +20,6 @@
         filterType: 'bucket'
       currentBuckets
 
+  App.on "before:start", ->
+    API.init()
+
