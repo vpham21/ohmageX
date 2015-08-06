@@ -53,7 +53,7 @@
             bucket: "Day #{index}"
             surveyId: '2AssessmentArtifacts'
             secondSurveyId: '3InstructionArtifacts'
-            newPrepopIndex: index-1
+            newPrepopIndex: index
             newPrepopfirstSurveyStep: "AssessmentArtifactDayFolder"
             newPrepopSecondSurveyStep: "InstructionalArtifactDayFolder"
             responseCount: count
