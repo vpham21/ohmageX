@@ -9,7 +9,7 @@
       campaigns = App.request "campaigns:saved:current"
       if campaigns.length isnt 0
         entries = App.request('history:entries:filtered', App.request("history:entries"))
-        bucketSelector = App.request "history:selector:buckets", App.request("history:entries")
+        bucketsSelector = App.request "history:selector:buckets", App.request("history:entries")
 
       @listenTo @layout, "show", =>
         if campaigns.length is 0
