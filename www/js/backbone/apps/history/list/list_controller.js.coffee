@@ -17,7 +17,7 @@
           @noticeRegion "No saved #{App.dictionary('pages','campaign')}! You must have saved #{App.dictionary('pages','campaign')} in order to view response history for them."
         else
           console.log "showing history layout"
-          @bucketRegion bucketSelector
+          @bucketsRegion bucketsSelector, entries
           @listRegion entries
 
       if campaigns.length is 0
@@ -33,10 +33,10 @@
 
       @show noticeView, region: @layout.noticeRegion
 
-    bucketRegion: (buckets) ->
-      bucketView = @getBucketsView buckets
+    bucketsRegion: (buckets, entries) ->
+      @show bucketsView, region: @layout.bucketsControlRegion
 
-      @show bucketView, region: @layout.bucketsControlRegion
+
 
     listRegion: (responses) ->
       listView = @getListView responses
