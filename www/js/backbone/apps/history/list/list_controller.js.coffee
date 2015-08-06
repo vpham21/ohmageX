@@ -19,6 +19,7 @@
         else
           console.log "showing history layout"
           @bucketsRegion bucketsSelector, entries
+          @surveysRegion surveysSelector, entries
           @listRegion entries
 
       if campaigns.length is 0
