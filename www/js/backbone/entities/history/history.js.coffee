@@ -104,7 +104,20 @@
 
   API =
     init: ->
-      currentHistory = new Entities.UserHistoryEntries
+      App.request "storage:get", 'history_responses', ((result) =>
+        # saved history retrieved from raw JSON.
+        console.log 'saved history responses retrieved from storage'
+        currentHistory = new Entities.UserHistoryEntries result
+        App.vent.trigger "history:saved:init:success"
+      ), =>
+        console.log 'saved history responses not retrieved from storage'
+        currentHistory = new Entities.UserHistoryEntries
+        App.vent.trigger "history:saved:init:failure"
+
+    updateLocal: (callback) ->
+      # update localStorage with the current history
+      App.execute "storage:save", 'history_responses', currentHistory.toJSON(), callback
+
     fetchHistory: (campaign_urns) ->
       App.vent.trigger 'loading:show', "Fetching History..."
       campaignCollections = []
@@ -152,7 +165,10 @@
 
           currentHistory.reset _.chain(campaignCollections).map((collection) -> collection.toJSON()).flatten().value()
 
-          App.vent.trigger "history:entries:fetch:success", currentHistory
+          @updateLocal( =>
+            App.vent.trigger "history:entries:fetch:success", currentHistory
+          )
+
         # resolve the fetch handler.
         currentlyFetching = false
         currentHistory._fetch.resolve()
@@ -178,9 +194,20 @@
         _.extend(response, id: key)
       new Entities.Collection result
     removeByCampaign: (campaign_urn) ->
-      currentHistory.remove currentHistory.where(campaign_urn: campaign_urn)
+      removed = currentHistory.where(campaign_urn: campaign_urn)
+      currentHistory.remove removed
+
+      @updateLocal( =>
+        App.vent.trigger "history:entries:removed:success", removed
+      )
+
     clear: ->
       currentHistory = false
+
+      App.execute "storage:clear", 'history_responses', ->
+        console.log 'history responses erased'
+        App.vent.trigger "history:saved:cleared"
+
 
   App.reqres.setHandler "history:entry", (id) ->
     currentHistory.get id
