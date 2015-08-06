@@ -27,9 +27,12 @@
         responseCounts = @getResponseCounts @entries
 
       else
-        # just prepoulate it with an array of @numDays+1 items all containing zero.
-        # we use @numDays+1 because there are two additional surveys.
-        responseCounts = _.range(0,@numDays+1,0)
+        # just prepoulate it with an array of @numDays+2 items all containing zero.
+        # we use @numDays+2 because there are two additional surveys.
+
+        # Note: Setting step in _.range() to zero does NOT make an array
+        # of identical zeros - the step value is ignored.
+        responseCounts = _.range(0,@numDays+2,0).map(_.constant(0))
 
       results = [
           rowLabel: "Initial"
@@ -50,7 +53,7 @@
             bucket: "Day #{index}"
             surveyId: '2AssessmentArtifacts'
             secondSurveyId: '3InstructionArtifacts'
-            newPrepopIndex: index-1
+            newPrepopIndex: index
             newPrepopfirstSurveyStep: "AssessmentArtifactDayFolder"
             newPrepopSecondSurveyStep: "InstructionalArtifactDayFolder"
             responseCount: count
@@ -76,7 +79,7 @@
       dayNumbers = _.range(1,@numDays+1,1)
       # get buckets, converting spaces into underscores
       # so they can be mapped to object properties
-      bucketCountsObj = entries.countBy (entry) -> entry.get('bucket').replace(" ", "_")
+      bucketCountsObj = entries.countBy (entry) -> "#{entry.get('bucket')}".replace(" ", "_")
       # returns an object like:
       # {bucket_1: 3, bucket_3: 4, ... }
       results = []
