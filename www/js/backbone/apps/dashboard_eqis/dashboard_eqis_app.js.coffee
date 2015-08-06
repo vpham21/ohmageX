@@ -28,4 +28,4 @@
     # TODO: decide where to put the campaign URN.
     # campaign URN - which campaign URN should be used here?
     # currently hardcoded from the example campaign.
-    App.navigate "survey/urn:campaign:tpp:internal:ctrance:eqissurveys14:#{surveyId}", trigger: true
+    App.navigate "survey/urn:campaign:tpp:internal:ctrance:eqissurveys16:#{surveyId}", trigger: true
