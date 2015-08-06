@@ -194,7 +194,13 @@
         _.extend(response, id: key)
       new Entities.Collection result
     removeByCampaign: (campaign_urn) ->
-      currentHistory.remove currentHistory.where(campaign_urn: campaign_urn)
+      removed = currentHistory.where(campaign_urn: campaign_urn)
+      currentHistory.remove removed
+
+      @updateLocal( =>
+        App.vent.trigger "history:entries:removed:success", removed
+      )
+
     clear: ->
       currentHistory = false
 
