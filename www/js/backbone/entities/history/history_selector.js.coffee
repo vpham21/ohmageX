@@ -22,3 +22,12 @@
         @listenTo @entries, "sync:stop reset", =>
           @reset @entries, parse: true
 
+    parse: (entries) ->
+
+      # prepend default label.
+      result = [
+            name: @defaultLabel
+          ]
+
+      result
+
