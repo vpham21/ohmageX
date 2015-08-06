@@ -8,6 +8,7 @@
     initialize: (options) ->
       @entries = options
       @_meta = {}
+      @_currentCriteria = {}
 
       @listenTo @entries, "reset", ->
         @where @_currentCriteria
