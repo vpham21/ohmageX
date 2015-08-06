@@ -19,6 +19,13 @@
       @listenTo @entries, "remove", (model) ->
         @remove model
 
+      @listenTo @, "filter:set", (filterType, value) =>
+        @_currentCriteria[filterType] = value
+        @where @_currentCriteria
+
+      @listenTo @, "filter:reset", (filterType) =>
+        delete @_currentCriteria[filterType]
+        @where @_currentCriteria
 
     where: (criteria) ->
       if criteria
