@@ -18,11 +18,6 @@
       @listenTo @entries, "remove", (model) ->
         @remove model
 
-    meta: (prop, value) ->
-      if value is undefined
-        return @_meta[prop]
-      else
-        @_meta[prop] = value
 
     where: (criteria) ->
       if criteria
