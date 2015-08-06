@@ -34,6 +34,20 @@
       @show noticeView, region: @layout.noticeRegion
 
     bucketsRegion: (buckets, entries) ->
+      @listenTo buckets, "change:chosen", (model) =>
+        console.log 'change:chosen listener'
+        # this listener must be in the controller,
+        # any references to @entries inside of the selector
+        # model are unable to trigger events or call methods
+        # on @entries
+        if model.isChosen()
+          console.log 'model name to choose by', model.get('name')
+
+          if model.get('name') is buckets.defaultLabel
+            entries.trigger "filter:reset", 'bucket'
+          else
+            entries.trigger "filter:set", 'bucket', model.get('name')
+
       @show bucketsView, region: @layout.bucketsControlRegion
 
 
