@@ -47,7 +47,7 @@
             else
               return false
           firstResponse = results.responses[firstKey]
-          sortParams.bucket = @getResponseFromObj firstResponse
+          sortParams.bucket = "Day #{@getResponseFromObj(firstResponse)}"
         else
           # all other surveys just use the survey title as the bucket.
           sortParams.bucket = results.survey.title
