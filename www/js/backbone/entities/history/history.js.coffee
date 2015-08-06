@@ -204,6 +204,11 @@
     clear: ->
       currentHistory = false
 
+      App.execute "storage:clear", 'history_responses', ->
+        console.log 'history responses erased'
+        App.vent.trigger "history:saved:cleared"
+
+
   App.reqres.setHandler "history:entry", (id) ->
     currentHistory.get id
 
