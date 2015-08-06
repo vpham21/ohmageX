@@ -29,5 +29,14 @@
             name: @defaultLabel
           ]
 
+      if @entries? and @entries.length > 0 and @entries instanceof Entities.UserHistoryEntries
+        # get an array that contains only unique filters.
+        # pass `true` for isSorted param of `uniq` to speed it up.
+        uniqueSurveys = _.chain(entries.toJSON()).pluck(@filterType).uniq(true).value()
+        result = result.concat uniqueSurveys.map (filterType) =>
+          return {
+            name: filterType
+          }
+
       result
 
