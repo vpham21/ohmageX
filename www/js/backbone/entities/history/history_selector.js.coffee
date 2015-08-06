@@ -6,3 +6,6 @@
   class Entities.UserHistorySelectorNav extends Entities.NavsCollection
     initialize: (models, options) ->
 
+      _.defaults options,
+        defaultLabel: "All"
+
