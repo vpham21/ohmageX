@@ -13,7 +13,6 @@
         @where @_currentCriteria
 
       @listenTo @entries, "sync:stop", ->
-        @trigger "filter:bucket:clear"
         @where()
 
       @listenTo @entries, "remove", (model) ->
