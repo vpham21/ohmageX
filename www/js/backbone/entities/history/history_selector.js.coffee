@@ -17,3 +17,8 @@
 
       @entries = models
 
+      # only create these listeners if entries is an actual Collection.
+      if @entries instanceof Entities.UserHistoryEntries
+        @listenTo @entries, "sync:stop reset", =>
+          @reset @entries, parse: true
+
