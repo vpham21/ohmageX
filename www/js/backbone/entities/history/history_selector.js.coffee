@@ -9,3 +9,7 @@
       _.defaults options,
         defaultLabel: "All"
 
+      # filterType is the property of Entries
+      # to use to filter the unique contents of the dropdown.
+      @filterType = options.filterType
+
