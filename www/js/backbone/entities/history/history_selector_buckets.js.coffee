@@ -7,3 +7,10 @@
 
   class Entities.UserHistoryBucketsNav extends Entities.UserHistorySelectorNav
 
+  API =
+    init: ->
+      currentBuckets = new Entities.UserHistoryBucketsNav [],
+        parse: true
+        filterType: 'bucket'
+      currentBuckets.chooseByName currentBuckets.defaultLabel
+
