@@ -68,9 +68,10 @@
       new List.Notice
         model: notice
 
-    getBucketsView: (buckets) ->
-      new List.BucketsSelector
-        collection: buckets
+    getFilterSelectorView: (filterType, collection) ->
+      new List.FilterSelector
+        filterType: filterType
+        collection: collection
 
     getListView: (entries) ->
       new List.Entries
