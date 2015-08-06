@@ -104,7 +104,15 @@
 
   API =
     init: ->
-      currentHistory = new Entities.UserHistoryEntries
+      App.request "storage:get", 'history_responses', ((result) =>
+        # saved history retrieved from raw JSON.
+        console.log 'saved history responses retrieved from storage'
+        currentHistory = new Entities.UserHistoryEntries result
+        App.vent.trigger "history:saved:init:success"
+      ), =>
+        console.log 'saved history responses not retrieved from storage'
+        currentHistory = new Entities.UserHistoryEntries
+        App.vent.trigger "history:saved:init:failure"
 
     updateLocal: (callback) ->
       # update localStorage with the current history
