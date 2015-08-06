@@ -11,6 +11,7 @@
         entries = App.request('history:entries:filtered', App.request("history:entries"))
         bucketsSelector = App.request "history:selector:buckets", App.request("history:entries")
         @buckets_filter = options.buckets_filter
+        surveysSelector = App.request "history:selector:surveys", App.request("history:entries")
 
       @listenTo @layout, "show", =>
         if campaigns.length is 0
