@@ -55,6 +55,10 @@
 
       @show bucketsView, region: @layout.bucketsControlRegion
 
+    surveysRegion: (surveys, entries) ->
+      surveysView = @getFilterSelectorView 'survey_id', surveys
+
+      @show surveysView, region: @layout.surveysControlRegion
 
 
     listRegion: (responses) ->
