@@ -14,3 +14,9 @@
         filterType: 'bucket'
       currentBuckets.chooseByName currentBuckets.defaultLabel
 
+    getBuckets: (entries) ->
+      currentBuckets = new Entities.UserHistoryBucketsNav entries,
+        parse: true
+        filterType: 'bucket'
+      currentBuckets
+
