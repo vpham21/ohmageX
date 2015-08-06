@@ -40,3 +40,5 @@
 
       result
 
+    chosenName: ->
+      (@findWhere(chosen: true) or @first()).get('name')
