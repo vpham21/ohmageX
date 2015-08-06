@@ -105,6 +105,11 @@
   API =
     init: ->
       currentHistory = new Entities.UserHistoryEntries
+
+    updateLocal: (callback) ->
+      # update localStorage with the current history
+      App.execute "storage:save", 'history_responses', currentHistory.toJSON(), callback
+
     fetchHistory: (campaign_urns) ->
       App.vent.trigger 'loading:show', "Fetching History..."
       campaignCollections = []
