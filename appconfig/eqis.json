@@ -26,7 +26,7 @@
     "pages": {
       "login": "login",
       "dashboardeqis": "dashboard",
-      "campaign": "portfolio",
+      "campaign": "portfolios",
       "survey": "artifacts",
       "queue": "upload queue",
       "history": "history",
