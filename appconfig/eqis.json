@@ -46,8 +46,11 @@
     }
   },
   "menu_items_disabled": {
-    "native": [],
+    "native": [
+      "survey"
+    ],
     "browser": [
+      "survey",
       "profile",
       "reminder",
       "logout"
