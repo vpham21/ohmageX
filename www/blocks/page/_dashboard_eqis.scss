@@ -46,6 +46,12 @@
     .col-artifacts,.col-collected {
       min-height: 2.5*$app-main-footer-padding;
     }
+    .col-artifacts .new-item {
+      width: 4.2*$app-main-footer-padding;
+      height: 2*$app-main-footer-padding;
+      background-size: 4.2*$app-main-footer-padding 2*$app-main-footer-padding;
+      background-position: center center;
+    }
     .col-artifacts .new-assessment, .col-artifacts .new-instruction {
       width: 2*$app-main-footer-padding;
       height: 2*$app-main-footer-padding;
