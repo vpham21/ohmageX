@@ -202,7 +202,7 @@
       )
 
     clear: ->
-      currentHistory = false
+      currentHistory = new Entities.UserHistoryEntries
 
       App.execute "storage:clear", 'history_responses', ->
         console.log 'history responses erased'
