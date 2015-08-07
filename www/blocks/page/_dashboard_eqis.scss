@@ -19,3 +19,11 @@
     float: right;
     margin: 0;
   }
+  .col-collected {
+    text-align: center;
+    width: $col-collected-width;
+  }
+  .col-artifacts {
+    text-align: right;
+    width: $col-artifacts-width;
+  }
