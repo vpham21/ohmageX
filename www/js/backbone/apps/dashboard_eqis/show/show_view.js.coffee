@@ -21,5 +21,6 @@
 
   class Show.Layout extends App.Views.Layout
     template: "dashboard_eqis/show/show_layout"
+    id: "dashboard-eqis"
     regions:
       artifactsRegion: "#artifacts-region"
