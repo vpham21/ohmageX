@@ -6,7 +6,7 @@
   "build": {
     "app_name": "e-QIS",
     "bundle_id": "org.ohmage.x.eqis",
-    "image_folder": "default",
+    "image_folder": "eqis",
     "login_header_image": "ohmageX.png",
     "debug": false
   },
