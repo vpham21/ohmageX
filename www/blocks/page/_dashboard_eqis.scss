@@ -27,3 +27,9 @@
     text-align: right;
     width: $col-artifacts-width;
   }
+  .list {
+    [role="link"] {
+      text-transform: uppercase;
+    }
+  }
+}
