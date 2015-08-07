@@ -1,4 +1,14 @@
 #dashboard-eqis #artifacts-region {
   $col-collected-width: 8rem;
   $col-artifacts-width: 8rem;
-
+  header {
+    .col-folder {
+      padding: $app-main-footer-padding;    
+    }  
+    .col-artifacts, .col-collected {
+      padding-top: $app-main-footer-padding;
+    }
+    .col-artifacts {
+      padding-right: $app-main-footer-padding;
+    }
+  }
