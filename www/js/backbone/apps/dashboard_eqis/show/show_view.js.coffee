@@ -6,7 +6,6 @@
 
   class Show.Artifact extends App.Views.ItemView
     tagName: "li"
-    className: "text-container"
     template: "dashboard_eqis/show/artifact"
     triggers:
       "click button.first-survey": "newsurvey:first:clicked"
@@ -22,5 +21,6 @@
 
   class Show.Layout extends App.Views.Layout
     template: "dashboard_eqis/show/show_layout"
+    id: "dashboard-eqis"
     regions:
       artifactsRegion: "#artifacts-region"
