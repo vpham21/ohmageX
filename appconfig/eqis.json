@@ -54,6 +54,7 @@
       "logout"
     ],
     "footer": [
+      "dashboardeqis",
       "campaign",
       "survey",
       "queue",
