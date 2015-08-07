@@ -15,3 +15,7 @@
   .col {
     display: block;
   }
+  .col-artifacts, .col-collected {
+    float: right;
+    margin: 0;
+  }
