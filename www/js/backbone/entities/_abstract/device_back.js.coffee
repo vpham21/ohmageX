@@ -40,7 +40,7 @@
 
     defaultBackAction: ->
       console.log 'defaultBackAction'
-      if App.navs.getSelectedName() is App.custom.build.homepage or App.navs.getSelectedName() is "login"
+      if App.navs.getSelectedName() is App.custom.routes.homepage or App.navs.getSelectedName() is "login"
         # we're on the homepage or login screen
         console.log 'on the homepage or login screen'
         App.execute "dialog:confirm", "Exit the app?", (=>
@@ -53,7 +53,7 @@
       else
         # just go to the homepage
         console.log 'go to homepage'
-        App.navigate App.navs.getUrlByName(App.custom.build.homepage), trigger: true
+        App.navigate App.navs.getUrlByName(App.custom.routes.homepage), trigger: true
 
     enableOverwrite: ->
       console.log 'overwrite enabled'

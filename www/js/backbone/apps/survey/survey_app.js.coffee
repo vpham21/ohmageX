@@ -48,5 +48,10 @@
       controller: API
 
   App.vent.on "survey:exit", (surveyId) ->
-    campaign_urn = App.request "survey:saved:urn", surveyId
-    App.navigate "surveys/#{campaign_urn}", { trigger: true }
+    if App.custom.routes.surveys is "survey"
+      # be sure to navigate to the campaign URN if going
+      # back to the surveys list.
+      campaign_urn = App.request "survey:saved:urn", surveyId
+      App.navigate "surveys/#{campaign_urn}", { trigger: true }
+    else
+      App.navigate App.navs.getUrlByName(App.custom.routes.surveys), { trigger: true }

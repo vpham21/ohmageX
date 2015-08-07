@@ -15,7 +15,7 @@
     App.package_info = options.package_info
 
     # overwrite base config with custom build options
-    defaultUrl = App.navs.getUrlByName App.custom.build.homepage
+    defaultUrl = App.navs.getUrlByName App.custom.routes.homepage
     Routes.dashboard_route = -> defaultUrl
 
   App.addRegions

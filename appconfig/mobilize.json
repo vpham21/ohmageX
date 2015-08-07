@@ -7,7 +7,6 @@
     "app_name": "UCLA MobilizingCS",
     "bundle_id": "org.mobilizingcs.mobilize",
     "image_folder": "mobilize",
-    "homepage": "campaign",
     "login_header_image": "mobilize.png",
     "debug": false
   },
@@ -65,6 +64,10 @@
       "reminder",
       "logout"
     ]
+  },
+  "routes": {
+    "homepage": "campaign",
+    "surveys": "survey"
   },
   "server_list": {
     "custom": false,
