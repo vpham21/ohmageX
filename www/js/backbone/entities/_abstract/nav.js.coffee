@@ -65,7 +65,7 @@
     getNavs: ->
       App.navs = new Entities.NavsCollection [
         { name: "login", url: "#login", icon: "profile", visible: false }
-        { name: "dashboardeqis", url: "#dashboard", icon: "campaign", visible: false }
+        { name: "dashboardeqis", url: "#dashboard", icon: "survey", visible: false }
         { name: "campaign", url: "#campaigns", icon: "campaign", visible: false }
         { name: "survey", url: "#surveys", icon: "survey", visible: false }
         { name: "queue", url: "#uploadqueue", icon: "upload", visible: false }
