@@ -7,7 +7,6 @@
     "app_name": "ohmageX",
     "bundle_id": "org.ohmage.x.ohmage",
     "image_folder": "default",
-    "homepage": "campaign",
     "login_header_image": "ohmageX.png",
     "debug": false
   },
@@ -65,6 +64,10 @@
       "reminder",
       "logout"
     ]
+  },
+  "routes": {
+    "homepage": "campaign",
+    "surveys": "survey"
   },
   "server_list": {
     "custom": true,
