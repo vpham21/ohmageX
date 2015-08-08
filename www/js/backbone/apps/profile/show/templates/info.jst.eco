@@ -8,4 +8,14 @@ Logged in as <strong><%= @username %></strong>
 </div>
 <% end %>
 <br />
+<div class="profile-item-switch">
+  <div class="enable-switch-container">
+    <div class="enable-switch">
+      <input id="enable-switch-wifi" type="checkbox">
+      <label for="enable-switch-wifi"></label>
+    </div>
+  </div>
+  WiFi-only uploads
+</div>
+<br />
 <small>Connected to server <strong><%= @serverPath %></strong></small>
