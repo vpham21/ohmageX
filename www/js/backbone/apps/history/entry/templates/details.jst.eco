@@ -3,7 +3,7 @@
     <button type="button" class="close icon">Close</button>
   </div>
   <div>
-    <h3><%= @survey.title %></h3>
+    <h3><%= @survey_title %></h3>
     <!-- <p><%= @survey.description %></p> -->
     <p><%= @campaign.name %></p>
     <footer>
