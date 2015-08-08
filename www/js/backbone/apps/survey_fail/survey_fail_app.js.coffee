@@ -50,3 +50,6 @@
   App.vent.on "survey:upload:failure:network", (responseData, errorText, surveyId) ->
     # placeholder for network errors handler.
     API.uploadFailureGeneral responseData, "", "Network Error", surveyId
+
+  App.vent.on "survey:upload:failure:wifionly", (responseData, errorText, surveyId) ->
+    API.uploadFailureGeneral responseData, "Cannot Upload: ", "User preferences set to only upload on wifi.", surveyId
