@@ -67,9 +67,9 @@
         # on @entries
         if model.isChosen()
           if model.get('name') is surveys.defaultLabel
-            entries.trigger "filter:reset", 'survey_id'
+            entries.trigger "filter:reset", 'survey_title'
           else
-            entries.trigger "filter:set", 'survey_id', model.get('name')
+            entries.trigger "filter:set", 'survey_title', model.get('name')
 
       @show surveysView, region: @layout.surveysControlRegion
 
