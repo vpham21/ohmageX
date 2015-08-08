@@ -90,5 +90,8 @@
       "caution_threshold_bytes": 300000000,
       "assumed_mb_per_minute": 90
     }
+  },
+  "user_preference_defaults": {
+    "wifi_upload_only": false
   }
 }
