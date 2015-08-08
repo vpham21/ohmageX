@@ -50,7 +50,7 @@
           sortParams.bucket = "Day #{@getResponseFromObj(firstResponse)}"
         else
           # all other surveys just use the survey title as the bucket.
-          sortParams.bucket = results.survey.title
+          sortParams.bucket = results.survey_title
       else
         sortParams.bucket = results.date
 
