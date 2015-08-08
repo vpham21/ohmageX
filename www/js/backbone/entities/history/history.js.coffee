@@ -80,6 +80,7 @@
           utc_timestamp: value.utc_timestamp
           campaign_urn: options.campaign.id
           survey_id: value.survey_id
+          survey_title: value.survey_title
           location:
             location_status: value.location_status
             location_timestamp: value.location_timestamp
@@ -90,7 +91,6 @@
             accuracy: value.accuracy
           campaign: options.campaign.toJSON()
           survey:
-            title: value.survey_title
             description: value.survey_description
           responses: value.responses
         }
