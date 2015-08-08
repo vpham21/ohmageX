@@ -6,7 +6,7 @@
     <button type="button" class="icon right-arrow navigate">View</button>
   </div>
   <div role="link">
-    <h3><%= @survey.title %></h3>
+    <h3><%= @survey_title %></h3>
     <footer><small><%= @timestamp %></small></footer>
   </div>
 </div>
