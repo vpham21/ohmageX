@@ -57,7 +57,7 @@
       @show bucketsView, region: @layout.bucketsControlRegion
 
     surveysRegion: (surveys, entries) ->
-      surveysView = @getFilterSelectorView 'survey_id', surveys
+      surveysView = @getFilterSelectorView 'survey_title', surveys
 
       @listenTo surveys, "change:chosen", (model) =>
         console.log 'change:chosen listener'
