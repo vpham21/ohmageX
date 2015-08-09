@@ -31,6 +31,13 @@
         console.log "UserPreferences entity saved in localStorage"
       )
 
+    clear: ->
+      storedPreferences = new Entities.UserPreferences
+
+      App.execute "storage:clear", 'user_preferences', ->
+        console.log 'user preferences erased'
+        App.vent.trigger "userpreferences:saved:cleared"
+
   App.on "before:start", ->
     API.init()
 
@@ -39,3 +46,6 @@
 
   App.reqres.setHandler "user:preferences:set", (preference, state) ->
     API.setPreference preference, state
+
+  App.vent.on "credentials:cleared", ->
+    API.clear()
