@@ -219,13 +219,21 @@
     else
       uploadType = App.request 'uploadqueue:item:uploadtype', itemId
 
-    console.log 'uploadType', uploadType
-    App.vent.trigger "uploadtracker:active"
+    # on device, no wifi and user preference set to only upload on wifi 
+    cellNetworkTypes = [Connection.CELL, Connection.CELL_2G, Connection.CELL_3G, Connection.CELL_4G] if App.device.isNative
+    if App.device.isNative and navigator.connection.type in cellNetworkTypes and App.request "user:preferences:get", 'wifi_upload_only'
+      console.log "device not on wifi, user preferences requires for upload."
+      App.vent.trigger "#{context}:upload:failure:wifionly", responseData, "Not on WiFi", itemId
+      App.vent.trigger "loading:hide"
 
-    switch uploadType
-      when 'video'
-        API.videoUploader context, responseData, itemId
-      when 'file'
-        API.documentUploader context, responseData, itemId
-      else
-        API.ajaxUploader context, responseData, itemId
+    else # continue with upload in all other cases.
+      console.log 'uploadType', uploadType
+      App.vent.trigger "uploadtracker:active"
+  
+      switch uploadType
+        when 'video'
+          API.videoUploader context, responseData, itemId
+        when 'file'
+          API.documentUploader context, responseData, itemId
+        else
+          API.ajaxUploader context, responseData, itemId

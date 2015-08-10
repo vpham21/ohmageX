@@ -84,3 +84,6 @@
   App.vent.on "uploadqueue:upload:failure:network", (responseData, errorText, itemId) ->
     # placeholder for network errors handler.
     API.queueFailureGeneral responseData, "", "Network Error", itemId
+
+  App.vent.on "uploadqueue:upload:failure:wifionly", (responseData, errorText, itemId) ->
+    API.queueFailureGeneral responseData, "Cannot Upload:", "User preferences set to only upload on wifi.", itemId
