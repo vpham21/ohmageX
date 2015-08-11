@@ -25,6 +25,10 @@
     detailsRegion: (entry) ->
       detailsView = @getDetailsView entry
 
+      @listenTo detailsView, "delete:clicked", (args) =>
+        console.log 'childview:delete:clicked', entry
+        App.vent.trigger "history:entry:delete:clicked", entry
+
       @listenTo detailsView, "close:clicked", (args) =>
         console.log 'childview:close:clicked', entry
         App.vent.trigger "history:entry:close:clicked", entry
