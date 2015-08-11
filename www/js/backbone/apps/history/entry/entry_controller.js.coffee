@@ -6,6 +6,10 @@
     initialize: (options) ->
       { entry_id } = options
       @entry_id = entry_id
+
+      @listenTo App.vent, 'history:entry:remove:success', (entry) =>
+        if entry.get('id') is @entry_id then App.historyBack()
+
       entry = App.request "history:entry", @entry_id
 
       @layout = @getLayoutView entry
