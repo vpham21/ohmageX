@@ -7,12 +7,6 @@
       "click .change-password": "password:clicked"
     events: ->
       "change #enable-switch-wifi": "setWifiUploadOnly"
-    setWifiUploadOnly: (e) ->
-      e.preventDefault()
-      e.stopPropagation()
-      App.request 'user:preferences:set', 'wifi_upload_only', @$el.find("#enable-switch-wifi").prop('checked') is true
-    checkEnabledWifiOnly: ->
-      @$el.find("#enable-switch-wifi").prop('checked', true)
     serializeData: ->
       data = @model.toJSON()
       data.showPassword = App.request "credentials:ispassword"
