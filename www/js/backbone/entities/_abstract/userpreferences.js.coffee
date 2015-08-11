@@ -44,8 +44,11 @@
   App.reqres.setHandler "user:preferences:get", (preference) ->
     API.getPreference preference
 
-  App.reqres.setHandler "user:preferences:set", (preference, state) ->
-    API.setPreference preference, state
+  App.vent.on "user:preferences:wifiuploadonly:enabled", ->
+    API.setPreference 'wifi_upload_only', true
+
+  App.vent.on "user:preferences:wifiuploadonly:disabled", ->
+    API.setPreference 'wifi_upload_only', false
 
   App.vent.on "credentials:cleared", ->
     API.clear()
