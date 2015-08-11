@@ -40,6 +40,16 @@
     API.entry myId
     App.navigate "history/entry/#{myId}"
 
+  App.vent.on "history:entry:delete:clicked", (model) ->
+    App.execute "notice:show",
+      data:
+        title: "Delete Responses"
+        description: "Are you sure you want to delete these responses? This cannot be undone."
+        showCancel: true
+      okListener: =>
+        App.vent.trigger "loading:show", "Deleting Responses..."
+        App.execute "history:entry:remove", model
+
   App.vent.on "history:entry:close:clicked", (model) ->
     API.list()
     App.navigate "history"
