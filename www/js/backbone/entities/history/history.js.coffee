@@ -193,6 +193,26 @@
         # to a flattened array of objects.
         _.extend(response, id: key)
       new Entities.Collection result
+    removeServerEntry: (entry) ->
+
+      myData =
+        client: App.client_string
+        campaign_urn: entry.get 'campaign_urn'
+        survey_key: entry.get 'id'
+
+      $.ajax
+        type: 'POST' # not RESTful but the Ohmage 2.0 API requires it
+        data: _.extend(myData, App.request("credentials:upload:params"))
+        url: "#{App.request("serverpath:current")}/app/survey_response/delete"
+        dataType: 'json'
+        success: (response) =>
+          if response.result is "success"
+            @removeLocalEntry entry
+          else
+            App.vent.trigger "history:entry:remove:error", entry, "Error: #{response.errors[0].text}"
+        error: (xhr, ajaxOptions, thrownError) =>
+          App.vent.trigger "history:entry:remove:error", entry, "Network Error, unable to delete responses."
+
     removeByCampaign: (campaign_urn) ->
       removed = currentHistory.where(campaign_urn: campaign_urn)
       currentHistory.remove removed
