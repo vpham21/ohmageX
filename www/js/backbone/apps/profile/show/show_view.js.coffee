@@ -7,6 +7,15 @@
       "click .change-password": "password:clicked"
       "change #enable-switch-wifi": "toggle:wifi"
 
+    initialize: ->
+      @listenTo @, "toggle:wifi", @toggleWifi
+
+    toggleWifi: ->
+      if @$el.find('#enable-switch-wifi').prop('checked')
+        @trigger "wifiuploadonly:enabled"
+      else
+        @trigger "wifiuploadonly:disabled"
+
     serializeData: ->
       data = @model.toJSON()
       data.showPassword = App.request "credentials:ispassword"
