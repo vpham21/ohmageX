@@ -22,9 +22,7 @@
       data.serverPath = App.request "serverpath:current"
       data
     onRender: ->
-      wifiUploadOnly = App.request "user:preferences:get", 'wifi_upload_only'
-      console.log "setting wifi upload only to: "+wifiUploadOnly
-      if wifiUploadOnly then @checkEnabledWifiOnly()
+      if @model.get('wifi_upload_only') is true then @$el.find("#enable-switch-wifi").prop('checked', true)
 
   class Show.Layout extends App.Views.Layout
     template: "profile/show/show_layout"
