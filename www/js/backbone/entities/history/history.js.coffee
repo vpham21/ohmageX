@@ -213,6 +213,13 @@
         error: (xhr, ajaxOptions, thrownError) =>
           App.vent.trigger "history:entry:remove:error", entry, "Network Error, unable to delete responses."
 
+    removeLocalEntry: (entry) ->
+      currentHistory.remove entry
+
+      @updateLocal( =>
+        App.vent.trigger 'history:entry:remove:success', entry
+      )
+
     removeByCampaign: (campaign_urn) ->
       removed = currentHistory.where(campaign_urn: campaign_urn)
       currentHistory.remove removed
