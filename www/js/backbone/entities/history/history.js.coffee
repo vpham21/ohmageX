@@ -254,6 +254,9 @@
 
     API.fetchHistory campaign_urns
 
+  App.commands.setHandler "history:entry:remove", (entry) ->
+    API.removeServerEntry entry
+
   App.vent.on "campaign:saved:remove", (campaign_urn) ->
     API.removeByCampaign campaign_urn
 
