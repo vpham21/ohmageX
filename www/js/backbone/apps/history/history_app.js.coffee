@@ -50,6 +50,9 @@
         App.vent.trigger "loading:show", "Deleting Responses..."
         App.execute "history:entry:remove", model
 
+  App.vent.on "history:entry:remove:error", (entry, errorText) ->
+    App.execute "dialog:alert", errorText
+
   App.vent.on "history:entry:close:clicked", (model) ->
     API.list()
     App.navigate "history"
