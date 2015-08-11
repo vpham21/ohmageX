@@ -5,8 +5,8 @@
     template: "profile/show/info"
     triggers:
       "click .change-password": "password:clicked"
-    events: ->
-      "change #enable-switch-wifi": "setWifiUploadOnly"
+      "change #enable-switch-wifi": "toggle:wifi"
+
     serializeData: ->
       data = @model.toJSON()
       data.showPassword = App.request "credentials:ispassword"
