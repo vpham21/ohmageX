@@ -6,6 +6,10 @@
     initialize: (options) ->
       { entry_id } = options
       @entry_id = entry_id
+
+      @listenTo App.vent, 'history:entry:remove:success', (entry) =>
+        if entry.get('id') is @entry_id then App.historyBack()
+
       entry = App.request "history:entry", @entry_id
 
       @layout = @getLayoutView entry
@@ -24,6 +28,10 @@
 
     detailsRegion: (entry) ->
       detailsView = @getDetailsView entry
+
+      @listenTo detailsView, "delete:clicked", (args) =>
+        console.log 'childview:delete:clicked', entry
+        App.vent.trigger "history:entry:delete:clicked", entry
 
       @listenTo detailsView, "close:clicked", (args) =>
         console.log 'childview:close:clicked', entry
