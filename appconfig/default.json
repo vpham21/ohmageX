@@ -47,16 +47,16 @@
   },
   "menu_items_disabled": {
     "native": [
-      "dashboard_eqis"
+      "dashboardeqis"
     ],
     "browser": [
-      "dashboard_eqis",
+      "dashboardeqis",
       "profile",
       "reminder",
       "logout"
     ],
     "footer": [
-      "dashboard_eqis",
+      "dashboardeqis",
       "campaign",
       "survey",
       "queue",
