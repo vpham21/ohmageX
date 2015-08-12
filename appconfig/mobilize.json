@@ -47,10 +47,12 @@
   },
   "menu_items_disabled": {
     "native": [
-      "dashboardeqis"
+      "dashboardeqis",
+      "history"
     ],
     "browser": [
       "dashboardeqis",
+      "history",
       "profile",
       "reminder",
       "logout"
