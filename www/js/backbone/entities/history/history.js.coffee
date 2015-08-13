@@ -263,7 +263,7 @@
   App.vent.on "credentials:cleared", ->
     API.clear()
 
-  App.vent.on "survey:exit survey:reset", ->
+  App.vent.on "uploadqueue:remove:success survey:exit survey:reset", ->
     campaign_urns = App.request 'campaigns:saved:urns'
 
     API.fetchHistory campaign_urns
