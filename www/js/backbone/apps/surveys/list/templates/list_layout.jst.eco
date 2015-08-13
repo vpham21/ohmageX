@@ -5,3 +5,7 @@
 </header>
 <h3 class="hide-accessible"><%= @name %> Saved <%= @dictionary('pages','survey') %></h3>
 <div id="list-region"></div>
+<div class="text-container trailing-notice">
+  <p>Missing <%= @dictionary('pages','survey')%>? Download more from the 
+  <%= @dictionary('pages','campaign').capitalizeFirstLetter() %> Menu section.</p>
+</div>
