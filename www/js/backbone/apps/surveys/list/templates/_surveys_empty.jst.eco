@@ -1,1 +1,1 @@
-There are no saved <%= @dictionary('pages','survey') %>. Download <%= @dictionary('pages','campaign') %> from the <%= @dictionary('page','campaign').capitalizeFirstLetter() %> Menu section to view your saved <%= @dictionary('pages','survey') %>.
+There are no saved <%= @dictionary('pages','survey') %>.
