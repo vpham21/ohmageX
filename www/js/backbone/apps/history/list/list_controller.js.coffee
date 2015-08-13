@@ -15,7 +15,7 @@
 
       @listenTo @layout, "show", =>
         if campaigns.length is 0
-          @noticeRegion "No saved #{App.dictionary('pages','campaign')}! Download #{App.dictionary('pages','campaign')} from the #{App.dictionary('page','campaign').capitalizeFirstLetter()} Menu section to view your #{App.dictionary('page','history')}."
+          @noticeRegion "No saved #{App.dictionary('pages','campaign')}! Download #{App.dictionary('pages','campaign')} from the #{App.dictionary('pages','campaign').capitalizeFirstLetter()} Menu section to view your #{App.dictionary('page','history')}."
         else
           console.log "showing history layout"
           @bucketsRegion bucketsSelector, entries
