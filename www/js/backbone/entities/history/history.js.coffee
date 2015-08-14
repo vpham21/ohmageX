@@ -264,6 +264,7 @@
     API.clear()
 
   App.vent.on "uploadqueue:remove:success survey:exit survey:reset", ->
-    campaign_urns = App.request 'campaigns:saved:urns'
+    if App.custom.functionality.history_auto_refresh
+      campaign_urns = App.request 'campaigns:saved:urns'
 
-    API.fetchHistory campaign_urns
+      API.fetchHistory campaign_urns
