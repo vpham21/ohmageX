@@ -7,5 +7,10 @@
 <div id="list-region"></div>
 <div class="text-container trailing-notice">
   <p>Missing <%= @dictionary('pages','survey')%>? Download more from the 
-  <%= @dictionary('pages','campaign').capitalizeFirstLetter() %> Menu section.</p>
+<% if @internalLinksEnabled: %>
+  <a href="#" class="campaigns-link"><%= @campaignsWord %></a>
+<% else: %>
+  <%= @campaignsWord %> 
+<% end %>
+Menu section.</p>
 </div>
