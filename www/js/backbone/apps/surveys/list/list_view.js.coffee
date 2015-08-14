@@ -80,4 +80,5 @@
     serializeData: ->
       data = @collection.findWhere(chosen: true).toJSON()
       data.internalLinksEnabled = App.custom.functionality.internal_links_enabled
+      data.campaignsWord = App.dictionary('pages','campaign').capitalizeFirstLetter()
       data
