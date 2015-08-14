@@ -27,6 +27,9 @@
         @selectorRegion selector
         @surveysRegion surveys
 
+      @listenTo @layout, "link:campaigns:clicked", =>
+        App.vent.trigger "surveys:list:link:campaigns:clicked"
+
       @show @layout, loading: false
 
     infoRegion: (campaign) ->
