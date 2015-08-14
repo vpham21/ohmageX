@@ -17,5 +17,5 @@
   App.vent.on "uploadtracker:active", ->
     isUploading = true
 
-  App.vent.on "credentials:cleared uploadtracker:complete uploadqueue:all:complete", ->
+  App.vent.on "survey:exit survey:reset credentials:cleared uploadtracker:complete uploadqueue:all:complete", ->
     isUploading = false
