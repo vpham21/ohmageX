@@ -79,6 +79,7 @@
     ]
   },
   "functionality": {
+    "internal_links_enabled": true,
     "post_survey_reminders_disabled": false,
     "multi_question_survey_flow": true,
     "history_eqis_bucketing": false
