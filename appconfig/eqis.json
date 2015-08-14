@@ -79,6 +79,7 @@
     "internal_links_enabled": false,
     "post_survey_reminders_disabled": true,
     "multi_question_survey_flow": true,
+    "history_auto_refresh": true,
     "history_eqis_bucketing": {
       "firstresponse_surveyids": [
         "2AssessmentArtifacts",
