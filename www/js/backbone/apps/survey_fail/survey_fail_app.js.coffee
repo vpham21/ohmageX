@@ -9,7 +9,7 @@
 
       App.execute "notice:show",
         data:
-          title: "#{App.dictionary('page','survey').capitalizeFirstLetter()} Upload Error"
+          title: "Unable to Upload #{App.dictionary('page','survey').capitalizeFirstLetter()}"
           description: "#{errorPrefix} #{errorText}"
           showCancel: true
           cancelLabel: "Ok"
