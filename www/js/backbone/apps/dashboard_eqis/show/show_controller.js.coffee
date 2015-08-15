@@ -54,6 +54,11 @@
       new Show.Notice
         model: notice
 
+    getCampaignView: (campaign) ->
+      new Show.Campaign
+        model: campaign
+
+
     getArtifactsView: (artifacts) ->
       new Show.Artifacts
         collection: artifacts
