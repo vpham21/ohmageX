@@ -6,8 +6,9 @@
 
   class Entities.eQISArtifacts extends Entities.Collection
     model: Entities.eQISArtifact
-    initialize: (models) ->
+    initialize: (models, options) ->
       @entries = models
+      @campaign_urn = options.campaign_urn
 
       # only create this listener if entries is an actual Collection.
       if @entries instanceof Entities.UserHistoryEntries
@@ -23,8 +24,10 @@
 
       # establish scaffolding for all entries.
       if @entries? and @entries.length > 0 and @entries instanceof Entities.UserHistoryEntries
+        # limit entries to matching passed-in campaign URN
+        @entries_campaign = @entries.where(campaign_urn: @campaign_urn)
         # update all of the response counts
-        responseCounts = @getResponseCounts @entries
+        responseCounts = @getResponseCounts @entries_campaign
 
       else
         # just prepoulate it with an array of @numDays+2 items all containing zero.
@@ -79,7 +82,7 @@
       dayNumbers = _.range(1,@numDays+1,1)
       # get buckets, converting spaces into underscores
       # so they can be mapped to object properties
-      bucketCountsObj = entries.countBy (entry) -> "#{entry.get('bucket')}".replace(" ", "_")
+      bucketCountsObj = _.countBy entries, (entry) -> "#{entry.get('bucket')}".replace(" ", "_")
       # returns an object like:
       # {bucket_1: 3, bucket_3: 4, ... }
       results = []
@@ -100,9 +103,11 @@
       results
 
   API =
-    getArtifacts: (entries) ->
-      new Entities.eQISArtifacts entries, parse: true
+    getArtifacts: (entries, campaign_urn) ->
+      new Entities.eQISArtifacts entries,
+        parse: true
+        campaign_urn: campaign_urn
 
-  App.reqres.setHandler "dashboardeqis:artifacts", ->
+  App.reqres.setHandler "dashboardeqis:artifacts", (campaign) ->
     entries = App.request "history:entries"
-    API.getArtifacts entries
+    API.getArtifacts entries, campaign.get("id")

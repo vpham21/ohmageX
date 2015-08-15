@@ -13,8 +13,11 @@
           @noticeRegion "No saved #{App.dictionary('pages','campaign')}! Download #{App.dictionary('pages','campaign')} from the #{App.dictionary('pages','campaign').capitalizeFirstLetter()} Menu section to view your #{App.dictionary('page','dashboardeqis')}."
         else
           console.log "showing layout"
-          artifacts = App.request "dashboardeqis:artifacts"
-          @artifactsRegion artifacts
+          # reference the most recent campaign
+          campaign = App.request 'campaigns:latest'
+          artifacts = App.request 'dashboardeqis:artifacts', campaign
+          @campaignRegion campaign
+          @artifactsRegion artifacts, campaign
 
       @show @layout
 
@@ -25,16 +28,21 @@
       @show noticeView, region: @layout.noticeRegion
 
 
-    artifactsRegion: (artifacts) ->
+    campaignRegion: (campaign) ->
+      campaignView = @getCampaignView campaign
+
+      @show campaignView, region: @layout.campaignRegion
+
+    artifactsRegion: (artifacts, campaign) ->
       artifactsView = @getArtifactsView artifacts
 
       @listenTo artifactsView, "childview:newsurvey:first:clicked", (child, args) ->
         console.log "childview:newsurvey:first:clicked", args.model
-        App.vent.trigger "dashboardeqis:newsurvey:clicked", args.model.get('surveyId'), args.model.get('newPrepopIndex'), args.model.get('newPrepopfirstSurveyStep')
+        App.vent.trigger "dashboardeqis:newsurvey:clicked", campaign.get('id'), args.model.get('surveyId'), args.model.get('newPrepopIndex'), args.model.get('newPrepopfirstSurveyStep')
 
       @listenTo artifactsView, "childview:newsurvey:second:clicked", (child, args) ->
         console.log "childview:newsurvey:second:clicked", args.model
-        App.vent.trigger "dashboardeqis:newsurvey:clicked", args.model.get('secondSurveyId'), args.model.get('newPrepopIndex'), args.model.get('newPrepopSecondSurveyStep')
+        App.vent.trigger "dashboardeqis:newsurvey:clicked", campaign.get('id'), args.model.get('secondSurveyId'), args.model.get('newPrepopIndex'), args.model.get('newPrepopSecondSurveyStep')
 
       @listenTo artifactsView, "childview:responsecount:clicked", (child, args) ->
         console.log "childview:responsecount:clicked", args.model
@@ -48,6 +56,11 @@
     getNoticeView: (notice) ->
       new Show.Notice
         model: notice
+
+    getCampaignView: (campaign) ->
+      new Show.Campaign
+        model: campaign
+
 
     getArtifactsView: (artifacts) ->
       new Show.Artifacts

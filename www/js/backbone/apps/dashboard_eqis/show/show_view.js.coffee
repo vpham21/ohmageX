@@ -4,6 +4,11 @@
     template: "dashboard_eqis/show/notice"
     className: "notice-nopop"
 
+  class Show.Campaign extends App.Views.ItemView
+    tagName: "h3"
+    template: "dashboard_eqis/show/campaign"
+    className: "campaign-header"
+
   class Show.Artifact extends App.Views.ItemView
     tagName: "li"
     template: "dashboard_eqis/show/artifact"
@@ -23,4 +28,5 @@
     template: "dashboard_eqis/show/show_layout"
     id: "dashboard-eqis"
     regions:
+      campaignRegion: "#campaign-region"
       artifactsRegion: "#artifacts-region"

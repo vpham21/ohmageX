@@ -1,3 +1,18 @@
+#dashboard-eqis #campaign-region {
+  .campaign-header {
+    margin: 0;
+    width: 100%;
+    overflow: auto;
+    display: block;
+    padding: $app-main-footer-padding;
+    background-color: $survey-step-inset-block-background-color;
+    font-weight: bold;
+    font-size: $global-form-control-font-size;
+    color: $survey-step-inset-block-font-color;
+    border-top: 1px solid $survey-step-inset-block-border-color;
+    border-bottom: 1px solid $survey-step-inset-block-border-color;
+  }
+}
 #dashboard-eqis #artifacts-region {
   $col-collected-width: 8rem;
   $col-artifacts-width: 8rem;
