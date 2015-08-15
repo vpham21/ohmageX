@@ -23,4 +23,5 @@
     template: "dashboard_eqis/show/show_layout"
     id: "dashboard-eqis"
     regions:
+      campaignRegion: "#campaign-region"
       artifactsRegion: "#artifacts-region"
