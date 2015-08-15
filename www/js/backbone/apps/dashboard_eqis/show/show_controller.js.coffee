@@ -13,8 +13,11 @@
           @noticeRegion "No saved #{App.dictionary('pages','campaign')}! Download #{App.dictionary('pages','campaign')} from the #{App.dictionary('pages','campaign').capitalizeFirstLetter()} Menu section to view your #{App.dictionary('page','dashboardeqis')}."
         else
           console.log "showing layout"
-          artifacts = App.request "dashboardeqis:artifacts"
-          @artifactsRegion artifacts
+          # reference the most recent campaign
+          campaign = App.request 'campaigns:latest'
+          artifacts = App.request 'dashboardeqis:artifacts', campaign
+          @campaignRegion campaign
+          @artifactsRegion artifacts, campaign
 
       @show @layout
 
