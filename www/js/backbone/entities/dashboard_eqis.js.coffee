@@ -103,6 +103,6 @@
     getArtifacts: (entries) ->
       new Entities.eQISArtifacts entries, parse: true
 
-  App.reqres.setHandler "dashboardeqis:artifacts", ->
+  App.reqres.setHandler "dashboardeqis:artifacts", (campaign) ->
     entries = App.request "history:entries"
-    API.getArtifacts entries
+    API.getArtifacts entries, campaign.get("id")
