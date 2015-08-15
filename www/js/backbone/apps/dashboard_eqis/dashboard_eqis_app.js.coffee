@@ -21,11 +21,8 @@
   App.vent.on "dashboardeqis:responsecount:clicked", (bucket) ->
     App.navigate "history/group/#{bucket}", trigger: true
 
-  App.vent.on "dashboardeqis:newsurvey:clicked", (surveyId, newPrepopIndex, newPrepopStep) ->
+  App.vent.on "dashboardeqis:newsurvey:clicked", (campaign_urn, surveyId, newPrepopIndex, newPrepopStep) ->
     if newPrepopIndex isnt false
       App.execute "flow:prepop:add", newPrepopStep, newPrepopIndex
 
-    # TODO: decide where to put the campaign URN.
-    # campaign URN - which campaign URN should be used here?
-    # currently hardcoded from the example campaign.
-    App.navigate "survey/urn:campaign:tpp:internal:ctrance:eqissurveys16:#{surveyId}", trigger: true
+    App.navigate "survey/#{campaign_urn}:#{surveyId}", trigger: true
