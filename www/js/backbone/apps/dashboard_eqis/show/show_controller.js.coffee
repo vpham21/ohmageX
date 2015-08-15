@@ -25,7 +25,12 @@
       @show noticeView, region: @layout.noticeRegion
 
 
-    artifactsRegion: (artifacts) ->
+    campaignRegion: (campaign) ->
+      campaignView = @getCampaignView campaign
+
+      @show campaignView, region: @layout.campaignRegion
+
+    artifactsRegion: (artifacts, campaign) ->
       artifactsView = @getArtifactsView artifacts
 
       @listenTo artifactsView, "childview:newsurvey:first:clicked", (child, args) ->
