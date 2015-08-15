@@ -6,8 +6,9 @@
 
   class Entities.eQISArtifacts extends Entities.Collection
     model: Entities.eQISArtifact
-    initialize: (models) ->
+    initialize: (models, options) ->
       @entries = models
+      @campaign_urn = options.campaign_urn
 
       # only create this listener if entries is an actual Collection.
       if @entries instanceof Entities.UserHistoryEntries
