@@ -24,8 +24,10 @@
 
       # establish scaffolding for all entries.
       if @entries? and @entries.length > 0 and @entries instanceof Entities.UserHistoryEntries
+        # limit entries to matching passed-in campaign URN
+        @entries_campaign = @entries.where(campaign_urn: @campaign_urn)
         # update all of the response counts
-        responseCounts = @getResponseCounts @entries
+        responseCounts = @getResponseCounts @entries_campaign
 
       else
         # just prepoulate it with an array of @numDays+2 items all containing zero.
