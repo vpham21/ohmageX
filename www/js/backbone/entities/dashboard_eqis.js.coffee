@@ -103,8 +103,10 @@
       results
 
   API =
-    getArtifacts: (entries) ->
-      new Entities.eQISArtifacts entries, parse: true
+    getArtifacts: (entries, campaign_urn) ->
+      new Entities.eQISArtifacts entries,
+        parse: true
+        campaign_urn: campaign_urn
 
   App.reqres.setHandler "dashboardeqis:artifacts", (campaign) ->
     entries = App.request "history:entries"
