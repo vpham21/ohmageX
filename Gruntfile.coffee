@@ -238,13 +238,13 @@ module.exports = (grunt) ->
         cmd: "bundle exec blocks build"
         cwd: "<%= web_root_folder %>"
       mobile_init:
-        cmd: "grunt cordova_init"
+        cmd: "../node_modules/grunt-cli/bin/grunt cordova_init"
         cwd: "<%= cordova_project_folder %>"
       ios_init:
-        cmd: "grunt cordova_ios_init"
+        cmd: "../node_modules/grunt-cli/bin/grunt cordova_ios_init"
         cwd: "<%= cordova_project_folder %>"
       ios_build:
-        cmd: "grunt cordova_build_ios"
+        cmd: "../node_modules/grunt-cli/bin/grunt cordova_build_ios"
         cwd: "<%= cordova_project_folder %>"
       android_build:
         cmd: "adb uninstall <%= appConfig.build.bundle_id %>;cordova run android"
