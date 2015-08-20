@@ -70,9 +70,11 @@
 
   class Entry.Responses extends App.Views.CollectionView
     getChildView: (model) ->
-      console.log 'childview model', model
-      if model.get('prompt_response') in ["NOT_DISPLAYED","SKIPPED"]
+      if model.get('prompt_response') is "SKIPPED"
         return Entry.ResponseAlternate
+
+      if model.get('prompt_response') is "NOT_DISPLAYED"
+        return Entry.ResponseNotDisplayed
 
       myView = switch model.get('prompt_type')
         when 'single_choice'
