@@ -10,7 +10,7 @@
       App.execute "notice:show",
         data:
           title: "Unable to Upload #{App.dictionary('page','survey').capitalizeFirstLetter()}"
-          description: "#{errorPrefix} #{errorText}"
+          description: "#{errorPrefix} #{errorText} - Retry or select OK to save the #{App.dictionary('page','survey')} to the upload queue."
           showCancel: true
           cancelLabel: "Ok"
           okLabel: "Retry"
