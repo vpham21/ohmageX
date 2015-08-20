@@ -32,6 +32,10 @@
       data.icon = @getIcon()
       data
 
+  class Entry.ResponseNotDisplayed extends App.Views.ItemView
+    # handles alternate response of NOT_DISPLAYED
+    template: false
+
   class Entry.ResponseAlternate extends Entry.ResponseBase
     # handles alternate responses, such as
     # NOT_DISPLAYED and SKIPPED
