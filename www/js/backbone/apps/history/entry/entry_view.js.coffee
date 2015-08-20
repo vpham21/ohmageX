@@ -37,8 +37,7 @@
     template: false
 
   class Entry.ResponseAlternate extends Entry.ResponseBase
-    # handles alternate responses, such as
-    # NOT_DISPLAYED and SKIPPED
+    # handles alternate response of SKIPPED
     template: "history/entry/response_alternate"
 
   class Entry.ResponseString extends Entry.ResponseBase
