@@ -10,7 +10,7 @@
 
       @listenTo @layout, "show", =>
         if campaigns.length is 0
-          @noticeRegion "No saved #{App.dictionary('pages','campaign')}! Download #{App.dictionary('pages','campaign')} from the #{App.dictionary('pages','campaign').capitalizeFirstLetter()} Menu section to view your #{App.dictionary('page','dashboardeqis')}."
+          @noticeRegion "No installed #{App.dictionary('pages','campaign').capitalizeFirstLetter()}. Tap the Menu bars in the top left corner and click #{App.dictionary('page','campaign').capitalizeFirstLetter()}. Then click on the Download icon."
         else
           console.log "showing layout"
           # reference the most recent campaign

@@ -32,9 +32,12 @@
       data.icon = @getIcon()
       data
 
+  class Entry.ResponseNotDisplayed extends App.Views.ItemView
+    # handles alternate response of NOT_DISPLAYED
+    template: false
+
   class Entry.ResponseAlternate extends Entry.ResponseBase
-    # handles alternate responses, such as
-    # NOT_DISPLAYED and SKIPPED
+    # handles alternate response of SKIPPED
     template: "history/entry/response_alternate"
 
   class Entry.ResponseString extends Entry.ResponseBase
@@ -67,9 +70,11 @@
 
   class Entry.Responses extends App.Views.CollectionView
     getChildView: (model) ->
-      console.log 'childview model', model
-      if model.get('prompt_response') in ["NOT_DISPLAYED","SKIPPED"]
+      if model.get('prompt_response') is "SKIPPED"
         return Entry.ResponseAlternate
+
+      if model.get('prompt_response') is "NOT_DISPLAYED"
+        return Entry.ResponseNotDisplayed
 
       myView = switch model.get('prompt_type')
         when 'single_choice'
