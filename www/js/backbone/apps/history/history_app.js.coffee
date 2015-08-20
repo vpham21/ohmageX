@@ -44,10 +44,10 @@
     App.execute "notice:show",
       data:
         title: "Delete Responses"
-        description: "Are you sure you want to delete these responses? This cannot be undone."
+        description: "Are you sure you want to delete this #{App.dictionary('page','survey')}?"
         showCancel: true
       okListener: =>
-        App.vent.trigger "loading:show", "Deleting Responses..."
+        App.vent.trigger "loading:show", "Deleting..."
         App.execute "history:entry:remove", model
 
   App.vent.on "history:entry:remove:error", (entry, errorText) ->
