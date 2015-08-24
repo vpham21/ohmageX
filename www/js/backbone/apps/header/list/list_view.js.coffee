@@ -59,6 +59,7 @@
     initialize: ->
       @listenTo @collection, "reveal", @render
       @listenTo @, "childview:chosen:check", @chosenCheck
+      @listenTo @, "childview:chosen:clicked", (-> @collection.trigger "chosen:canceled")
     chosenCheck: (args) ->
       myName = args.model.get('name')
       myUrl = args.model.get('url')
