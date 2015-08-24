@@ -32,6 +32,10 @@
   class List.Title extends App.Views.ItemView
     tagName: "span"
     template: "header/list/_title"
+
+    collectionEvents: ->
+      "change:marker": "render"
+
     serializeData: ->
       chosenModel = @collection.findWhere(chosen: true)
       data = {}
