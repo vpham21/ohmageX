@@ -30,6 +30,10 @@
     getUrlByName: (myName) ->
       @findWhere(name: myName).get('url')
 
+    setMarker: (name, value) ->
+      if @findWhere(name: name)
+        @findWhere(name: name).set('marker', value)
+
   API =
     reveal: (isLoggedIn) ->
       console.log 'reveal isLoggedIn', isLoggedIn
