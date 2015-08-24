@@ -5,6 +5,7 @@
 
     modelEvents:
       "change:chosen": "changeChosen"
+      "change:marker": "render"
 
     getTemplate: -> 
       if @model.isDivider() then false else "header/list/_nav"
@@ -31,6 +32,10 @@
   class List.Title extends App.Views.ItemView
     tagName: "span"
     template: "header/list/_title"
+
+    collectionEvents: ->
+      "change:marker": "render"
+
     serializeData: ->
       chosenModel = @collection.findWhere(chosen: true)
       data = {}
@@ -40,6 +45,7 @@
         name = chosenModel.get("name")
         data.pageTitle = App.dictionary "menu", name
         data.icon = chosenModel.get("icon")
+        data.marker = chosenModel.get("marker")
       data
 
   class List.Header extends App.Views.CollectionView
