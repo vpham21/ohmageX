@@ -22,7 +22,7 @@
         @stepsLayoutRegion()
         @prevButtonRegion()
         @nextButtonRegion()
-        $('body').scrollTop(0)
+        $('body').scrollTop App.request('surveys:scroll:position', @surveyId, @page)
 
       if App.request "flow:type:is:prompt", @firstStep.get('id')
         @addMultiResponseListeners()

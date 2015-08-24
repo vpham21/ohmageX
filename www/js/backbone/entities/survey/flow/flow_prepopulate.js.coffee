@@ -31,6 +31,9 @@
   App.vent.on "survey:exit survey:reset", ->
     API.clear()
 
+  App.reqres.setHandler "flow:prepop:is:empty", ->
+    currentEntries is false or currentEntries.length is 0
+
   App.reqres.setHandler "flow:prepop:get", (stepId) ->
     if currentEntries is false then return false
     API.getPrepopulateEntry stepId
