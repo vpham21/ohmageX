@@ -23,7 +23,7 @@
       @$el.toggleClass "active", value
 
     triggers:
-      "click": "chosen:check"
+      "click": "raw:click"
     serializeData: ->
       data = @model.toJSON()
       data.navLabel = App.dictionary "menu", @model.get('name')
