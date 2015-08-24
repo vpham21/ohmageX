@@ -1,6 +1,13 @@
 @Ohmage.module "HeaderApp.List", (List, App, Backbone, Marionette, $, _) ->
 
   class List.Nav extends App.Views.ItemView
+    initialize: ->
+      @listenTo @, "raw:click", ->
+        if @model.isChosen()
+          @trigger "chosen:clicked"
+        else
+          @trigger "chosen:check"
+
     tagName: "li"
 
     modelEvents:
@@ -23,7 +30,7 @@
       @$el.toggleClass "active", value
 
     triggers:
-      "click": "chosen:check"
+      "click": "raw:click"
     serializeData: ->
       data = @model.toJSON()
       data.navLabel = App.dictionary "menu", @model.get('name')
@@ -52,6 +59,7 @@
     initialize: ->
       @listenTo @collection, "reveal", @render
       @listenTo @, "childview:chosen:check", @chosenCheck
+      @listenTo @, "childview:chosen:clicked", (-> @collection.trigger "chosen:canceled")
     chosenCheck: (args) ->
       myName = args.model.get('name')
       myUrl = args.model.get('url')
