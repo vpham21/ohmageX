@@ -4,7 +4,7 @@
     initialize: ->
       @listenTo @, "raw:click", ->
         if @model.isChosen()
-          @trigger "active:clicked"
+          @trigger "chosen:clicked"
         else
           @trigger "chosen:check"
 
