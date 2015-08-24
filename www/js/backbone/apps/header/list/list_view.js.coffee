@@ -5,6 +5,7 @@
 
     modelEvents:
       "change:chosen": "changeChosen"
+      "change:marker": "render"
 
     getTemplate: -> 
       if @model.isDivider() then false else "header/list/_nav"
