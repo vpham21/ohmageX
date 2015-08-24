@@ -45,6 +45,7 @@
         name = chosenModel.get("name")
         data.pageTitle = App.dictionary "menu", name
         data.icon = chosenModel.get("icon")
+        data.marker = chosenModel.get("marker")
       data
 
   class List.Header extends App.Views.CollectionView
