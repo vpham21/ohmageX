@@ -1,6 +1,13 @@
 @Ohmage.module "HeaderApp.List", (List, App, Backbone, Marionette, $, _) ->
 
   class List.Nav extends App.Views.ItemView
+    initialize: ->
+      @listenTo @, "raw:click", ->
+        if @model.isChosen()
+          @trigger "active:clicked"
+        else
+          @trigger "chosen:check"
+
     tagName: "li"
 
     modelEvents:
