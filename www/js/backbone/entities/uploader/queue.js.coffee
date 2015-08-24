@@ -15,6 +15,12 @@
     model: Entities.UploadQueueItem
     comparator: (item) ->
       -(item.get 'timestamp')
+    initialize: (options) ->
+      @listenTo @, "add remove", =>
+        if @length isnt 0
+          App.execute "nav:marker:set", "queue", "(#{@length})"
+        else
+          App.execute "nav:marker:set", "queue", false
 
   API =
     init: ->
