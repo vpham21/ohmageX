@@ -76,6 +76,12 @@
     triggers:
       'click .fetch-button': "fetch:image:clicked"
 
+  class Entry.Media extends Entry.ResponseBase
+    template: "history/entry/response_media"
+
+    triggers:
+      'click .fetch-button': "fetch:media:clicked"
+
   class Entry.Responses extends App.Views.CollectionView
     getChildView: (model) ->
       if model.get('prompt_response') is "SKIPPED"
