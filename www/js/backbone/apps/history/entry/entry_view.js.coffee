@@ -97,7 +97,11 @@
           Entry.ResponseMultiChoice
         when 'multi_choice_custom'
           Entry.ResponseMultiChoiceCustom
-        when 'text','number','timestamp', 'photo', 'document', 'video', 'single_choice_custom'
+        when 'photo'
+          Entry.Photo
+        when 'document', 'video'
+          Entry.Media
+        when 'text','number','timestamp', 'single_choice_custom'
           Entry.ResponseString
         else
           Entry.ResponseUnsupported
