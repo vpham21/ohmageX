@@ -19,3 +19,8 @@
 
       myURL
 
+    openExternalURL: (history_response) ->
+      myURL = API.fetchURL history_response, "media"
+      if App.device.isNative
+        # open the URL in device external browser
+        window.open myURL, '_system'
