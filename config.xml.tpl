@@ -38,6 +38,7 @@
 
     </platform>
 
+    <preference name="Orientation" value="<%= orientation %>" />
     <!--
     In order for Android splash images to be configurable via this
     config.xml within Cordova, all splash images must be named `screen.png`,
