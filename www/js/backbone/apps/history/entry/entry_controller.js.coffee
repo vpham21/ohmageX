@@ -42,6 +42,10 @@
     responsesRegion: (responses) ->
       responsesView = @getResponsesView responses
 
+      @listenTo responsesView, "childview:fetch:image:clicked", (args) =>
+        console.log "history:entry:fetch:image:clicked", args.model
+        App.vent.trigger "history:entry:fetch:image:clicked", args.model
+
       @show responsesView, region: @layout.responsesRegion
 
     getResponsesView: (responses) ->
