@@ -192,7 +192,7 @@
         # flatten the raw object representation
         # to a flattened array of objects.
         _.extend(response, id: key)
-      new Entities.Collection result
+      result
     removeServerEntry: (entry) ->
 
       myData =
@@ -239,7 +239,7 @@
   App.reqres.setHandler "history:entry", (id) ->
     currentHistory.get id
 
-  App.reqres.setHandler "history:entry:responses", (id) ->
+  App.reqres.setHandler "history:entry:responses:raw", (id) ->
     API.getEntryResponses currentHistory.get(id).get('responses')
 
   App.reqres.setHandler "history:entries", ->
