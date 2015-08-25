@@ -68,6 +68,14 @@
   class Entry.ResponseUnsupported extends Entry.ResponseBase
     template: "history/entry/response_unsupported"
 
+  class Entry.Photo extends Entry.ResponseBase
+    template: "history/entry/response_photo"
+    modelEvents:
+      "change:media_url": "render"
+
+    triggers:
+      'click .fetch-button': "fetch:image:clicked"
+
   class Entry.Responses extends App.Views.CollectionView
     getChildView: (model) ->
       if model.get('prompt_response') is "SKIPPED"
