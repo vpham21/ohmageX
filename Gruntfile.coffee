@@ -143,6 +143,7 @@ module.exports = (grunt) ->
             author: "<%= pkg.author %>"
             image_folder: "<%= appConfig.build.image_folder %>"
             app_version: "<%= pkg.version %>"
+            orientation: "<%= appConfig.build.orientation %>"
         files:
           "config.xml": ["config.xml.tpl"]
 

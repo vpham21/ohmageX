@@ -7,6 +7,7 @@
     "app_name": "UCLA MobilizingCS",
     "bundle_id": "org.mobilizingcs.mobilize",
     "image_folder": "mobilize",
+    "orientation": "default",
     "login_header_image": "mobilize.png",
     "debug": false
   },
