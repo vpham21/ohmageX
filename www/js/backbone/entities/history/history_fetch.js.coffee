@@ -28,3 +28,6 @@
         # open the URL in a new window
         window.open myURL, '_blank'
 
+  App.commands.setHandler "history:response:fetch:image", (history_response) ->
+    API.fetchURL history_response, "image"
+
