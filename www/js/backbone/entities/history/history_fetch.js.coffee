@@ -31,3 +31,5 @@
   App.commands.setHandler "history:response:fetch:image", (history_response) ->
     API.fetchURL history_response, "image"
 
+  App.commands.setHandler "history:response:fetch:media", (history_response) ->
+    API.openExternalURL history_response
