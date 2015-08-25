@@ -56,6 +56,12 @@
   App.vent.on "history:entry:remove:success history:entry:remove:error", ->
     App.vent.trigger "loading:hide"
 
+  App.vent.on "history:entry:fetch:image:clicked", (response) ->
+    App.execute "history:response:fetch:image", response
+
+  App.vent.on "history:entry:fetch:media:clicked", (response) ->
+    App.execute "history:response:fetch:media", response
+
   App.vent.on "history:entry:close:clicked", (model) ->
     API.list()
     App.navigate "history"
