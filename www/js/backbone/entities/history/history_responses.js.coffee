@@ -7,3 +7,9 @@
     defaults:
       media_url: false
 
+  class Entities.UserHistoryResponses extends Entities.Collection
+    model: Entities.UserHistoryResponse
+    initialize: ->
+      @listenTo App.vent, 'history:response:fetch:image:url history:response:fetch:media:url', (myURL, entry) ->
+        @findWhere(id: entry.get('id')).set('media_url', myURL)
+
