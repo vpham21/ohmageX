@@ -24,3 +24,7 @@
       if App.device.isNative
         # open the URL in device external browser
         window.open myURL, '_system'
+      else
+        # open the URL in a new window
+        window.open myURL, '_blank'
+
