@@ -12,6 +12,11 @@
         'td'
       else
         'tr'
+    className: ->
+      if App.custom.appearance.prompt_horizontal_single_choice is true
+        'horizontal-layout'
+      else
+        ''
     getTemplate: ->
       if App.custom.appearance.prompt_horizontal_single_choice is true
         "prompts/single_choice_item_horizontal"
