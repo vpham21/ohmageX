@@ -7,14 +7,34 @@
 
 
   class Prompts.SingleChoiceItem extends App.Views.ItemView
-    tagName: 'tr'
+    tagName: ->
+      if App.custom.appearance.prompt_horizontal_single_choice is true
+        'td'
+      else
+        'tr'
+    className: ->
+      if App.custom.appearance.prompt_horizontal_single_choice is true
+        'horizontal-layout'
+      else
+        ''
+    getTemplate: ->
+      if App.custom.appearance.prompt_horizontal_single_choice is true
+        "prompts/single_choice_item_horizontal"
+      else
+        "prompts/single_choice_item"
+
     template: "prompts/single_choice_item"
     triggers:
       "click button.delete": "customchoice:remove"
 
 
   class Prompts.SingleChoice extends Prompts.BaseComposite
-    template: "prompts/single_choice"
+    getTemplate: ->
+      if App.custom.appearance.prompt_horizontal_single_choice is true
+        "prompts/single_choice_horizontal"
+      else
+        "prompts/single_choice"
+
     childView: Prompts.SingleChoiceItem
     childViewContainer: ".prompt-list"
 
