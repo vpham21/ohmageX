@@ -7,7 +7,11 @@
 
 
   class Prompts.SingleChoiceItem extends App.Views.ItemView
-    tagName: 'tr'
+    tagName: ->
+      if App.custom.appearance.prompt_horizontal_single_choice is true
+        'td'
+      else
+        'tr'
     getTemplate: ->
       if App.custom.appearance.prompt_horizontal_single_choice is true
         "prompts/single_choice_item_horizontal"
