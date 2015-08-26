@@ -11,6 +11,9 @@
     "login_header_image": "ohmageX.png",
     "debug": false
   },
+  "appearance": {
+    "prompt_horizontal_single_choice": false
+  },
   "dictionary": {
     "page": {
       "login": "login",
