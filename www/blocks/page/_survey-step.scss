@@ -244,7 +244,7 @@
     }
     button {
       background: #00aeff;
-      background: linear-gradient(to bottom, #47c4ff 0%, #00aeff 100%);
+      background: $survey-step-number-control-gradient;
       font-weight: bold;
       color: #fff;
       font-size: 1.5rem;
