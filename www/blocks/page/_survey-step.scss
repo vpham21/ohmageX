@@ -1,5 +1,4 @@
 .survey-step {
-
   #progress {
     line-height: 0.8;
     progress {
@@ -147,7 +146,7 @@
     button {
       width: 100%;
       text-transform: uppercase;
-      font-size: 0.8rem;
+      font-size: $global-form-control-font-size*0.85;
       padding: $global-form-control-padding*1.5;
     }
   }
@@ -244,16 +243,16 @@
     }
     button {
       background: #00aeff;
-      background: linear-gradient(to bottom, #47c4ff 0%, #00aeff 100%);
+      background: $survey-step-number-control-gradient;
       font-weight: bold;
       color: #fff;
-      font-size: 1.5rem;
-      padding: 0.25rem;
+      font-size: $global-form-control-font-size * 1.66;
+      padding: $global-form-control-padding / 1.9;
     }
     input {
       text-align: center;
-      font-size: 1.5rem;
-      padding: 1rem;
+      font-size: $global-form-control-font-size * 1.66;
+      padding: $global-form-control-padding * 2.1;
     }
     input[type=number]::-webkit-outer-spin-button { margin: 0; }
     button:first-child {

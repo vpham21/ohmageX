@@ -1,3 +1,5 @@
+$scale-factor: 1 !default;
+
 $app-header-height: 3rem !default;
 $app-header-image-size: 1.4rem !default;
 $app-header-font-size: 1.0rem !default;
@@ -39,4 +41,4 @@ $app-main-padding: 1rem !default;
 $app-main-footer-padding: $app-main-padding !default;
 $app-main-footer-font-size: 0.8rem !default;
 
-$app-status-bar-offset: 20px
+$app-status-bar-offset: 20px !default;
