@@ -14,7 +14,12 @@
 
 
   class Prompts.SingleChoice extends Prompts.BaseComposite
-    template: "prompts/single_choice"
+    getTemplate: ->
+      if App.custom.appearance.prompt_horizontal_single_choice is true
+        "prompts/single_choice_horizontal"
+      else
+        "prompts/single_choice"
+
     childView: Prompts.SingleChoiceItem
     childViewContainer: ".prompt-list"
 
