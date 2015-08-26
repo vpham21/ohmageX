@@ -97,8 +97,8 @@ module.exports = (grunt) ->
         files: ["<%= web_root_folder %>/index.html.tpl"]
         tasks: ["template:dev"]
       css:
-        files: "<%= web_root_folder %>/**/*.sass"
-        tasks: ['compass']
+        files: "<%= web_root_folder %>/**/*.scss"
+        tasks: ['compass:dist']
 
     concat:
       options:
