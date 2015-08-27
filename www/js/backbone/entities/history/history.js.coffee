@@ -93,7 +93,7 @@
       # sets the list icon type to this first matching item,
       # then exits
       _.find results.responses, (response) ->
-        if response.prompt_type in ['photo','document','video']
+        if response.prompt_type in ['photo','document','video'] and response.prompt_response not in ["NOT_DISPLAYED", "SKIPPED"]
           metaProperties.list_icon_type = response.prompt_type
           return true
         else
