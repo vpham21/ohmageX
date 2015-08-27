@@ -8,7 +8,7 @@
   API =
     init: ->
       if App.device.isNative
-        document.addEventListener 'backbutton', @backButtonListener, false
+        document.addEventListener 'backbutton', @backButtonListener
       else if App.custom.build.debug is true
         # make the "`" key simulate a device back button during debugging
         $(document).on 'keyup', (e) =>
