@@ -64,6 +64,24 @@
       # list_icon_type - bases the icon on the contents of the history item
       metaProperties = {}
 
+      if App.custom.functionality.history_eqis_bucketing isnt false
+        # set the meta property for second list label
+        # eQIS uses the second prompt value, not the first
+        secondKey = false
+        _.find results.responses, (response, key) ->
+          if response.prompt_index is 1
+            secondKey = key
+            return true
+          else
+            return false
+        secondResponse = results.responses[secondKey]
+        # make sure not displayed or skipped responses are not shown
+        if secondResponse in ["NOT_DISPLAYED","SKIPPED"] then secondResponse = false
+        metaProperties.list_second_label = @getResponseFromObj(secondResponse)
+      else
+        # second list label is blank otherwise, set to false
+        metaProperties.list_second_label = false
+
       _.extend(results, metaProperties)
 
     parse: (response, options) ->
