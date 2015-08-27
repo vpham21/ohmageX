@@ -24,7 +24,8 @@
         buckets_filter: bucket
 
     entry: (id) ->
-      App.vent.trigger "nav:choose", "history"
+      if App.navs.getSelectedName() isnt "history"
+        App.vent.trigger "nav:choose", "history"
       new HistoryApp.Entry.Controller
         entry_id: id
 
