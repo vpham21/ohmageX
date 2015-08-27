@@ -64,8 +64,11 @@
       # list_icon_type - bases the icon on the contents of the history item
       metaProperties = {}
 
-      if App.custom.functionality.history_eqis_bucketing isnt false
+      if App.custom.functionality.history_eqis_bucketing isnt false and 
+          results.survey_id in App.custom.functionality.history_eqis_bucketing.firstresponse_surveyids
+
         # set the meta property for second list label
+        # only for bucketed survey IDs
         # eQIS uses the second prompt value, not the first
         secondKey = false
         _.find results.responses, (response, key) ->
