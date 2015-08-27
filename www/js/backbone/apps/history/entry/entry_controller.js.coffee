@@ -20,8 +20,11 @@
         responses = App.request "history:entry:responses", @entry_id
         @responsesRegion responses
         @noticeRegion()
-
-      @show @layout, loading: false
+      @show @layout,
+        loading: false
+        modal:
+          closeCallback: =>
+            App.vent.trigger "history:entry:fullmodal:close"
 
     noticeRegion: ->
       App.execute "notice:region:set", @layout.noticeRegion
