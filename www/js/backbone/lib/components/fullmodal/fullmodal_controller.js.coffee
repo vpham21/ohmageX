@@ -23,6 +23,11 @@
 
       @layout = @getLayoutView()
 
+      @listenTo App.vent, "fullmodal:close", =>
+        # close the full modal
+        console.log 'close the full modal'
+        @layout.trigger "close:clicked"
+
       @show @layout
 
     getLayoutView: ->
