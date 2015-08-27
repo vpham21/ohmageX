@@ -11,3 +11,20 @@
   # can use for cleanup, since the mainRegion is unaffected 
   # by this view.
 
+  class FullModal.FullModalController extends App.Controllers.Application
+
+    initialize: (options) ->
+      { view, config } = options
+
+      config = if _.isBoolean(config) then {} else config
+
+      _.defaults config,
+        closeCallback: false
+
+      @layout = @getLayoutView()
+
+      @show @layout
+
+    getLayoutView: ->
+      new FullModal.Layout
+
