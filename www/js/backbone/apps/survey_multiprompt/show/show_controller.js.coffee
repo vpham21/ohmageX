@@ -160,7 +160,7 @@
               App.vent.trigger "survey:prompts:next:clicked", @surveyId, @page
             ),( (errorCount) =>
               # error callback
-              myDescription = if errorCount is 1 then "This page contains an invalid response. Please resolve before continuing." else "There are #{errorCount} invalid responses on this page. Please resolve before continuing."
+              myDescription = if errorCount is 1 then "This page contains either an invalid or incomplete response. Please resolve before continuing." else "There are #{errorCount} invalid or incomplete responses on this page. Please resolve before continuing."
 
               App.execute "notice:show",
                 data:
