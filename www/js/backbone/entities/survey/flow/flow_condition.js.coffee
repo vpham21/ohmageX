@@ -34,7 +34,13 @@
 
     containsInvalidFutureReference: (flow, condition) ->
       console.log 'containsInvalidFutureReference'
-      stepIds = flow.pluck 'id'
+      steps = _.chain(flow.toJSON()).sortBy('id').map((step)->{id: step.get('id'),status: step.get('status')}).reverse().value()
+      # We sort it by id, extract the ids and statuses, then reverse the order.
+      # The purpose of this is to ensure step IDs are evaluated
+      # so that if a longer ID happens to contain a shorter stepID inside of itself,
+      # the longer ID is evaluated first, and it can be removed from the
+      # condition string during future comparisons.
+
       if typeof condition is "string"
         # only check string-based conditions, boolean conditions won't contain any references
         result = _.find stepIds, (stepId, index) =>
