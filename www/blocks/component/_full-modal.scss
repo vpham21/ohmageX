@@ -28,6 +28,18 @@
       border: none;
       outline: none;
     }
+
+  }
+  & > article {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: scroll;
+    margin-top: $app-header-image-size*2;
+  }
+
 }
 
 
