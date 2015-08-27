@@ -43,8 +43,8 @@
 
       if typeof condition is "string"
         # only check string-based conditions, boolean conditions won't contain any references
-        result = _.find stepIds, (stepId, index) =>
-          if condition.indexOf(stepId) is -1
+        result = _.find steps, (step, index) =>
+          if condition.indexOf(step.id) is -1
             return false
           else
             # the condition contains a reference to a stepId.
