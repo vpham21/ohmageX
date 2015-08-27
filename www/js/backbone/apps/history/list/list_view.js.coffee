@@ -38,9 +38,21 @@
     template: "history/list/entry"
     triggers:
       "click": "clicked"
+    serializeData: ->
+      data = @model.toJSON()
 
-  class List.EntryWithHeader extends App.Views.ItemView
-    tagName: 'li'
+      data.list_icon = switch @model.get 'list_icon_type'
+        when 'photo'
+          'camera-retro'
+        when 'document'
+          'file-code-o'
+        when 'video'
+          'play-circle'
+        when 'text'
+          'align-left'
+      data
+
+  class List.EntryWithHeader extends List.Entry
     template: "history/list/_entry_with_header"
     triggers:
       "click .active.item": "clicked"
