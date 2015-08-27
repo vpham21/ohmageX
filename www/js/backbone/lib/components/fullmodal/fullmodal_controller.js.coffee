@@ -28,7 +28,14 @@
         console.log 'close the full modal'
         @layout.trigger "close:clicked"
 
+      @listenTo @layout, "show", =>
+        console.log "show fullmodal layout"
+        @contentRegion view
+
       @show @layout
+
+    contentRegion: (realView) ->
+      @show realView, region: @layout.contentRegion
 
     getLayoutView: ->
       new FullModal.Layout
