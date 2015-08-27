@@ -34,7 +34,7 @@
 
     containsInvalidFutureReference: (flow, condition) ->
       console.log 'containsInvalidFutureReference'
-      steps = _.chain(flow.toJSON()).sortBy('id').map((step)->{id: step.get('id'),status: step.get('status')}).reverse().value()
+      steps = _.chain(flow.toJSON()).map((step)->{id: step.id,status: step.status }).sortBy('id').reverse().value()
       # We sort it by id, extract the ids and statuses, then reverse the order.
       # The purpose of this is to ensure step IDs are evaluated
       # so that if a longer ID happens to contain a shorter stepID inside of itself,
