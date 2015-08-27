@@ -152,7 +152,7 @@
         result =
           id: notificationId
           title: "#{surveyTitle}"
-          text: "Take survey #{surveyTitle}"
+          text: "Tap to capture #{surveyTitle} #{App.dictionary('page','survey')}. Swipe to ignore."
           firstAt: firstAt
           data:
             surveyId: surveyId
