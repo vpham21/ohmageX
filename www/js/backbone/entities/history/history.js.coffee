@@ -198,7 +198,7 @@
       App.execute "when:fetched:always", campaignCollections, =>
         if _.contains(responseFetchSuccess, false)
           # there was an error while fetching one of the campaign's history entries
-          App.execute "dialog:alert", "Network error fetching history."
+          App.execute "dialog:alert", "Unable to update history, history can be updated when the connection error resolves."
           App.vent.trigger "history:entries:fetch:error"
         else
           # no errors, merge all of the fetched collections into the main history collection.
