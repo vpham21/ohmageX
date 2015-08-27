@@ -21,6 +21,7 @@
   App.addRegions
     loadingRegion: "body > #loading-spinner"
     blockerRegion: "body > #ui-blocker"
+    fullModalRegion: "body > #full-modal"
     headerRegion: "body > header"
     mainRegion:    "body > main"
     footerRegion: "body > footer"
