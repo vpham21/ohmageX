@@ -8,6 +8,17 @@
     regions:
       contentRegion: "article"
 
+    initialize: ->
+      @listenTo @, 'close:clicked', ->
+        @modal.hide()
+        setTimeout (=>
+          # the purpose of this setTimeout
+          # is to allow the FullModalComponent
+          # to finish its animation before deleting
+          # the contents of this modal.
+          @contentRegion.reset()
+          @trigger "content:reset"
+        ), 20
     onRender: ->
       @modal = new FullModalComponent('#fullmodal-root')
       @modal.show()
