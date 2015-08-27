@@ -74,11 +74,11 @@
 
 
   class Prompts.MultiChoiceItem extends Prompts.SingleChoiceItem
-    template: "prompts/multi_choice_item"
+    getTemplate: -> "prompts/multi_choice_item"
 
 
   class Prompts.MultiChoice extends Prompts.SingleChoice
-    template: "prompts/multi_choice"
+    getTemplate: -> "prompts/multi_choice"
     childView: Prompts.MultiChoiceItem
     childViewContainer: ".prompt-list"
 
