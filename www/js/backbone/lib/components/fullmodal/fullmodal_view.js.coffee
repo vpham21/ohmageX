@@ -19,6 +19,6 @@
           @contentRegion.reset()
           @trigger "content:reset"
         ), 20
-    onRender: ->
+    onAttach: ->
       @modal = new FullModalComponent('#fullmodal-root')
       @modal.show()
