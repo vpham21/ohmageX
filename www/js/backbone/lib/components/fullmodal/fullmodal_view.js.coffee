@@ -8,3 +8,6 @@
     regions:
       contentRegion: "article"
 
+    onRender: ->
+      @modal = new FullModalComponent('#fullmodal-root')
+      @modal.show()
