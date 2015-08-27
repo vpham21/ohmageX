@@ -45,7 +45,7 @@
     App.execute "notice:show",
       data:
         title: "Delete Responses"
-        description: "Are you sure you want to delete this #{App.dictionary('page','survey')}?"
+        description: "Are you sure you want to delete this #{App.dictionary('page','survey')}? Select OK to proceed."
         showCancel: true
       okListener: =>
         App.vent.trigger "loading:show", "Deleting..."
