@@ -76,7 +76,7 @@
             return false
         secondResponse = results.responses[secondKey]
         # make sure not displayed or skipped responses are not shown
-        if secondResponse in ["NOT_DISPLAYED","SKIPPED"] then secondResponse = false
+        if secondResponse.prompt_response in ["NOT_DISPLAYED","SKIPPED"] then secondResponse = false
         metaProperties.list_second_label = @getResponseFromObj(secondResponse)
       else
         # second list label is blank otherwise, set to false
