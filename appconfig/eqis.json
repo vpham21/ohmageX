@@ -8,7 +8,7 @@
     "bundle_id": "org.ohmage.x.eqis",
     "image_folder": "eqis",
     "orientation": "default",
-    "login_header_image": "ohmageX.png",
+    "login_header_image": "eQIS-light.png",
     "debug": false
   },
   "appearance": {
