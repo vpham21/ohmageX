@@ -10,6 +10,6 @@
   </div>
   <div role="link">
     <h3><%= @survey_title %></h3>
-    <footer><small><%= @timestamp %></small></footer>
+    <footer><small><%= @timestamp %></small><% if @list_second_label isnt false: %> <%= @list_second_label %><% end %></footer>
   </div>
 </div>
