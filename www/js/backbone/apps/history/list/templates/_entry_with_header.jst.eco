@@ -3,7 +3,7 @@
 </div>
 <div class="active item">
   <div class="action">
-
+    <i class="type-icon fa fa-<%= @list_icon %>"></i>
   </div>
   <div class="action">
     <button type="button" class="icon right-arrow navigate">View</button>
