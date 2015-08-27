@@ -52,3 +52,7 @@
       view: view
       config: options.modal
       region: App.fullModalRegion
+
+  App.vent.on "system:notifications:clicked", ->
+    # close an active modal when a notification has been selected
+    App.vent.trigger "fullmodal:close"

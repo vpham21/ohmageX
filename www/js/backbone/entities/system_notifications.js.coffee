@@ -34,6 +34,7 @@
         console.log "notification onclick event"
         result = JSON.parse notification.data
         console.log "survey/#{result.surveyId}"
+        App.vent.trigger "system:notifications:clicked", notification
         App.navigate "survey/#{result.surveyId}", trigger: true
 
         # clear the notification from the notification center now
