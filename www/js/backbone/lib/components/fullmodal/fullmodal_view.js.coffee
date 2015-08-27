@@ -18,7 +18,7 @@
           # the contents of this modal.
           @contentRegion.reset()
           @trigger "content:reset"
-        ), 20
+        ), 400
     onAttach: ->
       @modal = new FullModalComponent('#fullmodal-root')
       @modal.show()
