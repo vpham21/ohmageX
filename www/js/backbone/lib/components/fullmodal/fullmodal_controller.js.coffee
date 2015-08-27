@@ -28,6 +28,13 @@
         console.log 'close the full modal'
         @layout.trigger "close:clicked"
 
+      @listenTo @layout, "content:reset", =>
+        # close the layout when the content has reset
+        if config.closeCallback isnt false
+          config.closeCallback()
+
+        @layout.destroy()
+
       @listenTo @layout, "show", =>
         console.log "show fullmodal layout"
         @contentRegion view
