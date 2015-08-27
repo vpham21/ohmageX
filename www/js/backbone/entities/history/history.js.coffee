@@ -82,6 +82,19 @@
         # second list label is blank otherwise, set to false
         metaProperties.list_second_label = false
 
+      # set the list icon type, default is text
+      metaProperties.list_icon_type = 'text'
+
+      # loops through all responses.
+      # finds the first matching response of photo, doc or video,
+      # sets the list icon type to this first matching item,
+      # then exits
+      _.find results.responses, (response) ->
+        if response.prompt_type in ['photo','document','video']
+          metaProperties.list_icon_type = response.prompt_type
+          return true
+        else
+          return false
       _.extend(results, metaProperties)
 
     parse: (response, options) ->
