@@ -47,3 +47,8 @@
     getLayoutView: ->
       new FullModal.Layout
 
+  App.commands.setHandler "show:fullmodal", (view, options) ->
+    new FullModal.FullModalController
+      view: view
+      config: options.modal
+      region: App.fullModalRegion
