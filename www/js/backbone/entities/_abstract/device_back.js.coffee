@@ -56,6 +56,9 @@
         # we're in an upload queue item, navigate back to the upload queue list
         console.log "we're in an upload queue item, navigate back to the upload queue list"
         App.navigate App.navs.getUrlByName('queue'), trigger: true
+      else if App.navs.getSelectedName() is "history" and App.getCurrentRoute() isnt null and App.getCurrentRoute().indexOf('/') isnt -1
+        # we're in a history item, close the modal.
+        App.vent.trigger "fullmodal:close"
       else
         # just go to the homepage
         console.log 'go to homepage'
