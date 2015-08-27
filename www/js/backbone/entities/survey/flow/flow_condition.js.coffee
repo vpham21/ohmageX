@@ -48,7 +48,12 @@
             return false
           else
             # the condition contains a reference to a stepId.
-            myStep = flow.at(index)
+
+            # Delete that stepId from the condition, so that next
+            # time if this long stepId contains a shorter stepId
+            # within itself, it doesn't evaluate the shorter stepId.
+            # use regEx with 'g' to remove ALL instances of the stepId.
+            condition = condition.replace(new RegExp(step.id,'g'), '')
 
             # the step referenced is either currently displaying or pending,
             # meaning it's a future reference.
