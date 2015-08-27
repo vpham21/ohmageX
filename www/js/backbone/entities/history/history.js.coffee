@@ -58,6 +58,14 @@
 
       _.extend(results, sortParams)
 
+    addEntryListMetaProperties: (results) ->
+      # adds list meta properties to an entry:
+      # list_second_label - additional label in the history list
+      # list_icon_type - bases the icon on the contents of the history item
+      metaProperties = {}
+
+      _.extend(results, metaProperties)
+
     parse: (response, options) ->
       # parse JSON into individual responses with campaign metadata
 
@@ -94,7 +102,8 @@
             description: value.survey_description
           responses: value.responses
         }
-        return @addSorting(results)
+        results = @addSorting(results)
+        return @addEntryListMetaProperties(results)
       ).filter((result) -> !!result).value()
       campaignEntries
 
