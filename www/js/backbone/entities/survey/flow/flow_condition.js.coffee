@@ -34,19 +34,30 @@
 
     containsInvalidFutureReference: (flow, condition) ->
       console.log 'containsInvalidFutureReference'
-      stepIds = flow.pluck 'id'
+      steps = _.chain(flow.toJSON()).map((step)->{id: step.id,status: step.status }).sortBy('id').reverse().value()
+      # We sort it by id, extract the ids and statuses, then reverse the order.
+      # The purpose of this is to ensure step IDs are evaluated
+      # so that if a longer ID happens to contain a shorter stepID inside of itself,
+      # the longer ID is evaluated first, and it can be removed from the
+      # condition string during future comparisons.
+
       if typeof condition is "string"
         # only check string-based conditions, boolean conditions won't contain any references
-        result = _.find stepIds, (stepId, index) =>
-          if condition.indexOf(stepId) is -1
+        result = _.find steps, (step, index) =>
+          if condition.indexOf(step.id) is -1
             return false
           else
             # the condition contains a reference to a stepId.
-            myStep = flow.at(index)
+
+            # Delete that stepId from the condition, so that next
+            # time if this long stepId contains a shorter stepId
+            # within itself, it doesn't evaluate the shorter stepId.
+            # use regEx with 'g' to remove ALL instances of the stepId.
+            condition = condition.replace(new RegExp(step.id,'g'), '')
 
             # the step referenced is either currently displaying or pending,
             # meaning it's a future reference.
-            return myStep.get('status') in ['pending','displaying','skipped_displaying']
+            return step.status in ['pending','displaying','skipped_displaying']
         # if there were matches, that means there's a future reference in the condition
         return typeof result isnt "undefined"
       else

@@ -1,7 +1,7 @@
 @Ohmage.module "Components.Prompts", (Prompts, App, Backbone, Marionette, $, _) ->
 
   class Prompts.BaseChoiceCustom extends Prompts.BaseComposite
-    template: "prompts/choice_custom"
+    getTemplate: -> "prompts/choice_custom"
     triggers:
       "click button.my-add": "customchoice:toggle"
       "click .add-form .add-submit": "customchoice:add"
