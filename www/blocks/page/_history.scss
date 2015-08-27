@@ -14,13 +14,15 @@
     }
   }
 
-
   #list-region > ul {
     list-style: none;
     margin: 0;
     padding: 0;
     > li .active.item {
       border-bottom: 1px solid $app-list-border-color;
+      .type-icon {
+        font-size: $app-header-menu-header-icon-size;
+      }
       &.empty {
         font-style: italic;
         color: #777;
