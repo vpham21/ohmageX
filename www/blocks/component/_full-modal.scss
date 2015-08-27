@@ -6,6 +6,28 @@
   left: 0;
   background: $app-background;
   z-index: 99;
+  & > aside {
+    height: $app-header-image-size*2;
+    z-index: 100;
+    position: absolute;
+    padding: $app-header-image-size/2;
+    top: 0;
+    right: 0;
+    background: $app-footer-background-color;
+    .button-close {
+      width: $app-header-image-size;
+      height: $app-header-image-size;
+      display: inline-block;
+      overflow: hidden;
+      background-color: transparent;
+      background-image: url("../img/icon/menu-close.svg");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: $app-header-image-size $app-header-image-size;
+      text-indent: -999px;
+      border: none;
+      outline: none;
+    }
 }
 
 
