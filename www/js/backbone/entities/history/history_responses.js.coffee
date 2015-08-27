@@ -11,7 +11,8 @@
     model: Entities.UserHistoryResponse
     initialize: ->
       @listenTo App.vent, 'history:response:fetch:image:url history:response:fetch:media:url', (myURL, entry) ->
-        @findWhere(id: entry.get('id')).set('media_url', myURL)
+        if @findWhere(id: entry.get('id'))
+          @findWhere(id: entry.get('id')).set('media_url', myURL)
 
   API =
     getResponses: (rawResponses) ->
