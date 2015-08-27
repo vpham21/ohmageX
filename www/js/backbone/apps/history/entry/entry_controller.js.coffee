@@ -8,7 +8,7 @@
       @entry_id = entry_id
 
       @listenTo App.vent, 'history:entry:remove:success', (entry) =>
-        if entry.get('id') is @entry_id then App.historyBack()
+        if entry.get('id') is @entry_id then App.vent.trigger("fullmodal:close")
 
       entry = App.request "history:entry", @entry_id
 
@@ -20,8 +20,11 @@
         responses = App.request "history:entry:responses", @entry_id
         @responsesRegion responses
         @noticeRegion()
-
-      @show @layout, loading: false
+      @show @layout,
+        loading: false
+        modal:
+          closeCallback: =>
+            App.vent.trigger "history:entry:fullmodal:close"
 
     noticeRegion: ->
       App.execute "notice:region:set", @layout.noticeRegion

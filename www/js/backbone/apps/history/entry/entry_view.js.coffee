@@ -112,7 +112,6 @@
     template: "history/entry/details"
     triggers:
       "click button.delete": "delete:clicked"
-      "click button.close": "close:clicked"
     serializeData: ->
       data = @model.toJSON()
       console.log 'item details data', data

@@ -1,7 +1,4 @@
 <div class="running item">
-  <div class="icon-box">
-    <button type="button" class="close icon">Close</button>
-  </div>
   <div>
     <h3><%= @survey_title %></h3>
     <!-- <p><%= @survey.description %></p> -->
