@@ -62,6 +62,10 @@
   App.vent.on "history:entry:fetch:media:clicked", (response) ->
     App.execute "history:response:fetch:media", response
 
-  App.vent.on "history:entry:close:clicked", (model) ->
-    API.list()
-    App.navigate "history"
+  App.vent.on "history:entry:fullmodal:close", ->
+    # Since this came from a modal view,
+    # there is the chance that the modal was navigated to DIRECTLY.
+    # if this was the case, the app mainRegion would be empty.
+    # We can detect this and render the history list appropriately.
+    options = if typeof App.mainRegion.currentView is "undefined" then {trigger: true} else {}
+    App.navigate "history", options
