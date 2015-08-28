@@ -87,3 +87,11 @@
 
   App.vent.on "uploadqueue:upload:failure:wifionly", (responseData, errorText, itemId) ->
     API.queueFailureGeneral responseData, "Cannot Upload:", "User preferences set to only upload on wifi.", itemId
+
+  App.vent.on "uploadqueue:item:fullmodal:close", ->
+    # Since this came from a modal view,
+    # there is the chance that the modal was navigated to DIRECTLY.
+    # if this was the case, the app mainRegion would be empty.
+    # We can detect this and render the history list appropriately.
+    options = if typeof App.mainRegion.currentView is "undefined" then {trigger: true} else {}
+    App.navigate "queue", options
