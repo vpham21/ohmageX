@@ -14,7 +14,8 @@
       App.vent.trigger "nav:choose", "queue"
       new Uploadqueue.List.Controller
     item: (id) ->
-      App.vent.trigger "nav:choose", "queue"
+      if App.navs.getSelectedName() isnt "queue"
+        App.vent.trigger "nav:choose", "queue"
       new Uploadqueue.Item.Controller
         queue_id: id
     queueFailureGeneral: (responseData, errorPrefix, errorText, itemId) ->
