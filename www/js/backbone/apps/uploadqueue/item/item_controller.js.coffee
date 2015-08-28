@@ -21,7 +21,11 @@
         @responsesRegion responses
         @noticeRegion()
 
-      @show @layout, loading: false
+      @show @layout,
+        loading: false
+        modal:
+          closeCallback: =>
+            App.vent.trigger "uploadqueue:item:fullmodal:close"
 
     noticeRegion: ->
       App.execute "notice:region:set", @layout.noticeRegion
