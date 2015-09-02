@@ -28,6 +28,23 @@
       width: $radio-size;
       height: $radio-size;
 
+      position: relative;
+
+      &:before {
+        // this is the second border.
+        // the pseudo el is centered using absolute positioning relative to its parent
+        // and adds a gap to the other border via a negative offset in all directions.
+        content: " ";
+        display: block;
+        border: 1px solid black;
+        position: absolute;
+        border-radius: 50%;
+        top: -($radio-border-gap);
+        left: -($radio-border-gap);
+        right: -($radio-border-gap);
+        bottom: -($radio-border-gap);
+      }
+
     }
 
     input:checked + label.dummy-styled-radio {
