@@ -285,6 +285,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask "default", [
     "template:dev"
+    "template:blockfile"
     "eco"
     "coffee"
     "concat"
@@ -294,6 +295,7 @@ module.exports = (grunt) ->
   ]
   grunt.registerTask "mobile_dev", [
     "template:dev"
+    "template:blockfile"
     "eco"
     "coffee"
     "concat"
@@ -305,6 +307,7 @@ module.exports = (grunt) ->
   ]
   grunt.registerTask "dev", [
     "template:dev"
+    "template:blockfile"
     "eco"
     "coffee"
     "concat"
