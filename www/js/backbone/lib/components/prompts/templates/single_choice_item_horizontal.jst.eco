@@ -1,5 +1,5 @@
 <div class="input-area">
-<input type="radio" name="<%= @parentId %>" id="choice-<%= @parentId %>-<%= @key %>" value="<%= @key %>" />
+<input type="radio" name="<%= @parentId %>" id="choice-<%= @parentId %>-<%= @key %>" value="<%= @key %>" /><label for="choice-<%= @parentId %>-<%= @key %>" class="dummy-styled-radio" style="display:none"></label>
 </div>
 <div class="label-area">
   <label class="canonical" for="choice-<%= @parentId %>-<%= @key %>"><%= @label %></label>
