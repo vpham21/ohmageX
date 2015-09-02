@@ -152,7 +152,7 @@
         result =
           id: notificationId
           title: "#{surveyTitle}"
-          text: "Tap to capture #{surveyTitle} #{App.dictionary('page','survey')}. Swipe to ignore."
+          text: "Tap to capture. Swipe to ignore."
           firstAt: firstAt
           data:
             surveyId: surveyId
@@ -198,7 +198,7 @@
         result.push
           id: myId
           title: "#{reminder.get('surveyTitle')}"
-          text: "Take survey #{reminder.get('surveyTitle')}"
+          text: "Tap to capture. Swipe to ignore."
           every: 'week'
           firstAt: newDate.toDate()
           data:
