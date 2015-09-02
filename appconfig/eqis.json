@@ -12,7 +12,8 @@
     "debug": false
   },
   "appearance": {
-    "prompt_horizontal_single_choice": false
+    "prompt_horizontal_single_choice": false,
+    "custom_block": "default"
   },
   "dictionary": {
     "page": {

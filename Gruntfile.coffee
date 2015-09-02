@@ -146,6 +146,12 @@ module.exports = (grunt) ->
             orientation: "<%= appConfig.build.orientation %>"
         files:
           "config.xml": ["config.xml.tpl"]
+      blockfile:
+        options:
+          data:
+            custom_block: "<%= appConfig.appearance.custom_block %>"
+        files:
+          "<%= web_root_folder %>/Blockfile.rb": ["<%= web_root_folder %>/Blockfile.rb.tpl"]
 
     cordovacli:
       options:
@@ -279,6 +285,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask "default", [
     "template:dev"
+    "template:blockfile"
     "eco"
     "coffee"
     "concat"
@@ -288,6 +295,7 @@ module.exports = (grunt) ->
   ]
   grunt.registerTask "mobile_dev", [
     "template:dev"
+    "template:blockfile"
     "eco"
     "coffee"
     "concat"
@@ -299,6 +307,7 @@ module.exports = (grunt) ->
   ]
   grunt.registerTask "dev", [
     "template:dev"
+    "template:blockfile"
     "eco"
     "coffee"
     "concat"
