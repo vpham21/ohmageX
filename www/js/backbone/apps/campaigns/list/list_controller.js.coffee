@@ -31,6 +31,9 @@
         # and hiding the loader, such as this controller (when it's active)
         App.vent.trigger "loading:hide"
 
+      @listenTo App.vent, 'surveys:saved:campaign:fetch:error', (id, message) =>
+        App.execute "dialog:alert", message
+
       @layout = @getLayoutView campaigns
 
       @listenTo @layout, "show", =>
