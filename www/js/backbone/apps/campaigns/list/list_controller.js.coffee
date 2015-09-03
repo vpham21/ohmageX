@@ -25,6 +25,12 @@
           else
             campaigns.where()
 
+      @listenTo App.vent, 'surveys:saved:campaign:fetch:success surveys:saved:campaign:fetch:error', =>
+        # Surveys entity does not hide the loader on fetch.
+        # This allows other parts of the app to manage showing
+        # and hiding the loader, such as this controller (when it's active)
+        App.vent.trigger "loading:hide"
+
       @layout = @getLayoutView campaigns
 
       @listenTo @layout, "show", =>
