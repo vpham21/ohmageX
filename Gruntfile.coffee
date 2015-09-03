@@ -377,6 +377,9 @@ module.exports = (grunt) ->
     "copy:hybrid_build"
     "clean:cordova_www"
     "copy:cordova_www"
+    "template:cordova_config"
+    "clean:cordova_config"
+    "copy:cordova_config"
     "exec:android_build" # must pass it through a custom exec to change cwd
   ]
 
