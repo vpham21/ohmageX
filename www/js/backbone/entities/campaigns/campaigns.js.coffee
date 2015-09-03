@@ -175,17 +175,20 @@
                 App.vent.trigger "campaigns:sync:failure:auth", error.text
                 showAlert = false
                 return false
+            App.vent.trigger "campaigns:sync:failure"
             if showAlert then App.execute "dialog:alert", message
           App.vent.trigger "loading:hide"
         error: (collection, response, options) =>
           console.log 'campaign fetch error'
           App.execute "dialog:alert", "Network error syncing #{App.dictionary('pages','campaign')}."
+          App.vent.trigger "campaigns:sync:failure"
           App.vent.trigger "loading:hide"
       currentCampaignsUser
     saveLocalCampaigns: (collection) ->
       # update localStorage index campaigns_user with the current version of campaignsUser entity
       App.execute "storage:save", 'campaigns_user', collection.toJSON(), =>
         console.log "campaignsUser entity saved in localStorage"
+        App.vent.trigger "campaigns:sync:success", collection
 
     getCampaigns: ->
       if currentCampaignsUser.length < 1
