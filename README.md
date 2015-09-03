@@ -100,7 +100,7 @@ The `mobile_firstrun` task executes in the root folder without issues, and avoid
 
 ## Development using **ohmageX**
 
-- [Development Workflow (wiki)](https://github.com/ucla/ohmage-mwf-dw/wiki/Development-Workflow)
+- [Development Workflow (wiki)](https://github.com/ucla/ohmageX/wiki/Development-Workflow)
 
 ## Version Notes
 
