@@ -10,6 +10,14 @@
       @surveyId = surveyId
       @stepId = stepId
 
+      promptMarkdown = App.request "prompt:markdown",
+        originalText: entity.get 'promptText'
+        campaign_urn: App.request "survey:saved:urn", @surveyId
+        surveyId: @surveyId
+        stepId: @stepId
+
+      entity.set 'promptText', promptMarkdown
+
       @myView = @selectView entity, type
 
       @listenTo @myView, "customchoice:add:success", (myVal, myKey) =>
