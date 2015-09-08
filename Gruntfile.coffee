@@ -20,6 +20,7 @@ module.exports = (grunt) ->
       "<%= web_root_folder %>/js/vendor/spin.js"
       "<%= web_root_folder %>/js/vendor/jquery.spin.js"
       "<%= web_root_folder %>/js/vendor/hideShowPassword.js"
+      "<%= web_root_folder %>/js/vendor/markdown.js"
       "<%= web_root_folder %>/js/vendor/backbone-routefilter.js"
       "<%= web_root_folder %>/js/vendor/placeholder_polyfill.jquery.js"
       "<%= web_root_folder %>/js/vendor/ConditionalParser.js"
