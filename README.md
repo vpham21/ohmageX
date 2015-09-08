@@ -29,16 +29,10 @@ WebBlocks requires Bower, ensure it can see it with an export for the `$PATH` th
 export NODE_PATH=$(npm config get prefix)/lib/node_modules
 ```
 
-Generate the `Blockfile.rb` before running WebBlocks.
-
-```
-node_modules/grunt-cli/bin/grunt template:blockfile
-```
-
 Compile assets with WebBlocks:
 
 ```
-node_modules/grunt-cli/bin/grunt exec:blocks_build
+node_modules/grunt-cli/bin/grunt webblocks_build
 ```
 
 
