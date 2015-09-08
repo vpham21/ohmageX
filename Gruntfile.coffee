@@ -326,6 +326,11 @@ module.exports = (grunt) ->
   ]
 
 
+  grunt.registerTask "webblocks_build", [
+    "template:blockfile",
+    "exec:blocks_build"
+  ]
+
   grunt.registerTask "cordova_build_ios", [
     "cordovacli:build_ios"
   ]
