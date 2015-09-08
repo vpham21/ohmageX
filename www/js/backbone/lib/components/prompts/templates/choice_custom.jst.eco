@@ -1,6 +1,6 @@
 <form class="custom-choice-form">
   <h3 class="hide-accessible"><%= @displayLabel %></h3>
-  <label for="<%= @id %>" class="inset-block"><%= @promptText %></label>
+  <label for="<%= @id %>" class="markdown-inset-block"><%- @promptText %></label>
   <table class="prompt-list"></table>
   <button type="button" class="my-add"><span class="icon icon-plus"></span>Add custom option</button>
   <div class="add-form hidden">
