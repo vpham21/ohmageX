@@ -63,6 +63,7 @@
 
   // survey navigation buttons
   #prev-button, #next-button {
+
     button {
       border-radius: 5px;
       border: 1px solid black;
@@ -71,9 +72,14 @@
     }
   }
 
-  #prev-button button {
-    background: $survey-step-prev-button-gradient;
-    color: white;
+  #prev-button {
+    div::before {
+      background-image: url('../img/icon/va/left-triangle-white.svg');
+    }
+    button {
+      background: $survey-step-prev-button-gradient;
+      color: white;
+    }
   }
   #next-button button {
     background: $survey-step-next-button-gradient;
