@@ -74,7 +74,9 @@
 
 
   class Prompts.MultiChoiceItem extends Prompts.SingleChoiceItem
+    tagName: 'tr'
     getTemplate: -> "prompts/multi_choice_item"
+    className: ''
 
 
   class Prompts.MultiChoice extends Prompts.SingleChoice
