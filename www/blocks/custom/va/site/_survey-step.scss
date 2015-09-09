@@ -1,0 +1,82 @@
+.survey-step {
+
+  // photo prompt
+  .photo-control, .video-control, .file-control {
+    .input-activate {
+      position: absolute;
+      width: 100%;
+      height: $global-form-control-padding*3+$list-icon-size;
+      bottom: $global-form-control-padding;
+      text-align: center;
+      button {
+        background-position: center $global-form-control-padding;
+        color: #fff;
+        background-color: rgba(1,1,1,0.9);
+        border: none;
+        width: auto;
+      }
+      button.take-picture { background-image: url('../img/icon/camera.svg'); }
+      button.from-library { background-image: url('../img/icon/search.svg'); }
+      &.two-buttons {
+        bottom: $global-form-control-padding*6;
+      }
+      &.two-buttons button {
+        padding: $list-icon-size+$global-form-control-padding 0 $global-form-control-padding*1.55 0;
+      }
+
+    }
+
+    .preview-image {
+      width: 100%;
+    }
+    .video-name {
+      text-align: center;
+      font-size: $global-form-control-font-size*.85;
+      &:empty {
+        display: none;
+      }
+    }
+  }
+
+  // number prompt
+  .number-control {
+    width: 6rem;
+    button {
+      visibility: hidden;
+    }
+    input:not(:first-child){
+      border: none;
+      background: $global-form-control-border-color-dark;
+      color: white;
+    }
+  }
+
+  .button-pair {
+    > :first-child {
+      padding-right: 8px;
+    }
+    > :last-child {
+      padding-left: 8px;
+    }
+  }
+  .number-range { display: none; }
+
+  // survey navigation buttons
+  #prev-button, #next-button {
+    button {
+      border-radius: 5px;
+      border: 1px solid black;
+      padding-top: $global-form-control-padding;
+      padding-bottom: $global-form-control-padding;
+    }
+  }
+
+  #prev-button button {
+    background: $survey-step-prev-button-gradient;
+    color: white;
+  }
+  #next-button button {
+    background: $survey-step-next-button-gradient;
+    color: black;
+  }
+}

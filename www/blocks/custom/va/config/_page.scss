@@ -25,3 +25,7 @@ $survey-step-next-button-background-color: desaturate(#56c68a, 100%);
 $survey-step-skip-button-background-color: desaturate(#dbdbdb, 100%);
 
 $survey-step-number-control-gradient: linear-gradient(to bottom, desaturate(#47c4ff, 100%) 0%, desaturate(#00aeff, 100%) 100%);
+
+
+$survey-step-prev-button-gradient: linear-gradient(to bottom, lighten(#111111,20%) 10%, #111111 100%);
+$survey-step-next-button-gradient: linear-gradient(to bottom, lighten(#b8b8b8,20%) 10%, #b8b8b8 100%);
