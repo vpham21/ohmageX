@@ -1,5 +1,29 @@
 .survey-step {
 
+
+  // number prompt
+  .number-control {
+    width: 6rem;
+    button {
+      visibility: hidden;
+    }
+    input:not(:first-child){
+      border: none;
+      background: $global-form-control-border-color-dark;
+      color: white;
+    }
+  }
+
+  .button-pair {
+    > :first-child {
+      padding-right: 8px;
+    }
+    > :last-child {
+      padding-left: 8px;
+    }
+  }
+  .number-range { display: none; }
+
   // survey navigation buttons
   #prev-button, #next-button {
     button {
