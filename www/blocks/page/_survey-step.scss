@@ -38,13 +38,13 @@
     overflow: auto;
     display: block;
     background-color: $survey-step-inset-block-background-color;
-    font-weight: bold;
     color: $survey-step-inset-block-font-color;
     border-top: 1px solid $survey-step-inset-block-border-color;
     border-bottom: 1px solid $survey-step-inset-block-border-color;
   }
 
   .inset-block {
+    font-weight: bold;
     padding: $app-main-footer-padding;
   }
 
