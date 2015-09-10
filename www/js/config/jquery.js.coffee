@@ -8,6 +8,7 @@ do ($) ->
   # bottom tier of leaf nodes and there is no checking 
   # for duplicates.
   $.fn.tagText = (tagName) ->
+    if @find(tagName).length < 1 then return false
     $.trim(@find(tagName).text())
 
   # Selects a jQuery DOM element based on its exact contents.
