@@ -6,5 +6,14 @@
   # Note that this module includes an extra parameter "xmlToJSON"
   # that is passed in from the global scope.
 
+  API =
+    init: ->
+      App.xmlMeta =
+        rootLabel: "Xmeta"
+
+
+  App.on "before:start", ->
+    API.init()
+
 
 ), xmlToJSON
