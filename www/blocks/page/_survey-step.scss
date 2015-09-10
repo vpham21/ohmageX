@@ -37,6 +37,7 @@
     width: 100%;
     overflow: auto;
     display: block;
+    font-size: $global-form-control-font-size;
     background-color: $survey-step-inset-block-background-color;
     color: $survey-step-inset-block-font-color;
     border-top: 1px solid $survey-step-inset-block-border-color;
