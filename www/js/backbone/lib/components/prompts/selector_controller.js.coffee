@@ -16,7 +16,7 @@
         surveyId: @surveyId
         stepId: @stepId
 
-      entity.set 'promptText', promptMarkdown
+      entity.set 'promptTextMarkdown', promptMarkdown
 
       @myView = @selectView entity, type
 
