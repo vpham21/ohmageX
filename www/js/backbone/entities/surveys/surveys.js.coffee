@@ -36,6 +36,7 @@
           description: $survey.tagText('description')
           xmlStr: my$XmlToString($survey).trim()
           campaign_urn: urn
+          meta: App.request('xmlmeta:xml:to:json', $survey.tagText("> #{App.xmlMeta.rootLabel}"))
         }
       )
 
