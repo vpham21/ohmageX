@@ -18,13 +18,18 @@
         console.log 'options in parse', options
         urn = options.data.campaign_urn_list
         campaignXML = response.data[urn].xml
-        $surveys = @getSurveyXML campaignXML
+        $XML = $( $.parseXML(campaignXML) )
+
+        # we have to execute a command here,
+        # since campaigns are a separate entity and
+        # this is the central place where campaign/survey
+        # XML is extracted.
+        App.execute "campaigns:meta:set", urn, $XML.tagText("> #{App.xmlMeta.rootLabel}")
+
+        $surveys = $XML.find 'survey'
         @parseSurveysXML $surveys, urn, campaignXML
     comparator: (item) ->
       item.get('title').capitalizeFirstLetter()
-    getSurveyXML: (rawXML) ->
-      $XML = $( $.parseXML(rawXML) )
-      $XML.find 'survey'
     parseSurveysXML: ($surveysXML, urn, campaignXML) ->
       _.map($surveysXML, (survey) ->
         $survey = $(survey)
