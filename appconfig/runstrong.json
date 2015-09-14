@@ -1,0 +1,112 @@
+{
+  "api": {
+    "client_base_string": "runstrong-",
+    "token_redirect": "../web/#login"
+  },
+  "build": {
+    "app_name": "runstrong",
+    "bundle_id": "org.ohmage.x.runstrong",
+    "image_folder": "runstrong",
+    "orientation": "default",
+    "login_header_image": "ohmageX.png",
+    "debug": true,
+    "debug_settings" : {
+      "username": "mwf.vinh",
+      "password": "12345678!",
+      "debug_script": ""
+    }
+  },
+  "appearance": {
+    "prompt_horizontal_single_choice": false,
+    "custom_block": "runstrong"
+  },
+  "dictionary": {
+    "page": {
+      "login": "login",
+      "dashboardeqis": "dashboard",
+      "campaign": "campaign",
+      "survey": "survey",
+      "queue": "upload queue",
+      "history": "history",
+      "reminder": "reminder",
+      "profile": "profile",
+      "logout": "logout"
+    },
+    "pages": {
+      "login": "login",
+      "dashboardeqis": "dashboard",
+      "campaign": "campaigns",
+      "survey": "surveys",
+      "queue": "upload queue",
+      "history": "history",
+      "reminder": "reminders",
+      "profile": "profile",
+      "logout": "logout"
+    },
+    "menu": {
+      "login": "Login",
+      "dashboardeqis": "Dashboard",
+      "campaign": "Campaigns",
+      "survey": "Surveys",
+      "queue": "Upload Queue",
+      "history": "History",
+      "reminder": "Reminders",
+      "profile": "Profile",
+      "logout": "Logout"
+    }
+  },
+  "menu_items_disabled": {
+    "native": [
+      "dashboardeqis"
+    ],
+    "browser": [
+      "dashboardeqis",
+      "profile",
+      "reminder",
+      "logout"
+    ],
+    "footer": [
+      "dashboardeqis",
+      "campaign",
+      "survey",
+      "queue",
+      "history",
+      "reminder",
+      "logout"
+    ]
+  },
+  "routes": {
+    "homepage": "campaign",
+    "surveys": "survey"
+  },
+  "server_list": {
+    "custom": true,
+    "servers": [
+      "https://pilots.mobilizelabs.org",
+      "https://sandbox.mobilizingcs.org"
+    ]
+  },
+  "functionality": {
+    "internal_links_enabled": false,
+    "post_survey_reminders_disabled": false,
+    "multi_question_survey_flow": false,
+    "history_auto_refresh": false,
+    "history_eqis_bucketing": false
+  },
+  "prompt_defaults": {
+    "doc": {
+      "max_bytes": 1000000000
+    },
+    "photo": {
+      "max_pixels": 800
+    },
+    "video": {
+      "max_seconds": 180,
+      "caution_threshold_bytes": 300000000,
+      "assumed_mb_per_minute": 90
+    }
+  },
+  "user_preference_defaults": {
+    "wifi_upload_only": false
+  }
+}
