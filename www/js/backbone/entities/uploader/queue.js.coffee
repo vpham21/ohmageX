@@ -18,7 +18,7 @@
     initialize: (options) ->
       @listenTo @, "add remove", =>
         if @length isnt 0
-          App.execute "nav:marker:set", "queue", "(#{@length})"
+          App.execute "nav:marker:set", "queue", @length
         else
           App.execute "nav:marker:set", "queue", false
 
@@ -29,7 +29,7 @@
         console.log 'user upload queue retrieved from storage'
         currentQueue = new Entities.UploadQueue result
         if currentQueue.length > 0
-          App.execute "nav:marker:set", "queue", "(#{currentQueue.length})"
+          App.execute "nav:marker:set", "queue", currentQueue.length
       ), =>
         console.log 'user upload queue not retrieved from storage'
         currentQueue = new Entities.UploadQueue
