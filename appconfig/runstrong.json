@@ -30,6 +30,7 @@
       "history": "history",
       "reminder": "reminder",
       "profile": "profile",
+      "help": "help",
       "logout": "logout"
     },
     "pages": {
@@ -41,6 +42,7 @@
       "history": "history",
       "reminder": "reminders",
       "profile": "profile",
+      "help": "help",
       "logout": "logout"
     },
     "menu": {
@@ -52,6 +54,7 @@
       "history": "History",
       "reminder": "Reminders",
       "profile": "Profile",
+      "help": "Help",
       "logout": "Logout"
     }
   },
@@ -72,6 +75,7 @@
       "queue",
       "history",
       "reminder",
+      "help",
       "logout"
     ]
   },

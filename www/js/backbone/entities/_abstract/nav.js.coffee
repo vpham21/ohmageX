@@ -39,13 +39,12 @@
       console.log 'reveal isLoggedIn', isLoggedIn
       if isLoggedIn
         loginItems = [
-          "dashboardeqis"
           "campaign"
-          "history"
           "survey"
           "queue"
           "reminder"
           "profile"
+          "help"
           "logout"
         ]
         if App.custom.build.debug
@@ -76,6 +75,7 @@
         { name: "history", url: "#history", icon: "history", visible: false, marker: false }
         { name: "reminder", url: "#reminders", icon: "reminder", visible: false, marker: false }
         { name: "profile", url: "#profile", icon: "profile", visible: false, marker: false }
+        { name: "help", url: "#help", icon: "help", visible: false, marker: false }
         { name: "logout", url: "#logout", icon: "logout", visible: false, marker: false }
       ]
 
