@@ -62,8 +62,11 @@ body > header > div  {
     opacity: 0.85;
   }
 
-}
+  #button-region {
+    float: right;
+    button {
+      margin-left: 0;
+    }
+  }
 
-#button-region {
-  float: right;
 }
