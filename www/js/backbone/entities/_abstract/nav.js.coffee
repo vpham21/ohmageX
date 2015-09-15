@@ -25,7 +25,10 @@
       @choose (@findWhere(name: nav) or @first())
 
     getSelectedName: ->
-      @findWhere(chosen: true).get('name')
+      if @findWhere(chosen: true)
+        @findWhere(chosen: true).get('name')
+      else
+        false
 
     getUrlByName: (myName) ->
       @findWhere(name: myName).get('url')
