@@ -93,6 +93,6 @@
     # Since this came from a modal view,
     # there is the chance that the modal was navigated to DIRECTLY.
     # if this was the case, the app mainRegion would be empty.
-    # We can detect this and render the history list appropriately.
+    # We can detect this and render the uploadqueue list appropriately.
     options = if typeof App.mainRegion.currentView is "undefined" then {trigger: true} else {}
-    App.navigate "queue", options
+    App.navigate "uploadqueue", options
