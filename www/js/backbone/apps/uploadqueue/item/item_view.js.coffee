@@ -83,6 +83,13 @@
 
   class Item.Responses extends App.Views.CollectionView
     getChildView: (model) ->
+
+      if model.get('status') is "skipped"
+        return Item.ResponseAlternate
+
+      if model.get('status') is "not_displayed"
+        return Item.ResponseNotDisplayed
+
       myView = switch model.get('type')
         when 'single_choice', 'single_choice_custom'
           Item.ResponseSingleChoice
