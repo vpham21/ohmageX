@@ -42,6 +42,7 @@
           xmlStr: my$XmlToString($survey).trim()
           campaign_urn: urn
           meta: App.request('xmlmeta:xml:to:json', $survey.tagText("> #{App.xmlMeta.rootLabel}"))
+          parent_meta: App.request('campaigns:meta:get', urn)
         }
       )
 
