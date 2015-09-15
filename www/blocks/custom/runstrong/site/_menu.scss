@@ -1,0 +1,24 @@
+#app-menu {
+
+  > header {
+    .close {
+      border: 3px solid $app-header-menu-header-background;
+      border-top-width: 4px;
+      background-color: $app-header-menu-header-close-background-color;
+    }
+    h1 {
+      font-size: $app-header-menu-header-font-size;
+      line-height: $app-header-menu-header-height;
+      color: $app-header-menu-header-font-color;
+      margin: 0;
+      font-weight: bold;
+    }
+  }
+
+  .icon {
+    vertical-align: middle;
+    height: $app-header-menu-header-font-size;
+    width: $app-header-menu-header-font-size;
+  }
+
+}

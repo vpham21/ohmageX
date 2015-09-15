@@ -1,0 +1,35 @@
+.survey-step {
+
+  background-color: $app-header-menu-header-list-item-background;
+
+ 	.prompt-list {
+	 	td.left {
+      background-color: $app-header-background;
+    }
+
+    td.content,td.right {
+      background-color: $app-background;
+    }
+    label {
+      color: $survey-step-inset-block-font-color;
+	  }
+ 	}
+
+  .number-control {
+    button {
+      background: $app-header-menu-header-background;
+    }
+  }
+
+  .number-prompt-form {
+    aside.number-range {
+      section {
+        color: $app-header-font-color;
+      }
+      section header {
+        color: $app-header-font-color;
+        background: $app-header-menu-header-background;
+      }
+    }
+  }
+}

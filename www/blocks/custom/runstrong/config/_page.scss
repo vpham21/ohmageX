@@ -1,0 +1,19 @@
+$modal-close-background-color: #0054A6;
+$modal-close-background: linear-gradient(to bottom, adjust-color($modal-close-background-color, $lightness: 5%, $saturation: -5%) 0%, adjust-color($modal-close-background-color, $lightness: -5%, $saturation: 5%) 100%);
+$modal-close-font-color: #F4C51A;
+
+$modal-activate-background-color: #0054A6;
+$modal-activate-background: linear-gradient(to bottom, adjust-color($modal-activate-background-color, $lightness: 5%, $saturation: -5%) 0%, adjust-color($modal-activate-background-color, $lightness: -5%, $saturation: 5%) 100%);
+$modal-activate-font-color: #F4C51A;
+
+$survey-step-inset-block-background-color: #003466;
+$survey-step-inset-block-font-color: #F4C51A;
+$survey-step-inset-block-border-color: #0054A6;
+
+$list-icon-size: 2rem;
+
+$survey-step-button-font-color: #F4C51A;
+$survey-step-prev-button-background-color: #0054A6;
+$survey-step-next-button-background-color: #0054A6;
+$survey-step-skip-button-background-color: #dbdbdb;
+$survey-step-skip-button-font-color: #666666;

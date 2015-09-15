@@ -1,0 +1,16 @@
+body > #ui-blocker  {
+  figure {
+    background-color: $app-main-background;
+    color: $app-header-font-color;
+  }
+  form {
+    label {
+      color: $app-header-font-color;
+    }
+  }
+  .button-pair {
+    button {
+      height: 2rem;
+    }
+  }
+}

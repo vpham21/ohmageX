@@ -1,0 +1,10 @@
+.reminders-list {
+  .enable-switch {
+    input + label:after {
+      background-color: #888;
+    }
+    input:checked + label:after {
+      background-color: $app-header-background;
+    }
+  }
+}

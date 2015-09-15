@@ -1,0 +1,14 @@
+body > footer {
+  color: $app-header-font-color;
+  .subheader {
+    a {
+      color: $app-header-font-color;
+    }
+  }
+  .help-section {
+    margin-top: 0;
+    a {    
+      color: $app-header-font-color;
+    }
+  }
+}

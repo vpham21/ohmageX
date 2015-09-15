@@ -1,0 +1,114 @@
+.icon {
+
+  &.hamburger {
+    background-image: url("../img/icon/runstrong/menu-open.svg");
+    height: 38px;
+    width: 36px;
+  }
+
+  &.close {
+    background: url("../img/icon/runstrong/menu-close.svg") center no-repeat;
+    height: 40px;
+    width: 40px;
+  }
+
+  &.sync {
+    background-image: url("../img/icon/runstrong/sync.svg");
+    height: 55px;
+    width: 55px;
+  }
+
+  &.upload-queue {
+    background-image: url("../img/icon/runstrong/upload-queue.png");
+    height: 55px;
+    width: 55px;
+  }
+
+  &.add {
+    // needs to be replaced with custom add icon
+    background-image: url("../img/icon/add.svg");
+    height: 55px;
+    width: 55px;
+  }
+
+  &.clock {
+    background-image: url("../img/icon/clock.svg");
+    height: 31px;
+    width: 31px;
+  }
+
+  &.info {
+    background-image: url("../img/icon/runstrong/help.svg");
+  }
+
+  &.delete {
+    background-image: url("../img/icon/runstrong/trash.svg");
+  }
+
+  &.save {
+    background-image: url("../img/icon/save.svg");
+  }
+
+  &.survey {
+    background-image: url("../img/icon/runstrong/assessment.svg");
+  }
+
+  &.stream {
+    background-image: url("../img/icon/stream.svg");
+  }
+
+  &.help {
+    background-image: url("../img/icon/runstrong/help.svg");
+  }
+
+  &.upload {
+    background-image: url("../img/icon/runstrong/upload.svg");
+  }
+
+  &.reminder {
+    background-image: url("../img/icon/reminder.svg");
+  }
+
+  &.profile {
+    background-image: url("../img/icon/profile.svg");
+  }
+
+  &.logout {
+    background-image: url("../img/icon/runstrong/logout.svg");
+  }
+
+  &.trash {
+    background-image: url("../img/icon/runstrong/trash.svg");
+  }
+
+  &.edit {
+    background-image: url("../img/icon/edit.svg");
+  }
+
+  &.new-item {
+    background-image: url("../img/icon/eqis/new-item.svg");
+  }
+
+  &.delete, &.save, &.info {
+    background-size: 40px;
+  }
+
+  &.right-arrow {
+    background-size: 23px 36px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("../img/icon/runstrong/right-arrow.svg");
+  }
+
+  &.delete, &.save, &.info, &.right-arrow {
+    height: 40px;
+    width: 40px;
+  }
+
+  &.search {
+    background-image: url("../img/icon/runstrong/search.svg");
+    height: 56px;
+    width: 56px;
+  }
+
+}
