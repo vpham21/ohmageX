@@ -22,7 +22,6 @@
 
           # Broadcast that the user selected OK after the failure happened.
           App.vent.trigger "survey:upload:failure:ok", responseData, surveyId
-          App.execute "dialog:alert", "Your response has been added to the Upload Queue."
         okListener: =>
           App.execute "survey:upload", surveyId
 

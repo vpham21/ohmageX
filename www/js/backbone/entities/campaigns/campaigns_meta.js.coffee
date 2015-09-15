@@ -9,3 +9,6 @@
 
   App.commands.setHandler "campaigns:meta:set", (urn, $metaXML) ->
     API.setMetaProperty App.request('campaign:entity', urn), $metaXML
+
+  App.reqres.setHandler "campaigns:meta:get", (urn) ->
+    App.request('campaign:entity', urn).get('meta')

@@ -100,7 +100,7 @@
     API.init()
 
   App.commands.setHandler "uploadqueue:item:add", (responseData, errorText, surveyId) ->
-    responses = App.request 'responses:current:valid'
+    responses = App.request 'responses:current:flow'
     API.addItem responseData, errorText, responses, surveyId
 
   App.commands.setHandler "uploadqueue:item:remove", (id) ->
