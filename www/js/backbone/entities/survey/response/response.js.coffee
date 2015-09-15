@@ -166,11 +166,11 @@
     getResponses: ->
       throw new Error "responses not initialized, use 'responses:init' to create new Responses" unless currentResponses isnt false
       currentResponses
-    getValidResponses: ->
+    getResponsesWithFlow: ->
       responses = @getResponses()
-      responses.filter (response) ->
-        # valid responses only.
-        if !response.get('response') then false else true
+      responses.each (response) =>
+        response.set 'status', App.request("flow:step", response.get('id')).get('status')
+      responses
     destroyResponses: ->
       currentResponses = false
 
@@ -181,8 +181,8 @@
   App.reqres.setHandler "responses:current", ->
     API.getResponses()
 
-  App.reqres.setHandler "responses:current:valid", ->
-    API.getValidResponses()
+  App.reqres.setHandler "responses:current:flow", ->
+    API.getResponsesWithFlow()
 
   App.reqres.setHandler "responses:uploadtype", ->
     API.getUploadType()
