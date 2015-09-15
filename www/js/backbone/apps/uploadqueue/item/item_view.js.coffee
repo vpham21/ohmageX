@@ -32,9 +32,16 @@
       data.icon = @getIcon()
       data
 
+  class Item.ResponseNotDisplayed extends App.Views.ItemView
+    # handles alternate response of NOT_DISPLAYED
+    template: false
+
+  class Item.ResponseAlternate extends Item.ResponseBase
+    # handles alternate response of SKIPPED
+    template: "uploadqueue/item/response_alternate"
+
   class Item.ResponseString extends Item.ResponseBase
     template: "uploadqueue/item/response_string"
-
 
   class Item.ResponseSingleChoice extends Item.ResponseString
     serializeData: ->
