@@ -24,7 +24,7 @@
         # since campaigns are a separate entity and
         # this is the central place where campaign/survey
         # XML is extracted.
-        App.execute "campaigns:meta:set", urn, $XML.tagText("> #{App.xmlMeta.rootLabel}")
+        App.execute "campaigns:meta:set", urn, $XML.tagHTML("campaign > #{App.xmlMeta.rootLabel}")
 
         $surveys = $XML.find 'survey'
         @parseSurveysXML $surveys, urn, campaignXML
@@ -41,7 +41,7 @@
           description: $survey.tagText('description')
           xmlStr: my$XmlToString($survey).trim()
           campaign_urn: urn
-          meta: App.request('xmlmeta:xml:to:json', $survey.tagText("> #{App.xmlMeta.rootLabel}"))
+          meta: App.request('xmlmeta:xml:to:json', $survey.tagHTML("> #{App.xmlMeta.rootLabel}"))
           parent_meta: App.request('campaigns:meta:get', urn)
         }
       )
