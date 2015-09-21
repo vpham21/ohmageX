@@ -32,8 +32,7 @@
 
     detectCSS: ->
       if Modernizr.csstransforms
-        # $('body').addClass('animated-menu')
-        console.log 'add animated menu placeholder'
+        $('body').addClass('animated-menu')
 
   App.reqres.setHandler "device:init", ->
     API.initDevice()
