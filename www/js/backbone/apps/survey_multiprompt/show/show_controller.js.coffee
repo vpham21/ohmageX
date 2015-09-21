@@ -133,7 +133,7 @@
               App.vent.trigger "survey:direct:prev:clicked", @surveyId, @page
             ),( (errorCount) =>
               # error callback
-              myMessage = if errorCount is 1 then "This page contains an invalid response. Go back and lose this invalid response?" else "This page contains #{errorCount} invalid responses. Go back and lose these invalid responses?"
+              myMessage = if errorCount is 1 then "This page contains an invalid or incomplete response. Going back will not save this invalid or incomplete response, continue?" else "This page contains #{errorCount} invalid or incomplete responses. Going back will not save any invalid or incomplete responses, continue?"
               App.execute "dialog:confirm", myMessage, (=>
                 App.vent.trigger "survey:direct:prev:clicked", @surveyId, @page
               )
