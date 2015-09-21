@@ -11,6 +11,10 @@ do ($) ->
     if @find(tagName).length < 1 then return false
     $.trim(@find(tagName).text())
 
+  $.fn.tagHTML = (tagName) ->
+    if @find(tagName).length < 1 then return false
+    $.trim(@find(tagName).html())
+
   # Selects a jQuery DOM element based on its exact contents.
   # Not case sensitive.
   # Example Usage: "div:containsExact('John')"
