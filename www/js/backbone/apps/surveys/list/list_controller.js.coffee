@@ -13,7 +13,10 @@
       else
         surveys = App.request "surveys:saved"
 
-      selector = App.request "surveys:selector:entities", options.campaign_id
+      if options.category
+        selector = App.request "surveys:selector:category", options.category
+      else
+        selector = App.request "surveys:selector:entities", options.campaign_id
 
       @layout = @getLayoutView selector
 
