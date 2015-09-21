@@ -64,7 +64,7 @@
           $XML: $child
           skippable: $child.tagText('skippable') is "true"
           skiplabel: mySkipLabel
-          meta: App.request('xmlmeta:xml:to:json', $child.tagText(App.xmlMeta.rootLabel))
+          meta: App.request('xmlmeta:xml:to:json', $child.tagHTML(App.xmlMeta.rootLabel))
       )
 
     createSurveySubmitSteps: ($rootXML) ->
