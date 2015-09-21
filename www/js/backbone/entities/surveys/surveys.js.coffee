@@ -24,7 +24,7 @@
         # since campaigns are a separate entity and
         # this is the central place where campaign/survey
         # XML is extracted.
-        App.execute "campaigns:meta:set", urn, $XML.tagText("> #{App.xmlMeta.rootLabel}")
+        App.execute "campaigns:meta:set", urn, $XML.tagHTML("campaign > #{App.xmlMeta.rootLabel}")
 
         $surveys = $XML.find 'survey'
         @parseSurveysXML $surveys, urn, campaignXML
