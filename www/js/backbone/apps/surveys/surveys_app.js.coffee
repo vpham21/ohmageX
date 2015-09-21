@@ -14,10 +14,12 @@
       App.vent.trigger "nav:choose", "survey"
       new SurveysApp.List.Controller
         campaign_id: false
+        category: false
     single: (campaign_id) ->
       App.vent.trigger "nav:choose", "survey"
       new SurveysApp.List.Controller
         campaign_id: campaign_id
+        category: false
 
   App.addInitializer ->
     new SurveysApp.Router
