@@ -1,4 +1,4 @@
-@Ohmage.module "Entities", (Entities, App, Backbone, Marionette, $, _) ->
+@Ohmage.module "Entities", ((Entities, App, Backbone, Marionette, $, _, Modernizr) ->
 
   API =
     initDevice: ->
@@ -32,3 +32,5 @@
 
   App.reqres.setHandler "device:init", ->
     API.initDevice()
+
+), Modernizr
