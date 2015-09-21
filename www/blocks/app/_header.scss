@@ -63,6 +63,15 @@ body > header > div  {
     opacity: 0.85;
   }
 
+  .app-menu-trigger.hamburger.icon, #button-region button { outline: none; }
+  #button-region button:active {
+    background-color: lighten($app-header-menu-header-close-background-color, 5%);
+  }
+
+  .app-menu-trigger.hamburger.icon:active {
+    background-color: $app-header-menu-header-close-background-color;
+  }
+
   #button-region {
     float: right;
     button {
