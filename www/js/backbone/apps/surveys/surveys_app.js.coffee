@@ -8,6 +8,7 @@
     appRoutes:
       "surveys/:campaign_id": "single"
       "surveys": "all"
+      "surveys/category/:category": "category"
 
   API =
     all: ->
@@ -20,6 +21,11 @@
       new SurveysApp.List.Controller
         campaign_id: campaign_id
         category: false
+    category: (category) ->
+      App.vent.trigger "nav:choose", "survey"
+      new SurveysApp.List.Controller
+        campaign_id: false
+        category: category
 
   App.addInitializer ->
     new SurveysApp.Router
