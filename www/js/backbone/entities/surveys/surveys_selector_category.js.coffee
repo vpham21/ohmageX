@@ -30,6 +30,10 @@
         {
           name: 'Recipes'
           id: 'recipes'
+        },
+        {
+          name: 'Resources'
+          id: 'resources'
         }
       ]
       navs.chooseById(chosen)

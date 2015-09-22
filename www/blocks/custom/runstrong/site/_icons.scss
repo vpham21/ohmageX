@@ -49,12 +49,24 @@
     background-image: url("../img/icon/save.svg");
   }
 
+  &.assessment {
+    background-image: url("../img/icon/runstrong/assessment.svg");
+  }
+
   &.survey {
     background-image: url("../img/icon/runstrong/assessment.svg");
   }
 
+  &.resource {
+    background-image: url("../img/icon/runstrong/resource.svg");
+  }
+
   &.stream {
     background-image: url("../img/icon/stream.svg");
+  }
+
+  &.recipe {
+    background-image: url("../img/icon/runstrong/recipe.svg");
   }
 
   &.help {

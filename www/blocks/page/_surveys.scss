@@ -1,10 +1,7 @@
 #surveys {
 
   > header {
-    @include -clearfix;
-    padding: $app-main-footer-padding;
-    overflow: hidden;
-    background-color: $component-header-background-color;
+    display: none;
   }
 
   #infobutton-region {

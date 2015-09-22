@@ -43,8 +43,10 @@
       if isLoggedIn
         loginItems = [
           "campaign"
-          "survey"
+          "resource"
+          "assessment"
           "queue"
+          "recipe"
           "reminder"
           "profile"
           "help"
@@ -73,9 +75,12 @@
         { name: "login", url: "#login", icon: "profile", visible: false, marker: false }
         { name: "dashboardeqis", url: "#dashboard", icon: "survey", visible: false, marker: false }
         { name: "campaign", url: "#campaigns", icon: "campaign", visible: false, marker: false }
+        { name: "resource", url: "#surveys/category/resources", icon: "resource", visible: false, marker: false }
+        { name: "assessment", url: "#surveys/category/assessments", icon: "assessment", visible: false, marker: false }
         { name: "survey", url: "#surveys", icon: "survey", visible: false, marker: false }
         { name: "queue", url: "#uploadqueue", icon: "upload", visible: false, marker: false }
         { name: "history", url: "#history", icon: "history", visible: false, marker: false }
+        { name: "recipe", url: "#surveys/category/recipes", icon: "recipe", visible: false, marker: false }
         { name: "reminder", url: "#reminders", icon: "reminder", visible: false, marker: false }
         { name: "profile", url: "#profile", icon: "profile", visible: false, marker: false }
         { name: "help", url: "#help", icon: "help", visible: false, marker: false }

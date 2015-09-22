@@ -1,0 +1,8 @@
+body > header > div  {
+  #button-region .icon, .app-menu-trigger.hamburger.icon {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    -moz-opacity: 1.0;
+    opacity: 1.0;
+  }
+}
