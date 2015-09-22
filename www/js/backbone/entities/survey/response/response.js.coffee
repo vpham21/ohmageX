@@ -170,7 +170,8 @@
       responses = @getResponses()
       responses.each (response) =>
         response.set 'status', App.request("flow:step", response.get('id')).get('status')
-      responses
+      # return JSON so responses can be easily added to localStorage
+      responses.toJSON()
     destroyResponses: ->
       currentResponses = false
 
