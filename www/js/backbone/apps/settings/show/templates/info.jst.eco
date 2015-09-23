@@ -1,0 +1,26 @@
+<nav class="list settings-list">
+	<ul>
+		<li>
+			<div class="survey running">
+			  <div class="action right">
+			    <button type="button" class="icon right-arrow navigate">View</button>
+			  </div>
+			  <div role="link">
+			    <h3>Account</h3>
+			  </div>
+			</div>
+		</li>
+	</ul>
+	<ul>
+		<li>
+			<div class="survey running">
+			  <div class="action right">
+			    <button type="button" class="icon right-arrow navigate">View</button>
+			  </div>
+			  <div role="link">
+			    <h3>Start Date</h3>
+			  </div>
+			</div>
+		</li>
+	</ul>
+</nav>

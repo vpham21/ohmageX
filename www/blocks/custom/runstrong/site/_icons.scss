@@ -85,12 +85,20 @@
     background-image: url("../img/icon/profile.svg");
   }
 
+  &.notification {
+    background-image: url("../img/icon/runstrong/notification.svg");
+  }
+
   &.logout {
     background-image: url("../img/icon/runstrong/logout.svg");
   }
 
   &.trash {
     background-image: url("../img/icon/runstrong/trash.svg");
+  }
+
+  &.settings {
+    background-image: url("../img/icon/runstrong/settings.svg");
   }
 
   &.edit {

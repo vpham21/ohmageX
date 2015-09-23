@@ -32,6 +32,7 @@
       "history": "history",
       "recipe": "recipe",
       "reminder": "reminder",
+      "settings": "settings",
       "profile": "profile",
       "help": "help",
       "logout": "logout"
@@ -47,6 +48,7 @@
       "history": "history",
       "recipe": "recipes",
       "reminder": "reminders",
+      "settings": "settings",
       "profile": "profile",
       "help": "help",
       "logout": "logout"
@@ -61,7 +63,8 @@
       "queue": "Upload Queue",
       "history": "History",
       "recipe": "Recipes",
-      "reminder": "Reminders",
+      "reminder": "Notifications",
+      "settings": "Settings",
       "profile": "Profile",
       "help": "Help",
       "logout": "Logout"
@@ -87,6 +90,7 @@
       "history",
       "recipe",
       "reminder",
+      "settings",
       "help",
       "logout"
     ]

@@ -48,7 +48,7 @@
           "queue"
           "recipe"
           "reminder"
-          "profile"
+          "settings"
           "help"
           "logout"
         ]
@@ -81,7 +81,8 @@
         { name: "queue", url: "#uploadqueue", icon: "upload", visible: false, marker: false }
         { name: "history", url: "#history", icon: "history", visible: false, marker: false }
         { name: "recipe", url: "#surveys/category/recipes", icon: "recipe", visible: false, marker: false }
-        { name: "reminder", url: "#reminders", icon: "reminder", visible: false, marker: false }
+        { name: "reminder", url: "#reminders", icon: "notification", visible: false, marker: false }
+        { name: "settings", url: "#settings", icon: "settings", visible: false, marker: false }
         { name: "profile", url: "#profile", icon: "profile", visible: false, marker: false }
         { name: "help", url: "#help", icon: "help", visible: false, marker: false }
         { name: "logout", url: "#logout", icon: "logout", visible: false, marker: false }
