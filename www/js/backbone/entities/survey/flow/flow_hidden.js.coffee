@@ -32,3 +32,9 @@
             typeof myEntity.get('properties').get('max') is "undefined"
           throw new Error "hidden prompt min and/or max properties not set" if  propertiesNotSet
 
+          # extract the min and max properties from myEntity.
+          minValue = parseInt myEntity.get('properties').get('min')
+          maxValue = parseInt myEntity.get('properties').get('max')
+          # generate a random number between min and max
+          myRandom = Math.floor(Math.random() * maxValue) + minValue
+
