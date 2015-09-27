@@ -33,6 +33,7 @@
       mySurveySubmitSteps = @createSurveySubmitSteps $root
       currentFlow.add mySurveySubmitSteps
       console.log 'Current flow Object', currentFlow.toJSON()
+      App.vent.trigger "flow:init:complete", currentFlow
     getFlow: ->
       throw new Error "flow not initialized, use 'flow:init' to create new Flow" unless currentFlow isnt false
       currentFlow
