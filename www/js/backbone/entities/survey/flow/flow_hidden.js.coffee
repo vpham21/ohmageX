@@ -19,3 +19,6 @@
         if myHidden isnt false
           # we have a hidden prompt. Begin initializing.
           throw new Error "Only random values for hidden prompt #{myId} implemented, #{myHidden} not valid" if myHidden isnt 'random'
+
+          throw new Error "hidden prompt #{myId} must be a number prompt, is #{step.get('type')}" if step.get('type') isnt 'number'
+
