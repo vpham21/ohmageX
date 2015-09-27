@@ -47,3 +47,5 @@
           step.set 'hidden_value', myRandom
 
 
+  App.vent.on "flow:init:complete", (flow) ->
+    API.initHidden flow
