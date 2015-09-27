@@ -27,3 +27,8 @@
           # initialize the flow entity for this step, but don't set its value yet.
           myEntity = App.request("flow:entity", myId, setValue: false)
 
+          propertiesNotSet = typeof myEntity.get('properties') is "undefined" or 
+            typeof myEntity.get('properties').get('min') is "undefined" or 
+            typeof myEntity.get('properties').get('max') is "undefined"
+          throw new Error "hidden prompt min and/or max properties not set" if  propertiesNotSet
+
