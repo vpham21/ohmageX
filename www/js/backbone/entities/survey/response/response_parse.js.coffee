@@ -9,7 +9,7 @@
   # via the interface "responses:current"
 
   API = 
-    parseInvalidToValue: (myStatus, stepId) ->
+    parseInvalidToValue: (myStatus, responseValue, stepId) ->
       # convert invalid responses (such as false or incomplete)
       # into equivalents required by the server,
       # based on the flow status of the step.
@@ -21,6 +21,10 @@
           return 'SKIPPED'
         when 'not_displayed'
           return 'NOT_DISPLAYED'
+        when 'hidden'
+          # hidden prompts return the actual response value.
+          # We currently assume that hidden prompts are number prompts only.
+          return responseValue
         else
           throw new Error "invalid response for step #{stepId} with invalid flow status: #{myStatus}"
 
@@ -109,7 +113,7 @@
           addUploadUUIDs: addUploadUUIDs
           conditionValue: conditionValue
       else
-        return @parseInvalidToValue App.request("flow:status", stepId), options.stepId
+        return @parseInvalidToValue App.request("flow:status", stepId), myResponse.get('response'), options.stepId
 
   App.reqres.setHandler "response:value:parsed", (options) ->
     options.myResponse = App.request "response:get", options.stepId

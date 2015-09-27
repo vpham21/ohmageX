@@ -14,6 +14,7 @@
   # complete       - has been displayed, and the user has submitted a valid value
   # skipped        - the user intentionally skipped this Step
   # skipped_displaying - both skipped AND displaying, required for multi-step flow
+  # hidden         - not shown to the user, but prepopulated with a value.
 
   API =
     updateStatus: (currentStep, status) ->
