@@ -38,3 +38,12 @@
           # generate a random number between min and max
           myRandom = Math.floor(Math.random() * maxValue) + minValue
 
+          # This does not use currentValue in flow entity, currentValue is used to populate
+          # prompts during view rendering. No view is rendered, the response will
+          # be set directly on the response entity when responses are initialized.
+          # We instead set a new property on the flow step. Later, when hidden responses initialize,
+          # they set using this property.
+          console.log "hidden prompt #{myId} random value", myRandom
+          step.set 'hidden_value', myRandom
+
+
