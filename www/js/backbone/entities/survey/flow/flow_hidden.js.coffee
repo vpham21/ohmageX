@@ -24,3 +24,6 @@
 
           step.set 'status', 'hidden'
 
+          # initialize the flow entity for this step, but don't set its value yet.
+          myEntity = App.request("flow:entity", myId, setValue: false)
+
