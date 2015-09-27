@@ -22,3 +22,5 @@
 
           throw new Error "hidden prompt #{myId} must be a number prompt, is #{step.get('type')}" if step.get('type') isnt 'number'
 
+          step.set 'status', 'hidden'
+
