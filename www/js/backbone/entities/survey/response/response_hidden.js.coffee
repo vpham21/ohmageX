@@ -10,3 +10,10 @@
   # failing to evaluate correctly. 
   # Assuming that doesn't happen right now. if there are errors with hidden prompt 
   # behavior, this may need to be accounted for.
+
+  API =
+    initHidden: (flow) ->
+      flow.each (step) =>
+        if step.get('status') is 'hidden'
+          App.execute "response:set", step.get('hidden_value'), step.get('id')
+
