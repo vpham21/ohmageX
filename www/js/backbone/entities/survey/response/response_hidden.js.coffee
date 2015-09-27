@@ -17,3 +17,5 @@
         if step.get('status') is 'hidden'
           App.execute "response:set", step.get('hidden_value'), step.get('id')
 
+  App.vent.on "responses:init:complete", ->
+    API.initHidden App.request("flow:current")
