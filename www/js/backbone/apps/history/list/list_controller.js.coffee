@@ -74,8 +74,8 @@
       @show surveysView, region: @layout.surveysControlRegion
 
 
-    listRegion: (responses) ->
-      listView = @getListView responses
+    listRegion: (entries) ->
+      listView = @getListView entries
 
       @listenTo listView, "childview:clicked", (args) =>
         console.log 'childview:entry:clicked', args.model
