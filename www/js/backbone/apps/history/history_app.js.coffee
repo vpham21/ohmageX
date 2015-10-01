@@ -63,6 +63,9 @@
   App.vent.on "history:entry:fetch:media:clicked", (response) ->
     App.execute "history:response:fetch:media", response
 
+  App.vent.on "file:image:url:success file:image:url:error", ->
+    App.vent.trigger "loading:hide"
+
   App.vent.on "history:entry:fullmodal:close", ->
     # Since this came from a modal view,
     # there is the chance that the modal was navigated to DIRECTLY.
