@@ -12,3 +12,18 @@
 
   storedMeta = false
 
+  API =
+    init: ->
+      App.request "storage:get", 'file_meta', ((result) =>
+        console.log 'saved file meta retrieved from storage'
+        storedMeta = new Entities.FileMeta result
+        App.vent.trigger "filemeta:saved:init:success"
+      ), =>
+        console.log 'saved file meta not retrieved from storage'
+        storedMeta = new Entities.FileMeta
+        App.vent.trigger "filemeta:saved:init:failure"
+
+
+  App.on "before:start", ->
+    API.init()
+
