@@ -19,6 +19,9 @@
       @listenTo @entries, "remove", (model) ->
         @remove model
 
+      @listenTo @, "ids:adjacent:set", (id) =>
+        @setAdjacentIds id
+
       @listenTo @, "filter:set", (filterType, value) =>
         @_currentCriteria[filterType] = value
         @where @_currentCriteria
@@ -27,6 +30,16 @@
         delete @_currentCriteria[filterType]
         @where @_currentCriteria
 
+    setAdjacentIds: (id) ->
+      myModel = @get(id)
+      myLength = @length - 1
+      prevIndex = if @indexOf(myModel) - 1 > 0 then @indexOf(myModel) - 1 else myLength
+      nextIndex = if @indexOf(myModel) + 1 <= myLength then @indexOf(myModel) + 1 else 0
+
+      myModel.set
+        prevId: @at(prevIndex).get('id')
+        nextId: @at(nextIndex).get('id')
+ 
     where: (criteria) ->
       if criteria and !_.isEmpty criteria
         items = @entries.where criteria
