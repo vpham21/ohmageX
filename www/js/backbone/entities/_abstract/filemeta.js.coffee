@@ -28,6 +28,19 @@
       App.execute "storage:save", 'file_meta', storedMeta.toJSON(), callback
 
 
+    clear: ->
+
+      # erase all stored file entries one at a time.
+      storedMeta.each (fileMetaEntry) =>
+        # don't need to pass callbacks to removal. Removal just happens in the background.
+        App.execute "system:file:uuid:remove", fileMetaEntry.get('id')
+
+      storedMeta = new Entities.FileMeta
+
+      App.execute "storage:clear", 'file_meta', ->
+        console.log 'file meta erased'
+        App.vent.trigger "filemeta:saved:cleared"
+
   App.on "before:start", ->
     API.init()
 
