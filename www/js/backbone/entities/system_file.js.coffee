@@ -33,3 +33,12 @@
     # success callback, arg is a fileEntry
     # error callback, arg is an error message
     API.readFile options
+
+  App.commands.setHandler "system:file:uuid:download", (options) ->
+    # parameters:
+    # uuid
+    # url
+    # success callback, arg is a fileEntry
+    # error callback, arg is an error message
+    API.downloadFile options
+
