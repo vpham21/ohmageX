@@ -23,6 +23,9 @@
         storedMeta = new Entities.FileMeta
         App.vent.trigger "filemeta:saved:init:failure"
 
+    getFileMetaLength: ->
+      storedMeta.length
+
     updateLocal: (callback) ->
       # update localStorage index file_meta with the current version of the file meta store
       App.execute "storage:save", 'file_meta', storedMeta.toJSON(), callback
