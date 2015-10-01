@@ -25,3 +25,22 @@
   # even if the extension does not match the file type,
   # because they are rendered inline using the src attr.
   # *********************  WARNING *********************
+
+  API =
+    generateUUID: (fileExt) ->
+      # truncate `.` from the front
+      myStr = fileExt.slice 1
+      # pad a less than 4-character extension with " "
+      myStr = "    #{myStr}".slice -4
+      # convert to hex
+      myHex = myStringToHex myStr
+      # generate UUID
+      uuid = _.guid()
+      # ovewrite last 8 characters with hex
+      uuid.slice(0,-8)+myHex
+
+  App.reqres.setHandler "system:file:generate:uuid", (fileExt) ->
+    # assume the extension includes the "."
+    # assume the extension without the dot is 1-4 chars long
+    API.generateUUID fileExt
+
