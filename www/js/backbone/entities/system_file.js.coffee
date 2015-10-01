@@ -12,6 +12,17 @@
     readFile: (options) ->
       window.resolveLocalFileSystemURL fileDirectory + options.uuid, options.success, options.error
 
+    downloadFile: (options) ->
+      ft = new FileTransfer()
+      ft.onprogress = (progressEvent) =>
+        if progressEvent.lengthComputable
+          # TODO: Refactor so download progress event is customizable.
+          # Pass in a custom event label to trigger showing percentages
+          # instead of directly triggering the loader.
+          App.vent.trigger "loading:show", "Downloading #{Math.round(progressEvent.loaded / progressEvent.total * 100)}%..."
+
+      ft.download options.url, fileDirectory + options.uuid, options.success, options.error
+
 
   App.on "before:start", ->
     if App.device.isNative then API.init()
