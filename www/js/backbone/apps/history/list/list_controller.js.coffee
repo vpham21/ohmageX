@@ -86,6 +86,14 @@
         # with new adjacent IDs and not the base view's model.
         App.vent.trigger "history:list:entry:clicked", args.model.get('id')
 
+      @listenTo App.vent, "history:entry:previous:clicked history:entry:next:clicked", (myId) =>
+        # This is listening to an app level event - necessary
+        # so that this list view can trigger itself to open.
+        # This way the activation of next and previous properly handles
+        # all of its necessary cleanup.
+        entries.trigger "ids:adjacent:set", myId
+
+        App.vent.trigger "history:list:entry:clicked", myId
 
       @show listView, region: @layout.listRegion
 
