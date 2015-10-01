@@ -14,7 +14,8 @@
       fileDirectory + uuid + App.request("system:file:uuid:ext", uuid)
 
     readFile: (options) ->
-      window.resolveLocalFileSystemURL fileDirectory + options.uuid, options.success, options.error
+      window.resolveLocalFileSystemURL @getFullPath(options.uuid), options.success, options.error
+
 
     downloadFile: (options) ->
       ft = new FileTransfer()
@@ -25,10 +26,10 @@
           # instead of directly triggering the loader.
           App.vent.trigger "loading:show", "Downloading #{Math.round(progressEvent.loaded / progressEvent.total * 100)}%..."
 
-      ft.download options.url, fileDirectory + options.uuid, options.success, options.error
+      ft.download options.url, @getFullPath(options.uuid), options.success, options.error
 
     removeFileByUUID: (uuid) ->
-      window.resolveLocalFileSystemURL fileDirectory + uuid, ( (fileEntry) =>
+      window.resolveLocalFileSystemURL @getFullPath(uuid), ( (fileEntry) =>
         fileEntry.remove ( =>
           App.vent.trigger "system:file:uuid:remove:success", uuid
         ),( =>
