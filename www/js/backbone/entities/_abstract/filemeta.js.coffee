@@ -46,6 +46,27 @@
       # update localStorage index file_meta with the current version of the file meta store
       App.execute "storage:save", 'file_meta', storedMeta.toJSON(), callback
 
+    fetchImageFileURL: (uuid) ->
+
+      App.execute "system:file:uuid:read",
+        uuid: uuid
+        success: (fileEntry) =>
+          App.vent.trigger "file:image:url:success", uuid, fileEntry.toURL()
+        error: (message) =>
+          # file wasn't read, try to download it.
+          App.vent.trigger "file:image:uuid:notfound", uuid
+
+          App.execute "system:file:uuid:download",
+            uuid: uuid
+            url: @generateMediaURL(uuid, 'image')
+            success: (fileEntry) =>
+              App.vent.trigger "file:image:url:success", uuid, fileEntry.toURL()
+
+              @addFileMeta
+                id: uuid
+                username: App.request("credentials:username")
+            error: =>
+              App.vent.trigger "file:image:url:error", uuid
 
     clear: ->
 
