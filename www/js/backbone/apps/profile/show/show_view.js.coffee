@@ -5,6 +5,7 @@
     template: "profile/show/info"
     triggers:
       "click .change-password": "password:clicked"
+      "click .clear-cache": "clear:cache:clicked"
       "change #enable-switch-wifi": "toggle:wifi"
 
     initialize: ->
