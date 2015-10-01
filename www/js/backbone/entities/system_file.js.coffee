@@ -9,6 +9,10 @@
     init: ->
       fileDirectory = cordova.file.dataDirectory
 
+    getFullPath: (uuid) ->
+      # file directory, uuid, plus the encoded extension
+      fileDirectory + uuid + App.request("system:file:uuid:ext", uuid)
+
     readFile: (options) ->
       window.resolveLocalFileSystemURL fileDirectory + options.uuid, options.success, options.error
 
