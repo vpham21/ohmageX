@@ -6,8 +6,16 @@ Logged in as <strong><%= @username %></strong>
     <button class="change-password" type="button">Change Password</button>
   </div>
 </div>
-<% end %>
 <br />
+<% end %>
+<% if @showCache: %>
+<div class="button-single">
+  <div class="action">
+    <button class="clear-cache" type="button">Clear File Cache</button>
+  </div>
+</div>
+<br />
+<% end %>
 <div class="profile-item-switch">
   <div class="enable-switch-container">
     <div class="enable-switch">
@@ -17,5 +25,6 @@ Logged in as <strong><%= @username %></strong>
   </div>
   WiFi-only uploads
 </div>
+
 <br />
 <small>Connected to server <strong><%= @serverPath %></strong></small>

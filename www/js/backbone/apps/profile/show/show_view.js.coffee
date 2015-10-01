@@ -5,6 +5,7 @@
     template: "profile/show/info"
     triggers:
       "click .change-password": "password:clicked"
+      "click .clear-cache": "clear:cache:clicked"
       "change #enable-switch-wifi": "toggle:wifi"
 
     initialize: ->
@@ -18,8 +19,10 @@
 
     serializeData: ->
       data = @model.toJSON()
+      data.showCache = App.device.isNative
       data.showPassword = App.request "credentials:ispassword"
       data.serverPath = App.request "serverpath:current"
+
       data
     onRender: ->
       if @model.get('wifi_upload_only') is true then @$el.find("#enable-switch-wifi").prop('checked', true)
