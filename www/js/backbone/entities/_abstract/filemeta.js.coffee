@@ -44,3 +44,12 @@
   App.on "before:start", ->
     API.init()
 
+  App.commands.setHandler "filemeta:erase:all", ->
+    metaLength = API.getFileMetaLength()
+    if metaLength > 0
+      App.execute "dialog:confirm", "Are you sure you want to clear the file cache? You will lose #{metaLength} file(s).", (=>
+        API.clear()
+      ), (=>
+        console.log 'dialog canceled'
+      )
+
