@@ -76,10 +76,7 @@
     triggers:
       'click .fetch-button': "fetch:image:clicked"
     onRender: ->
-      if !(App.device.isNative and navigator.connection.type is Connection.NONE)
-        # The only situation where we don't load an image immediately
-        # is when we're on a mobile device and we're offline.
-        @trigger "fetch:image:clicked"
+      @trigger "fetch:image:clicked"
 
   class Entry.Media extends Entry.ResponseBase
     template: "history/entry/response_media"
