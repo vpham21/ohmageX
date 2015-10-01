@@ -32,6 +32,22 @@
   Mixed
 
 
+@myStringToHex = (tmp) ->
+  # Each character in the string is converted to a 2-digit hex
+  # of its character code, no spaces between.
+
+  d2h = (d) -> d.toString 16
+
+  str = ''
+  i = 0
+  tmp_len = tmp.length
+  c = undefined
+  while i < tmp_len
+    c = tmp.charCodeAt(i)
+    str += d2h(c)
+    i += 1
+  str
+
 if typeof String.prototype.capitalizeFirstLetter isnt 'function'
   String.prototype.capitalizeFirstLetter = ->
     @ && @[0].toUpperCase() + @slice(1)
