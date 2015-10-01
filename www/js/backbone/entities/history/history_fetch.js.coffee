@@ -35,4 +35,7 @@
       API.fetchURL history_response, "image"
 
   App.commands.setHandler "history:response:fetch:media", (history_response) ->
-    API.openExternalURL history_response
+    if App.device.isNative
+      App.execute "filemeta:fetch:media:open", history_response.get('prompt_response')
+    else
+      API.openExternalURL history_response
