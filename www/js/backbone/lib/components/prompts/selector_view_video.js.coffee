@@ -28,11 +28,19 @@
         if mediaFile.size > App.custom.prompt_defaults.video.caution_threshold_bytes
           App.execute "dialog:alert", "Caution: the recorded video is large, and may take a long time to upload to the server."
 
+        # STOPGAP - file extension encoded in UUIDs
+        fileExt = mediaFile.name.match(/\.[0-9a-z]+$/i)
+
+        # Hardcode any blank file extensions to .mp4
+        # for Android video.
+        fileExt = if !!!fileExt then '.mp4' else fileExt[0]
+
         @model.set 'currentValue',
           source: "capture"
           fileObj: mediaFile
           videoName: mediaFile.name
-          UUID: _.guid()
+          UUID: App.request('system:file:generate:uuid', fileExt)
+          # UUID: _.guid()
 
       ),( (error) =>
         # capture error
