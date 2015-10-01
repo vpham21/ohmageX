@@ -39,8 +39,22 @@
       # ovewrite last 8 characters with hex
       uuid.slice(0,-8)+myHex
 
+    getExtension: (uuid) ->
+      # peel off the last 8 characters
+      myHex = uuid.slice -8
+      # convert them to a string,
+      # trim any white space
+      rawString = myHexToString(myHex).trim()
+
+      # Add the `.` to the front
+      ".#{rawString}"
+
   App.reqres.setHandler "system:file:generate:uuid", (fileExt) ->
     # assume the extension includes the "."
     # assume the extension without the dot is 1-4 chars long
     API.generateUUID fileExt
 
+  App.reqres.setHandler "system:file:uuid:ext", (uuid) ->
+    # assume we get the entire UUID to parse out.
+    # the last 8 characters of the UUID contain the encoding.
+    API.getExtension uuid
