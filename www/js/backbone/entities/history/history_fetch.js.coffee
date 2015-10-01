@@ -29,7 +29,10 @@
         window.open myURL, '_blank'
 
   App.commands.setHandler "history:response:fetch:image", (history_response) ->
-    API.fetchURL history_response, "image"
+    if App.device.isNative
+      App.execute "filemeta:fetch:image:url", history_response.get('prompt_response')
+    else
+      API.fetchURL history_response, "image"
 
   App.commands.setHandler "history:response:fetch:media", (history_response) ->
     API.openExternalURL history_response
