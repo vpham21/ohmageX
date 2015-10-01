@@ -63,7 +63,7 @@
   App.vent.on "history:entry:fetch:media:clicked", (response) ->
     App.execute "history:response:fetch:media", response
 
-  App.vent.on "file:image:url:success file:image:url:error", ->
+  App.vent.on "file:media:open:complete file:media:open:error file:image:url:success file:image:url:error", ->
     App.vent.trigger "loading:hide"
 
   App.vent.on "history:entry:fullmodal:close", ->
