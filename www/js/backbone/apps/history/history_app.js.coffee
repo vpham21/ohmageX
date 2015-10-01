@@ -36,8 +36,7 @@
   App.vent.on "history:entries:fetch:error history:entries:fetch:success", ->
     App.vent.trigger "loading:hide"
 
-  App.vent.on "history:list:entry:clicked", (model) ->
-    myId = model.get 'id'
+  App.vent.on "history:list:entry:clicked", (myId) ->
     API.entry myId
     App.navigate "history/entry/#{myId}"
 
