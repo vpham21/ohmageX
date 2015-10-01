@@ -79,7 +79,13 @@
 
       @listenTo listView, "childview:clicked", (args) =>
         console.log 'childview:entry:clicked', args.model
-        App.vent.trigger "history:list:entry:clicked", args.model
+        # update the previous and next ids for
+        # the activated model.
+        entries.trigger "ids:adjacent:set", args.model.get('id')
+        # fetching the model from entries so we pass in the modified model
+        # with new adjacent IDs and not the base view's model.
+        App.vent.trigger "history:list:entry:clicked", args.model.get('id')
+
 
       @show listView, region: @layout.listRegion
 
