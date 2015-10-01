@@ -93,3 +93,5 @@
         console.log 'dialog canceled'
       )
 
+  App.commands.setHandler "filemeta:fetch:image:url", (uuid) ->
+    API.fetchImageFileURL uuid
