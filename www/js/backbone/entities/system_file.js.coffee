@@ -9,8 +9,16 @@
     init: ->
       fileDirectory = cordova.file.dataDirectory
 
+    getFullPath: (uuid) ->
+      # file directory, uuid, plus the encoded extension
+      fileDirectory + uuid + App.request("system:file:uuid:ext", uuid)
+
     readFile: (options) ->
-      window.resolveLocalFileSystemURL fileDirectory + options.uuid, options.success, options.error
+      window.resolveLocalFileSystemURL @getFullPath(options.uuid), options.success, options.error
+
+    openFile: (uuid, type) ->
+      console.log 'file path to open', @getFullPath(uuid)
+      window.openFileNative.open @getFullPath(uuid)
 
     downloadFile: (options) ->
       ft = new FileTransfer()
@@ -21,10 +29,10 @@
           # instead of directly triggering the loader.
           App.vent.trigger "loading:show", "Downloading #{Math.round(progressEvent.loaded / progressEvent.total * 100)}%..."
 
-      ft.download options.url, fileDirectory + options.uuid, options.success, options.error
+      ft.download options.url, @getFullPath(options.uuid), options.success, options.error
 
     removeFileByUUID: (uuid) ->
-      window.resolveLocalFileSystemURL fileDirectory + uuid, ( (fileEntry) =>
+      window.resolveLocalFileSystemURL @getFullPath(uuid), ( (fileEntry) =>
         fileEntry.remove ( =>
           App.vent.trigger "system:file:uuid:remove:success", uuid
         ),( =>
@@ -51,6 +59,12 @@
     # success callback, arg is a fileEntry
     # error callback, arg is an error message
     API.downloadFile options
+
+  App.commands.setHandler "system:file:uuid:open", (uuid, type) ->
+    # parameters:
+    # uuid
+    # type - MIME type
+    API.openFile uuid, type
 
   App.commands.setHandler "system:file:uuid:remove", (uuid) ->
     API.removeFileByUUID uuid

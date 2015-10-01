@@ -84,6 +84,11 @@
     triggers:
       'click .fetch-button': "fetch:media:clicked"
 
+    serializeData: ->
+      data = @model.toJSON()
+      data.buttonText = if App.device.isNative then "View Response Media" else "Open Response Media"
+      data
+
   class Entry.Responses extends App.Views.CollectionView
     getChildView: (model) ->
       if model.get('prompt_response') is "SKIPPED"

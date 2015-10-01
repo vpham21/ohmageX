@@ -205,6 +205,7 @@ module.exports = (grunt) ->
             "network-information",
             "splashscreen",
             "org.apache.cordova.file-transfer",
+            "https://github.com/andischerer/cordova-plugin-openfilenative.git",
             "https://github.com/ucla/cordova-plugin-local-notifications.git"
           ]
 
