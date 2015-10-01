@@ -23,6 +23,16 @@
 
       ft.download options.url, fileDirectory + options.uuid, options.success, options.error
 
+    removeFileByUUID: (uuid) ->
+      window.resolveLocalFileSystemURL fileDirectory + uuid, ( (fileEntry) =>
+        fileEntry.remove ( =>
+          App.vent.trigger "system:file:uuid:remove:success", uuid
+        ),( =>
+          App.vent.trigger "system:file:uuid:remove:error", uuid
+        )
+      ),( =>
+        App.vent.trigger "system:file:uuid:remove:error", uuid
+      )
 
   App.on "before:start", ->
     if App.device.isNative then API.init()
@@ -42,3 +52,5 @@
     # error callback, arg is an error message
     API.downloadFile options
 
+  App.commands.setHandler "system:file:uuid:remove", (uuid) ->
+    API.removeFileByUUID uuid
