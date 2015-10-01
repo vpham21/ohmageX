@@ -26,6 +26,16 @@
     getFileMetaLength: ->
       storedMeta.length
 
+    generateMediaURL: (uuid, context) ->
+
+      myData =
+        client: App.client_string
+        id: uuid
+      myData = _.extend(myData, App.request("credentials:upload:params"))
+
+      myURL = "#{App.request("serverpath:current")}/app/#{context}/read?#{$.param(myData)}"
+      myURL
+
     addFileMeta: (options) ->
       storedMeta.add options
       @updateLocal( =>
