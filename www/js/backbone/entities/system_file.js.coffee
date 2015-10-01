@@ -16,6 +16,9 @@
     readFile: (options) ->
       window.resolveLocalFileSystemURL @getFullPath(options.uuid), options.success, options.error
 
+    openFile: (uuid, type) ->
+      console.log 'file path to open', @getFullPath(uuid)
+      window.openFileNative.open @getFullPath(uuid)
 
     downloadFile: (options) ->
       ft = new FileTransfer()
@@ -56,6 +59,12 @@
     # success callback, arg is a fileEntry
     # error callback, arg is an error message
     API.downloadFile options
+
+  App.commands.setHandler "system:file:uuid:open", (uuid, type) ->
+    # parameters:
+    # uuid
+    # type - MIME type
+    API.openFile uuid, type
 
   App.commands.setHandler "system:file:uuid:remove", (uuid) ->
     API.removeFileByUUID uuid
