@@ -18,8 +18,10 @@
 
     serializeData: ->
       data = @model.toJSON()
+      data.showCache = App.device.isNative
       data.showPassword = App.request "credentials:ispassword"
       data.serverPath = App.request "serverpath:current"
+
       data
     onRender: ->
       if @model.get('wifi_upload_only') is true then @$el.find("#enable-switch-wifi").prop('checked', true)
