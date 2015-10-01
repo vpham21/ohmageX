@@ -26,6 +26,12 @@
     getFileMetaLength: ->
       storedMeta.length
 
+    addFileMeta: (options) ->
+      storedMeta.add options
+      @updateLocal( =>
+        console.log "file meta API.addFileMeta storage success"
+      )
+
     updateLocal: (callback) ->
       # update localStorage index file_meta with the current version of the file meta store
       App.execute "storage:save", 'file_meta', storedMeta.toJSON(), callback
