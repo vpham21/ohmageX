@@ -19,7 +19,7 @@
 
         if App.request("system:file:name:is:valid", myInput.name) and !App.request("system:file:name:is:video", myInput.name)
 
-          fileExt = myInput.name.match(/\.[0-9a-z]+$/i)
+          fileExt = myInput.name.match(/\.[0-9a-z]+$/i)[0]
 
           @model.set 'currentValue',
             fileObj: myInput
