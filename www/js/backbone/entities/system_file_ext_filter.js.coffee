@@ -32,6 +32,12 @@
     checkFileExt: (filename) ->
       API.compareExtToArray filename, extWhitelist
 
+    checkVideoExt: (filename) ->
+      API.compareExtToArray filename, extVideos
+
   App.reqres.setHandler "system:file:name:is:valid", (filename) ->
     API.checkFileExt filename
+
+  App.reqres.setHandler "system:file:name:is:video", (filename) ->
+    API.checkVideoExt filename
 
