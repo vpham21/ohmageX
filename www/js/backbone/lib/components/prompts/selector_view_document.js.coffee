@@ -16,18 +16,21 @@
 
       if myInput
         # STOPGAP - file extension encoded in UUIDs
-        fileExt = myInput.name.match(/\.[0-9a-z]+$/i)
 
-        # Hardcode any blank file extensions to .mp4
-        # for Android video.
-        fileExt = if !!!fileExt then '.mp4' else fileExt[0]
-        console.log 'myFile Extension', fileExt
-        @model.set 'currentValue',
-          fileObj: myInput
-          fileName: myInput.name
-          UUID: App.request('system:file:generate:uuid', fileExt)
-          # UUID: _.guid()
-          fileSize: myInput.size
+        if App.request("system:file:name:is:valid", myInput.name) and !App.request("system:file:name:is:video", myInput.name)
+
+          fileExt = myInput.name.match(/\.[0-9a-z]+$/i)
+
+          @model.set 'currentValue',
+            fileObj: myInput
+            fileName: myInput.name
+            UUID: App.request('system:file:generate:uuid', fileExt)
+            # UUID: _.guid()
+            fileSize: myInput.size
+
+        else
+          App.vent.trigger "system:file:ext:invalid", myInput.name
+          @model.set 'currentValue', false
       else
         @model.set 'currentValue', false
 
