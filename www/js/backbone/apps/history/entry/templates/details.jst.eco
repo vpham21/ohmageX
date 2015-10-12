@@ -1,7 +1,5 @@
 <div class="running item">
   <div>
-    <button type="button" class="previous-entry">Previous</button>
-    <button type="button" class="next-entry">Next</button>
     <h3><%= @survey_title %></h3>
     <!-- <p><%= @survey.description %></p> -->
     <p><%= @campaign.name %></p>

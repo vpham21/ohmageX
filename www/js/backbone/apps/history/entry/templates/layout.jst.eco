@@ -1,6 +1,10 @@
+<button type="button" class="previous-entry">Previous</button>
+<button type="button" class="next-entry">Next</button>
 <div id="notice-region"></div>
 <div id="details-region"></div>
 <div id="responses-region">
   <h3>Response Details</h3>
   <div id="responses-list"></div>
 </div>
+<button type="button" class="previous-entry">Previous</button>
+<button type="button" class="next-entry">Next</button>

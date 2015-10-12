@@ -119,8 +119,6 @@
     template: "history/entry/details"
     triggers:
       "click button.delete": "delete:clicked"
-      "click button.previous-entry": "previous:clicked"
-      "click button.next-entry": "next:clicked"
     serializeData: ->
       data = @model.toJSON()
       console.log 'item details data', data
@@ -132,6 +130,9 @@
   class Entry.Layout extends App.Views.Layout
     id: 'history-section'
     template: "history/entry/layout"
+    triggers:
+      "click button.previous-entry": "previous:clicked"
+      "click button.next-entry": "next:clicked"
     regions:
       noticeRegion: "#notice-region"
       detailsRegion: "#details-region"
