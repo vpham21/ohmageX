@@ -25,22 +25,31 @@
         # mediaFile properties: name, fullPath, type, lastModifiedDate, size (bytes)
         mediaFile = mediaFiles[0]
 
-        if mediaFile.size > App.custom.prompt_defaults.video.caution_threshold_bytes
-          App.execute "dialog:alert", "Caution: the recorded video is large, and may take a long time to upload to the server."
-
-        # STOPGAP - file extension encoded in UUIDs
-        fileExt = mediaFile.name.match(/\.[0-9a-z]+$/i)
+        fileName = mediaFile.name
+        fileExt = fileName.match(/\.[0-9a-z]+$/i)
 
         # Hardcode any blank file extensions to .mp4
         # for Android video.
-        fileExt = if !!!fileExt then '.mp4' else fileExt[0]
+        if !!!fileExt
+          fileExt = '.mp4'
+          fileName = "#{fileName}#{fileExt}"
+        else
+          fileExt = fileExt[0]
 
-        @model.set 'currentValue',
-          source: "capture"
-          fileObj: mediaFile
-          videoName: mediaFile.name
-          UUID: App.request('system:file:generate:uuid', fileExt)
-          # UUID: _.guid()
+        if App.request("system:file:name:is:video", fileName)
+
+          if mediaFile.size > App.custom.prompt_defaults.video.caution_threshold_bytes
+            App.execute "dialog:alert", "Caution: the recorded video is large, and may take a long time to upload to the server."
+
+          @model.set 'currentValue',
+            source: "capture"
+            fileObj: mediaFile
+            videoName: mediaFile.name
+            UUID: App.request('system:file:generate:uuid', fileExt)
+            # UUID: _.guid()
+        else
+          App.vent.trigger "system:file:ext:invalid", fileName
+          @model.set 'currentValue', false
 
       ),( (error) =>
         # capture error
@@ -74,15 +83,36 @@
           fileEntry.file (file) =>
 
             console.log 'file entry success'
-            if file.size > App.custom.prompt_defaults.video.caution_threshold_bytes
-              App.execute "dialog:alert", "Caution: the selected video is large, and may take a long time to upload to the server."
 
-            @model.set 'currentValue',
-              source: "library"
-              fileObj: file
-              videoName: fileURI.split('/').pop()
-              UUID: _.guid()
-              fileSize: file.size
+            fileName = fileURI.split('/').pop()
+            fileExt = fileName.match(/\.[0-9a-z]+$/i)
+
+            # Hardcode any blank file extensions to .mp4
+            # for Android video.
+            if !!!fileExt
+              fileExt = '.mp4'
+              fileName = "#{fileName}#{fileExt}"
+            else
+              fileExt = fileExt[0]
+
+            if App.request("system:file:name:is:video", fileName)
+
+              if file.size > App.custom.prompt_defaults.video.caution_threshold_bytes
+                App.execute "dialog:alert", "Caution: the selected video is large, and may take a long time to upload to the server."
+
+              # STOPGAP - file extension encoded in UUIDs
+              fileExt = fileName.match(/\.[0-9a-z]+$/i)
+
+              @model.set 'currentValue',
+                source: "library"
+                fileObj: file
+                videoName: fileName
+                UUID: App.request('system:file:generate:uuid', fileExt)
+                fileSize: file.size
+
+            else
+              App.vent.trigger "system:file:ext:invalid", fileName
+              @model.set 'currentValue', false
 
         ),( (error) =>
           # error callback when reading the generated fileURI
