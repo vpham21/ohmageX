@@ -41,3 +41,5 @@
   App.reqres.setHandler "system:file:name:is:video", (filename) ->
     API.checkVideoExt filename
 
+  App.vent.on "system:file:ext:invalid", (fileName) ->
+    App.execute "dialog:alert", "The selected file \"#{fileName}\" does not contain a valid file extension. Please select another file."
