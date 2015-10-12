@@ -15,3 +15,7 @@
     'rtf' # Rich Text format
   ]
 
+  extVideos = [
+    'mpg','mpeg','mpe','mp4','avi','3gp','3gpp','3g2' # video
+  ]
+
