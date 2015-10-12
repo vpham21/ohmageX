@@ -100,9 +100,6 @@
               if file.size > App.custom.prompt_defaults.video.caution_threshold_bytes
                 App.execute "dialog:alert", "Caution: the selected video is large, and may take a long time to upload to the server."
 
-              # STOPGAP - file extension encoded in UUIDs
-              fileExt = fileName.match(/\.[0-9a-z]+$/i)
-
               @model.set 'currentValue',
                 source: "library"
                 fileObj: file
