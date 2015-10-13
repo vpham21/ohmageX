@@ -6,6 +6,30 @@
 			    <button type="button" class="icon right-arrow navigate">View</button>
 			  </div>
 			  <div role="link">
+			    <h3>Personal Information</h3>
+			  </div>
+			</div>
+		</li>
+	</ul>
+	<ul>
+		<li>
+			<div class="survey running navigate">
+			  <div class="action right">
+			    <button type="button" class="icon right-arrow navigate">View</button>
+			  </div>
+			  <div role="link">
+			    <h3>Goals</h3>
+			  </div>
+			</div>
+		</li>
+	</ul>
+	<ul>
+		<li>
+			<div class="survey running navigate-profile">
+			  <div class="action right">
+			    <button type="button" class="icon right-arrow navigate">View</button>
+			  </div>
+			  <div role="link">
 			    <h3>Account</h3>
 			  </div>
 			</div>
@@ -13,7 +37,7 @@
 	</ul>
 	<ul>
 		<li>
-			<div class="survey running">
+			<div class="survey running navigate-settings-date">
 			  <div class="action right">
 			    <button type="button" class="icon right-arrow navigate">View</button>
 			  </div>

@@ -84,6 +84,7 @@
         { name: "reminder", url: "#reminders", icon: "notification", visible: false, marker: false }
         { name: "settings", url: "#settings", icon: "settings", visible: false, marker: false }
         { name: "profile", url: "#profile", icon: "profile", visible: false, marker: false }
+        { name: "settings_date", url: "#settings_date", icon: "settings", visible: false, marker: false }
         { name: "help", url: "#help", icon: "help", visible: false, marker: false }
         { name: "logout", url: "#logout", icon: "logout", visible: false, marker: false }
       ]

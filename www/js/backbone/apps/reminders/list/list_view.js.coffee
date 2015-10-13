@@ -134,7 +134,7 @@
         active: true
         repeat: myRepeat
         repeatDays: repeatDays
-
+        
       @trigger "reminder:submit", @model, response
 
     serializeData: ->

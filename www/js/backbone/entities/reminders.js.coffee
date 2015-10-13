@@ -109,6 +109,7 @@
         surveyId: false
         surveyTitle: false
         campaign: false
+        message: "You have a reminder!"
       }
 
   class Entities.Reminders extends Entities.Collection
@@ -123,10 +124,7 @@
     comparator: (model) ->
       # sort by the hour, minute and second.
       input = moment(model.get('activationDate'))
-      hour = input.hour()
-      minute = input.minute()
-
-      moment().startOf('day').hour(hour).minute(minute).second(0).unix()
+      moment(input).unix()
 
   currentReminders = false
 
@@ -178,8 +176,6 @@
       if response.repeat and response.repeatDays.length is 0
         App.vent.trigger "reminder:validate:fail", 'Please select days to repeat this reminder.'
         return false
-      console.log 'validateReminder model', model
-      console.log 'response', response
       reminder = currentReminders.get(model)
       validateIt = response.active and !response.repeat
 

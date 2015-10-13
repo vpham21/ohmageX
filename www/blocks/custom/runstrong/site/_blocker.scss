@@ -9,8 +9,20 @@ body > #ui-blocker  {
     }
   }
   .button-pair {
+    margin-bottom: 1rem;
     button {
-      height: 2rem;
+      height: 1rem;
     }
   }
+}
+.hide {
+  display: none;
+}
+.blocker-title {
+  font-size: 1rem;
+  color: $app-header-font-color;
+  text-align: center;
+}
+.blocker-text {
+  color: $app-header-font-color;
 }

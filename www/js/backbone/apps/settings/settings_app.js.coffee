@@ -14,6 +14,20 @@
       console.log 'SettingsApp show'
       new SettingsApp.Show.Controller
 
+    goToProfile: ->
+      App.navigate "#profile", trigger: true
+      
+    goToSettingsDate: ->
+      App.navigate "#settings_date", trigger: true
+
   App.addInitializer ->
     new SettingsApp.Router
       controller: API
+
+  App.vent.on "settings:navigate:profile", ->
+    console.log 'settings_app.settings:navigate:profile'
+    API.goToProfile()
+
+  App.vent.on "settings:navigate:settings_date", ->
+    console.log 'settings_date_app.settings:navigate:settings_date'
+    API.goToSettingsDate()

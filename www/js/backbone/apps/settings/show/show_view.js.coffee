@@ -3,10 +3,10 @@
   class Show.Settings extends App.Views.ItemView
     className: "text-container"
     template: "settings/show/info"
+    triggers:
+      "click .navigate-profile": "navigate:profile:clicked"
+      "click .navigate-settings-date": "navigate:settings_date:clicked"
 
-    serializeData: ->
-
-    onRender: ->
 
   class Show.Layout extends App.Views.Layout
     template: "settings/show/show_layout"

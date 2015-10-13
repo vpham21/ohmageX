@@ -34,6 +34,10 @@
         {
           name: 'Resources'
           id: 'resources'
+        },
+        {
+          name: 'Messages'
+          id: 'messages'
         }
       ]
       navs.chooseById(chosen)

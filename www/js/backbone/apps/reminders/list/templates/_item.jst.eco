@@ -1,15 +1,14 @@
 <form class='reminder-form' id="reminder-form-<%= @id %>">
-
-  <div class="repeat-enable-region">
+  <span class="blocker-title"><%= @surveyTitle %></span>
+  <div class="repeat-enable-region hide">
     <div class="square-checkbox">
       <input type="checkbox" name="repeat" id="repeat<%= @id %>">
       <label for="repeat<%= @id %>">Repeat</label>
     </div>
   </div>
-  <div class="surveys-region select-block"></div>
-
+  <div class="surveys-region select-block hide"></div>
   <fieldset>
-    <div class="repeat-days-container">
+    <div class="repeat-days-container" style="display:none">
       <label for="date<%= @id %>">on </label>
       <ul class="repeat-days" data-visible="false">
         <li><input type="checkbox" value="1" name="repeatDays[]"> <label>M</label></li>
@@ -24,14 +23,12 @@
         <input name="date<%= @id %>" value="<%= @currentDateValue %>" type="date">
       </div>
     </div>
-    <label for="time<%= @id %>">at </label>
     <div class="time-control">
+      <span class="blocker-text">on <%= moment(@currentDateValue).format('LL') %> at</span>
       <input name="time<%= @id %>" value="<%= @currentTimeValue %>" type="time">
     </div>
   </fieldset>
-
   <div class="delete-button-container">
-    <button type="button" class="delete-button icon trash">Delete</button>
+    <button type="button" class="delete-button icon trash hide">Delete</button>
   </div>
-
 </form>

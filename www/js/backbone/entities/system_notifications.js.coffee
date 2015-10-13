@@ -28,6 +28,8 @@
         else
           cordova.plugins.notification.local.clearAll =>
             console.log 'triggered surveys noted, cleared all from notification center'
+
+        App.execute "settings_date:local_notifications:keep_up_to_date"
       )
 
       cordova.plugins.notification.local.on "click", (notification) =>
@@ -65,7 +67,7 @@
           # an iOS bug that causes repeating notifications in certain circumstances to fire the
           # `trigger` event multiple times for a single notification.
           if App.request "system:notifications:oldid:compare", notification.id
-            App.execute "dialog:confirm", "Reminder to take the survey #{result.surveyTitle}. Go to the survey?", (=>
+            App.execute "dialog:confirm", "#{result.message}", (=>
               App.navigate "survey/#{result.surveyId}", trigger: true
               setTimeout (=>
                 # add a 2 second buffer after this dialog box is closed
@@ -107,6 +109,7 @@
           reminderId: reminder.get('id')
           firstAt: reminder.get('activationDate').toDate()
           surveyTitle: reminder.get('surveyTitle')
+          message: reminder.get('message')
 
       else
 
@@ -134,6 +137,7 @@
             every: 'day'
             firstAt: newDate.toDate()
             surveyTitle: reminder.get('surveyTitle')
+            message: reminder.get('message')
 
         else
           # schedule multiple non-consecutive weekly notifications
@@ -145,18 +149,19 @@
 
     scheduleNotification: (options) ->
 
-      { notificationId, surveyId, every, firstAt, surveyTitle } = options
+      { notificationId, surveyId, every, firstAt, surveyTitle, message } = options
       console.log 'scheduleNotification'
       console.log JSON.stringify(options)
       if App.device.isNative
         result =
           id: notificationId
           title: "#{surveyTitle}"
-          text: "Tap to capture. Swipe to ignore."
+          text: message
           firstAt: firstAt
           data:
             surveyId: surveyId
             surveyTitle: surveyTitle
+            message: message
 
         # In the plugin schedule method:
         # `every` property must either be NOT included at all or set to a pre-defined interval string.
@@ -204,6 +209,7 @@
           data:
             surveyId: reminder.get('surveyId')
             surveyTitle: reminder.get('surveyTitle')
+            message: reminder.get('message')
 
       # set the new activationDate to the next occurrence of
       # the non-consecutive repeating reminder

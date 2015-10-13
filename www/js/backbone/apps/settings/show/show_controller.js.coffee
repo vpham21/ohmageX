@@ -17,6 +17,14 @@
     settingsRegion: (settings) ->
       settingsView = @getInfoView settings
 
+      @listenTo settingsView, "navigate:profile:clicked", ->
+        console.log 'show_controller.listenTo.navigate:profile:clicked'
+        App.vent.trigger "settings:navigate:profile"
+
+      @listenTo settingsView, "navigate:settings_date:clicked", ->
+        console.log 'show_controller.listenTo.navigate:settings_date:clicked'
+        App.vent.trigger "settings:navigate:settings_date"
+
       @show settingsView, region: @layout.settingsRegion
 
     getInfoView: (settings) ->

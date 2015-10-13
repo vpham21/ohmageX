@@ -72,6 +72,8 @@
 
       @listenTo @blockerView, "reminder:submit", (model, response) =>
         console.log 'reminder:submit model', model
+        console.log 'model: ' + JSON.stringify(model)
+        console.log 'response: ' + JSON.stringify(response)
         App.vent.trigger "reminders:reminder:submit", model, response
 
       @listenTo @blockerView, "new:revert", (model) =>
