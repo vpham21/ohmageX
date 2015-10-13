@@ -278,7 +278,7 @@
 
       App.execute "storage:clear", 'reminders', ->
         console.log 'saved reminders erased'
-        App.vent.trigger "reminders:saved:cleared"
+        App.vent.trigger "reminders:all:clear:complete", options
 
   App.vent.on "surveys:saved:load:complete", ->
     API.init()
