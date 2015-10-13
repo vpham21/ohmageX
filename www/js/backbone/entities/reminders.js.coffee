@@ -283,8 +283,8 @@
   App.vent.on "surveys:saved:load:complete", ->
     API.init()
 
-  App.commands.setHandler "reminders:saved:clear", ->
-    API.clear()
+  App.commands.setHandler "reminders:all:clear", (options) ->
+    API.clear options
 
   App.vent.on "credentials:cleared", ->
     API.clear()
