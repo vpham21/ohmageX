@@ -244,6 +244,6 @@
     console.log "system:notifications:turn:on", reminder
     API.turnOn reminder
 
-  App.vent.on "credentials:cleared", ->
+  App.vent.on "reminders:all:clear:complete", (options) ->
     if App.device.isNative
-      API.clear()
+      API.clear options
