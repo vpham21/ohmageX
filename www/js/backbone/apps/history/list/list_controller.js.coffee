@@ -74,12 +74,26 @@
       @show surveysView, region: @layout.surveysControlRegion
 
 
-    listRegion: (responses) ->
-      listView = @getListView responses
+    listRegion: (entries) ->
+      listView = @getListView entries
 
       @listenTo listView, "childview:clicked", (args) =>
         console.log 'childview:entry:clicked', args.model
-        App.vent.trigger "history:list:entry:clicked", args.model
+        # update the previous and next ids for
+        # the activated model.
+        entries.trigger "ids:adjacent:set", args.model.get('id')
+        # fetching the model from entries so we pass in the modified model
+        # with new adjacent IDs and not the base view's model.
+        App.vent.trigger "history:list:entry:clicked", args.model.get('id')
+
+      @listenTo App.vent, "history:entry:previous:clicked history:entry:next:clicked", (myId) =>
+        # This is listening to an app level event - necessary
+        # so that this list view can trigger itself to open.
+        # This way the activation of next and previous properly handles
+        # all of its necessary cleanup.
+        entries.trigger "ids:adjacent:set", myId
+
+        App.vent.trigger "history:list:entry:clicked", myId
 
       @show listView, region: @layout.listRegion
 

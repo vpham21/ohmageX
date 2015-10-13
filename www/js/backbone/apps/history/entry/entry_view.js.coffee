@@ -76,16 +76,18 @@
     triggers:
       'click .fetch-button': "fetch:image:clicked"
     onRender: ->
-      if !(App.device.isNative and navigator.connection.type is Connection.NONE)
-        # The only situation where we don't load an image immediately
-        # is when we're on a mobile device and we're offline.
-        @trigger "fetch:image:clicked"
+      @trigger "fetch:image:clicked"
 
   class Entry.Media extends Entry.ResponseBase
     template: "history/entry/response_media"
 
     triggers:
       'click .fetch-button': "fetch:media:clicked"
+
+    serializeData: ->
+      data = @model.toJSON()
+      data.buttonText = if App.device.isNative then "View Response Media" else "Open Response Media"
+      data
 
   class Entry.Responses extends App.Views.CollectionView
     getChildView: (model) ->
@@ -128,6 +130,9 @@
   class Entry.Layout extends App.Views.Layout
     id: 'history-section'
     template: "history/entry/layout"
+    triggers:
+      "click button.previous-entry": "previous:clicked"
+      "click button.next-entry": "next:clicked"
     regions:
       noticeRegion: "#notice-region"
       detailsRegion: "#details-region"

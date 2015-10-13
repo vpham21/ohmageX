@@ -11,6 +11,10 @@
     checkCondition: (currentFlow, stepId) ->
       result = currentFlow.findWhere({id: stepId })
       throw new Error "Flow id #{stepId} does not exist in currentFlow" if typeof result is 'undefined'
+
+      # evaluate all hidden prompts as false, do not show
+      if result.get('status') is 'hidden' then return false
+
       myRawCondition = result.get 'condition'
 
       if @parseCondition(myRawCondition, App.request "responses:current")

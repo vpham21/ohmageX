@@ -98,6 +98,7 @@
       myResponses = @createResponses App.request("survey:xml:content", $surveyXML)
       currentResponses = new Entities.ResponseCollection myResponses
       console.log 'currentResponses', currentResponses.toJSON()
+      App.vent.trigger "responses:init:complete", currentResponses
     getValidationProperties: ($xml, type) ->
       if type in ['single_choice', 'single_choice_custom','multi_choice','multi_choice_custom']
         return false

@@ -2,4 +2,4 @@
   <h5><%= @prompt_text %></h5>
   <i class="fa fa-<%= @icon %>"></i>
 </header>
-<p><button class="fetch-button" type="button">Open Response Media</button></p>
+<p><button class="fetch-button" type="button"><%= @buttonText %></button></p>

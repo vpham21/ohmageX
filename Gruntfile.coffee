@@ -205,6 +205,7 @@ module.exports = (grunt) ->
             "network-information",
             "splashscreen",
             "org.apache.cordova.file-transfer",
+            "https://github.com/wrenr/cordova-plugin-openfilenative.git",
             "https://github.com/ucla/cordova-plugin-local-notifications.git"
           ]
 
@@ -259,7 +260,7 @@ module.exports = (grunt) ->
         cmd: "../node_modules/grunt-cli/bin/grunt cordova_build_ios"
         cwd: "<%= cordova_project_folder %>"
       android_build:
-        cmd: "adb uninstall <%= appConfig.build.bundle_id %>;cordova run android"
+        cmd: "adb uninstall <%= appConfig.build.bundle_id %>;../node_modules/cordova/bin/cordova run android"
         cwd: "<%= cordova_project_folder %>"
       android_theme_fix:
         cmd: "sed -i '' 's|android:theme=\"@android:style/Theme.Black.NoTitleBar\"||g' AndroidManifest.xml"
@@ -393,3 +394,13 @@ module.exports = (grunt) ->
     "exec:android_build" # must pass it through a custom exec to change cwd
   ]
 
+  grunt.registerTask "jenkins_build", [
+    "dev"
+    "clean:hybrid_build"
+    "copy:hybrid_build"
+    "clean:cordova_www"
+    "copy:cordova_www"
+    "template:cordova_config"
+    "clean:cordova_config"
+    "copy:cordova_config"
+  ]

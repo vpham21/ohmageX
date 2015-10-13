@@ -20,6 +20,16 @@
         responses = App.request "history:entry:responses", @entry_id
         @responsesRegion responses
         @noticeRegion()
+
+      @listenTo @layout, "previous:clicked", (args) =>
+        console.log 'childview:previous:clicked', entry
+        App.vent.trigger "history:entry:previous:clicked", entry.get 'prevId'
+
+      @listenTo @layout, "next:clicked", (args) =>
+        console.log 'childview:next:clicked', entry
+        App.vent.trigger "history:entry:next:clicked", entry.get 'nextId'
+
+
       @show @layout,
         loading: false
         modal:
@@ -35,10 +45,6 @@
       @listenTo detailsView, "delete:clicked", (args) =>
         console.log 'childview:delete:clicked', entry
         App.vent.trigger "history:entry:delete:clicked", entry
-
-      @listenTo detailsView, "close:clicked", (args) =>
-        console.log 'childview:close:clicked', entry
-        App.vent.trigger "history:entry:close:clicked", entry
 
       @show detailsView, region: @layout.detailsRegion
 

@@ -14,6 +14,14 @@
         if @findWhere(id: entry.get('id'))
           @findWhere(id: entry.get('id')).set('media_url', myURL)
 
+      @listenTo App.vent, "file:image:url:success", (uuid, url) ->
+        if @findWhere(prompt_response: uuid)
+          @findWhere(prompt_response: uuid).set('media_url', url)
+
+      @listenTo App.vent, "file:image:url:error", (uuid) ->
+        if @findWhere(prompt_response: uuid)
+          @findWhere(prompt_response: uuid).set('media_url', false)
+
   API =
     getResponses: (rawResponses) ->
       new Entities.UserHistoryResponses rawResponses

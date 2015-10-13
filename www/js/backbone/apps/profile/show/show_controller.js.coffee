@@ -20,6 +20,9 @@
       @listenTo profileView, "password:clicked", ->
         App.vent.trigger "profile:password:clicked"
 
+      @listenTo profileView, "clear:cache:clicked", ->
+        App.vent.trigger "profile:clear:cache:clicked"
+
       @listenTo profileView, "wifiuploadonly:enabled", ->
         App.vent.trigger 'user:preferences:wifiuploadonly:enabled'
 

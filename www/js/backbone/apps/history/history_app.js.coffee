@@ -36,8 +36,7 @@
   App.vent.on "history:entries:fetch:error history:entries:fetch:success", ->
     App.vent.trigger "loading:hide"
 
-  App.vent.on "history:list:entry:clicked", (model) ->
-    myId = model.get 'id'
+  App.vent.on "history:list:entry:clicked", (myId) ->
     API.entry myId
     App.navigate "history/entry/#{myId}"
 
@@ -62,6 +61,9 @@
 
   App.vent.on "history:entry:fetch:media:clicked", (response) ->
     App.execute "history:response:fetch:media", response
+
+  App.vent.on "file:media:open:complete file:media:open:error file:image:url:success file:image:url:error", ->
+    App.vent.trigger "loading:hide"
 
   App.vent.on "history:entry:fullmodal:close", ->
     # Since this came from a modal view,
