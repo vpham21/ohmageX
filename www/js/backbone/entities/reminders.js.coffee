@@ -273,7 +273,7 @@
       # update localStorage index reminders with the current version of campaignsSaved entity
       App.execute "storage:save", 'reminders', currentReminders.toJSON(), callback
 
-    clear: ->
+    clear: (options = {}) ->
       currentReminders = new Entities.Reminders
 
       App.execute "storage:clear", 'reminders', ->
