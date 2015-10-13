@@ -229,9 +229,15 @@
         App.vent.trigger "notifications:update:complete"
 
 
-    clear: ->
-      cordova.plugins.notification.local.cancelAll ->
-        console.log 'All system notifications canceled'
+    clear: (options) ->
+      # options
+      # complete: A callback to fire when cancelAll has finished
+
+      _.defaults options,
+        complete: ->
+          console.log 'All system notifications canceled'
+
+      cordova.plugins.notification.local.cancelAll options.complete
 
   App.vent.on "surveys:saved:load:complete", ->
     if App.device.isNative
@@ -244,6 +250,6 @@
     console.log "system:notifications:turn:on", reminder
     API.turnOn reminder
 
-  App.vent.on "credentials:cleared", ->
+  App.vent.on "reminders:all:clear:complete", (options) ->
     if App.device.isNative
-      API.clear()
+      API.clear options
