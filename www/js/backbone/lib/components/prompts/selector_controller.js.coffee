@@ -18,6 +18,16 @@
 
       entity.set 'promptTextMarkdown', promptMarkdown
 
+      if type in ["single_choice", "single_choice_custom", "multi_choice", "multi_choice_custom"]
+
+        promptChoicesMarkdown = App.request "prompt:markdown:choices",
+          collection: entity.get 'properties'
+          campaign_urn: App.request "survey:saved:urn", @surveyId
+          surveyId: @surveyId
+          stepId: @stepId
+
+        entity.set 'promptChoices', promptChoicesMarkdown
+
       @myView = @selectView entity, type
 
       @listenTo @myView, "customchoice:add:success", (myVal, myKey) =>
@@ -70,19 +80,19 @@
         when "single_choice"
           return new Prompts.SingleChoice
             model: entity
-            collection: entity.get('properties')
+            collection: entity.get 'promptChoices'
         when "single_choice_custom"
           return new Prompts.SingleChoiceCustom
             model: entity
-            collection: App.request "prompt:customchoices:merged", @surveyId, @stepId, entity.get('properties')
+            collection: App.request "prompt:customchoices:merged", @surveyId, @stepId, entity.get 'promptChoices'
         when "multi_choice"
           return new Prompts.MultiChoice
             model: entity
-            collection: entity.get('properties')
+            collection: entity.get 'promptChoices'
         when "multi_choice_custom"
           return new Prompts.MultiChoiceCustom
             model: entity
-            collection: App.request "prompt:customchoices:merged", @surveyId, @stepId, entity.get('properties')
+            collection: App.request "prompt:customchoices:merged", @surveyId, @stepId, entity.get 'promptChoices'
         when "document"
           return new Prompts.Document
             model: entity
