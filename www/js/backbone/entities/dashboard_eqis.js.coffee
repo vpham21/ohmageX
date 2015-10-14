@@ -51,9 +51,12 @@
       days = []
       _.each responseCounts, (count, index) =>
         if index > 0 and index < @numDays+1
+
+          paddedIndex = "0#{index}".slice('-2')
+
           days.push
-            rowLabel: "Day #{index}"
-            bucket: "Day #{index}"
+            rowLabel: "Day #{paddedIndex}"
+            bucket: "Day #{paddedIndex}"
             surveyId: '2AssessmentArtifacts'
             secondSurveyId: '3InstructionArtifacts'
             newPrepopIndex: index
@@ -90,7 +93,10 @@
       # returns an array of 10 items, with bucket count in sequence.
       results = results.concat( _.map dayNumbers, (dayNumber) ->
         # we mapped the spaces to underscores, include an underscore here!
-        targetBucket = "Day_#{dayNumber}"
+
+        paddedDayNumber = "0#{dayNumber}".slice('-2')
+
+        targetBucket = "Day_#{paddedDayNumber}"
         if targetBucket of bucketCountsObj
           # The key exists.
           # return the value of this bucket's count.
