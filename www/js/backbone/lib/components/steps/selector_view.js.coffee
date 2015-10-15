@@ -9,7 +9,7 @@
       data
 
   class Steps.Message extends App.Views.ItemView
-    className: "text-container"
+    className: "step-message"
     template: "steps/message"
     serializeData: ->
       data = @model.toJSON()
