@@ -585,10 +585,6 @@
 			]
 			return settings_dates
 
-		getSettingsDateReminders: ->
-			reminders = []
-			return reminders
-			
 	App.reqres.setHandler "settings_dates:get:all", ->
 		console.log "settings_dates:get:all"
 		API.getSettingsDates()

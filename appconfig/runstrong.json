@@ -33,6 +33,7 @@
       "recipe": "recipe",
       "reminder": "reminder",
       "settings": "settings",
+      "settings_date": "settings_date",
       "profile": "profile",
       "help": "help",
       "logout": "logout"
@@ -49,6 +50,7 @@
       "recipe": "recipes",
       "reminder": "reminders",
       "settings": "settings",
+      "settings_date": "settings_date",
       "profile": "profile",
       "help": "help",
       "logout": "logout"
@@ -65,6 +67,7 @@
       "recipe": "Recipes",
       "reminder": "Notifications",
       "settings": "Settings",
+      "settings_date": "Start Date",
       "profile": "Profile",
       "help": "Help",
       "logout": "Logout"
