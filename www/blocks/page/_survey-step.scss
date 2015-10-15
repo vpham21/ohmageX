@@ -6,6 +6,17 @@
     }
   }
 
+  .step-message {
+    padding: $global-form-control-padding*2;
+    h2:empty {
+      display: none;
+    }
+    p {
+      margin: 0;
+      padding: $global-form-control-padding*2 0;
+    }
+  }
+
   .inline-error {
     font-size: $global-form-control-font-size*0.95;
     background-color: #FFDDEE;
