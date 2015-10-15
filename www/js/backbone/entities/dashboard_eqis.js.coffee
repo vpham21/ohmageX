@@ -39,7 +39,7 @@
 
       results = [
           rowLabel: "Initial"
-          bucket: "Initial Reflection"
+          bucket: "A. Initial Reflection"
           surveyId: '1InitialReflection'
           secondSurveyId: false
           newPrepopIndex: false
@@ -69,7 +69,7 @@
       # add suffix results
       results = results.concat [
         rowLabel: "Concluding"
-        bucket: "Concluding Reflection"
+        bucket: "Z. Concluding Reflection"
         surveyId: '4ConcludingReflection'
         secondSurveyId: false
         newPrepopIndex: false
@@ -89,7 +89,7 @@
       # returns an object like:
       # {bucket_1: 3, bucket_3: 4, ... }
       results = []
-      results[0] = if "Initial_Reflection" of bucketCountsObj then bucketCountsObj.Initial_Reflection else 0
+      results[0] = if "A._Initial_Reflection" of bucketCountsObj then bucketCountsObj.Initial_Reflection else 0
       # returns an array of 10 items, with bucket count in sequence.
       results = results.concat( _.map dayNumbers, (dayNumber) ->
         # we mapped the spaces to underscores, include an underscore here!
@@ -105,7 +105,7 @@
           # key does not exist, its count is zero.
           return 0
       )
-      results[@numDays+1] = if "Concluding_Reflection" of bucketCountsObj then bucketCountsObj.Concluding_Reflection else 0
+      results[@numDays+1] = if "Z._Concluding_Reflection" of bucketCountsObj then bucketCountsObj.Concluding_Reflection else 0
       results
 
   API =
