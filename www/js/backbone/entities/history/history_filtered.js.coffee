@@ -39,6 +39,8 @@
       myModel.set
         prevId: @at(prevIndex).get('id')
         nextId: @at(nextIndex).get('id')
+        position: @indexOf(myModel) + 1
+        total: myLength + 1
  
     where: (criteria) ->
       if criteria and !_.isEmpty criteria
