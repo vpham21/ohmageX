@@ -39,7 +39,7 @@
 
       results = [
           rowLabel: "Initial"
-          bucket: "A. Initial Reflection"
+          bucket: "A Initial Reflection"
           surveyId: '1InitialReflection'
           secondSurveyId: false
           newPrepopIndex: false
@@ -69,7 +69,7 @@
       # add suffix results
       results = results.concat [
         rowLabel: "Concluding"
-        bucket: "Z. Concluding Reflection"
+        bucket: "A Concluding Reflection"
         surveyId: '4ConcludingReflection'
         secondSurveyId: false
         newPrepopIndex: false
@@ -85,11 +85,11 @@
       dayNumbers = _.range(1,@numDays+1,1)
       # get buckets, converting spaces into underscores
       # so they can be mapped to object properties
-      bucketCountsObj = _.countBy entries, (entry) -> "#{entry.get('bucket')}".replace(" ", "_")
+      bucketCountsObj = _.countBy entries, (entry) -> "#{entry.get('bucket')}".replace(/\s/g, "_").replace(/\./g, "")
       # returns an object like:
       # {bucket_1: 3, bucket_3: 4, ... }
       results = []
-      results[0] = if "A._Initial_Reflection" of bucketCountsObj then bucketCountsObj.Initial_Reflection else 0
+      results[0] = if "A_Initial_Reflection" of bucketCountsObj then bucketCountsObj.A_Initial_Reflection else 0
       # returns an array of 10 items, with bucket count in sequence.
       results = results.concat( _.map dayNumbers, (dayNumber) ->
         # we mapped the spaces to underscores, include an underscore here!
@@ -105,7 +105,7 @@
           # key does not exist, its count is zero.
           return 0
       )
-      results[@numDays+1] = if "Z._Concluding_Reflection" of bucketCountsObj then bucketCountsObj.Concluding_Reflection else 0
+      results[@numDays+1] = if "Z_Concluding_Reflection" of bucketCountsObj then bucketCountsObj.A_Concluding_Reflection else 0
       results
 
   API =
