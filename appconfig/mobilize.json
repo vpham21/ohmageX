@@ -50,6 +50,9 @@
       "logout": "Logout"
     }
   },
+  "messages": {
+    "reminder_body": "Tap to capture. Swipe to ignore."
+  },
   "menu_items_disabled": {
     "native": [
       "dashboardeqis",
