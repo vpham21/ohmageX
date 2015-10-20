@@ -25,6 +25,15 @@
 
       App.vent.trigger "history:media:queue:all:start"
 
+      queue.each (item) ->
+        itemId = item.get('id')
+        context = item.get('context')
+
+        if App.device.isNative
+          App.execute "filemeta:fetch:auto", itemId, context
+        else
+          App.vent.trigger "filemeta:fetch:auto:success", itemId, context
+
     whenComplete: ->
       errorCount = App.request "history:media:queue:errors:count"
       myLength = App.request "history:media:queue:length"
