@@ -23,6 +23,8 @@
       $.when( currentDeferred... ).done =>
         @whenComplete()
 
+      App.vent.trigger "history:media:queue:all:start"
+
     whenComplete: ->
       errorCount = App.request "history:media:queue:errors:count"
       myLength = App.request "history:media:queue:length"
