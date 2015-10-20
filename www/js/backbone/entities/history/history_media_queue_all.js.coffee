@@ -1,6 +1,10 @@
 @Ohmage.module "Entities", (Entities, App, Backbone, Marionette, $, _) ->
 
   # This handles History Media Queue operations on all items.
+  # NOTE: This does not use oldLength and newLength like
+  # the Upload Queue uses to count errors. Doing this was causing
+  # strange errors when looping through the queue and
+  # the queue item was returning null before it even got deleted.
 
   currentDeferred = []
   currentIndices = []
