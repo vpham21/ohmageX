@@ -45,3 +45,18 @@
         # some failed, use errorCount
         App.execute "dialog:alert", "Unable to fetch #{errorCount} out of #{myLength} images or documents in the History."
 
+    queueFailure: (itemId, context) ->
+      # the queue events - whether error or success -
+      # must resolve each individual Deferred object.
+      console.log "queue failure for #{itemId}"
+      myIndex = currentIndices.indexOf(itemId)
+      currentDeferred[myIndex].resolve()
+
+    queueSuccess: (itemId) ->
+      # the queue events - whether error or success -
+      # must resolve each individual Deferred object.
+      console.log "queue Success for #{itemId}"
+      myIndex = currentIndices.indexOf(itemId)
+      currentDeferred[myIndex].resolve()
+
+
