@@ -37,6 +37,8 @@
   App.reqres.setHandler "history:media:queue:errors:count", ->
     API.getErrorCount()
 
+  App.vent.on "filemeta:fetch:auto:success", (itemId) ->
+    currentQueue.get(itemId).set 'fetched', true
 
   App.vent.on "history:fetch:start", ->
     API.init()
