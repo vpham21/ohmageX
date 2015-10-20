@@ -11,6 +11,8 @@
 
 
   storedMeta = false
+  # prefix string added to all auto fetch requests
+  autoPrefix = "auto:"
 
   API =
     init: ->
