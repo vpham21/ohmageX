@@ -75,7 +75,8 @@
   },
   "routes": {
     "homepage": "dashboardeqis",
-    "surveys": "dashboardeqis"
+    "surveys": "dashboardeqis",
+    "help": "http://wiki.eqis.io/app/eqis"
   },
   "server_list": {
     "custom": false,
