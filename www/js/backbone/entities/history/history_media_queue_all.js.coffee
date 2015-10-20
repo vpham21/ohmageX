@@ -20,6 +20,9 @@
         return new $.Deferred()
       )
 
+      $.when( currentDeferred... ).done =>
+        @whenComplete()
+
     whenComplete: ->
       errorCount = App.request "history:media:queue:errors:count"
       myLength = App.request "history:media:queue:length"
