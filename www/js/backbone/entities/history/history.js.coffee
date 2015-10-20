@@ -101,6 +101,15 @@
           return false
       _.extend(results, metaProperties)
 
+    makeHistoryMediaIndex: (results) ->
+      mediaIndex = []
+      _.each results.responses, (response) ->
+        if response.prompt_type in ['photo','document'] and response.prompt_response not in ["NOT_DISPLAYED", "SKIPPED"]
+          mediaIndex.push
+            context: if response.prompt_type is 'photo' then 'image' else 'media'
+            id: response.prompt_response
+      App.execute "history:media:queue:add", mediaIndex
+
     parse: (response, options) ->
       # parse JSON into individual responses with campaign metadata
 
@@ -138,6 +147,7 @@
           responses: value.responses
         }
         results = @addSorting(results)
+        @makeHistoryMediaIndex(results)
         return @addEntryListMetaProperties(results)
       ).filter((result) -> !!result).value()
       campaignEntries
