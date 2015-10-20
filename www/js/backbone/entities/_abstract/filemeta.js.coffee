@@ -42,6 +42,12 @@
       myURL = "#{App.request("serverpath:current")}/app/#{context}/read?#{$.param(myData)}"
       myURL
 
+    removeFileMeta: (id) ->
+      storedMeta.remove storedMeta.get(id)
+      @updateLocal( =>
+        console.log "file meta API.removeFileMeta storage success"
+      )
+
     addFileMeta: (options) ->
       storedMeta.add options
       @updateLocal( =>
@@ -51,6 +57,13 @@
     updateLocal: (callback) ->
       # update localStorage index file_meta with the current version of the file meta store
       App.execute "storage:save", 'file_meta', storedMeta.toJSON(), callback
+
+    deleteReference: (uuid) ->
+      # delete any saved file reference if it already exists.
+
+      if storedMeta.where(id: uuid)
+        App.execute "system:file:uuid:remove", uuid
+        @removeFileMeta uuid
 
     fetchMedia: (uuid, context) ->
 
@@ -72,6 +85,9 @@
               # this queue item.
               App.vent.trigger "filemeta:fetch:auto:success", uuid, context
         error: (message) =>
+
+          @deleteReference uuid
+
           # file wasn't read, try to download it.
           switch (context)
             when 'image'
@@ -125,6 +141,8 @@
             else
               # resolve the queue item with an error, download failed
               App.vent.trigger "filemeta:fetch:auto:error", uuid, context
+
+          @deleteReference uuid
 
     clear: ->
 
