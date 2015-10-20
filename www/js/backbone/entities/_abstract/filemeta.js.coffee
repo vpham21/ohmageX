@@ -42,6 +42,12 @@
       myURL = "#{App.request("serverpath:current")}/app/#{context}/read?#{$.param(myData)}"
       myURL
 
+    removeFileMeta: (id) ->
+      storedMeta.remove storedMeta.get(id)
+      @updateLocal( =>
+        console.log "file meta API.removeFileMeta storage success"
+      )
+
     addFileMeta: (options) ->
       storedMeta.add options
       @updateLocal( =>
