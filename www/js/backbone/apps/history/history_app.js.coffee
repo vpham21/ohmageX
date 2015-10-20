@@ -56,6 +56,9 @@
   App.vent.on "history:entry:remove:success history:entry:remove:error", ->
     App.vent.trigger "loading:hide"
 
+  App.vent.on "history:media:queue:all:start", ->
+    App.vent.trigger "loading:show", "Fetching History images and documents..."
+
   App.vent.on "history:entry:fetch:image:clicked", (response) ->
     App.execute "history:response:fetch:image", response
 
