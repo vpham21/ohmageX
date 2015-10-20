@@ -40,6 +40,7 @@
       results = [
           rowLabel: "Initial"
           bucket: "A Initial Reflection"
+          navbucket: "A. Initial Reflection"
           surveyId: '1InitialReflection'
           secondSurveyId: false
           newPrepopIndex: false
@@ -57,6 +58,7 @@
           days.push
             rowLabel: "Day #{paddedIndex}"
             bucket: "Day #{paddedIndex}"
+            navbucket: "Day #{paddedIndex}"
             surveyId: '2AssessmentArtifacts'
             secondSurveyId: '3InstructionArtifacts'
             newPrepopIndex: index
@@ -70,6 +72,7 @@
       results = results.concat [
         rowLabel: "Concluding"
         bucket: "Z Concluding Reflection"
+        navbucket: "Z. Concluding Reflection"
         surveyId: '4ConcludingReflection'
         secondSurveyId: false
         newPrepopIndex: false
