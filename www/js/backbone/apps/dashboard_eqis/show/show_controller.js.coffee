@@ -49,7 +49,7 @@
         if args.model.get('responseCount') is 0
           App.execute "dialog:alert", "There are no responses to show for this category."
         else
-          App.vent.trigger "dashboardeqis:responsecount:clicked", args.model.get 'bucket'
+          App.vent.trigger "dashboardeqis:responsecount:clicked", args.model.get 'navbucket'
 
       @show artifactsView, region: @layout.artifactsRegion
 
