@@ -30,3 +30,6 @@
   App.reqres.setHandler "history:media:queue:length", ->
     currentQueue.length
 
+
+  App.vent.on "history:fetch:start", ->
+    API.init()
