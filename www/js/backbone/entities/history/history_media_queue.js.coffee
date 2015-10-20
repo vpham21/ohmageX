@@ -18,3 +18,10 @@
   App.on "before:start", ->
     API.init()
 
+
+  App.reqres.setHandler "history:media:queue", ->
+    currentQueue
+
+  App.reqres.setHandler "history:media:queue:length", ->
+    currentQueue.length
+
