@@ -73,16 +73,25 @@
               App.vent.trigger "filemeta:fetch:auto:success", uuid, context
         error: (message) =>
           # file wasn't read, try to download it.
-          if context is 'image'
-            App.vent.trigger "file:image:uuid:notfound", uuid
-            @downloadMedia uuid, context
-          else
-            App.vent.trigger "file:media:uuid:notfound", uuid
-            App.execute "dialog:confirm", "Download and open the file? It may be large and take a long time to download.", (=>
+          switch (context)
+            when 'image'
+              App.vent.trigger "file:image:uuid:notfound", uuid
               @downloadMedia uuid, context
-            ), (=>
-              console.log 'dialog canceled'
-            )
+            when 'media'
+              if navigator.connection.type is Connection.NONE
+                # they're offline.
+                App.execute "dialog:alert", "File does not exist on the device, try again when a network is available."
+                return false
+
+              App.vent.trigger "file:media:uuid:notfound", uuid
+              App.execute "dialog:confirm", "Download and open the file? It may be large and take a long time to download.", (=>
+                @downloadMedia uuid, context
+              ), (=>
+                console.log 'dialog canceled'
+              )
+            else
+              # it's automatic, attempt to download with no prompts
+              @downloadMedia uuid, context
 
 
     downloadMedia: (uuid, context) ->
