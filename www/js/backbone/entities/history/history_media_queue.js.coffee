@@ -15,9 +15,14 @@
     init: ->
       currentQueue = new Entities.HistoryMediaQueue
 
+    addQueue: (queue) ->
+      currentQueue.add queue
+      console.log 'history media queue', currentQueue.toJSON()
   App.on "before:start", ->
     API.init()
 
+  App.commands.setHandler "history:media:queue:add", (queue) ->
+    if queue.length > 0 then API.addQueue(queue)
 
   App.reqres.setHandler "history:media:queue", ->
     currentQueue
