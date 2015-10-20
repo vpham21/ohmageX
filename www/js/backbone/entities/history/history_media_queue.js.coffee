@@ -18,6 +18,10 @@
     addQueue: (queue) ->
       currentQueue.add queue
       console.log 'history media queue', currentQueue.toJSON()
+    getErrorCount: ->
+      result = currentQueue.where(fetched: false) or []
+      result.length
+
   App.on "before:start", ->
     API.init()
 
@@ -29,6 +33,9 @@
 
   App.reqres.setHandler "history:media:queue:length", ->
     currentQueue.length
+
+  App.reqres.setHandler "history:media:queue:errors:count", ->
+    API.getErrorCount()
 
 
   App.vent.on "history:fetch:start", ->
