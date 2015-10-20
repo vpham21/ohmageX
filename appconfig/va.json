@@ -75,7 +75,8 @@
   },
   "routes": {
     "homepage": "campaign",
-    "surveys": "survey"
+    "surveys": "survey",
+    "help": "https://web.ohmage.org/ohmage/ohmagex-help.html"
   },
   "server_list": {
     "custom": false,
