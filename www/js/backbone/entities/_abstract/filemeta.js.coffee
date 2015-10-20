@@ -11,6 +11,8 @@
 
 
   storedMeta = false
+  # prefix string added to all auto fetch requests
+  autoPrefix = "auto:"
 
   API =
     init: ->
@@ -27,6 +29,10 @@
       storedMeta.length
 
     generateMediaURL: (uuid, context) ->
+
+      if context.indexOf(autoPrefix) is 0
+        # if the context string contains the "auto" prefix, remove the prefix.
+        context = context.substring autoPrefix.length
 
       myData =
         client: App.client_string
@@ -51,47 +57,74 @@
       App.execute "system:file:uuid:read",
         uuid: uuid
         success: (fileEntry) =>
-          if context is 'image'
-            App.vent.trigger "file:image:url:success", uuid, fileEntry.toURL()
-          else
-            App.vent.trigger "file:media:open:complete"
-            fileEntry.file (file) =>
-              console.log "fileEntry file", file
-              App.execute "system:file:uuid:open", uuid, file.type
+          switch (context)
+            when 'image'
+              App.vent.trigger "file:image:url:success", uuid, fileEntry.toURL()
+            when 'media'
+              App.vent.trigger "file:media:open:complete"
+              fileEntry.file (file) =>
+                console.log "fileEntry file", file
+                App.execute "system:file:uuid:open", uuid, file.type
+            else
+              # auto download queue
+              # It exists - the file doesn't have to be
+              # downloaded at all! Just trigger success to resolve
+              # this queue item.
+              App.vent.trigger "filemeta:fetch:auto:success", uuid, context
         error: (message) =>
           # file wasn't read, try to download it.
-          if context is 'image'
-            App.vent.trigger "file:image:uuid:notfound", uuid
-            @downloadMedia uuid, context
-          else
-            App.vent.trigger "file:media:uuid:notfound", uuid
-            App.execute "dialog:confirm", "Download and open the file? It may be large and take a long time to download.", (=>
+          switch (context)
+            when 'image'
+              App.vent.trigger "file:image:uuid:notfound", uuid
               @downloadMedia uuid, context
-            ), (=>
-              console.log 'dialog canceled'
-            )
+            when 'media'
+              if navigator.connection.type is Connection.NONE
+                # they're offline.
+                App.execute "dialog:alert", "File does not exist on the device, try again when a network is available."
+                return false
+
+              App.vent.trigger "file:media:uuid:notfound", uuid
+              App.execute "dialog:confirm", "Download and open the file? It may be large and take a long time to download.", (=>
+                @downloadMedia uuid, context
+              ), (=>
+                console.log 'dialog canceled'
+              )
+            else
+              # it's automatic, attempt to download with no prompts
+              @downloadMedia uuid, context
 
 
     downloadMedia: (uuid, context) ->
       App.execute "system:file:uuid:download",
         uuid: uuid
         url: @generateMediaURL(uuid, context)
+        showLoader: context in ['image','media'] # only show the loader for image and media downloads, not auto
         success: (fileEntry) =>
-          if context is 'image'
-            App.vent.trigger "file:image:url:success", uuid, fileEntry.toURL()
-          else
-            App.vent.trigger "file:media:open:complete"
-            fileEntry.file (file) =>
-              App.execute "system:file:uuid:open", uuid, file.type
+          switch (context)
+            when 'image'
+              App.vent.trigger "file:image:url:success", uuid, fileEntry.toURL()
+            when 'media'
+              App.vent.trigger "file:media:open:complete"
+              fileEntry.file (file) =>
+                App.execute "system:file:uuid:open", uuid, file.type
+            else
+              # resolve the queue item, download succeeded
+              App.vent.trigger "filemeta:fetch:auto:success", uuid, context
+
+          # add a file meta entry in all cases
           @addFileMeta
             id: uuid
             username: App.request("credentials:username")
 
         error: =>
-          if context is 'image'
-            App.vent.trigger "file:image:url:error", uuid
-          else
-            App.vent.trigger "file:media:open:error", uuid
+          switch (context)
+            when 'image'
+              App.vent.trigger "file:image:url:error", uuid
+            when 'media'
+              App.vent.trigger "file:media:open:error", uuid
+            else
+              # resolve the queue item with an error, download failed
+              App.vent.trigger "filemeta:fetch:auto:error", uuid, context
 
     clear: ->
 
@@ -123,3 +156,6 @@
 
   App.commands.setHandler "filemeta:fetch:media:open", (uuid) ->
     API.fetchMedia uuid, 'media'
+
+  App.commands.setHandler "filemeta:fetch:auto", (uuid, context) ->
+    API.fetchMedia uuid, "#{autoPrefix}#{context}"
