@@ -19,3 +19,15 @@
         currentIndices.push(item.get 'id')
         return new $.Deferred()
       )
+
+    whenComplete: ->
+      errorCount = App.request "history:media:queue:errors:count"
+      myLength = App.request "history:media:queue:length"
+      App.vent.trigger "history:media:queue:all:complete"
+      if errorCount is 0
+        # success, show success notice
+        # App.execute "dialog:alert", "All History images and documents fetched successfully."
+      else
+        # some failed, use errorCount
+        App.execute "dialog:alert", "Unable to fetch #{errorCount} out of #{myLength} images or documents in the History."
+
