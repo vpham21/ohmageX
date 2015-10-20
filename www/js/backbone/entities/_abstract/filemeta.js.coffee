@@ -98,6 +98,7 @@
       App.execute "system:file:uuid:download",
         uuid: uuid
         url: @generateMediaURL(uuid, context)
+        showLoader: context in ['image','media'] # only show the loader for image and media downloads, not auto
         success: (fileEntry) =>
           if context is 'image'
             App.vent.trigger "file:image:url:success", uuid, fileEntry.toURL()
