@@ -53,7 +53,7 @@
   App.vent.on "history:entry:remove:error", (entry, errorText) ->
     App.execute "dialog:alert", errorText
 
-  App.vent.on "history:entry:remove:success history:entry:remove:error", ->
+  App.vent.on "history:entry:remove:success history:entry:remove:error history:media:queue:all:complete", ->
     App.vent.trigger "loading:hide"
 
   App.vent.on "history:media:queue:all:start", ->
