@@ -58,6 +58,13 @@
       # update localStorage index file_meta with the current version of the file meta store
       App.execute "storage:save", 'file_meta', storedMeta.toJSON(), callback
 
+    deleteReference: (uuid) ->
+      # delete any saved file reference if it already exists.
+
+      if storedMeta.where(id: uuid)
+        App.execute "system:file:uuid:remove", uuid
+        @removeFileMeta uuid
+
     fetchMedia: (uuid, context) ->
 
       App.execute "system:file:uuid:read",
