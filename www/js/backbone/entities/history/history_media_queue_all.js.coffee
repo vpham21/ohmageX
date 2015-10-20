@@ -60,3 +60,9 @@
       currentDeferred[myIndex].resolve()
 
 
+
+  App.vent.on "filemeta:fetch:auto:success", (itemId) ->
+    API.queueSuccess itemId
+
+  App.vent.on "filemeta:fetch:auto:error", (itemId, context) ->
+    API.queueFailure itemId, context
