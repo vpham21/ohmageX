@@ -156,3 +156,6 @@
 
   App.commands.setHandler "filemeta:fetch:media:open", (uuid) ->
     API.fetchMedia uuid, 'media'
+
+  App.commands.setHandler "filemeta:fetch:auto", (uuid, context) ->
+    API.fetchMedia uuid, "#{autoPrefix}#{context}"
