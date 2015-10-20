@@ -69,7 +69,7 @@
       # add suffix results
       results = results.concat [
         rowLabel: "Concluding"
-        bucket: "A Concluding Reflection"
+        bucket: "Z Concluding Reflection"
         surveyId: '4ConcludingReflection'
         secondSurveyId: false
         newPrepopIndex: false
@@ -105,7 +105,7 @@
           # key does not exist, its count is zero.
           return 0
       )
-      results[@numDays+1] = if "Z_Concluding_Reflection" of bucketCountsObj then bucketCountsObj.A_Concluding_Reflection else 0
+      results[@numDays+1] = if "Z_Concluding_Reflection" of bucketCountsObj then bucketCountsObj.Z_Concluding_Reflection else 0
       results
 
   API =
