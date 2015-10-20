@@ -30,6 +30,10 @@
 
     generateMediaURL: (uuid, context) ->
 
+      if context.indexOf(autoPrefix) is 0
+        # if the context string contains the "auto" prefix, remove the prefix.
+        context = context.substring autoPrefix.length
+
       myData =
         client: App.client_string
         id: uuid
