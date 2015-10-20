@@ -117,10 +117,14 @@
             username: App.request("credentials:username")
 
         error: =>
-          if context is 'image'
-            App.vent.trigger "file:image:url:error", uuid
-          else
-            App.vent.trigger "file:media:open:error", uuid
+          switch (context)
+            when 'image'
+              App.vent.trigger "file:image:url:error", uuid
+            when 'media'
+              App.vent.trigger "file:media:open:error", uuid
+            else
+              # resolve the queue item with an error, download failed
+              App.vent.trigger "filemeta:fetch:auto:error", uuid, context
 
     clear: ->
 
