@@ -163,6 +163,7 @@
       App.execute "storage:save", 'history_responses', currentHistory.toJSON(), callback
 
     fetchHistory: (campaign_urns) ->
+      App.vent.trigger "history:fetch:start"
       App.vent.trigger 'loading:show', "Fetching History..."
       campaignCollections = []
       responseFetchSuccess = []
