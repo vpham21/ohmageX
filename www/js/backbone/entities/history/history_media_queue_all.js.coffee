@@ -60,6 +60,9 @@
       currentDeferred[myIndex].resolve()
 
 
+  App.vent.on "history:entries:fetch:success", ->
+    if App.custom.functionality.history_auto_refresh and App.request("history:media:queue:length") > 0
+      API.downloadAll App.request("history:media:queue")
 
   App.vent.on "filemeta:fetch:auto:success", (itemId) ->
     API.queueSuccess itemId
