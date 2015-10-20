@@ -11,3 +11,10 @@
 
   currentQueue = []
 
+  API =
+    init: ->
+      currentQueue = new Entities.HistoryMediaQueue
+
+  App.on "before:start", ->
+    API.init()
+
