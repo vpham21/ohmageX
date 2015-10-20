@@ -57,13 +57,20 @@
       App.execute "system:file:uuid:read",
         uuid: uuid
         success: (fileEntry) =>
-          if context is 'image'
-            App.vent.trigger "file:image:url:success", uuid, fileEntry.toURL()
-          else
-            App.vent.trigger "file:media:open:complete"
-            fileEntry.file (file) =>
-              console.log "fileEntry file", file
-              App.execute "system:file:uuid:open", uuid, file.type
+          switch (context)
+            when 'image'
+              App.vent.trigger "file:image:url:success", uuid, fileEntry.toURL()
+            when 'media'
+              App.vent.trigger "file:media:open:complete"
+              fileEntry.file (file) =>
+                console.log "fileEntry file", file
+                App.execute "system:file:uuid:open", uuid, file.type
+            else
+              # auto download queue
+              # It exists - the file doesn't have to be
+              # downloaded at all! Just trigger success to resolve
+              # this queue item.
+              App.vent.trigger "filemeta:fetch:auto:success", uuid, context
         error: (message) =>
           # file wasn't read, try to download it.
           if context is 'image'
