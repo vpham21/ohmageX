@@ -100,12 +100,18 @@
         url: @generateMediaURL(uuid, context)
         showLoader: context in ['image','media'] # only show the loader for image and media downloads, not auto
         success: (fileEntry) =>
-          if context is 'image'
-            App.vent.trigger "file:image:url:success", uuid, fileEntry.toURL()
-          else
-            App.vent.trigger "file:media:open:complete"
-            fileEntry.file (file) =>
-              App.execute "system:file:uuid:open", uuid, file.type
+          switch (context)
+            when 'image'
+              App.vent.trigger "file:image:url:success", uuid, fileEntry.toURL()
+            when 'media'
+              App.vent.trigger "file:media:open:complete"
+              fileEntry.file (file) =>
+                App.execute "system:file:uuid:open", uuid, file.type
+            else
+              # resolve the queue item, download succeeded
+              App.vent.trigger "filemeta:fetch:auto:success", uuid, context
+
+          # add a file meta entry in all cases
           @addFileMeta
             id: uuid
             username: App.request("credentials:username")
