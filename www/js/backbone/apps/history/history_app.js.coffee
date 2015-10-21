@@ -60,7 +60,7 @@
     App.vent.trigger "loading:show", "Fetching History images and documents..."
 
   App.vent.on "file:media:open:error", ->
-    App.vent.trigger "Unable to open document or video."
+    App.execute "dialog:alert", "Unable to open document or video."
 
   App.vent.on "history:entry:fetch:image:clicked", (response) ->
     App.execute "history:response:fetch:image", response
