@@ -75,7 +75,7 @@
       currentDeferred[myIndex].resolve()
 
 
-  App.vent.on "history:entries:fetch:success", ->
+  App.vent.on "history:entries:fetch:storage:success", ->
     if App.custom.functionality.history_auto_refresh and App.request("history:media:queue:length") > 0
       API.downloadAll App.request("history:media:queue")
 
