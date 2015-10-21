@@ -40,7 +40,7 @@
         prevId = item.get 'id'
 
       # trigger the first queue item to get the ball rolling
-      @triggerQueueItem queue.at(0)
+      @triggerQueueItem queue.at(0), 1, queue.length
 
     triggerQueueItem: (item, index, length) ->
       App.vent.trigger "loading:show", "Fetching file #{index+1} of #{length}..."
