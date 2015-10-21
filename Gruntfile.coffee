@@ -145,7 +145,7 @@ module.exports = (grunt) ->
             author: "<%= pkg.author %>"
             image_folder: "<%= appConfig.build.image_folder %>"
             app_version: "<%= pkg.version %>"
-            android_version: "15#{Math.floor(new Date() / 100000)}"
+            android_version: "#{Math.floor(new Date() / 1000)}"
             orientation: "<%= appConfig.build.orientation %>"
         files:
           "config.xml": ["config.xml.tpl"]
