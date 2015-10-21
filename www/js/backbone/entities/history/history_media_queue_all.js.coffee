@@ -43,7 +43,8 @@
       @triggerQueueItem queue.at(0), 1, queue.length
 
     triggerQueueItem: (item, index, length) ->
-      App.vent.trigger "loading:show", "Fetching file #{index+1} of #{length}..."
+      App.vent.trigger "loading:show", "Fetching history file #{index} of #{length}..."
+      console.log "loading:show", "Fetching history file #{index} of #{length}..."
       itemId = item.get('id')
       context = item.get('context')
 
