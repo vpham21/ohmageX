@@ -33,7 +33,10 @@
 
       queue.each (item, index) =>
         # when the previous id resolves, trigger the queue item
-        if prevId then $.when(currentDeferred[prevId]).done => @triggerQueueItem item, index, queue.length
+
+        if prevId
+          prevIndex = currentIndices.indexOf(prevId)
+          $.when(currentDeferred[prevIndex]).done => @triggerQueueItem item, index+1, queue.length
         prevId = item.get 'id'
 
       # trigger the first queue item to get the ball rolling
