@@ -85,7 +85,7 @@
               # this queue item.
               App.vent.trigger "filemeta:fetch:auto:success", uuid, context
         error: (message) =>
-
+          console.log 'error reading file: ', message
           @deleteReference uuid
 
           # file wasn't read, try to download it.
@@ -141,8 +141,6 @@
             else
               # resolve the queue item with an error, download failed
               App.vent.trigger "filemeta:fetch:auto:error", uuid, context
-
-          @deleteReference uuid
 
     clear: ->
 
