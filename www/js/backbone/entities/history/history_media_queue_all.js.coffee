@@ -29,14 +29,25 @@
 
       App.vent.trigger "history:media:queue:all:start"
 
-      queue.each (item) ->
-        itemId = item.get('id')
-        context = item.get('context')
+      prevId = false
 
-        if App.device.isNative
-          App.execute "filemeta:fetch:auto", itemId, context
-        else
-          App.vent.trigger "filemeta:fetch:auto:success", itemId, context
+      queue.each (item, index) =>
+        # when the previous id resolves, trigger the queue item
+        if prevId then $.when(currentDeferred[prevId]).done => @triggerQueueItem item, index, queue.length
+        prevId = item.get 'id'
+
+      # trigger the first queue item to get the ball rolling
+      @triggerQueueItem queue.at(0)
+
+    triggerQueueItem: (item, index, length) ->
+      App.vent.trigger "loading:show", "Fetching file #{index+1} of #{length}..."
+      itemId = item.get('id')
+      context = item.get('context')
+
+      if App.device.isNative
+        App.execute "filemeta:fetch:auto", itemId, context
+      else
+        App.vent.trigger "filemeta:fetch:auto:success", itemId, context
 
     whenComplete: ->
       errorCount = App.request "history:media:queue:errors:count"
