@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="<%= bundle_id %>" version="<%= app_version %>" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="<%= bundle_id %>" version="<%= app_version %>" android-versionCode="<%= android_version %>" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name><%= app_name %></name>
     <description>
         <%= description %>
