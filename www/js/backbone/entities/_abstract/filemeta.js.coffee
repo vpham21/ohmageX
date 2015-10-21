@@ -96,7 +96,7 @@
             when 'media'
               if navigator.connection.type is Connection.NONE
                 # they're offline.
-                App.execute "dialog:alert", "File does not exist on the device, try again when a network is available."
+                App.execute "dialog:alert", "Unable to open file on the device, try again when a network is available."
                 return false
 
               App.vent.trigger "file:media:uuid:notfound", uuid
