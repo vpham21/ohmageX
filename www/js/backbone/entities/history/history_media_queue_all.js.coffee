@@ -33,14 +33,18 @@
 
       queue.each (item, index) =>
         # when the previous id resolves, trigger the queue item
-        if prevId then $.when(currentDeferred[prevId]).done => @triggerQueueItem item, index, queue.length
+
+        if prevId
+          prevIndex = currentIndices.indexOf(prevId)
+          $.when(currentDeferred[prevIndex]).done => @triggerQueueItem item, index+1, queue.length
         prevId = item.get 'id'
 
       # trigger the first queue item to get the ball rolling
-      @triggerQueueItem queue.at(0)
+      @triggerQueueItem queue.at(0), 1, queue.length
 
     triggerQueueItem: (item, index, length) ->
-      App.vent.trigger "loading:show", "Fetching file #{index+1} of #{length}..."
+      App.vent.trigger "loading:show", "Fetching history file #{index} of #{length}..."
+      console.log "loading:show", "Fetching history file #{index} of #{length}..."
       itemId = item.get('id')
       context = item.get('context')
 
@@ -75,7 +79,7 @@
       currentDeferred[myIndex].resolve()
 
 
-  App.vent.on "history:entries:fetch:success", ->
+  App.vent.on "history:entries:fetch:storage:success", ->
     if App.custom.functionality.history_auto_refresh and App.request("history:media:queue:length") > 0
       API.downloadAll App.request("history:media:queue")
 

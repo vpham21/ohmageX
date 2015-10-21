@@ -220,8 +220,10 @@
 
           currentHistory.reset _.chain(campaignCollections).map((collection) -> collection.toJSON()).flatten().value()
 
+          App.vent.trigger "history:entries:fetch:success", currentHistory
+
           @updateLocal( =>
-            App.vent.trigger "history:entries:fetch:success", currentHistory
+            App.vent.trigger "history:entries:fetch:storage:success", currentHistory
           )
 
         # resolve the fetch handler.
