@@ -51,8 +51,12 @@
     API.setPreference 'wifi_upload_only', false
 
   App.vent.on "user:preferences:start_date:set", (dateStart) ->
-    console.log 'saving to user preference: ' + dateStart
+    console.log 'saving to start date: ' + dateStart
     API.setPreference 'start_date', dateStart
+
+  App.vent.on "user:preferences:goals:set", (goals) ->
+    console.log 'saving to goals: ' + goals
+    API.setPreference 'goals', goals
 
   App.vent.on "credentials:cleared", ->
     API.clear()

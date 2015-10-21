@@ -1,5 +1,5 @@
 <div class="hotspot"></div>
-<div class="enable-switch-container">
+<div class="enable-switch-container hide">
   <div class="enable-switch">
     <input id="enable-switch-<%= @id %>" type="checkbox">
     <label for="enable-switch-<%= @id %>"></label>

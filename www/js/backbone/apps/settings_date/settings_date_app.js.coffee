@@ -16,17 +16,16 @@
 
     saveDate: (dateStart) ->
       console.log "save settings date"
-      App.vent.trigger 'user:preferences:start_date:set', dateStart
+      App.vent.trigger "user:preferences:start_date:set", dateStart
       if App.device.isNative
         App.execute "reminders:all:clear",
           complete: ->
-            @addNotifications dateStart
+            App.vent.trigger "settings_date:local_notifications:add_notifications", dateStart
       else 
-        @addNotifications dateStart
+        App.vent.trigger "settings_date:local_notifications:add_notifications", dateStart
+        
 
     addNotifications: (dateStart) ->
-      console.log "add notifications" + dateStart
-
       currentReminders = App.request 'reminders:current'
 
       right_now = moment()
@@ -62,36 +61,40 @@
 
       App.execute "storage:save", 'reminders', currentReminders, =>
         console.log "reminders storage save success"
-        @setNotifications currentReminders, date_to_schedule
+        App.vent.trigger "settings_date:local_notifications:keep_up_to_date"
+        App.execute "notice:show",
+          data:
+            title: "Save Success"
+            description: "Start Date saved successfully."
+            showCancel: false
 
     setNotifications: (currentReminders, startDate) ->
-      if App.device.isNative
-        console.log "setNotifications"
+      console.log "setNotifications"
 
-        date_start = moment(startDate)
-        date_end = moment(startDate)
-        date_end.endOf('day').add(3,'weeks')
+      date_start = moment(startDate)
+      date_end = moment(startDate)
+      date_end.endOf('day').add(3,'weeks')
 
-        max = 64 - 4 # max ios local notifications - buffer
+      max = 64 - 4 # max ios local notifications - buffer
 
-        assigned = 0 # local notifications already assigned
-        assigning = 0
-        currentReminders.each( (item) ->
-          if item.get('notificationIds').length > 0
-            assigned += 1
-        )
+      assigned = 0 # local notifications already assigned
+      assigning = 0
+      currentReminders.each( (item) ->
+        if item.get('notificationIds').length > 0
+          assigned += 1
+      )
 
-        currentReminders.each( (item) ->
-          activation_date = moment(item.get('activationDate'))
-          
-          # schedule local notifications to go off from now until 3 weeks from now up to 60 max
-          if activation_date.diff(date_start) > 0 and date_end.diff(activation_date) > 0
-            if item.get('notificationIds').length == 0 and ((assigned + assigning) < max)
-              assigning += 1
-              App.vent.trigger "reminder:set:success", item
-        )
+      currentReminders.each( (item) ->
+        activation_date = moment(item.get('activationDate'))
+        
+        # schedule local notifications to go off from now until 3 weeks from now up to 60 max
+        if activation_date.diff(date_start) > 0 and date_end.diff(activation_date) > 0
+          if item.get('notificationIds').length == 0 and ((assigned + assigning) < max)
+            assigning += 1
+            App.vent.trigger "reminder:set:success", item
+      )
 
-        console.log "added " + assigning + " local notifications"
+      console.log "added " + assigning + " local notifications"
     
     keepNotificationsUpdated: ->
       currentReminders = App.request 'reminders:current'
@@ -104,6 +107,10 @@
   App.vent.on "settings_date:save:clicked", (dateStart) ->
     console.log 'settings_app.settings_date:save:clicked'
     API.saveDate(dateStart)
+
+  App.vent.on "settings_date:local_notifications:add_notifications", (dateStart) ->
+    console.log 'settings_date:local_notifications:add_notifications'
+    API.addNotifications(dateStart)
 
   App.vent.on "settings_date:local_notifications:keep_up_to_date", (dateStart) ->
     console.log 'settings_date:local_notifications:keep_up_to_date'

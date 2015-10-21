@@ -1,0 +1,51 @@
+<div>
+	Please select your goal(s):
+	<div class="goals-list">
+		<% if @isGoalSnacks: %>
+			<input type="checkbox" id="goalSnacks" checked> Add one or more snacks per day</input><br/>
+		<% else: %>
+			<input type="checkbox" id="goalSnacks"> Add one or more snacks per day</input><br/>
+		<% end %>
+
+		<% if @isGoalMeals: %>
+			<input type="checkbox" id="goalMeals" checked> Add a meal (if currently skips meals)</input><br/>
+		<% else: %>
+			<input type="checkbox" id="goalMeals"> Add a meal (if currently skips meals)</input><br/>
+		<% end %>
+
+		<% if @isGoalEnergyDensity: %>
+			<input type="checkbox" id="goalEnergyDensity" checked> Increase energy density of current snacks or meals</input><br/>
+		<% else: %>
+			<input type="checkbox" id="goalEnergyDensity"> Increase energy density of current snacks or meals</input><br/>
+		<% end %>
+
+		<% if @isGoalCarbohydrates: %>
+			<input type="checkbox" id="goalCarbohydrates" checked> Increase intake of nutrient dense carbohydrate foods</input><br/>
+		<% else: %>
+			<input type="checkbox" id="goalCarbohydrates"> Increase intake of nutrient dense carbohydrate foods</input><br/>
+		<% end %>
+
+		<% if @isGoalWorkoutSnack: %>
+			<input type="checkbox" id="goalWorkoutSnack" checked> Add or modify a pre or post-workout snack</input><br/>
+		<% else: %>
+			<input type="checkbox" id="goalWorkoutSnack"> Add or modify a pre or post-workout snack</input><br/>
+		<% end %>
+
+		<% if @isGoalIntakeFrequency: %>
+			<input type="checkbox" id="goalIntakeFrequency" checked> Eat more frequently during the day</input><br/>
+		<% else: %>
+			<input type="checkbox" id="goalIntakeFrequency"> Eat more frequently during the day</input><br/>
+		<% end %>
+
+		<% if @isGoalBoneNutrients: %>
+			<input type="checkbox" id="goalBoneNutrients" checked> Increase intake of bone-building nutrients (i.e. calcium or vitamin D)</input>
+		<% else: %>
+			<input type="checkbox" id="goalBoneNutrients"> Increase intake of bone-building nutrients (i.e. calcium or vitamin D)</input>
+		<% end %>
+	</div>
+</div>
+<div class="button-single">
+  <div class="action">
+    <button class="change-goals" type="button">Save Goals</button>
+  </div>
+</div>

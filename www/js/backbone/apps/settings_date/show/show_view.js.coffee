@@ -14,6 +14,14 @@
     	if moment(dateString).isValid()
     		@trigger "settings_date:save:clicked", dateString
 
+    serializeData: ->
+      start = App.request "user:preferences:get", "start_date"
+
+      if typeof(start) != 'undefined'      
+        data = 
+          start_date: moment(start).format('YYYY-MM-DD')
+      data
+
   class Show.Layout extends App.Views.Layout
     template: "settings_date/show/show_layout"
     regions:

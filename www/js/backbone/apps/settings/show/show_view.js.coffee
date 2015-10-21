@@ -4,6 +4,7 @@
     className: "text-container"
     template: "settings/show/info"
     triggers:
+      "click .navigate-goals": "navigate:goals:clicked"
       "click .navigate-profile": "navigate:profile:clicked"
       "click .navigate-settings-date": "navigate:settings_date:clicked"
 

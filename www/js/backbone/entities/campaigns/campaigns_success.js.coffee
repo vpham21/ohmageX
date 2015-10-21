@@ -24,6 +24,8 @@
 				if ~item.get('id').indexOf 'urn:campaign:ucla:runstrong'
 					App.execute "campaign:save", item
 			)
+			
+			App.navigate "settings_date", { trigger: true }
 
 		whenComplete: (oldLength) ->
 			newLength = 0

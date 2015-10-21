@@ -16,6 +16,10 @@
 
     settingsRegion: (settings) ->
       settingsView = @getInfoView settings
+      
+      @listenTo settingsView, "navigate:goals:clicked", ->
+        console.log 'show_controller.listenTo.navigate:goals:clicked'
+        App.vent.trigger "settings:navigate:goals"
 
       @listenTo settingsView, "navigate:profile:clicked", ->
         console.log 'show_controller.listenTo.navigate:profile:clicked'

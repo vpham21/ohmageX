@@ -1,5 +1,5 @@
 <div class="date-control">
-  <strong>Start Date: </strong><input type="date">
+  <strong>Start Date: </strong><input type="date" value='<%= @start_date %>'>
 </div>
 <div class="button-single">
   <div class="action">

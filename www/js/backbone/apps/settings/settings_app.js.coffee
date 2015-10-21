@@ -14,6 +14,9 @@
       console.log 'SettingsApp show'
       new SettingsApp.Show.Controller
 
+    goToGoals: ->
+      App.navigate "#goals", trigger: true
+
     goToProfile: ->
       App.navigate "#profile", trigger: true
       
@@ -24,9 +27,13 @@
     new SettingsApp.Router
       controller: API
 
+  App.vent.on "settings:navigate:goals", ->
+    console.log 'settings_app.settings:navigate:goals'
+    API.goToGoals()
+
   App.vent.on "settings:navigate:profile", ->
     console.log 'settings_app.settings:navigate:profile'
-    API.goToProfile()
+    API.goToProfile()  
 
   App.vent.on "settings:navigate:settings_date", ->
     console.log 'settings_date_app.settings:navigate:settings_date'

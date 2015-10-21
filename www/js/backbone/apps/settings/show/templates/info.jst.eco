@@ -1,7 +1,7 @@
 <nav class="list settings-list">
 	<ul>
 		<li>
-			<div class="survey running">
+			<div class="survey running-personal-info">
 			  <div class="action right">
 			    <button type="button" class="icon right-arrow navigate">View</button>
 			  </div>
@@ -13,7 +13,7 @@
 	</ul>
 	<ul>
 		<li>
-			<div class="survey running navigate">
+			<div class="survey running navigate-goals">
 			  <div class="action right">
 			    <button type="button" class="icon right-arrow navigate">View</button>
 			  </div>

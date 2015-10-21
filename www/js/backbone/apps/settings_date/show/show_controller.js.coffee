@@ -6,7 +6,12 @@
     initialize: ->
       @layout = @getLayoutView()
 
+      permissions = App.request 'permissions:current'
       settings_date = App.request 'settings_date:current'
+
+
+      if permissions.get('localNotification') is false
+        App.execute "permissions:register:localnotifications"
 
       @listenTo @layout, "show", =>
         console.log "showing layout"
