@@ -1,5 +1,9 @@
 .survey-step {
 
+  .markdown-inset-block {
+    font-size: $global-form-control-font-size * 1.1;
+  }
+
   // photo prompt
   .photo-control, .video-control, .file-control {
     .input-activate {
@@ -62,6 +66,11 @@
   .number-range { display: none; }
 
   // survey navigation buttons
+  #prev-button, #skip-button, #next-button {
+    button {
+      font-size: $global-form-control-font-size*1.1;
+    }
+  }
   #prev-button, #next-button {
 
     button {
