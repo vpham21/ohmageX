@@ -94,11 +94,12 @@
 
   #prev-button {
     div::before {
-      background-image: url('../img/icon/va/left-triangle-white.svg');
+      opacity: 1;
+      background-size: $global-form-control-font-size*1.1;
     }
     button {
       background: $survey-step-prev-button-gradient;
-      color: white;
+      color: black;
     }
   }
   #next-button button {
