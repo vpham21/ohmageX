@@ -102,8 +102,15 @@
       color: black;
     }
   }
-  #next-button button {
-    background: $survey-step-next-button-gradient;
-    color: black;
+  #next-button {
+    div::before {
+      background-image: url('../img/icon/va/right-triangle-white.svg');
+      opacity: 1;
+      background-size: $global-form-control-font-size*1.1;
+    }
+    button {
+      background: $survey-step-next-button-gradient;
+      color: white;      
+    }
   }
 }
