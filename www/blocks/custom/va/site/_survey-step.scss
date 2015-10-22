@@ -113,4 +113,36 @@
       color: white;      
     }
   }
+
+  // changing the button layout
+  $button-width: 200px;
+
+  .inset-block.survey-navigation {
+    border-top: none;
+    & > * {
+      max-width: none;
+    }
+    position: relative;
+    min-height: $global-form-control-font-size*3.1;
+    .button-pair > * {
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      float: none;
+      width: $button-width;
+    }
+
+    .button-pair > :first-child {
+      left: 8px;
+      right: auto;
+    }
+    #skip-button {
+      width: $button-width;
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      margin-left: -$button-width/2;
+    }
+  }
+
 }
