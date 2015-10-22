@@ -81,6 +81,17 @@
     }
   }
 
+  #skip-button {
+    button {
+      border-radius: 5px;
+      background: $survey-step-prev-button-gradient;
+      color: black;
+      border: 1px solid black;
+      padding-top: $global-form-control-padding;
+      padding-bottom: $global-form-control-padding;
+    }
+  }
+
   #prev-button {
     div::before {
       background-image: url('../img/icon/va/left-triangle-white.svg');
