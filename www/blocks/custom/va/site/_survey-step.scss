@@ -2,6 +2,9 @@
 
   .markdown-inset-block {
     font-size: $global-form-control-font-size * 1.1;
+  .prompt-list label {
+    font-size: 1rem;
+    padding: 0 1rem;
   }
 
   // photo prompt
