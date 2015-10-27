@@ -1,7 +1,32 @@
 .survey-step {
 
+  $base-inset-font-size: $global-form-control-font-size * 1.1;
   .markdown-inset-block {
-    font-size: $global-form-control-font-size * 1.1;
+    font-size: $base-inset-font-size;
+
+    h1 {
+      font-size: $base-inset-font-size*1.8;      
+    }
+    h2 {
+      font-size: $base-inset-font-size*1.5;      
+    }
+    h3 {
+      font-size: $base-inset-font-size*1.35;      
+    }
+    h4 {
+      font-size: $base-inset-font-size*1.2;      
+    }
+    h5 {
+      font-size: $base-inset-font-size*1.1;      
+    }
+    h6 {
+      font-size: $base-inset-font-size;
+    }
+  }
+
+  .prompt-list label {
+    font-size: 1rem;
+    padding: 0 1rem;
   }
 
   // photo prompt

@@ -1,3 +1,9 @@
 #page-title {
   .survey.icon { display: none; }
 }
+
+// hide the hamburger menu while survey is active
+// prevents fixed elements from breaking UI
+.survey-active .app-menu-trigger.hamburger.icon {
+  visibility: hidden;
+}
