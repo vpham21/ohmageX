@@ -1,6 +1,23 @@
 .survey-step {
 
   $base-inset-font-size: $global-form-control-font-size * 1.1;
+
+  #progress {
+    line-height: 0.8;
+    progress {
+      width: 90%;
+    }
+    .raw-percentage {
+      display: block;
+      float: left;
+      width: 10%;
+      line-height: 1em;
+      font-size: 1rem;
+      padding-left: 0.5rem;
+    }
+  }
+
+
   .markdown-inset-block {
     font-size: $base-inset-font-size;
 
