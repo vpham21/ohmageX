@@ -167,7 +167,7 @@ $survey-navigation-height: $global-form-control-font-size*3.1;
       max-width: none;
     }
     position: relative;
-    min-height: $global-form-control-font-size*3.1;
+    min-height: $survey-navigation-height;
     .button-pair > * {
       position: absolute;
       right: 8px;
