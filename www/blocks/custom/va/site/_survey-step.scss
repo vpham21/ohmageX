@@ -190,3 +190,15 @@ $survey-navigation-height: $global-form-control-font-size*3.1;
   }
 
 }
+
+.survey-active {
+// fixed position survey navigation
+
+  .inset-block.survey-navigation {
+    position: fixed;
+    bottom: 0;
+  }
+  #step-body {
+    padding-bottom: $survey-navigation-height;
+  }
+}
