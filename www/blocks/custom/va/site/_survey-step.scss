@@ -1,3 +1,5 @@
+$survey-navigation-height: $global-form-control-font-size*3.1;
+
 .survey-step {
 
   $base-inset-font-size: $global-form-control-font-size * 1.1;
@@ -165,7 +167,7 @@
       max-width: none;
     }
     position: relative;
-    min-height: $global-form-control-font-size*3.1;
+    min-height: $survey-navigation-height;
     .button-pair > * {
       position: absolute;
       right: 8px;
@@ -187,4 +189,16 @@
     }
   }
 
+}
+
+.survey-active {
+// fixed position survey navigation
+
+  .inset-block.survey-navigation {
+    position: fixed;
+    bottom: 0;
+  }
+  #step-body {
+    padding-bottom: $survey-navigation-height;
+  }
 }
