@@ -26,6 +26,16 @@
       trimCondition = rawCondition.replace(/\)\s*(and|or)\s*\(/i, ") $1 (")
       trimCondition = trimCondition.replace(/\s*(==|!=|<=|=>|>|<)\s*/i, " $1 ")
       ConditionalParser.parse trimCondition, oldParserResponses
+    mergeMessagePrompts: (oldParserResponses) ->
+      messageIds = App.request "flow:message:ids"
+
+      if messageIds
+        messageResponses = {}
+        _.each messageIds, (id) => messageResponses[id] = App.request 'flow:message:value', id
+
+        _.extend oldParserResponses, messageResponses
+      else
+        oldParserResponses
 
   App.reqres.setHandler "oldcondition:evaluate", (rawCondition, responses) ->
     API.prepParser rawCondition, responses
