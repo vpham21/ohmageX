@@ -6,7 +6,7 @@
   "build": {
     "app_name": "ohmageX",
     "bundle_id": "org.ohmage.x.ohmage",
-    "image_folder": "va",
+    "image_folder": "default",
     "orientation": "landscape",
     "login_header_image": "ohmageX.png",
     "debug": false
