@@ -25,7 +25,8 @@
 
       trimCondition = rawCondition.replace(/\)\s*(and|or)\s*\(/i, ") $1 (")
       trimCondition = trimCondition.replace(/\s*(==|!=|<=|=>|>|<)\s*/i, " $1 ")
-      ConditionalParser.parse trimCondition, oldParserResponses
+      ConditionalParser.parse trimCondition, @mergeMessagePrompts oldParserResponses
+
     mergeMessagePrompts: (oldParserResponses) ->
       messageIds = App.request "flow:message:ids"
 
