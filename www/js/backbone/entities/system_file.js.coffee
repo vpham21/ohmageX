@@ -62,6 +62,9 @@
             @readFile
               uuid: uuid
               success: (newFileEntry) =>
+                newFileEntry.file (file) =>
+                  App.execute "survey:files:update", uuid, file
+                  complete()
               error: =>
                 console.log 'read new file error'
                 complete()
