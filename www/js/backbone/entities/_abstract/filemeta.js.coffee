@@ -180,3 +180,6 @@
 
   App.commands.setHandler "filemeta:fetch:auto", (uuid, context) ->
     API.fetchMedia uuid, "#{autoPrefix}#{context}"
+
+  App.vent.on "filemeta:move:native:start", ->
+    App.vent.trigger "loading:show", "Preparing Upload..."
