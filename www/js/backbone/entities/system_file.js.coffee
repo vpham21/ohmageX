@@ -59,6 +59,12 @@
 
             App.execute "filemeta:add:entry", uuid
 
+            @readFile
+              uuid: uuid
+              success: (newFileEntry) =>
+              error: =>
+                console.log 'read new file error'
+                complete()
 
           ), ( (error) =>
             console.log("copyTo Error:" + error.code)
