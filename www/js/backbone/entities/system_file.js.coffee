@@ -108,3 +108,10 @@
 
   App.commands.setHandler "system:file:uuid:remove", (uuid) ->
     API.removeFileByUUID uuid
+
+  App.commands.setHandler "system:file:uuid:move", (uuid, fileObj, complete) ->
+    # parameters:
+    # uuid
+    # fileObj - a Cordova file object
+    # complete (success and error callback)
+    API.moveFileByUUID uuid, fileObj, complete
