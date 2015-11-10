@@ -155,6 +155,14 @@
         console.log 'file meta erased'
         App.vent.trigger "filemeta:saved:cleared"
 
+    moveMedia: (callback) ->
+      if App.request("responses:uploadtype") is 'video'
+        uuid = App.request("survey:files:first:uuid")
+        App.vent.trigger "filemeta:move:native:start"
+        App.execute "system:file:uuid:move", uuid, App.request("survey:files:first:file"), callback
+      else
+        callback()
+
   App.on "before:start", ->
     API.init()
 
@@ -167,6 +175,11 @@
         console.log 'dialog canceled'
       )
 
+  App.commands.setHandler "filemeta:add:entry", (uuid) ->
+    API.addFileMeta
+      id: uuid
+      username: App.request("credentials:username")
+
   App.commands.setHandler "filemeta:fetch:image:url", (uuid) ->
     API.fetchMedia uuid, 'image'
 
@@ -175,3 +188,12 @@
 
   App.commands.setHandler "filemeta:fetch:auto", (uuid, context) ->
     API.fetchMedia uuid, "#{autoPrefix}#{context}"
+
+  App.commands.setHandler "filemeta:move:native", (callback) ->
+    if App.device.isNative
+      API.moveMedia callback
+    else
+      callback()
+
+  App.vent.on "filemeta:move:native:start", ->
+    App.vent.trigger "loading:show", "Preparing Upload..."

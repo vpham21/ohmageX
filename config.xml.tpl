@@ -62,6 +62,12 @@
         <splash src="../res/<%= image_folder %>/android/splash/splash-port-ldpi/screen.png" density="port-ldpi"/>
         <splash src="../res/<%= image_folder %>/android/splash/splash-port-mdpi/screen.png" density="port-mdpi"/>
         <splash src="../res/<%= image_folder %>/android/splash/splash-port-xhdpi/screen.png" density="port-xhdpi"/>
+        <feature name="File">
+            <param name="android-package" value="org.apache.cordova.file.FileUtils" />
+        </feature>
+        <feature name="FileTransfer">
+            <param name="android-package" value="org.apache.cordova.filetransfer.FileTransfer" />
+        </feature>
     </platform>
     <access origin="*" />
 </widget>
