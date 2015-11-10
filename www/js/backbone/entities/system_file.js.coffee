@@ -52,6 +52,12 @@
     moveFileByUUID: (uuid, fileObj, complete) ->
       window.resolveLocalFileSystemURL fileObj.localURL, ( (fileEntry) =>
         console.log 'fileEntry success', fileObj.localURL, fileEntry
+        window.resolveLocalFileSystemURL fileDirectory, ( (dirEntry) =>
+          console.log 'dirEntry success', fileDirectory, dirEntry, uuid + App.request("system:file:uuid:ext", uuid)
+        ), ( (error) =>
+          console.log("fileDirectory read Error:" + error.code)
+          complete()
+        ) # just exec complete if dirEntry fails
       ), ( (error) =>
         console.log("fileObj read Error:" + error.code)
         complete()
