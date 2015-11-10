@@ -49,6 +49,14 @@
         App.vent.trigger "system:file:uuid:remove:error", uuid
       )
 
+    moveFileByUUID: (uuid, fileObj, complete) ->
+      window.resolveLocalFileSystemURL fileObj.localURL, ( (fileEntry) =>
+        console.log 'fileEntry success', fileObj.localURL, fileEntry
+      ), ( (error) =>
+        console.log("fileObj read Error:" + error.code)
+        complete()
+      ) # just exec complete if fileEntry fails
+
   App.on "before:start", ->
     if App.device.isNative then API.init()
 
