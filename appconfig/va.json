@@ -4,7 +4,7 @@
     "token_redirect": "../web/#login"
   },
   "build": {
-    "app_name": "VA",
+    "app_name": "_",
     "bundle_id": "org.ohmage.x.ohmage",
     "image_folder": "default",
     "orientation": "landscape",
