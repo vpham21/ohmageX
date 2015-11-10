@@ -54,6 +54,14 @@
         console.log 'fileEntry success', fileObj.localURL, fileEntry
         window.resolveLocalFileSystemURL fileDirectory, ( (dirEntry) =>
           console.log 'dirEntry success', fileDirectory, dirEntry, uuid + App.request("system:file:uuid:ext", uuid)
+          fileEntry.copyTo dirEntry, uuid + App.request("system:file:uuid:ext", uuid), ( =>
+            console.log 'copyTo success', uuid + App.request("system:file:uuid:ext", uuid)
+
+
+          ), ( (error) =>
+            console.log("copyTo Error:" + error.code)
+            complete()
+          ) # just exec complete if copyTo fails
         ), ( (error) =>
           console.log("fileDirectory read Error:" + error.code)
           complete()
