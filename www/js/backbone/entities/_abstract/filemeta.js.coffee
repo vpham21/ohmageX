@@ -167,6 +167,11 @@
         console.log 'dialog canceled'
       )
 
+  App.commands.setHandler "filemeta:add:entry", (uuid) ->
+    API.addFileMeta
+      id: uuid
+      username: App.request("credentials:username")
+
   App.commands.setHandler "filemeta:fetch:image:url", (uuid) ->
     API.fetchMedia uuid, 'image'
 
