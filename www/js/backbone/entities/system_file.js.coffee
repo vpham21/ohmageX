@@ -57,6 +57,8 @@
           fileEntry.copyTo dirEntry, uuid + App.request("system:file:uuid:ext", uuid), ( =>
             console.log 'copyTo success', uuid + App.request("system:file:uuid:ext", uuid)
 
+            App.execute "filemeta:add:entry", uuid
+
 
           ), ( (error) =>
             console.log("copyTo Error:" + error.code)
