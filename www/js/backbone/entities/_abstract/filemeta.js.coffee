@@ -155,6 +155,14 @@
         console.log 'file meta erased'
         App.vent.trigger "filemeta:saved:cleared"
 
+    moveMedia: (callback) ->
+      if App.request("responses:uploadtype") is 'video'
+        uuid = App.request("survey:files:first:uuid")
+        App.vent.trigger "filemeta:move:native:start"
+        App.execute "system:file:uuid:move", uuid, App.request("survey:files:first:file"), callback
+      else
+        callback()
+
   App.on "before:start", ->
     API.init()
 
