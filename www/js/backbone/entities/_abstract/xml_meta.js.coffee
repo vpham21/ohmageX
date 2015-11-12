@@ -9,7 +9,7 @@
   API =
     init: ->
       App.xmlMeta =
-        rootLabel: "Xmeta"
+        rootLabel: "ohmagexmeta"
 
     xmlToJSON: (xmlText) ->
       # convert to JSON with the library's default options.
