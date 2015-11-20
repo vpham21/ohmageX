@@ -4,6 +4,20 @@
     progress {
       width: 100%;
     }
+    .raw-percentage {
+      display: none;
+    }
+  }
+
+  .step-message {
+    padding: $global-form-control-padding*2;
+    h2:empty {
+      display: none;
+    }
+    p {
+      margin: 0;
+      padding: $global-form-control-padding*2 0;
+    }
   }
 
   .inline-error {
@@ -99,8 +113,12 @@
       line-height: 1;
       font-size: $global-form-control-font-size;
       display: inline-block;
-      padding: $global-form-control-padding*2;
+      padding: 0 $global-form-control-padding*2;
       width: 100%;
+      p {
+        margin: 0;
+        padding: $global-form-control-padding*2 0;
+      }
     }
 
     button.delete {

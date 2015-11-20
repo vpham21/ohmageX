@@ -39,7 +39,8 @@
 
       results = [
           rowLabel: "Initial"
-          bucket: "Initial Reflection"
+          bucket: "A Initial Reflection"
+          navbucket: "A. Initial Reflection"
           surveyId: '1InitialReflection'
           secondSurveyId: false
           newPrepopIndex: false
@@ -51,9 +52,13 @@
       days = []
       _.each responseCounts, (count, index) =>
         if index > 0 and index < @numDays+1
+
+          paddedIndex = "0#{index}".slice('-2')
+
           days.push
-            rowLabel: "Day #{index}"
-            bucket: "Day #{index}"
+            rowLabel: "Day #{paddedIndex}"
+            bucket: "Day #{paddedIndex}"
+            navbucket: "Day #{paddedIndex}"
             surveyId: '2AssessmentArtifacts'
             secondSurveyId: '3InstructionArtifacts'
             newPrepopIndex: index
@@ -66,7 +71,8 @@
       # add suffix results
       results = results.concat [
         rowLabel: "Concluding"
-        bucket: "Concluding Reflection"
+        bucket: "Z Concluding Reflection"
+        navbucket: "Z. Concluding Reflection"
         surveyId: '4ConcludingReflection'
         secondSurveyId: false
         newPrepopIndex: false
@@ -82,15 +88,18 @@
       dayNumbers = _.range(1,@numDays+1,1)
       # get buckets, converting spaces into underscores
       # so they can be mapped to object properties
-      bucketCountsObj = _.countBy entries, (entry) -> "#{entry.get('bucket')}".replace(" ", "_")
+      bucketCountsObj = _.countBy entries, (entry) -> "#{entry.get('bucket')}".replace(/\s/g, "_").replace(/\./g, "")
       # returns an object like:
       # {bucket_1: 3, bucket_3: 4, ... }
       results = []
-      results[0] = if "Initial_Reflection" of bucketCountsObj then bucketCountsObj.Initial_Reflection else 0
+      results[0] = if "A_Initial_Reflection" of bucketCountsObj then bucketCountsObj.A_Initial_Reflection else 0
       # returns an array of 10 items, with bucket count in sequence.
       results = results.concat( _.map dayNumbers, (dayNumber) ->
         # we mapped the spaces to underscores, include an underscore here!
-        targetBucket = "Day_#{dayNumber}"
+
+        paddedDayNumber = "0#{dayNumber}".slice('-2')
+
+        targetBucket = "Day_#{paddedDayNumber}"
         if targetBucket of bucketCountsObj
           # The key exists.
           # return the value of this bucket's count.
@@ -99,7 +108,7 @@
           # key does not exist, its count is zero.
           return 0
       )
-      results[@numDays+1] = if "Concluding_Reflection" of bucketCountsObj then bucketCountsObj.Concluding_Reflection else 0
+      results[@numDays+1] = if "Z_Concluding_Reflection" of bucketCountsObj then bucketCountsObj.Z_Concluding_Reflection else 0
       results
 
   API =

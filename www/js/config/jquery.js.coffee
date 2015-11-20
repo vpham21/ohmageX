@@ -13,7 +13,8 @@ do ($) ->
 
   $.fn.tagHTML = (tagName) ->
     if @find(tagName).length < 1 then return false
-    $.trim(@find(tagName).html())
+    rawHTML = $(document.createElement('div')).append(@find(tagName).clone()).html()
+    $.trim( $( rawHTML ).html() )
 
   # Selects a jQuery DOM element based on its exact contents.
   # Not case sensitive.

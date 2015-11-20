@@ -10,6 +10,7 @@
       @listenTo @, "clicked:save", @saveClicked
 
     saveClicked: ->
+      
     	dateString = @$el.find('input[type=date]').val()
     	if moment(dateString).isValid()
     		@trigger "settings_date:save:clicked", dateString

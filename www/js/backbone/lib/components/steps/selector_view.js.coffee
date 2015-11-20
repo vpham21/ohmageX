@@ -9,7 +9,7 @@
       data
 
   class Steps.Message extends App.Views.ItemView
-    className: "text-container"
+    className: "step-message"
     template: "steps/message"
     serializeData: ->
       data = @model.toJSON()
@@ -71,5 +71,5 @@
       data = @model.toJSON()
       console.log 'Steps.AfterSubmission data', data
       data.completeTitle = "#{App.dictionary('page','survey').capitalizeFirstLetter()} Complete"
-      data.summary = "#{App.dictionary('page','survey').capitalizeFirstLetter()} submitted."
+      data.summary = "#{App.dictionary('page','survey').capitalizeFirstLetter()} successfully uploaded or stored in the #{App.dictionary('page','queue')}."
       data

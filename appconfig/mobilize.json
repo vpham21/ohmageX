@@ -50,6 +50,9 @@
       "logout": "Logout"
     }
   },
+  "messages": {
+    "reminder_body": "Tap to capture. Swipe to ignore."
+  },
   "menu_items_disabled": {
     "native": [
       "dashboardeqis",
@@ -74,7 +77,8 @@
   },
   "routes": {
     "homepage": "campaign",
-    "surveys": "survey"
+    "surveys": "survey",
+    "help": "https://web.ohmage.org/ohmage/ohmagex-help.html"
   },
   "server_list": {
     "custom": false,

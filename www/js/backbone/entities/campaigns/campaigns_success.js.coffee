@@ -20,9 +20,9 @@
 				@whenComplete(oldLength)
 
 			collection.each( (item) ->
-				console.log 'downloading ' + item.get('id')
-				if ~item.get('id').indexOf 'urn:campaign:ucla:runstrong'
-					App.execute "campaign:save", item
+				console.log 'downloading ' + item.get('id') + ': ' + JSON.stringify(item)
+				#if ~item.get('id').indexOf 'urn:campaign:ucla:runstrong'
+					#App.execute "campaign:save", item
 			)
 			
 			App.navigate "settings_date", { trigger: true }

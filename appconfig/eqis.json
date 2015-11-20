@@ -50,6 +50,9 @@
       "logout": "Logout"
     }
   },
+  "messages": {
+    "reminder_body": "Please tap to capture your artifacts for today."
+  },
   "menu_items_disabled": {
     "native": [
       "survey"
@@ -72,12 +75,13 @@
   },
   "routes": {
     "homepage": "dashboardeqis",
-    "surveys": "dashboardeqis"
+    "surveys": "dashboardeqis",
+    "help": "http://wiki.eqis.io/app/eqis"
   },
   "server_list": {
     "custom": false,
     "servers": [
-      "https://test.mobilizingcs.org"
+      "https://pilots.mobilizelabs.org"
     ]
   },
   "functionality": {

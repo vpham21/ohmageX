@@ -3,7 +3,7 @@
   // all sizing for this element is derived from $radio-size,
   // which is proportional to the global form font size.
 
-  $radio-size: $global-form-control-font-size * 1.25;
+  $radio-size: 1.25rem;
   $radio-border-gap: $radio-size * 0.5;
 
   .input-area {

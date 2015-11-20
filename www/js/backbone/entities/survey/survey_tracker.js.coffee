@@ -40,7 +40,9 @@
   App.vent.on "survey:start", (surveyId) ->
     API.setActive()
     API.startPages()
+    $('body').addClass('survey-active')
 
   App.vent.on "survey:exit survey:reset credentials:cleared", (surveyId) ->
+    $('body').removeClass('survey-active')
     API.setInactive()
     API.endPages()

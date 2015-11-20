@@ -24,7 +24,6 @@
       else 
         App.vent.trigger "settings_date:local_notifications:add_notifications", dateStart
         
-
     addNotifications: (dateStart) ->
       currentReminders = App.request 'reminders:current'
 

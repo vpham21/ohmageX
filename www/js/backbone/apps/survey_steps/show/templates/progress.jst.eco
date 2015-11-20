@@ -1,1 +1,1 @@
-<progress value="<%= @percentage %>" max="100"><%= @percentage %>%</progress>
+<div class="raw-percentage"><%= Math.round(@percentage) %>%</div><progress value="<%= @percentage %>" max="100"><%= @percentage %>%</progress>

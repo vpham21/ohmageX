@@ -156,7 +156,7 @@
         result =
           id: notificationId
           title: "#{surveyTitle}"
-          text: message
+          text: App.custom.messages.reminder_body
           firstAt: firstAt
           data:
             surveyId: surveyId
@@ -203,7 +203,7 @@
         result.push
           id: myId
           title: "#{reminder.get('surveyTitle')}"
-          text: "Tap to capture. Swipe to ignore."
+          text: App.custom.messages.reminder_body
           every: 'week'
           firstAt: newDate.toDate()
           data:

@@ -49,6 +49,39 @@
         App.vent.trigger "system:file:uuid:remove:error", uuid
       )
 
+    moveFileByUUID: (uuid, fileObj, complete) ->
+      window.resolveLocalFileSystemURL fileObj.localURL, ( (fileEntry) =>
+        console.log 'fileEntry success', fileObj.localURL, fileEntry
+        window.resolveLocalFileSystemURL fileDirectory, ( (dirEntry) =>
+          console.log 'dirEntry success', fileDirectory, dirEntry, uuid + App.request("system:file:uuid:ext", uuid)
+          fileEntry.copyTo dirEntry, uuid + App.request("system:file:uuid:ext", uuid), ( =>
+            console.log 'copyTo success', uuid + App.request("system:file:uuid:ext", uuid)
+
+            App.execute "filemeta:add:entry", uuid
+
+            @readFile
+              uuid: uuid
+              success: (newFileEntry) =>
+                newFileEntry.file (file) =>
+                  App.execute "survey:files:update", uuid, file
+                  complete()
+              error: =>
+                console.log 'read new file error'
+                complete()
+
+          ), ( (error) =>
+            console.log("copyTo Error:" + error.code)
+            complete()
+          ) # just exec complete if copyTo fails
+        ), ( (error) =>
+          console.log("fileDirectory read Error:" + error.code)
+          complete()
+        ) # just exec complete if dirEntry fails
+      ), ( (error) =>
+        console.log("fileObj read Error:" + error.code)
+        complete()
+      ) # just exec complete if fileEntry fails
+
   App.on "before:start", ->
     if App.device.isNative then API.init()
 
@@ -75,3 +108,10 @@
 
   App.commands.setHandler "system:file:uuid:remove", (uuid) ->
     API.removeFileByUUID uuid
+
+  App.commands.setHandler "system:file:uuid:move", (uuid, fileObj, complete) ->
+    # parameters:
+    # uuid
+    # fileObj - a Cordova file object
+    # complete (success and error callback)
+    API.moveFileByUUID uuid, fileObj, complete
